@@ -1,0 +1,664 @@
+{
+ "info": {
+  "name": "Material Choco hub",
+  "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+  "description": "Generated from hub/server.js. Sign in with POST /api/login first; the session cookie is then sent automatically."
+ },
+ "variable": [
+  {
+   "key": "baseUrl",
+   "value": "http://localhost:8080"
+  },
+  {
+   "key": "agentToken",
+   "value": ""
+  },
+  {
+   "key": "id",
+   "value": ""
+  }
+ ],
+ "item": [
+  {
+   "name": "Browser API",
+   "item": [
+    {
+     "name": "GET /api/status",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/status",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "status"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/setup",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/setup",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "setup"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /api/login",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/login",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "login"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /api/logout",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/logout",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "logout"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/schema",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/schema",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "schema"
+       ]
+      }
+     }
+    },
+    {
+     "name": "GET /api/machines",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/machines",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "machines"
+       ]
+      }
+     }
+    },
+    {
+     "name": "PATCH /api/machines/:id",
+     "request": {
+      "method": "PATCH",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/machines/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "machines",
+        "{{id}}"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE /api/machines/:id",
+     "request": {
+      "method": "DELETE",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/machines/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "machines",
+        "{{id}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/pairing",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/pairing",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "pairing"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /api/jobs",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/jobs",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "jobs"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/jobs",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/jobs",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "jobs"
+       ]
+      }
+     }
+    },
+    {
+     "name": "GET /api/jobs/:id",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/jobs/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "jobs",
+        "{{id}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/jobs/:id/cancel",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/jobs/{{id}}/cancel",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "jobs",
+        "{{id}}",
+        "cancel"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/schedules",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/schedules",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "schedules"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/schedules",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/schedules",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "schedules"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "PATCH /api/schedules/:id",
+     "request": {
+      "method": "PATCH",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/schedules/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "schedules",
+        "{{id}}"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE /api/schedules/:id",
+     "request": {
+      "method": "DELETE",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/schedules/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "schedules",
+        "{{id}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "GET /api/audit",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/audit",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "audit"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/audit",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/audit",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "audit"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/account",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/account/password",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account/password",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account",
+        "password"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /api/account/totp",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account/totp",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account",
+        "totp"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/events",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/events",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "events"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "name": "Agent API",
+   "item": [
+    {
+     "name": "POST /agent/enroll",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/agent/enroll",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "agent",
+        "enroll"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /agent/poll",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Authorization",
+        "value": "Bearer {{agentToken}}"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/agent/poll",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "agent",
+        "poll"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /agent/jobs/:id/output",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Authorization",
+        "value": "Bearer {{agentToken}}"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/agent/jobs/{{id}}/output",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "agent",
+        "jobs",
+        "{{id}}",
+        "output"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /agent/jobs/:id/done",
+     "request": {
+      "method": "POST",
+      "header": [
+       {
+        "key": "Authorization",
+        "value": "Bearer {{agentToken}}"
+       }
+      ],
+      "url": {
+       "raw": "{{baseUrl}}/agent/jobs/{{id}}/done",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "agent",
+        "jobs",
+        "{{id}}",
+        "done"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

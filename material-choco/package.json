@@ -1,0 +1,65 @@
+{
+  "name": "material-choco",
+  "productName": "Material Choco",
+  "version": "0.1.0",
+  "description": "Desktop app and remote management hub for the Chocolatey CLI",
+  "license": "Apache-2.0",
+  "author": "Ding Ding Projects",
+  "homepage": "https://github.com/Ding-Ding-Projects/choco",
+  "main": "desktop/main.js",
+  "scripts": {
+    "schema": "node scripts/gen-schema.mjs",
+    "schema:check": "node scripts/gen-schema.mjs --check",
+    "vendor": "node scripts/build-vendor.mjs",
+    "hub": "node hub/server.js",
+    "agent": "node core/agent-cli.js",
+    "start": "electron .",
+    "test": "node --test test/core.test.js test/hub.test.js", "test:e2e": "node test/e2e/run.mjs",
+    "dist": "electron-builder --win squirrel --x64 --publish never"
+  },
+  "devDependencies": {
+    "@fontsource-variable/roboto-flex": "^5.3.0",
+    "@fontsource/roboto": "^5.3.0",
+    "@fontsource/roboto-mono": "^5.3.0",
+    "@material-symbols/svg-400": "^0.27.2",
+    "@material/web": "^2.5.0",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "electron-builder-squirrel-windows": "^25.1.8",
+    "esbuild": "^0.24.2"
+  },
+  "build": {
+    "appId": "projects.dingding.materialchoco",
+    "productName": "Material Choco",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**",
+      "core/**",
+      "hub/**",
+      "ui/**",
+      "shared/**",
+      "CHANGELOG.md",
+      "package.json",
+      "!hub/Dockerfile",
+      "!**/*.map"
+    ],
+    "extraResources": [{ "from": "choco-bundle", "to": "choco" }],
+    "win": {
+      "target": [
+        {
+          "target": "squirrel",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "desktop/icon.ico"
+    },
+    "squirrelWindows": {
+      "iconUrl": "https://raw.githubusercontent.com/Ding-Ding-Projects/choco/develop/material-choco/desktop/icon.ico",
+      "name": "MaterialChoco"
+    }
+  }
+}

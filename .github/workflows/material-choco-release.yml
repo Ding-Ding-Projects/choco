@@ -1,0 +1,114 @@
+name: Material Choco release
+
+# Builds the Chocolatey CLI from this repository, bundles it into the Material Choco desktop
+# app, builds the Squirrel.Windows installer and the hub container image, and publishes one
+# uniquely tagged release. By the maintainer's standing decision this workflow gates on no
+# tests; the release notes say which checks were run before the push.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: material-choco-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  installer:
+    if: github.repository == 'Ding-Ding-Projects/choco'
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: meta
+        shell: bash
+        run: |
+          version="0.1.${GITHUB_RUN_NUMBER}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=material-choco-v$version" >> "$GITHUB_OUTPUT"
+          echo "started=$(date +%s)" >> "$GITHUB_OUTPUT"
+      - name: Cache Tools
+        uses: actions/cache@v4
+        with:
+          path: tools
+          key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 5.0.x
+      - name: Build the Chocolatey CLI from this repository
+        shell: powershell
+        run: ./build.ps1 --target=CI --testExecutionType=unit --shouldRunOpenCover=false --shouldBuildMsi=false
+      - name: Collect the built CLI into the app bundle
+        shell: powershell
+        run: |
+          $exe = Get-ChildItem -Path code_drop -Recurse -Filter choco.exe | Sort-Object { if ($_.FullName -match 'choco_merged') { 0 } elseif ($_.FullName -match '_PublishedApps') { 1 } else { 2 } } | Select-Object -First 1
+          if (-not $exe) { throw 'The build did not produce choco.exe under code_drop.' }
+          Write-Host "Bundling $($exe.FullName)"
+          New-Item -ItemType Directory -Force material-choco/choco-bundle | Out-Null
+          Copy-Item -Path (Join-Path $exe.DirectoryName '*') -Destination material-choco/choco-bundle -Recurse -Force
+          & material-choco/choco-bundle/choco.exe --version --allow-unofficial-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the desktop app and installer
+        working-directory: material-choco
+        shell: bash
+        run: |
+          npm ci
+          npm version --no-git-tag-version "${{ steps.meta.outputs.version }}"
+          node -e "require('fs').writeFileSync('shared/build-info.json', JSON.stringify({version: process.argv[1], builtAt: new Date().toISOString(), commit: process.env.GITHUB_SHA}))" "${{ steps.meta.outputs.version }}"
+          node scripts/gen-schema.mjs
+          node scripts/build-vendor.mjs
+          npx electron-builder --win squirrel --x64 --publish never
+          ls -la dist/squirrel-windows
+      - name: Publish the release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd material-choco
+          elapsed=$(( $(date +%s) - ${{ steps.meta.outputs.started }} ))
+          lines=$(git ls-files core hub desktop scripts test 'ui/*.html' 'ui/*.css' 'ui/js' | xargs cat | wc -l)
+          {
+            echo "Material Choco ${{ steps.meta.outputs.version }}, built from commit ${GITHUB_SHA}."
+            echo
+            echo "- Installer: Squirrel.Windows (Setup.exe, RELEASES and the full .nupkg are attached)."
+            echo "- The Chocolatey CLI inside the app was built from this repository in this run. Nothing else needs to be installed."
+            echo "- The files are **not code signed**. Windows may show an unknown publisher or SmartScreen warning. No authenticity claim is made."
+            echo "- Hub image: \`ghcr.io/ding-ding-projects/material-choco-hub:${{ steps.meta.outputs.version }}\`"
+            echo "- This workflow ran the CLI build with its unit tests. It did not run the Material Choco tests; see HANDOFF.md in material-choco for the checks run before the push."
+            echo "- Hand-written lines counted by this run: ${lines}. Build time up to publishing: ${elapsed} s."
+          } > notes.md
+          gh release create "${{ steps.meta.outputs.tag }}" dist/squirrel-windows/* --title "Material Choco ${{ steps.meta.outputs.version }}" --notes-file notes.md --target "${GITHUB_SHA}"
+
+  hub-image:
+    if: github.repository == 'Ding-Ding-Projects/choco'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Stamp build information
+        working-directory: material-choco
+        run: node -e "require('fs').writeFileSync('shared/build-info.json', JSON.stringify({version: '0.1.' + process.env.GITHUB_RUN_NUMBER, builtAt: new Date().toISOString(), commit: process.env.GITHUB_SHA}))"
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: material-choco
+          file: material-choco/hub/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/ding-ding-projects/material-choco-hub:0.1.${{ github.run_number }}
+            ghcr.io/ding-ding-projects/material-choco-hub:latest

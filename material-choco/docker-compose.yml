@@ -1,0 +1,13 @@
+# One command: docker compose up -d
+# Then open http://<this host>:8080 from any device on the LAN and create the administrator.
+services:
+  hub:
+    image: ghcr.io/ding-ding-projects/material-choco-hub:latest
+    build: { context: ., dockerfile: hub/Dockerfile }
+    restart: unless-stopped
+    ports: ["8080:8080"]
+    volumes: ["material-choco-data:/data"]
+    # For HTTPS without a reverse proxy, mount a certificate and set:
+    # environment: { MATERIAL_CHOCO_TLS_CERT: /certs/cert.pem, MATERIAL_CHOCO_TLS_KEY: /certs/key.pem }
+volumes:
+  material-choco-data:

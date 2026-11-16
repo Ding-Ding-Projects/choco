@@ -1,0 +1,298 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-16T04:33:52Z"
+ },
+ "title": "Material Choco",
+ "launch": {
+  "view": "canvas",
+  "page": "front"
+ },
+ "pages": [
+  {
+   "id": "front",
+   "name": "Front door"
+  },
+  {
+   "id": "packages",
+   "name": "Packages"
+  },
+  {
+   "id": "configuration",
+   "name": "Configuration"
+  },
+  {
+   "id": "authoring",
+   "name": "Console and authoring"
+  },
+  {
+   "id": "fleet",
+   "name": "Remote fleet"
+  },
+  {
+   "id": "features",
+   "name": "Required features"
+  },
+  {
+   "id": "states",
+   "name": "States and errors"
+  },
+  {
+   "id": "phone",
+   "name": "Phone"
+  },
+  {
+   "id": "desktop",
+   "name": "Desktop app"
+  }
+ ],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 880,
+   "title": "Overview",
+   "page": "front",
+   "expand": "fill"
+  },
+  "Onboarding.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 880,
+   "title": "First run setup",
+   "page": "front",
+   "expand": "fill"
+  },
+  "Installed.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 880,
+   "title": "Installed packages",
+   "page": "packages",
+   "expand": "fill"
+  },
+  "Install.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 960,
+   "title": "Install with every option",
+   "page": "packages",
+   "expand": "fill"
+  },
+  "Updates.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 960,
+   "title": "Updates",
+   "page": "packages",
+   "expand": "fill"
+  },
+  "Config.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1020,
+   "title": "Sources, config and features",
+   "page": "configuration",
+   "expand": "fill"
+  },
+  "Console.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1040,
+   "title": "Console, every command",
+   "page": "authoring",
+   "expand": "fill"
+  },
+  "Machines.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 880,
+   "title": "Machines and pairing",
+   "page": "fleet",
+   "expand": "fill"
+  },
+  "Job.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 880,
+   "title": "Job output and two key confirmation",
+   "page": "fleet",
+   "expand": "fill"
+  },
+  "Settings.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1000,
+   "title": "Settings",
+   "page": "features",
+   "expand": "fill"
+  },
+  "Palette.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Command palette",
+   "page": "features",
+   "expand": "fill"
+  },
+  "StateLoading.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 900,
+   "h": 620,
+   "title": "Loading",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StateError.dc.html": {
+   "x": 980,
+   "y": 0,
+   "w": 900,
+   "h": 620,
+   "title": "Error",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StateSuccess.dc.html": {
+   "x": 1960,
+   "y": 0,
+   "w": 900,
+   "h": 620,
+   "title": "Success",
+   "page": "states",
+   "expand": "fill"
+  },
+  "StateEmpty.dc.html": {
+   "x": 2940,
+   "y": 0,
+   "w": 900,
+   "h": 620,
+   "title": "Empty and offline",
+   "page": "states",
+   "expand": "fill"
+  },
+  "Phone.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 390,
+   "h": 844,
+   "title": "Phone overview",
+   "page": "phone"
+  },
+  "Desktop.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Desktop app window",
+   "page": "desktop",
+   "expand": "fill"
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "Onboarding.dc.html",
+  "Installed.dc.html",
+  "Install.dc.html",
+  "Updates.dc.html",
+  "Config.dc.html",
+  "Console.dc.html",
+  "Machines.dc.html",
+  "Job.dc.html",
+  "Settings.dc.html",
+  "Palette.dc.html",
+  "StateLoading.dc.html",
+  "StateError.dc.html",
+  "StateSuccess.dc.html",
+  "StateEmpty.dc.html",
+  "Phone.dc.html",
+  "Desktop.dc.html"
+ ],
+ "notes": {
+  "t_front": {
+   "x": 0,
+   "y": -300,
+   "text": "Front door",
+   "kind": "title1",
+   "maxW": 2800,
+   "page": "front"
+  },
+  "t_packages": {
+   "x": 0,
+   "y": -300,
+   "text": "Packages",
+   "kind": "title1",
+   "maxW": 4240,
+   "page": "packages"
+  },
+  "t_configuration": {
+   "x": 0,
+   "y": -300,
+   "text": "Configuration",
+   "kind": "title1",
+   "maxW": 1360,
+   "page": "configuration"
+  },
+  "t_authoring": {
+   "x": 0,
+   "y": -300,
+   "text": "Console and authoring",
+   "kind": "title1",
+   "maxW": 1360,
+   "page": "authoring"
+  },
+  "t_fleet": {
+   "x": 0,
+   "y": -300,
+   "text": "Remote fleet",
+   "kind": "title1",
+   "maxW": 2800,
+   "page": "fleet"
+  },
+  "t_features": {
+   "x": 0,
+   "y": -300,
+   "text": "Required features",
+   "kind": "title1",
+   "maxW": 2800,
+   "page": "features"
+  },
+  "t_states": {
+   "x": 0,
+   "y": -300,
+   "text": "States and errors",
+   "kind": "title1",
+   "maxW": 3840,
+   "page": "states"
+  },
+  "t_phone": {
+   "x": 0,
+   "y": -300,
+   "text": "Phone",
+   "kind": "title1",
+   "maxW": 900,
+   "page": "phone"
+  },
+  "t_desktop": {
+   "x": 0,
+   "y": -300,
+   "text": "Desktop app",
+   "kind": "title1",
+   "maxW": 1360,
+   "page": "desktop"
+  }
+ },
+ "designSystems": []
+}

@@ -1,0 +1,3452 @@
+{
+ "schemaVersion": 1,
+ "generatedFrom": "src/chocolatey/infrastructure.app",
+ "cliVersionHint": "2.0.0",
+ "globalOptions": [
+  {
+   "id": "debug",
+   "flag": "--debug",
+   "names": [
+    "d",
+    "debug"
+   ],
+   "takesValue": false,
+   "label": "Debug",
+   "description": "Debug - Show debug messaging.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "verbose",
+   "flag": "--verbose",
+   "names": [
+    "v",
+    "verbose"
+   ],
+   "takesValue": false,
+   "label": "Verbose",
+   "description": "Verbose - Show verbose messaging. Very verbose messaging, avoid using under normal circumstances.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "trace",
+   "flag": "--trace",
+   "names": [
+    "trace"
+   ],
+   "takesValue": false,
+   "label": "Trace",
+   "description": "Trace - Show trace messaging. Very, very verbose trace messaging. Avoid except when needing super low-level .NET Framework debugging.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "no-color",
+   "flag": "--no-color",
+   "names": [
+    "nocolor",
+    "no-color"
+   ],
+   "takesValue": false,
+   "label": "No Color",
+   "description": "No Color - Do not show colorization in logging output. This overrides the feature '{0}', set to '{1}'.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "accept-license",
+   "flag": "--accept-license",
+   "names": [
+    "acceptlicense",
+    "accept-license"
+   ],
+   "takesValue": false,
+   "label": "AcceptLicense",
+   "description": "AcceptLicense - Accept license dialogs automatically. Reserved for future use.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "confirm",
+   "flag": "--confirm",
+   "names": [
+    "y",
+    "yes",
+    "confirm"
+   ],
+   "takesValue": false,
+   "label": "Confirm all prompts",
+   "description": "Confirm all prompts - Chooses affirmative answer instead of prompting. Implies --accept-license",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "force",
+   "flag": "--force",
+   "names": [
+    "f",
+    "force"
+   ],
+   "takesValue": false,
+   "label": "Force",
+   "description": "Force - force the behavior. Do not use force during normal operation - it subverts some of the smart behavior for commands.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "what-if",
+   "flag": "--what-if",
+   "names": [
+    "noop",
+    "whatif",
+    "what-if"
+   ],
+   "takesValue": false,
+   "label": "NoOp / WhatIf",
+   "description": "NoOp / WhatIf - Don't actually do anything.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "limit-output",
+   "flag": "--limit-output",
+   "names": [
+    "r",
+    "limitoutput",
+    "limit-output"
+   ],
+   "takesValue": false,
+   "label": "LimitOutput",
+   "description": "LimitOutput - Limit the output to essential information",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "include-headers",
+   "flag": "--include-headers",
+   "names": [
+    "include-headers"
+   ],
+   "takesValue": false,
+   "label": "include-headers",
+   "description": "Include header names when --limit-output is used. Requires Chocolatey CLI 2.5.0+",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "execution-timeout",
+   "flag": "--execution-timeout",
+   "names": [
+    "timeout",
+    "execution-timeout"
+   ],
+   "takesValue": true,
+   "label": "CommandExecutionTimeout (in seconds)",
+   "description": "CommandExecutionTimeout (in seconds) - The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration of {0} seconds. Supply '0' to disable the timeout.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "cache-location",
+   "flag": "--cache-location",
+   "names": [
+    "c",
+    "cache",
+    "cachelocation",
+    "cache-location"
+   ],
+   "takesValue": true,
+   "label": "CacheLocation",
+   "description": "CacheLocation - Location for download cache, defaults to %{EnvironmentVariables.System.Temp}% or value in chocolatey.config file.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "allow-unofficial-build",
+   "flag": "--allow-unofficial-build",
+   "names": [
+    "allowunofficial",
+    "allow-unofficial",
+    "allowunofficialbuild",
+    "allow-unofficial-build"
+   ],
+   "takesValue": false,
+   "label": "AllowUnofficialBuild",
+   "description": "AllowUnofficialBuild - When not using the official build you must set this flag for choco to continue.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "fail-on-standard-error",
+   "flag": "--fail-on-standard-error",
+   "names": [
+    "failstderr",
+    "failonstderr",
+    "fail-on-stderr",
+    "fail-on-standard-error",
+    "fail-on-error-output"
+   ],
+   "takesValue": false,
+   "label": "FailOnStandardError",
+   "description": "FailOnStandardError - Fail on standard error output (stderr), typically received when running external commands during install providers. This overrides the feature failOnStandardError.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "use-system-powershell",
+   "flag": "--use-system-powershell",
+   "names": [
+    "use-system-powershell"
+   ],
+   "takesValue": false,
+   "label": "UseSystemPowerShell",
+   "description": "UseSystemPowerShell - Execute PowerShell using an external process instead of the built-in PowerShell host. Should only be used when internal host is failing.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "no-progress",
+   "flag": "--no-progress",
+   "names": [
+    "no-progress"
+   ],
+   "takesValue": false,
+   "label": "Do Not Show Progress",
+   "description": "Do Not Show Progress - Do not show download progress percentages.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "proxy",
+   "flag": "--proxy",
+   "names": [
+    "proxy"
+   ],
+   "takesValue": true,
+   "label": "Proxy Location",
+   "description": "Proxy Location - Explicit proxy location. Overrides the default proxy location of '{0}'.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "proxy-user",
+   "flag": "--proxy-user",
+   "names": [
+    "proxy-user"
+   ],
+   "takesValue": true,
+   "label": "Proxy User Name",
+   "description": "Proxy User Name - Explicit proxy user (optional). Requires explicit proxy (`--proxy` or config setting). Overrides the default proxy user of '{0}'.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "proxy-password",
+   "flag": "--proxy-password",
+   "names": [
+    "proxy-password"
+   ],
+   "takesValue": true,
+   "label": "Proxy Password",
+   "description": "Proxy Password - Explicit proxy password (optional) to be used with user name. Encrypted. Requires explicit proxy (`--proxy` or config setting) and user name (`--proxy-user` or config setting).  Overrides the default proxy password.",
+   "deprecated": false,
+   "secret": true
+  },
+  {
+   "id": "proxy-bypass-list",
+   "flag": "--proxy-bypass-list",
+   "names": [
+    "proxy-bypass-list"
+   ],
+   "takesValue": true,
+   "label": "ProxyBypassList",
+   "description": "ProxyBypassList - Comma separated list of regex locations to bypass on proxy. Requires explicit proxy (`--proxy` or config setting). Overrides the default proxy bypass list of '{0}'.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "proxy-bypass-on-local",
+   "flag": "--proxy-bypass-on-local",
+   "names": [
+    "proxy-bypass-on-local"
+   ],
+   "takesValue": false,
+   "label": "Proxy Bypass On Local",
+   "description": "Proxy Bypass On Local - Bypass proxy for local connections. Requires explicit proxy (`--proxy` or config setting). Overrides the default proxy bypass on local setting of '{0}'.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "log-file",
+   "flag": "--log-file",
+   "names": [
+    "log-file"
+   ],
+   "takesValue": true,
+   "label": "log-file",
+   "description": "Log File to output to in addition to regular loggers.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "skip-compatibility-checks",
+   "flag": "--skip-compatibility-checks",
+   "names": [
+    "skipcompatibilitychecks",
+    "skip-compatibility-checks"
+   ],
+   "takesValue": false,
+   "label": "SkipCompatibilityChecks",
+   "description": "SkipCompatibilityChecks - Prevent warnings being shown before and after command execution when a runtime compatibility problem is found between the version of Chocolatey and the Chocolatey Licensed Extension.",
+   "deprecated": false,
+   "secret": false
+  },
+  {
+   "id": "ignore-http-cache",
+   "flag": "--ignore-http-cache",
+   "names": [
+    "ignore-http-cache"
+   ],
+   "takesValue": false,
+   "label": "ignore-http-cache",
+   "description": "Ignore any HTTP caches that have previously been created when querying sources, and create new caches. Available in 2.1.0+",
+   "deprecated": false,
+   "secret": false
+  }
+ ],
+ "commands": [
+  {
+   "name": "apikey",
+   "aliases": [
+    "setapikey"
+   ],
+   "summary": "retrieves, saves or deletes an API key for a particular source",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [
+    "list",
+    "add",
+    "remove"
+   ],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source [REQUIRED]",
+     "description": "Source [REQUIRED] - The source location for the key",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "api-key",
+     "flag": "--api-key",
+     "names": [
+      "k",
+      "key",
+      "apikey",
+      "api-key"
+     ],
+     "takesValue": true,
+     "label": "ApiKey",
+     "description": "ApiKey - The API key for the source. This is the authentication that identifies you and allows you to push to a source. With some sources this is either a key or it could be a user name and password specified as 'user:password'.",
+     "deprecated": false,
+     "secret": true
+    }
+   ],
+   "help": "ApiKey Command\n\nThis lists API keys that are set or sets an api key for a particular\n source so it doesn't need to be specified every time.\n\nAnything that doesn't contain source and key will list API keys.\n\nUsage\n\nchoco apikey [<options/switches>]\n    choco setapikey [<options/switches>]\n\nExamples\n\nchoco apikey\n    choco apikey -s https://somewhere/out/there\n    choco apikey list\n    choco apikey list -s https://somewhere/out/there\n    choco apikey add -s=\"https://somewhere/out/there/\" -k=\"value\"\n    choco apikey add -s \"https://push.chocolatey.org/\" -k=\"123-123123-123\"\n    choco apikey add -s \"http://internal_nexus\" -k=\"user:password\"\n    choco apikey remove -s https://somewhere/out/there\n\nFor source location, this can be a folder/file share or an\nhttp location. When it comes to urls, they can be different from the packages\nurl (where packages are searched and installed from). As an example, for\nChocolatey's community package package repository, the package url is\nhttps://community.chocolatey.org/api/v2/, but the push url is https://push.chocolatey.org\n(and the deprecated https://chocolatey.org/ as a push url). Check the\ndocumentation for your choice of repository to learn what the push url is.\n\nFor the key, this can be an apikey that is provided by your source repository.\nWith some sources, like Nexus, this can be a NuGet API key or it could be a\nuser name and password specified as 'user:password' for the API key. Please see\nyour repository's documentation (for Nexus, please see\nhttps://ch0.co/nexus2apikey).\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nConnecting to Chocolatey.org (Community Package Repository)\n\nIn order to save your API key for {0},\n log in (or register, confirm and then log in) to\n {0}, go to {0}account,\n copy the API Key, and then use it in the following command:\n\n    choco apikey add -k <your key here> -s {0}\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: nothing to do, apikey already set (enhanced)\n\nNOTE: Starting in v2.3.0, if you have the feature '{0}'\n turned on, then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyApiKeyCommand.cs"
+  },
+  {
+   "name": "cache",
+   "aliases": [],
+   "summary": "Manage the local HTTP caches used to store queries",
+   "since": "2.1.0",
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [
+    "list",
+    "remove"
+   ],
+   "options": [
+    {
+     "id": "expired",
+     "flag": "--expired",
+     "names": [
+      "expired"
+     ],
+     "takesValue": false,
+     "label": "Expired",
+     "description": "Expired - Remove cached items that have expired.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyCacheCommand.cs"
+  },
+  {
+   "name": "config",
+   "aliases": [],
+   "summary": "Retrieve and configure config file settings",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [
+    "list",
+    "get",
+    "set",
+    "unset"
+   ],
+   "options": [
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "Name",
+     "description": "Name - the name of the config setting. Required with some actions. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "value",
+     "flag": "--value",
+     "names": [
+      "value"
+     ],
+     "takesValue": true,
+     "label": "Value",
+     "description": "Value - the value of the config setting. Required with some actions. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Config Command\n\nChocolatey will allow you to interact with the configuration file settings.\n\nUsage\n\nchoco config [list]|get|set|unset [<options/switches>]\n\nExamples\n\nchoco config\n    choco config list\n    choco config get cacheLocation\n    choco config get --name cacheLocation\n    choco config set cacheLocation c:\\temp\\choco\n    choco config set --name cacheLocation --value c:\\temp\\choco\n    choco config unset proxy\n    choco config unset --name proxy\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: nothing to do, config already set/unset (enhanced)\n\nNOTE: Starting in v2.3.0, if you have the feature '{0}'\n turned on, then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nSee It In Action\n\nConfig shown in action: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_config.gif\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyConfigCommand.cs"
+  },
+  {
+   "name": "export",
+   "aliases": [],
+   "summary": "exports list of currently installed packages",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "output-file-path",
+     "flag": "--output-file-path",
+     "names": [
+      "o",
+      "output-file-path"
+     ],
+     "takesValue": true,
+     "label": "Output File Path",
+     "description": "Output File Path - the path to where the list of currently installed packages should be saved. Defaults to packages.config.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-version-numbers",
+     "flag": "--include-version-numbers",
+     "names": [
+      "include-version-numbers",
+      "include-version"
+     ],
+     "takesValue": false,
+     "label": "Include Version Numbers",
+     "description": "Include Version Numbers - controls whether or not version numbers for each package appear in generated file.  Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Export Command\n\nExport all currently installed packages to a file.\n\nThis is especially helpful when re-building a machine that was created\nusing Chocolatey.  Export all packages to a file, and then re-install\nthose packages onto new machine using `choco install packages.config`.\n\nUsage\n\nchoco export [<options/switches>]\n\nExamples\n\nchoco export\n    choco export --include-version-numbers\n    choco export \"'c:\\temp\\packages.config'\"\n    choco export \"'c:\\temp\\packages.config'\" --include-version-numbers\n    choco export -o=\"'c:\\temp\\packages.config'\"\n    choco export -o=\"'c:\\temp\\packages.config'\" --include-version-numbers\n    choco export --output-file-path=\"'c:\\temp\\packages.config'\"\n    choco export --output-file-path=\"'c:\\temp\\packages.config'\" --include-version-numbers\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyExportCommand.cs"
+  },
+  {
+   "name": "feature",
+   "aliases": [
+    "features"
+   ],
+   "summary": "view and configure choco features",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [
+    "list",
+    "get",
+    "enable",
+    "disable"
+   ],
+   "options": [
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "Name",
+     "description": "Name - the name of the source. Required with actions other than list. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Feature Command\n\nChocolatey will allow you to interact with features.\n\nUsage\n\nchoco feature [list]|disable|enable [<options/switches>]\n\nExamples\n\nchoco feature\n    choco feature list\n    choco feature get checksumFiles\n    choco feature get --name=checksumFiles\n    choco feature disable --name=checksumFiles\n    choco feature enable --name=checksumFiles\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: nothing to do, feature already set (enhanced)\n\nNOTE: Starting in v2.3.0, if you have the feature '{0}'\n turned on, then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyFeatureCommand.cs"
+  },
+  {
+   "name": "help",
+   "aliases": [],
+   "summary": "displays top level help information for choco",
+   "since": null,
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [],
+   "help": "",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyHelpCommand.cs"
+  },
+  {
+   "name": "info",
+   "aliases": [],
+   "summary": "retrieves package information. Shorthand for choco search pkgname --exact --verbose",
+   "since": null,
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - Source location for install. Can use special 'windowsfeatures', 'ruby', 'cygwin', or 'python' sources. Defaults to configured sources.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "local-only",
+     "flag": "--local-only",
+     "names": [
+      "l",
+      "lo",
+      "localonly",
+      "local-only"
+     ],
+     "takesValue": false,
+     "label": "LocalOnly",
+     "description": "LocalOnly - Only search against local machine items.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - Specific version of a package to return.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "prerelease",
+     "flag": "--prerelease",
+     "names": [
+      "pre",
+      "prerelease"
+     ],
+     "takesValue": false,
+     "label": "Prerelease",
+     "description": "Prerelease - Include Prereleases? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "user",
+     "flag": "--user",
+     "names": [
+      "u",
+      "user"
+     ],
+     "takesValue": true,
+     "label": "User",
+     "description": "User - used with authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "password",
+     "flag": "--password",
+     "names": [
+      "p",
+      "password"
+     ],
+     "takesValue": true,
+     "label": "Password",
+     "description": "Password - the user's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "cert",
+     "flag": "--cert",
+     "names": [
+      "cert"
+     ],
+     "takesValue": true,
+     "label": "Client certificate",
+     "description": "Client certificate - PFX pathname for an x509 authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "certpassword",
+     "flag": "--certpassword",
+     "names": [
+      "cp",
+      "certpassword"
+     ],
+     "takesValue": true,
+     "label": "Certificate Password",
+     "description": "Certificate Password - the client certificate's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "disable-package-repository-optimizations",
+     "flag": "--disable-package-repository-optimizations",
+     "names": [
+      "disable-repository-optimizations",
+      "disable-package-repository-optimizations"
+     ],
+     "takesValue": false,
+     "label": "Disable Package Repository Optimizations",
+     "description": "Disable Package Repository Optimizations - Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When used, this makes queries similar to the way they were done in earlier versions of Chocolatey. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-configured-sources",
+     "flag": "--include-configured-sources",
+     "names": [
+      "include-configured-sources"
+     ],
+     "takesValue": false,
+     "label": "Include Configured Sources",
+     "description": "Include Configured Sources - When using the '--source' option, this appends the sources that have been saved into the chocolatey.config file by 'source' command.  Available in 2.3.0+",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Info Command\n\nChocolatey will perform a search for a package local or remote and provide\n detailed information about that package. This is a synonym for\n `choco search <pkgname> --exact --detailed`.\n\nUsage\n\nchoco info [<options/switches>]\n\nExamples\n\nchoco info chocolatey\n    choco info googlechrome\n    choco info powershell\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nEnhanced:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: no results (enhanced)\n\nNOTE: If you have the feature '{0}' turned on,\n then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyInfoCommand.cs"
+  },
+  {
+   "name": "install",
+   "aliases": [],
+   "summary": "installs packages using configured sources",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - The source to find the package(s) to install. Special sources include: ruby, cygwin, windowsfeatures, and python. To specify more than one source, pass it with a semi-colon separating the values (e.g. \"'source1;source2'\"). Defaults to default feeds.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - A specific version to install. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "prerelease",
+     "flag": "--prerelease",
+     "names": [
+      "pre",
+      "prerelease"
+     ],
+     "takesValue": false,
+     "label": "Prerelease",
+     "description": "Prerelease - Include Prereleases? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "forcex86",
+     "flag": "--forcex86",
+     "names": [
+      "x86",
+      "forcex86"
+     ],
+     "takesValue": false,
+     "label": "ForceX86",
+     "description": "ForceX86 - Force x86 (32bit) installation on 64 bit systems. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "install-arguments",
+     "flag": "--install-arguments",
+     "names": [
+      "ia",
+      "installargs",
+      "install-args",
+      "installarguments",
+      "install-arguments"
+     ],
+     "takesValue": true,
+     "label": "InstallArguments",
+     "description": "InstallArguments - Install Arguments to pass to the native installer in the package. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "override-arguments",
+     "flag": "--override-arguments",
+     "names": [
+      "o",
+      "override",
+      "overrideargs",
+      "overridearguments",
+      "override-arguments"
+     ],
+     "takesValue": false,
+     "label": "OverrideArguments",
+     "description": "OverrideArguments - Should install arguments be used exclusively without appending to current package passed arguments? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "not-silent",
+     "flag": "--not-silent",
+     "names": [
+      "notsilent",
+      "not-silent"
+     ],
+     "takesValue": false,
+     "label": "NotSilent",
+     "description": "NotSilent - Do not install this silently. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "package-parameters",
+     "flag": "--package-parameters",
+     "names": [
+      "params",
+      "parameters",
+      "pkgparameters",
+      "packageparameters",
+      "package-parameters"
+     ],
+     "takesValue": true,
+     "label": "PackageParameters",
+     "description": "PackageParameters - Parameters to pass to the package. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "apply-install-arguments-to-dependencies",
+     "flag": "--apply-install-arguments-to-dependencies",
+     "names": [
+      "argsglobal",
+      "args-global",
+      "installargsglobal",
+      "install-args-global",
+      "applyargstodependencies",
+      "apply-args-to-dependencies",
+      "apply-install-arguments-to-dependencies"
+     ],
+     "takesValue": false,
+     "label": "Apply Install Arguments To Dependencies ",
+     "description": "Apply Install Arguments To Dependencies  - Should install arguments be applied to dependent packages? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "apply-package-parameters-to-dependencies",
+     "flag": "--apply-package-parameters-to-dependencies",
+     "names": [
+      "paramsglobal",
+      "params-global",
+      "packageparametersglobal",
+      "package-parameters-global",
+      "applyparamstodependencies",
+      "apply-params-to-dependencies",
+      "apply-package-parameters-to-dependencies"
+     ],
+     "takesValue": false,
+     "label": "Apply Package Parameters To Dependencies ",
+     "description": "Apply Package Parameters To Dependencies  - Should package parameters be applied to dependent packages? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-downgrade",
+     "flag": "--allow-downgrade",
+     "names": [
+      "allowdowngrade",
+      "allow-downgrade"
+     ],
+     "takesValue": false,
+     "label": "AllowDowngrade",
+     "description": "AllowDowngrade - Should an attempt at downgrading be allowed? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-dependencies",
+     "flag": "--ignore-dependencies",
+     "names": [
+      "i",
+      "ignoredependencies",
+      "ignore-dependencies"
+     ],
+     "takesValue": false,
+     "label": "IgnoreDependencies",
+     "description": "IgnoreDependencies - Ignore dependencies when installing package(s). Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "force-dependencies",
+     "flag": "--force-dependencies",
+     "names": [
+      "x",
+      "forcedependencies",
+      "force-dependencies"
+     ],
+     "takesValue": false,
+     "label": "ForceDependencies",
+     "description": "ForceDependencies - Force dependencies to be reinstalled when force installing package(s). Must be used in conjunction with --force. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-automation-scripts",
+     "flag": "--skip-automation-scripts",
+     "names": [
+      "n",
+      "skippowershell",
+      "skip-powershell",
+      "skipscripts",
+      "skip-scripts",
+      "skip-automation-scripts"
+     ],
+     "takesValue": false,
+     "label": "Skip PowerShell",
+     "description": "Skip PowerShell - Do not run chocolateyInstall.ps1. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "user",
+     "flag": "--user",
+     "names": [
+      "u",
+      "user"
+     ],
+     "takesValue": true,
+     "label": "User",
+     "description": "User - used with authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "password",
+     "flag": "--password",
+     "names": [
+      "p",
+      "password"
+     ],
+     "takesValue": true,
+     "label": "Password",
+     "description": "Password - the user's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "cert",
+     "flag": "--cert",
+     "names": [
+      "cert"
+     ],
+     "takesValue": true,
+     "label": "Client certificate",
+     "description": "Client certificate - PFX pathname for an x509 authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "certpassword",
+     "flag": "--certpassword",
+     "names": [
+      "cp",
+      "certpassword"
+     ],
+     "takesValue": true,
+     "label": "Certificate Password",
+     "description": "Certificate Password - the client certificate's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "ignore-checksums",
+     "flag": "--ignore-checksums",
+     "names": [
+      "ignorechecksum",
+      "ignore-checksum",
+      "ignorechecksums",
+      "ignore-checksums"
+     ],
+     "takesValue": false,
+     "label": "IgnoreChecksums",
+     "description": "IgnoreChecksums - Ignore checksums provided by the package. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-empty-checksums",
+     "flag": "--allow-empty-checksums",
+     "names": [
+      "allowemptychecksum",
+      "allowemptychecksums",
+      "allow-empty-checksums"
+     ],
+     "takesValue": false,
+     "label": "Allow Empty Checksums",
+     "description": "Allow Empty Checksums - Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Use this switch is not recommended if using sources that download resources from the internet. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-empty-checksums-secure",
+     "flag": "--allow-empty-checksums-secure",
+     "names": [
+      "allowemptychecksumsecure",
+      "allowemptychecksumssecure",
+      "allow-empty-checksums-secure"
+     ],
+     "takesValue": false,
+     "label": "Allow Empty Checksums Secure",
+     "description": "Allow Empty Checksums Secure - Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS). Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "require-checksums",
+     "flag": "--require-checksums",
+     "names": [
+      "requirechecksum",
+      "requirechecksums",
+      "require-checksums"
+     ],
+     "takesValue": false,
+     "label": "Require Checksums",
+     "description": "Require Checksums - Requires packages to have checksums for downloaded resources (both non-secure and secure). Overrides the default feature '{0}' set to '{1}' and '{2}' set to '{3}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum",
+     "flag": "--download-checksum",
+     "names": [
+      "checksum",
+      "downloadchecksum",
+      "download-checksum"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum",
+     "description": "Download Checksum - a user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one).  Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum-x64",
+     "flag": "--download-checksum-x64",
+     "names": [
+      "checksum64",
+      "checksumx64",
+      "downloadchecksumx64",
+      "download-checksum-x64"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum 64bit",
+     "description": "Download Checksum 64bit - a user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Defaults to same as Download Checksum.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum-type",
+     "flag": "--download-checksum-type",
+     "names": [
+      "checksumtype",
+      "checksum-type",
+      "downloadchecksumtype",
+      "download-checksum-type"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum Type",
+     "description": "Download Checksum Type - a user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to 'md5'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum-type-x64",
+     "flag": "--download-checksum-type-x64",
+     "names": [
+      "checksumtype64",
+      "checksumtypex64",
+      "checksum-type-x64",
+      "downloadchecksumtypex64",
+      "download-checksum-type-x64"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum Type 64bit",
+     "description": "Download Checksum Type 64bit - a user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Used in conjunction with Download Checksum 64bit. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to same as Download Checksum Type.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-package-exit-codes",
+     "flag": "--ignore-package-exit-codes",
+     "names": [
+      "ignorepackagecodes",
+      "ignorepackageexitcodes",
+      "ignore-package-codes",
+      "ignore-package-exit-codes"
+     ],
+     "takesValue": false,
+     "label": "IgnorePackageExitCodes",
+     "description": "IgnorePackageExitCodes - Exit with a 0 for success and 1 for non-success, no matter what package scripts provide for exit codes. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "use-package-exit-codes",
+     "flag": "--use-package-exit-codes",
+     "names": [
+      "usepackagecodes",
+      "usepackageexitcodes",
+      "use-package-codes",
+      "use-package-exit-codes"
+     ],
+     "takesValue": false,
+     "label": "UsePackageExitCodes",
+     "description": "UsePackageExitCodes - Package scripts can provide exit codes. Use those for choco's exit code when non-zero (this value can come from a dependency package). Chocolatey defines valid exit codes as 0, 1605, 1614, 1641, 3010.  Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "stop-on-first-package-failure",
+     "flag": "--stop-on-first-package-failure",
+     "names": [
+      "stoponfirstfailure",
+      "stop-on-first-failure",
+      "stop-on-first-package-failure"
+     ],
+     "takesValue": false,
+     "label": "Stop On First Package Failure",
+     "description": "Stop On First Package Failure - stop running install, upgrade or uninstall on first package failure instead of continuing with others. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "exit-when-reboot-detected",
+     "flag": "--exit-when-reboot-detected",
+     "names": [
+      "exitwhenrebootdetected",
+      "exit-when-reboot-detected"
+     ],
+     "takesValue": false,
+     "label": "Exit When Reboot Detected",
+     "description": "Exit When Reboot Detected - Stop running install, upgrade, or uninstall when a reboot request is detected. Requires '{0}' feature to be turned on. Will exit with either {1} or {2}. Overrides the default feature '{3}' set to '{4}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-detected-reboot",
+     "flag": "--ignore-detected-reboot",
+     "names": [
+      "ignoredetectedreboot",
+      "ignore-detected-reboot"
+     ],
+     "takesValue": false,
+     "label": "Ignore Detected Reboot",
+     "description": "Ignore Detected Reboot - Ignore any detected reboots if found. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "disable-package-repository-optimizations",
+     "flag": "--disable-package-repository-optimizations",
+     "names": [
+      "disable-repository-optimizations",
+      "disable-package-repository-optimizations"
+     ],
+     "takesValue": false,
+     "label": "Disable Package Repository Optimizations",
+     "description": "Disable Package Repository Optimizations - Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When used, this makes queries similar to the way they were done in earlier versions of Chocolatey. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "pin-package",
+     "flag": "--pin-package",
+     "names": [
+      "pin",
+      "pinpackage",
+      "pin-package"
+     ],
+     "takesValue": false,
+     "label": "Pin Package",
+     "description": "Pin Package - Add a pin to the package after install. Available in 1.2.0+",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-hooks",
+     "flag": "--skip-hooks",
+     "names": [
+      "skiphooks",
+      "skip-hooks"
+     ],
+     "takesValue": false,
+     "label": "Skip hooks",
+     "description": "Skip hooks - Do not run hook scripts. Available in 1.2.0+",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-configured-sources",
+     "flag": "--include-configured-sources",
+     "names": [
+      "include-configured-sources"
+     ],
+     "takesValue": false,
+     "label": "Include Configured Sources",
+     "description": "Include Configured Sources - When using the '--source' option, this appends the sources that have been saved into the chocolatey.config file by 'source' command.  Available in 2.3.0+",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Install Command\n\nInstalls a package or a list of packages (sometimes specified as a\n packages.config).\n\nUsage\n\nchoco install <pkg|packages.config> [<pkg2> <pkgN>] [<options/switches>]\n\nNOTE: Any package name ending with .config is considered a\n 'packages.config' file. Please see https://ch0.co/packages_config\n\nNOTE: Chocolatey Pro / Business builds on top of a great open source\n experience with quite a few features that enhance the your use of the\n community package repository (when using Pro), and really enhance the\n Chocolatey experience all around. If you are an organization looking\n for a better ROI, look no further than Business - automatic package\n creation from installer files, automatic recompile support, runtime\n malware protection, private CDN download cache, synchronize with\n Programs and Features, etc - https://chocolatey.org/compare.\n\nExamples\n\nchoco install sysinternals\n    choco install notepadplusplus googlechrome atom 7zip\n    choco install notepadplusplus --force --force-dependencies\n    choco install notepadplusplus googlechrome atom 7zip -dvfy\n    choco install git -y --params=\"'/GitAndUnixToolsOnPath /NoAutoCrlf'\"\n    choco install git -y --params=\"'/GitAndUnixToolsOnPath /NoAutoCrlf'\" --install-arguments=\"'/DIR=C:\\git'\"\n    # Params are package parameters, passed to the package\n    # Install args are installer arguments, appended to the silentArgs\n    #  in the package for the installer itself\n    choco install nodejs.install --version 0.10.35\n    choco install git -s \"'https://somewhere/out/there'\"\n    choco install git -s \"'https://somewhere/protected'\" -u user -p pass\n\n(DEPRECATED) Choco can also install directly from a nuspec/nupkg file. This aids in\n testing packages:\n\n    choco install <path/to/nuspec>\n    choco install <path/to/nupkg>\n\nNOTE: `all` is a special package keyword that will allow you to install\n all packages available on a source. This keyword is not available for\n public repositories like the Chocolatey Community Repository, and is\n intended to  be used with internal package sources only.\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nPackage Exit Codes:\n - 1641: success, reboot initiated\n - 3010: success, reboot required\n - other (not listed): likely an error has occurred\n\nIn addition to normal exit codes, packages are allowed to exit\n with their own codes when the feature '{0}' is\n turned on. Uninstall command has additional valid exit codes.\n\nReboot Exit Codes:\n - 350: pending reboot detected, no action has occurred\n - 1604: install suspended, incomplete\n\nIn addition to the above exit codes, you may also see reboot exit codes\n when the feature '{1}' is turned on. It typically requires\n the feature '{0}' to also be turned on to work properly.\n\nSee It In Action\n\nChocolatey FOSS install showing tab completion and `refreshenv` (a way\n to update environment variables without restarting the shell).\n\nFOSS install in action: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install.gif\n\nChocolatey Professional showing private download cache and virus scan\n protection.\n\nPro install in action: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/chocopro_install_stopped.gif\n\nPackages.config\n\nAlternative to PackageName. This is a list of packages in an xml manifest for Chocolatey to install. This is like the packages.config that NuGet uses except it also adds other options and switches. This can also be the path to the packages.config file if it is not in the current working directory.\n\nNOTE: The filename is only required to end in .config, the name is not required to be packages.config.\n\n    <?xml version=\"1.0\" encoding=\"utf-8\"?>\n    <packages>\n      <package id=\"apackage\" />\n      <package id=\"anotherPackage\" version=\"1.1\" />\n      <package id=\"chocolateytestpackage\" version=\"0.1\" source=\"somelocation\" />\n      <package id=\"alloptions\" version=\"0.1.1\"\n               source=\"https://somewhere/api/v2/\" installArguments=\"\"\n               packageParameters=\"\" forceX86=\"false\" ignoreDependencies=\"false\"\n               executionTimeout=\"1000\" force=\"false\"\n               />\n    </packages>\n\nAlternative Sources\n\nRuby\nThis specifies the source is Ruby Gems and that we are installing a\n gem. If you do not have ruby installed prior to running this command,\n the command will install that first.\n e.g. `choco install compass -source ruby`\n\nCygwin\nThis specifies the source is Cygwin and that we are installing a cygwin\n package, such as bash. If you do not have Cygwin installed, it will\n install that first and then the product requested.\n e.g. `choco install bash --source cygwin`\n\nPython\nThis specifies the source is Python and that we are installing a python\n package, such as Sphinx. If you do not have easy_install and Python\n installed, it will install those first and then the product requested.\n e.g. `choco install sphinx --source python`\n\nWindows Features\nThis specifies that the source is a Windows Feature and we should\n install via the Deployment Image Servicing and Management tool (DISM)\n on the local machine.\n e.g. `choco install IIS-WebServerRole --source windowsfeatures`\n\nResources\n\n* How-To: A complete example of how you can use the PackageParameters argument\n   when creating a Chocolatey Package can be seen at\n   https://docs.chocolatey.org/en-us/guides/create/parse-packageparameters-argument\n * One may want to override the default installation directory of a\n   piece of software. See\n   https://docs.chocolatey.org/en-us/getting-started#overriding-default-install-directory-or-other-advanced-install-concepts.\n\nOptions and Switches\n\nNOTE: Options and switches apply to all items passed, so if you are\n installing multiple packages, and you use `--version=1.0.0`, it is\n going to look for and try to install version 1.0.0 of every package\n passed. So please split out multiple package calls when wanting to\n pass specific options.",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyInstallCommand.cs"
+  },
+  {
+   "name": "license",
+   "aliases": [],
+   "summary": "display Chocolatey license information",
+   "since": "2.5.0",
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [
+    "info"
+   ],
+   "options": [],
+   "help": "",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyLicenseCommand.cs"
+  },
+  {
+   "name": "list",
+   "aliases": [],
+   "summary": "lists local packages",
+   "since": null,
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - Name of alternative source to use, for example 'windowsfeatures', 'ruby', 'cygwin', or 'python'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "id-only",
+     "flag": "--id-only",
+     "names": [
+      "idonly",
+      "id-only"
+     ],
+     "takesValue": false,
+     "label": "Id Only",
+     "description": "Id Only - Only return Package Ids in the list results.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "prerelease",
+     "flag": "--prerelease",
+     "names": [
+      "pre",
+      "prerelease"
+     ],
+     "takesValue": false,
+     "label": "Prerelease",
+     "description": "Prerelease - Include Prereleases? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-programs",
+     "flag": "--include-programs",
+     "names": [
+      "i",
+      "includeprograms",
+      "include-programs"
+     ],
+     "takesValue": false,
+     "label": "IncludePrograms",
+     "description": "IncludePrograms - Includes software from Programs and Features not being managed by Chocolatey CLI.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - Specific version of a package to return.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "page",
+     "flag": "--page",
+     "names": [
+      "page"
+     ],
+     "takesValue": true,
+     "label": "Page",
+     "description": "Page - the 'page' of results to return. Defaults to return all results. OBSOLETE - will be removed in v3.0.0.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "page-size",
+     "flag": "--page-size",
+     "names": [
+      "page-size"
+     ],
+     "takesValue": true,
+     "label": "Page Size",
+     "description": "Page Size - the amount of package results to return per page. Defaults to 25. OBSOLETE - will be removed in v3.0.0.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "exact",
+     "flag": "--exact",
+     "names": [
+      "e",
+      "exact"
+     ],
+     "takesValue": false,
+     "label": "Exact",
+     "description": "Exact - Only return packages with this exact name.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "by-id-only",
+     "flag": "--by-id-only",
+     "names": [
+      "by-id-only"
+     ],
+     "takesValue": false,
+     "label": "ByIdOnly",
+     "description": "ByIdOnly - Only return packages where the id contains the search filter.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "by-tags-only",
+     "flag": "--by-tags-only",
+     "names": [
+      "by-tag-only",
+      "by-tags-only"
+     ],
+     "takesValue": false,
+     "label": "ByTagOnly",
+     "description": "ByTagOnly - Only return packages where the search filter matches on the tags.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "id-starts-with",
+     "flag": "--id-starts-with",
+     "names": [
+      "id-starts-with"
+     ],
+     "takesValue": false,
+     "label": "IdStartsWith",
+     "description": "IdStartsWith - Only return packages where the id starts with the search filter.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "detailed",
+     "flag": "--detailed",
+     "names": [
+      "detail",
+      "detailed"
+     ],
+     "takesValue": false,
+     "label": "Detailed",
+     "description": "Detailed - Alias for verbose.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-pinned",
+     "flag": "--ignore-pinned",
+     "names": [
+      "ignore-pinned"
+     ],
+     "takesValue": false,
+     "label": "Ignore Pinned",
+     "description": "Ignore Pinned - Ignore pinned packages. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "List Command\n\nUsage\n\nchoco {0} <filter> [<options/switches>]\n\nExamples\n\nchoco list -i\n    choco list --include-programs\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nEnhanced:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: no results (enhanced)\n\nNOTE: If you have the feature '{0}' turned on,\n then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyListCommand.cs"
+  },
+  {
+   "name": "new",
+   "aliases": [],
+   "summary": "creates template files for creating a new Chocolatey package",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "automaticpackage",
+     "flag": "--automaticpackage",
+     "names": [
+      "a",
+      "auto",
+      "automaticpackage"
+     ],
+     "takesValue": false,
+     "label": "AutomaticPackage",
+     "description": "AutomaticPackage - Generate automatic package instead of normal. Defaults to false",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "template-name",
+     "flag": "--template-name",
+     "names": [
+      "t",
+      "template",
+      "template-name"
+     ],
+     "takesValue": true,
+     "label": "TemplateName",
+     "description": "TemplateName - Use a named template in {0}\\templates\\templatename instead of built-in template.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "name",
+     "description": "Name [Required]- the name of the package. Can be passed as first parameter without \"--name=\".",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - the version of the package. Can also be passed as the property PackageVersion=somevalue",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "maintainer",
+     "flag": "--maintainer",
+     "names": [
+      "maintainer"
+     ],
+     "takesValue": true,
+     "label": "Maintainer",
+     "description": "Maintainer - the name of the maintainer. Can also be passed as the property MaintainerName=somevalue",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "output-directory",
+     "flag": "--output-directory",
+     "names": [
+      "out",
+      "outdir",
+      "outputdirectory",
+      "output-directory"
+     ],
+     "takesValue": true,
+     "label": "OutputDirectory",
+     "description": "OutputDirectory - Specifies the directory for the created Chocolatey package file. If not specified, uses the current directory.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "use-original-template",
+     "flag": "--use-original-template",
+     "names": [
+      "built-in",
+      "built-in-template",
+      "originaltemplate",
+      "original-template",
+      "use-original-template",
+      "use-built-in-template"
+     ],
+     "takesValue": false,
+     "label": "BuiltInTemplate",
+     "description": "BuiltInTemplate - Use the original built-in template instead of any override.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "New Command\n\nChocolatey will generate package specification files for a new package.\n\nUsage\n\nchoco new <name> [<options/switches>] [<property=value> <propertyN=valueN>]\n\nPossible properties to pass:\n    packageversion\n    maintainername\n    maintainerrepo\n    installertype\n    url\n    url64\n    silentargs\n\nNOTE: You can pass arbitrary property value pairs\n through to templates. This really unlocks your ability to create\n packages automatically!\n\nNOTE: Chocolatey for Business can create complete packages by just\n pointing the new command to native installers!\n\nNOTE: Chocolatey for Business can also download and internalize remote\n resources from existing packages so that existing packages can be used\n without being tied to the internet.\n This is called automatic recompile.\n\nExamples\n\nchoco new bob\n    choco new bob -a --version 1.2.0 maintainername=\"'This guy'\"\n    choco new bob silentargs=\"'/S'\" url=\"'https://somewhere/out/there.msi'\"\n    choco new bob --outputdirectory Packages\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyNewCommand.cs"
+  },
+  {
+   "name": "outdated",
+   "aliases": [],
+   "summary": "retrieves information about packages that are outdated. Similar to upgrade all --noop",
+   "since": null,
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - The source to find the package(s) to install. Special sources include: ruby, cygwin, windowsfeatures, and python. To specify more than one source, pass it with a semi-colon separating the values (e.g. \"'source1;source2'\"). Defaults to default feeds.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "user",
+     "flag": "--user",
+     "names": [
+      "u",
+      "user"
+     ],
+     "takesValue": true,
+     "label": "User",
+     "description": "User - used with authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "password",
+     "flag": "--password",
+     "names": [
+      "p",
+      "password"
+     ],
+     "takesValue": true,
+     "label": "Password",
+     "description": "Password - the user's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "cert",
+     "flag": "--cert",
+     "names": [
+      "cert"
+     ],
+     "takesValue": true,
+     "label": "Client certificate",
+     "description": "Client certificate - PFX pathname for an x509 authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "certpassword",
+     "flag": "--certpassword",
+     "names": [
+      "cp",
+      "certpassword"
+     ],
+     "takesValue": true,
+     "label": "Certificate Password",
+     "description": "Certificate Password - the client certificate's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "prerelease",
+     "flag": "--prerelease",
+     "names": [
+      "pre",
+      "prerelease"
+     ],
+     "takesValue": false,
+     "label": "Prerelease",
+     "description": "Prerelease - Include Prereleases? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-pinned",
+     "flag": "--ignore-pinned",
+     "names": [
+      "ignore-pinned"
+     ],
+     "takesValue": false,
+     "label": "Ignore Pinned",
+     "description": "Ignore Pinned - Ignore pinned packages. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-unfound",
+     "flag": "--ignore-unfound",
+     "names": [
+      "ignore-unfound"
+     ],
+     "takesValue": false,
+     "label": "Ignore Unfound Packages",
+     "description": "Ignore Unfound Packages - Ignore packages that are not found on the sources used (or the defaults). Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "disable-package-repository-optimizations",
+     "flag": "--disable-package-repository-optimizations",
+     "names": [
+      "disable-repository-optimizations",
+      "disable-package-repository-optimizations"
+     ],
+     "takesValue": false,
+     "label": "Disable Package Repository Optimizations",
+     "description": "Disable Package Repository Optimizations - Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When disabled, this makes queries similar to the way they were done in earlier versions of Chocolatey. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-configured-sources",
+     "flag": "--include-configured-sources",
+     "names": [
+      "include-configured-sources"
+     ],
+     "takesValue": false,
+     "label": "Include Configured Sources",
+     "description": "Include Configured Sources - When using the '--source' option, this appends the sources that have been saved into the chocolatey.config file by 'source' command.  Available in 2.3.0+",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Outdated Command\n\nReturns a list of outdated packages.\n\nUsage\n\nchoco outdated [<options/switches>]\n\nExamples\n\nchoco outdated\n    choco outdated -s https://somewhere/out/there\n    choco outdated -s \"'https://somewhere/protected'\" -u user -p pass\n\nIf you use `--source=https://somewhere/out/there`, it is\n going to look for outdated packages only based on that source, so\n you may want to add `--ignore-unfound` to your options.\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nEnhanced:\n - 0: no outdated packages\n - -1 or 1: an error has occurred\n - 2: outdated packages have been found (enhanced)\n\nNOTE: If you have the feature '{0}' turned on,\n then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nSee It In Action\n\nchoco outdated: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_outdated.gif\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyOutdatedCommand.cs"
+  },
+  {
+   "name": "pack",
+   "aliases": [],
+   "summary": "packages nuspec, scripts, and other Chocolatey package resources into a nupkg file",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - The version you would like to insert into the package.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "output-directory",
+     "flag": "--output-directory",
+     "names": [
+      "out",
+      "outdir",
+      "outputdirectory",
+      "output-directory"
+     ],
+     "takesValue": true,
+     "label": "OutputDirectory",
+     "description": "OutputDirectory - Specifies the directory for the created Chocolatey package file. If not specified, uses the current directory.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Pack Command\n\nChocolatey will attempt to package a nuspec into a compiled nupkg.\n\nNOTE: You can pass arbitrary property value pairs through to nuspecs.\n These will replace variables formatted as `$property$` with the value passed.\n\nUsage\n\nchoco pack [<path to nuspec>] [<options/switches>] [<property=value>]\n\nExamples\n\nchoco pack\n    choco pack --version 1.2.3 configuration=release\n    choco pack path/to/nuspec\n    choco pack --outputdirectory build\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyPackCommand.cs"
+  },
+  {
+   "name": "pin",
+   "aliases": [],
+   "summary": "suppress upgrades for a package",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [
+    "list",
+    "add",
+    "remove"
+   ],
+   "options": [
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "Name",
+     "description": "Name - the name of the package. Required with some actions. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - Used when multiple versions of a package are installed.  Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Pin Command\n\nPin a package to suppress upgrades.\n\nThis is especially helpful when running `choco upgrade` for all\n packages, as it will automatically skip those packages. Another\n alternative is `choco upgrade --except=\"pkg1,pk2\"`.\n\nUsage\n\nchoco pin [list]|add|remove [<options/switches>]\n\nExamples\n\nchoco pin\n    choco pin list\n    choco pin add -n git\n    choco pin add --name=\"'git'\" --version=\"'1.2.3'\"\n    choco pin add --name=\"'git'\" --version=\"'1.2.3'\" --reason=\"'reasons available in business editions only'\"\n    choco pin remove --name=\"'git'\"\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: nothing to do (enhanced)\n\nNOTE: Starting in v2.3.0, if you have the feature '{0}'\n turned on, then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyPinCommand.cs"
+  },
+  {
+   "name": "push",
+   "aliases": [],
+   "summary": "pushes a compiled nupkg to a source",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - The source we are pushing the package to. Use {0} to push to community feed.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "api-key",
+     "flag": "--api-key",
+     "names": [
+      "k",
+      "key",
+      "apikey",
+      "api-key"
+     ],
+     "takesValue": true,
+     "label": "ApiKey",
+     "description": "ApiKey - The API key for the source. If not specified (and not local file source), does a lookup. If not specified and one is not found for an https source, push will fail.",
+     "deprecated": false,
+     "secret": true
+    }
+   ],
+   "help": "Push Command\n\nChocolatey will attempt to push a compiled nupkg to a package feed.\n\nA feed can be a local folder, a file share, the community feed\n ({0}), or a custom/private feed. For web\n feeds, it has a requirement that it implements the proper OData\n endpoints required for NuGet packages.\n\nUsage\n\nchoco push [<path to nupkg>] [<options/switches>]\n\nNOTE: If there is more than one nupkg file in the folder, the command\n will require specifying the path to the file.\n\nExamples\n\nchoco push --source {0}\n    choco push --source \"'{0}'\" --execution-timeout 500\n    choco push --source \"'{0}'\" -k=\"'123-123123-123'\"\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nTroubleshooting\n\nTo use this command, you must have your API key saved for the community\n feed (chocolatey.org) or the source you want to push to. Or you can\n explicitly pass the apikey to the command. See `apikey` command help\n for instructions on saving your key:\n\n    choco apikey --help\n\nA common error is `Failed to process request. 'The specified API key\n does not provide the authority to push packages.' The remote server\n returned an error: (403) Forbidden..` This means the package already\n exists with a different user (API key). The package could be unlisted.\n You can verify by going to {0}packages/packageName.\n Please contact the administrators of {0} if you see this\n and you don't see a good reason for it.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyPushCommand.cs"
+  },
+  {
+   "name": "rule",
+   "aliases": [],
+   "summary": "view or list implemented package rules",
+   "since": "2.3.0",
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "Name",
+     "description": "Name - the name of the rule to show more details about. Required with actions other than list. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyRuleCommand.cs"
+  },
+  {
+   "name": "search",
+   "aliases": [
+    "find"
+   ],
+   "summary": "searches remote packages",
+   "since": null,
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - Source location for install. Can use special 'windowsfeatures', 'ruby', 'cygwin', or 'python' sources. Defaults to sources.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "id-only",
+     "flag": "--id-only",
+     "names": [
+      "idonly",
+      "id-only"
+     ],
+     "takesValue": false,
+     "label": "Id Only",
+     "description": "Id Only - Only return Package Ids in the list results.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "prerelease",
+     "flag": "--prerelease",
+     "names": [
+      "pre",
+      "prerelease"
+     ],
+     "takesValue": false,
+     "label": "Prerelease",
+     "description": "Prerelease - Include Prereleases? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-programs",
+     "flag": "--include-programs",
+     "names": [
+      "i",
+      "includeprograms",
+      "include-programs"
+     ],
+     "takesValue": false,
+     "label": "IncludePrograms",
+     "description": "IncludePrograms - Filters out apps Chocolatey has listed as packages and includes those in the list. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "all-versions",
+     "flag": "--all-versions",
+     "names": [
+      "a",
+      "all",
+      "allversions",
+      "all-versions"
+     ],
+     "takesValue": false,
+     "label": "AllVersions",
+     "description": "AllVersions - include results from all versions.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - Specific version of a package to return.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "user",
+     "flag": "--user",
+     "names": [
+      "u",
+      "user"
+     ],
+     "takesValue": true,
+     "label": "User",
+     "description": "User - used with authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "password",
+     "flag": "--password",
+     "names": [
+      "p",
+      "password"
+     ],
+     "takesValue": true,
+     "label": "Password",
+     "description": "Password - the user's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "cert",
+     "flag": "--cert",
+     "names": [
+      "cert"
+     ],
+     "takesValue": true,
+     "label": "Client certificate",
+     "description": "Client certificate - PFX pathname for an x509 authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "certpassword",
+     "flag": "--certpassword",
+     "names": [
+      "cp",
+      "certpassword"
+     ],
+     "takesValue": true,
+     "label": "Certificate Password",
+     "description": "Certificate Password - the client certificate's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "page",
+     "flag": "--page",
+     "names": [
+      "page"
+     ],
+     "takesValue": true,
+     "label": "Page",
+     "description": "Page - the 'page' of results to return. Defaults to return all results.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "page-size",
+     "flag": "--page-size",
+     "names": [
+      "page-size"
+     ],
+     "takesValue": true,
+     "label": "Page Size",
+     "description": "Page Size - the amount of packages to return in each page of results. NOTE: this value is per source. Defaults to 25 for each source that is included in query.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "exact",
+     "flag": "--exact",
+     "names": [
+      "e",
+      "exact"
+     ],
+     "takesValue": false,
+     "label": "Exact",
+     "description": "Exact - Only return packages with this exact name.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "by-id-only",
+     "flag": "--by-id-only",
+     "names": [
+      "by-id-only"
+     ],
+     "takesValue": false,
+     "label": "ByIdOnly",
+     "description": "ByIdOnly - Only return packages where the id contains the search filter.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "by-tags-only",
+     "flag": "--by-tags-only",
+     "names": [
+      "by-tag-only",
+      "by-tags-only"
+     ],
+     "takesValue": false,
+     "label": "ByTagOnly",
+     "description": "ByTagOnly - Only return packages where the search filter matches on the tags.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "id-starts-with",
+     "flag": "--id-starts-with",
+     "names": [
+      "id-starts-with"
+     ],
+     "takesValue": false,
+     "label": "IdStartsWith",
+     "description": "IdStartsWith - Only return packages where the id starts with the search filter.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "order-by",
+     "flag": "--order-by",
+     "names": [
+      "order-by"
+     ],
+     "takesValue": true,
+     "label": "OrderBy",
+     "description": "OrderBy - Sort package results by Id (default), {0}. Available in 2.5.0+.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "order-by-popularity",
+     "flag": "--order-by-popularity",
+     "names": [
+      "order-by-popularity"
+     ],
+     "takesValue": false,
+     "label": "(Deprecated) OrderByPopularity",
+     "description": "(Deprecated) OrderByPopularity - Sort package results by popularity. Use '--order-by='Popularity'' instead.",
+     "deprecated": true,
+     "secret": false
+    },
+    {
+     "id": "approved-only",
+     "flag": "--approved-only",
+     "names": [
+      "approved-only"
+     ],
+     "takesValue": false,
+     "label": "ApprovedOnly",
+     "description": "ApprovedOnly - Only return approved packages - this option will filter out results not from the community repository.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-cache-only",
+     "flag": "--download-cache-only",
+     "names": [
+      "download-cache",
+      "download-cache-only"
+     ],
+     "takesValue": false,
+     "label": "DownloadCacheAvailable",
+     "description": "DownloadCacheAvailable - Only return packages that have a download cache available - this option will filter out results not from the community repository.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "not-broken",
+     "flag": "--not-broken",
+     "names": [
+      "not-broken"
+     ],
+     "takesValue": false,
+     "label": "NotBroken",
+     "description": "NotBroken - Only return packages that are not failing testing - this option only filters out failing results from the community feed. It will not filter against other sources.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "detailed",
+     "flag": "--detailed",
+     "names": [
+      "detail",
+      "detailed"
+     ],
+     "takesValue": false,
+     "label": "Detailed",
+     "description": "Detailed - Alias for verbose.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "disable-package-repository-optimizations",
+     "flag": "--disable-package-repository-optimizations",
+     "names": [
+      "disable-repository-optimizations",
+      "disable-package-repository-optimizations"
+     ],
+     "takesValue": false,
+     "label": "Disable Package Repository Optimizations",
+     "description": "Disable Package Repository Optimizations - Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When disabled, this makes queries similar to the way they were done in earlier versions of Chocolatey. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-configured-sources",
+     "flag": "--include-configured-sources",
+     "names": [
+      "include-configured-sources"
+     ],
+     "takesValue": false,
+     "label": "Include Configured Sources",
+     "description": "Include Configured Sources - When using the '--source' option, this appends the sources that have been saved into the chocolatey.config file by 'source' command.  Available in 2.3.0+",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Search Command\n\nChocolatey will perform a search for a package local or remote.\n\nUsage\n\nchoco find <filter> [<options/switches>]\n    choco search <filter> [<options/switches>]\n\nExamples\n\nchoco search git\n    choco search git --source=\"'https://somewhere/out/there'\"\n    choco search bob -s \"'https://somewhere/protected'\" -u user -p pass\n    choco search --page=0 --page-size=25\n    choco search 7zip --all-versions --exact\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nEnhanced:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: no results (enhanced)\n\nNOTE: If you have the feature '{0}' turned on,\n then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nSee It In Action\n\nchoco {0}: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_search.gif\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateySearchCommand.cs"
+  },
+  {
+   "name": "source",
+   "aliases": [
+    "sources"
+   ],
+   "summary": "view and configure default sources",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [
+    "list",
+    "add",
+    "remove",
+    "enable",
+    "disable"
+   ],
+   "options": [
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "Name",
+     "description": "Name - the name of the source. Required with actions other than list. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - The source. This can be a folder/file share or an http location. If it is a url, it will be a location you can go to in a browser and it returns OData with something that says Packages in the browser, similar to what you see when you go to https://community.chocolatey.org/api/v2/. Required with add action. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "user",
+     "flag": "--user",
+     "names": [
+      "u",
+      "user"
+     ],
+     "takesValue": true,
+     "label": "User",
+     "description": "User - used with authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "password",
+     "flag": "--password",
+     "names": [
+      "p",
+      "password"
+     ],
+     "takesValue": true,
+     "label": "Password",
+     "description": "Password - the user's password to the source. Encrypted in chocolatey.config file.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "cert",
+     "flag": "--cert",
+     "names": [
+      "cert"
+     ],
+     "takesValue": true,
+     "label": "Client certificate",
+     "description": "Client certificate - PFX pathname for an x509 authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "certpassword",
+     "flag": "--certpassword",
+     "names": [
+      "cp",
+      "certpassword"
+     ],
+     "takesValue": true,
+     "label": "Certificate Password",
+     "description": "Certificate Password - the client certificate's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "priority",
+     "flag": "--priority",
+     "names": [
+      "priority"
+     ],
+     "takesValue": true,
+     "label": "Priority",
+     "description": "Priority - The priority order of this source as compared to other sources, lower is better. Defaults to 0 (no priority). All priorities above 0 will be evaluated first, then zero-based values will be evaluated in config file order.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "bypass-proxy",
+     "flag": "--bypass-proxy",
+     "names": [
+      "bypassproxy",
+      "bypass-proxy"
+     ],
+     "takesValue": false,
+     "label": "Bypass Proxy",
+     "description": "Bypass Proxy - Should this source explicitly bypass any explicitly or system configured proxies? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-self-service",
+     "flag": "--allow-self-service",
+     "names": [
+      "allowselfservice",
+      "allow-self-service"
+     ],
+     "takesValue": false,
+     "label": "Allow Self-Service",
+     "description": "Allow Self-Service - Should this source be allowed to be used with self-service? Requires business edition with feature 'useBackgroundServiceWithSelfServiceSourcesOnly' turned on. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "admin-only",
+     "flag": "--admin-only",
+     "names": [
+      "adminonly",
+      "admin-only"
+     ],
+     "takesValue": false,
+     "label": "Visible to Administrators Only",
+     "description": "Visible to Administrators Only - Should this source be visible to non-administrators? Requires business edition. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Source Command\n\nChocolatey will allow you to interact with sources.\n\nUsage\n\nchoco source [list]|add|remove|disable|enable [<options/switches>]\n    choco sources [list]|add|remove|disable|enable [<options/switches>]\n\nExamples\n\nchoco source\n    choco source list\n    choco source add -n=bob -s=\"https://somewhere/out/there/api/v2/\"\n    choco source add -n=bob -s \"'https://somewhere/out/there/api/v2/'\" -cert=\\Users\\bob\\bob.pfx\n    choco source add -n=bob -s \"'https://somewhere/out/there/api/v2/'\" -u=bob -p=12345\n    choco source disable -n=bob\n    choco source enable -n=bob\n    choco source remove -n=bob\n\nWhen it comes to the source location, this can be a folder/file share or an http\nlocation. If it is a url, it will be a location you can go to in a browser and\nit returns OData with something that says Packages in the browser, similar to\nwhat you see when you go to https://community.chocolatey.org/api/v2/.\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: nothing to do (enhanced)\n\nNOTE: Starting in v2.3.0, if you have the feature '{0}'\n turned on, then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateySourceCommand.cs"
+  },
+  {
+   "name": "support",
+   "aliases": [],
+   "summary": "provides support information",
+   "since": "2.5.0",
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [],
+   "options": [],
+   "help": "Support Command\n\nAs a user of Chocolatey CLI open-source, we are unable to\n provide private support. See https://chocolatey.org/support\n for details.",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateySupportCommand.cs"
+  },
+  {
+   "name": "template",
+   "aliases": [
+    "templates"
+   ],
+   "summary": "get information about installed templates",
+   "since": null,
+   "deprecated": false,
+   "mutating": false,
+   "subcommands": [
+    "list",
+    "info"
+   ],
+   "options": [
+    {
+     "id": "name",
+     "flag": "--name",
+     "names": [
+      "n",
+      "name"
+     ],
+     "takesValue": true,
+     "label": "name",
+     "description": "The name of the template to get information about.",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Template Command\n\nList information installed templates.\n\nBoth manually installed templates and templates installed via\n .template packages are displayed.\n\nUsage\n\nchoco template [list]|info [<options/switches>]\n\nExamples\n\nchoco template\n    choco templates\n    choco template list\n    choco template info --name msi\n    choco template list --reduce-output\n    choco template list --verbose\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nIf you find other exit codes that we have not yet documented, please\n file a ticket so we can document it at\n https://github.com/chocolatey/choco/issues/new/choose.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyTemplateCommand.cs"
+  },
+  {
+   "name": "uninstall",
+   "aliases": [],
+   "summary": "uninstalls a package",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - The source to find the package(s) to install. Special sources include: ruby, cygwin, windowsfeatures, and python. Defaults to default feeds.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - A specific version to uninstall. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "all-versions",
+     "flag": "--all-versions",
+     "names": [
+      "a",
+      "allversions",
+      "all-versions"
+     ],
+     "takesValue": false,
+     "label": "AllVersions",
+     "description": "AllVersions - Uninstall all versions? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "uninstall-arguments",
+     "flag": "--uninstall-arguments",
+     "names": [
+      "ua",
+      "uninstallargs",
+      "uninstallarguments",
+      "uninstall-arguments"
+     ],
+     "takesValue": true,
+     "label": "UninstallArguments",
+     "description": "UninstallArguments - Uninstall Arguments to pass to the native installer in the package. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "override-arguments",
+     "flag": "--override-arguments",
+     "names": [
+      "o",
+      "override",
+      "overrideargs",
+      "overridearguments",
+      "override-arguments"
+     ],
+     "takesValue": false,
+     "label": "OverrideArguments",
+     "description": "OverrideArguments - Should uninstall arguments be used exclusively without appending to current package passed arguments? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "not-silent",
+     "flag": "--not-silent",
+     "names": [
+      "notsilent",
+      "not-silent"
+     ],
+     "takesValue": false,
+     "label": "NotSilent",
+     "description": "NotSilent - Do not uninstall this silently. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "package-parameters",
+     "flag": "--package-parameters",
+     "names": [
+      "params",
+      "parameters",
+      "pkgparameters",
+      "packageparameters",
+      "package-parameters"
+     ],
+     "takesValue": true,
+     "label": "PackageParameters",
+     "description": "PackageParameters - Parameters to pass to the package. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "apply-install-arguments-to-dependencies",
+     "flag": "--apply-install-arguments-to-dependencies",
+     "names": [
+      "argsglobal",
+      "args-global",
+      "installargsglobal",
+      "install-args-global",
+      "applyargstodependencies",
+      "apply-args-to-dependencies",
+      "apply-install-arguments-to-dependencies"
+     ],
+     "takesValue": false,
+     "label": "Apply Install Arguments To Dependencies ",
+     "description": "Apply Install Arguments To Dependencies  - Should install arguments be applied to dependent packages? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "apply-package-parameters-to-dependencies",
+     "flag": "--apply-package-parameters-to-dependencies",
+     "names": [
+      "paramsglobal",
+      "params-global",
+      "packageparametersglobal",
+      "package-parameters-global",
+      "applyparamstodependencies",
+      "apply-params-to-dependencies",
+      "apply-package-parameters-to-dependencies"
+     ],
+     "takesValue": false,
+     "label": "Apply Package Parameters To Dependencies ",
+     "description": "Apply Package Parameters To Dependencies  - Should package parameters be applied to dependent packages? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "remove-dependencies",
+     "flag": "--remove-dependencies",
+     "names": [
+      "x",
+      "forcedependencies",
+      "force-dependencies",
+      "removedependencies",
+      "remove-dependencies"
+     ],
+     "takesValue": false,
+     "label": "RemoveDependencies",
+     "description": "RemoveDependencies - Uninstall dependencies when uninstalling package(s). Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-automation-scripts",
+     "flag": "--skip-automation-scripts",
+     "names": [
+      "n",
+      "skippowershell",
+      "skip-powershell",
+      "skipscripts",
+      "skip-scripts",
+      "skip-automation-scripts"
+     ],
+     "takesValue": false,
+     "label": "Skip PowerShell",
+     "description": "Skip PowerShell - Do not run chocolateyUninstall.ps1. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-package-exit-codes",
+     "flag": "--ignore-package-exit-codes",
+     "names": [
+      "ignorepackagecodes",
+      "ignorepackageexitcodes",
+      "ignore-package-codes",
+      "ignore-package-exit-codes"
+     ],
+     "takesValue": false,
+     "label": "IgnorePackageExitCodes",
+     "description": "IgnorePackageExitCodes - Exit with a 0 for success and 1 for non-success, no matter what package scripts provide for exit codes. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "use-package-exit-codes",
+     "flag": "--use-package-exit-codes",
+     "names": [
+      "usepackagecodes",
+      "usepackageexitcodes",
+      "use-package-codes",
+      "use-package-exit-codes"
+     ],
+     "takesValue": false,
+     "label": "UsePackageExitCodes",
+     "description": "UsePackageExitCodes - Package scripts can provide exit codes. Use those for choco's exit code when non-zero (this value can come from a dependency package). Chocolatey defines valid exit codes as 0, 1605, 1614, 1641, 3010. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "use-autouninstaller",
+     "flag": "--use-autouninstaller",
+     "names": [
+      "autouninstaller",
+      "use-autouninstaller"
+     ],
+     "takesValue": false,
+     "label": "UseAutoUninstaller",
+     "description": "UseAutoUninstaller - Use auto uninstaller service when uninstalling. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-autouninstaller",
+     "flag": "--skip-autouninstaller",
+     "names": [
+      "skipautouninstaller",
+      "skip-autouninstaller"
+     ],
+     "takesValue": false,
+     "label": "SkipAutoUninstaller",
+     "description": "SkipAutoUninstaller - Skip auto uninstaller service when uninstalling. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "fail-on-autouninstaller",
+     "flag": "--fail-on-autouninstaller",
+     "names": [
+      "failonautouninstaller",
+      "fail-on-autouninstaller"
+     ],
+     "takesValue": false,
+     "label": "FailOnAutoUninstaller",
+     "description": "FailOnAutoUninstaller - Fail the package uninstall if the auto uninstaller reports and error. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-autouninstaller-failure",
+     "flag": "--ignore-autouninstaller-failure",
+     "names": [
+      "ignoreautouninstallerfailure",
+      "ignore-autouninstaller-failure"
+     ],
+     "takesValue": false,
+     "label": "Ignore Auto Uninstaller Failure",
+     "description": "Ignore Auto Uninstaller Failure - Do not fail the package if auto uninstaller reports an error. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "stop-on-first-package-failure",
+     "flag": "--stop-on-first-package-failure",
+     "names": [
+      "stoponfirstfailure",
+      "stop-on-first-failure",
+      "stop-on-first-package-failure"
+     ],
+     "takesValue": false,
+     "label": "Stop On First Package Failure",
+     "description": "Stop On First Package Failure - stop running install, upgrade or uninstall on first package failure instead of continuing with others. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "exit-when-reboot-detected",
+     "flag": "--exit-when-reboot-detected",
+     "names": [
+      "exitwhenrebootdetected",
+      "exit-when-reboot-detected"
+     ],
+     "takesValue": false,
+     "label": "Exit When Reboot Detected",
+     "description": "Exit When Reboot Detected - Stop running install, upgrade, or uninstall when a reboot request is detected. Requires '{0}' feature to be turned on. Will exit with either {1} or {2}.  Overrides the default feature '{3}' set to '{4}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-detected-reboot",
+     "flag": "--ignore-detected-reboot",
+     "names": [
+      "ignoredetectedreboot",
+      "ignore-detected-reboot"
+     ],
+     "takesValue": false,
+     "label": "Ignore Detected Reboot",
+     "description": "Ignore Detected Reboot - Ignore any detected reboots if found. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-hooks",
+     "flag": "--skip-hooks",
+     "names": [
+      "skiphooks",
+      "skip-hooks"
+     ],
+     "takesValue": false,
+     "label": "Skip hooks",
+     "description": "Skip hooks - Do not run hook scripts. Available in 1.2.0+",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Uninstall Command\n\nUninstalls a package or a list of packages.\n\nChocolatey automatically tracks registry changes for \"Programs and\n Features\" of the underlying software's native installers when\n installing packages. The \"Automatic Uninstaller\" (auto uninstaller)\n service is a feature that can use that information to automatically\n determine how to uninstall these natively installed applications. This\n means that a package may not need an explicit chocolateyUninstall.ps1\n to reverse the installation done in the install script.\n\nChocolatey tracks packages, which are the files in\n `$env:{0}\\lib\\packagename`. These packages may or may not\n contain the software (applications/tools) that each package represents.\n The software may actually be installed in Program Files (most native\n installers will install the software there) or elsewhere on the\n machine.\n\nWith auto uninstaller turned off, a chocolateyUninstall.ps1 is required\n to perform uninstall from the system. In the absence of\n chocolateyUninstall.ps1, choco uninstall only removes the package from\n Chocolatey but does not remove the software from your system (unless\n in the package directory).\n\nNOTE: A package with a failing uninstall can be removed with the\n`-n --skipautouninstaller` flags. This will remove the package from\nchocolatey without attempting to uninstall the program.\n\nNOTE: Chocolatey Pro / Business automatically synchronizes with\n Programs and Features, ensuring manually removed apps are\n automatically removed from Chocolatey's repository.\n\nNOTE: Synchronizer and AutoUninstaller enhancements in licensed\n versions of Chocolatey ensure that Autouninstaller is up to 95%\n effective at removing software without an uninstall script. This is\n because synchronizer ensures the registry snapshot stays up to date\n and licensed enhancements have the ability to inspect more locations\n to determine how to automatically uninstall software.\n\nUsage\n\nchoco uninstall <pkg|all> [pkg2 pkgN] [options/switches]\n\nNOTE: `all` is a special package keyword that will allow you to\n uninstall all packages.\n\nSee It In Action\n\nchoco uninstall: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_uninstall.gif\n\nExamples\n\nchoco uninstall git\n    choco uninstall notepadplusplus googlechrome atom 7zip\n    choco uninstall notepadplusplus googlechrome atom 7zip -dv\n    choco uninstall ruby --version 1.8.7.37402\n    choco uninstall nodejs.install --all-versions\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n\nPackage Exit Codes:\n - 1605: software is not installed\n - 1614: product is uninstalled\n - 1641: success, reboot initiated\n - 3010: success, reboot required\n - other (not listed): likely an error has occurred\n\nIn addition to normal exit codes, packages are allowed to exit\n with their own codes when the feature '{0}' is\n turned on.\n\nReboot Exit Codes:\n - 350: pending reboot detected, no action has occurred\n - 1604: install suspended, incomplete\n\nIn addition to the above exit codes, you may also see reboot exit codes\n when the feature '{1}' is turned on. It typically requires\n the feature '{0}' to also be turned on to work properly.\n\nOptions and Switches\n\nNOTE: Options and switches apply to all items passed, so if you are\n installing multiple packages, and you use `--version=1.0.0`, it is\n going to look for and try to install version 1.0.0 of every package\n passed. So please split out multiple package calls when wanting to\n pass specific options.",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyUninstallCommand.cs"
+  },
+  {
+   "name": "unpackself",
+   "aliases": [],
+   "summary": "[DEPRECATED] will be removed in v3.0.0 - re-installs Chocolatey base files",
+   "since": null,
+   "deprecated": true,
+   "mutating": true,
+   "subcommands": [],
+   "options": [],
+   "help": "[DEPRECATED] UnpackSelf Command\n\nNOTE: Unpackself has been deprecated and will be removed in version 3.0.0. \n\nThis will unpack files needed by choco. It will overwrite existing\n files only if --force is specified.\n\nNOTE: This command should only be used when installing Chocolatey, not\n during normal operation.\n\nOptions and Switches",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyUnpackSelfCommand.cs"
+  },
+  {
+   "name": "upgrade",
+   "aliases": [],
+   "summary": "upgrades packages from various sources",
+   "since": null,
+   "deprecated": false,
+   "mutating": true,
+   "subcommands": [],
+   "options": [
+    {
+     "id": "source",
+     "flag": "--source",
+     "names": [
+      "s",
+      "source"
+     ],
+     "takesValue": true,
+     "label": "Source",
+     "description": "Source - The source to find the package(s) to install. Special sources include: ruby, cygwin, windowsfeatures, and python. To specify more than one source, pass it with a semi-colon separating the values (e.g. \"'source1;source2'\"). Defaults to default feeds.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "version",
+     "flag": "--version",
+     "names": [
+      "version"
+     ],
+     "takesValue": true,
+     "label": "Version",
+     "description": "Version - A specific version to install. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "prerelease",
+     "flag": "--prerelease",
+     "names": [
+      "pre",
+      "prerelease"
+     ],
+     "takesValue": false,
+     "label": "Prerelease",
+     "description": "Prerelease - Include Prereleases? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "forcex86",
+     "flag": "--forcex86",
+     "names": [
+      "x86",
+      "forcex86"
+     ],
+     "takesValue": false,
+     "label": "ForceX86",
+     "description": "ForceX86 - Force x86 (32bit) installation on 64 bit systems. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "install-arguments",
+     "flag": "--install-arguments",
+     "names": [
+      "ia",
+      "installargs",
+      "install-args",
+      "installarguments",
+      "install-arguments"
+     ],
+     "takesValue": true,
+     "label": "InstallArguments",
+     "description": "InstallArguments - Install Arguments to pass to the native installer in the package. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "override-arguments",
+     "flag": "--override-arguments",
+     "names": [
+      "o",
+      "override",
+      "overrideargs",
+      "overridearguments",
+      "override-arguments"
+     ],
+     "takesValue": false,
+     "label": "OverrideArguments",
+     "description": "OverrideArguments - Should install arguments be used exclusively without appending to current package passed arguments? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "not-silent",
+     "flag": "--not-silent",
+     "names": [
+      "notsilent",
+      "not-silent"
+     ],
+     "takesValue": false,
+     "label": "NotSilent",
+     "description": "NotSilent - Do not install this silently. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "package-parameters",
+     "flag": "--package-parameters",
+     "names": [
+      "params",
+      "parameters",
+      "pkgparameters",
+      "packageparameters",
+      "package-parameters"
+     ],
+     "takesValue": true,
+     "label": "PackageParameters",
+     "description": "PackageParameters - Parameters to pass to the package. Defaults to unspecified.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "apply-install-arguments-to-dependencies",
+     "flag": "--apply-install-arguments-to-dependencies",
+     "names": [
+      "argsglobal",
+      "args-global",
+      "installargsglobal",
+      "install-args-global",
+      "applyargstodependencies",
+      "apply-args-to-dependencies",
+      "apply-install-arguments-to-dependencies"
+     ],
+     "takesValue": false,
+     "label": "Apply Install Arguments To Dependencies ",
+     "description": "Apply Install Arguments To Dependencies  - Should install arguments be applied to dependent packages? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "apply-package-parameters-to-dependencies",
+     "flag": "--apply-package-parameters-to-dependencies",
+     "names": [
+      "paramsglobal",
+      "params-global",
+      "packageparametersglobal",
+      "package-parameters-global",
+      "applyparamstodependencies",
+      "apply-params-to-dependencies",
+      "apply-package-parameters-to-dependencies"
+     ],
+     "takesValue": false,
+     "label": "Apply Package Parameters To Dependencies ",
+     "description": "Apply Package Parameters To Dependencies  - Should package parameters be applied to dependent packages? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-downgrade",
+     "flag": "--allow-downgrade",
+     "names": [
+      "allowdowngrade",
+      "allow-downgrade"
+     ],
+     "takesValue": false,
+     "label": "AllowDowngrade",
+     "description": "AllowDowngrade - Should an attempt at downgrading be allowed? Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-dependencies",
+     "flag": "--ignore-dependencies",
+     "names": [
+      "i",
+      "ignoredependencies",
+      "ignore-dependencies"
+     ],
+     "takesValue": false,
+     "label": "IgnoreDependencies",
+     "description": "IgnoreDependencies - Ignore dependencies when upgrading package(s). Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-automation-scripts",
+     "flag": "--skip-automation-scripts",
+     "names": [
+      "n",
+      "skippowershell",
+      "skip-powershell",
+      "skipscripts",
+      "skip-scripts",
+      "skip-automation-scripts"
+     ],
+     "takesValue": false,
+     "label": "Skip PowerShell",
+     "description": "Skip PowerShell - Do not run chocolateyInstall.ps1. Defaults to false.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "fail-on-unfound",
+     "flag": "--fail-on-unfound",
+     "names": [
+      "failonunfound",
+      "fail-on-unfound"
+     ],
+     "takesValue": false,
+     "label": "Fail On Unfound Packages",
+     "description": "Fail On Unfound Packages - If a package is not found in sources specified, fail instead of warn.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-unfound",
+     "flag": "--ignore-unfound",
+     "names": [
+      "ignore-unfound"
+     ],
+     "takesValue": false,
+     "label": "Ignore Unfound Packages",
+     "description": "Ignore Unfound Packages - Ignore packages that are not found on the sources used (or the defaults). Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "fail-on-not-installed",
+     "flag": "--fail-on-not-installed",
+     "names": [
+      "failonnotinstalled",
+      "fail-on-not-installed"
+     ],
+     "takesValue": false,
+     "label": "Fail On Non-installed Packages",
+     "description": "Fail On Non-installed Packages - If a package is not already installed, fail instead of installing.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "user",
+     "flag": "--user",
+     "names": [
+      "u",
+      "user"
+     ],
+     "takesValue": true,
+     "label": "User",
+     "description": "User - used with authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "password",
+     "flag": "--password",
+     "names": [
+      "p",
+      "password"
+     ],
+     "takesValue": true,
+     "label": "Password",
+     "description": "Password - the user's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "cert",
+     "flag": "--cert",
+     "names": [
+      "cert"
+     ],
+     "takesValue": true,
+     "label": "Client certificate",
+     "description": "Client certificate - PFX pathname for an x509 authenticated feeds. Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "certpassword",
+     "flag": "--certpassword",
+     "names": [
+      "cp",
+      "certpassword"
+     ],
+     "takesValue": true,
+     "label": "Certificate Password",
+     "description": "Certificate Password - the client certificate's password to the source. Defaults to empty.",
+     "deprecated": false,
+     "secret": true
+    },
+    {
+     "id": "ignore-checksums",
+     "flag": "--ignore-checksums",
+     "names": [
+      "ignorechecksum",
+      "ignore-checksum",
+      "ignorechecksums",
+      "ignore-checksums"
+     ],
+     "takesValue": false,
+     "label": "IgnoreChecksums",
+     "description": "IgnoreChecksums - Ignore checksums provided by the package. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-empty-checksums",
+     "flag": "--allow-empty-checksums",
+     "names": [
+      "allowemptychecksum",
+      "allowemptychecksums",
+      "allow-empty-checksums"
+     ],
+     "takesValue": false,
+     "label": "Allow Empty Checksums",
+     "description": "Allow Empty Checksums - Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Use this switch is not recommended if using sources that download resources from the internet. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "allow-empty-checksums-secure",
+     "flag": "--allow-empty-checksums-secure",
+     "names": [
+      "allowemptychecksumsecure",
+      "allowemptychecksumssecure",
+      "allow-empty-checksums-secure"
+     ],
+     "takesValue": false,
+     "label": "Allow Empty Checksums Secure",
+     "description": "Allow Empty Checksums Secure - Allow packages to have empty checksums for downloaded resources from secure locations (HTTPS). Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "require-checksums",
+     "flag": "--require-checksums",
+     "names": [
+      "requirechecksum",
+      "requirechecksums",
+      "require-checksums"
+     ],
+     "takesValue": false,
+     "label": "Require Checksums",
+     "description": "Require Checksums - Requires packages to have checksums for downloaded resources (both non-secure and secure). Overrides the default feature '{0}' set to '{1}' and '{2}' set to '{3}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum",
+     "flag": "--download-checksum",
+     "names": [
+      "checksum",
+      "downloadchecksum",
+      "download-checksum"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum",
+     "description": "Download Checksum - a user provided checksum for downloaded resources for the package. Overrides the package checksum (if it has one).  Defaults to empty.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum-x64",
+     "flag": "--download-checksum-x64",
+     "names": [
+      "checksum64",
+      "checksumx64",
+      "downloadchecksumx64",
+      "download-checksum-x64"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum 64bit",
+     "description": "Download Checksum 64bit - a user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Defaults to same as Download Checksum.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum-type",
+     "flag": "--download-checksum-type",
+     "names": [
+      "checksumtype",
+      "checksum-type",
+      "downloadchecksumtype",
+      "download-checksum-type"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum Type",
+     "description": "Download Checksum Type - a user provided checksum type. Overrides the package checksum type (if it has one). Used in conjunction with Download Checksum. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to 'md5'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "download-checksum-type-x64",
+     "flag": "--download-checksum-type-x64",
+     "names": [
+      "checksumtype64",
+      "checksumtypex64",
+      "checksum-type-x64",
+      "downloadchecksumtypex64",
+      "download-checksum-type-x64"
+     ],
+     "takesValue": true,
+     "label": "Download Checksum Type 64bit",
+     "description": "Download Checksum Type 64bit - a user provided checksum for 64bit downloaded resources for the package. Overrides the package 64-bit checksum (if it has one). Used in conjunction with Download Checksum 64bit. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to same as Download Checksum Type.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-package-exit-codes",
+     "flag": "--ignore-package-exit-codes",
+     "names": [
+      "ignorepackagecodes",
+      "ignorepackageexitcodes",
+      "ignore-package-codes",
+      "ignore-package-exit-codes"
+     ],
+     "takesValue": false,
+     "label": "IgnorePackageExitCodes",
+     "description": "IgnorePackageExitCodes - Exit with a 0 for success and 1 for non-success, no matter what package scripts provide for exit codes. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "use-package-exit-codes",
+     "flag": "--use-package-exit-codes",
+     "names": [
+      "usepackagecodes",
+      "usepackageexitcodes",
+      "use-package-codes",
+      "use-package-exit-codes"
+     ],
+     "takesValue": false,
+     "label": "UsePackageExitCodes",
+     "description": "UsePackageExitCodes - Package scripts can provide exit codes. Use those for choco's exit code when non-zero (this value can come from a dependency package). Chocolatey defines valid exit codes as 0, 1605, 1614, 1641, 3010. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "except",
+     "flag": "--except",
+     "names": [
+      "except"
+     ],
+     "takesValue": true,
+     "label": "Except",
+     "description": "Except - a comma-separated list of package names that should not be upgraded when upgrading 'all'. Overrides the configuration setting '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "stop-on-first-package-failure",
+     "flag": "--stop-on-first-package-failure",
+     "names": [
+      "stoponfirstfailure",
+      "stop-on-first-failure",
+      "stop-on-first-package-failure"
+     ],
+     "takesValue": false,
+     "label": "Stop On First Package Failure",
+     "description": "Stop On First Package Failure - stop running install, upgrade or uninstall on first package failure instead of continuing with others. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-when-not-installed",
+     "flag": "--skip-when-not-installed",
+     "names": [
+      "skip-if-not-installed",
+      "only-upgrade-installed",
+      "skip-when-not-installed"
+     ],
+     "takesValue": false,
+     "label": "Skip Packages Not Installed",
+     "description": "Skip Packages Not Installed - if a package is not installed, do not install it during the upgrade process. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "install-if-not-installed",
+     "flag": "--install-if-not-installed",
+     "names": [
+      "install-if-not-installed"
+     ],
+     "takesValue": false,
+     "label": "Install Missing Packages When Not Installed",
+     "description": "Install Missing Packages When Not Installed - if a package is not installed, install it as part of running upgrade (typically default behavior). Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "exclude-prereleases",
+     "flag": "--exclude-prereleases",
+     "names": [
+      "exclude-pre",
+      "exclude-prerelease",
+      "exclude-prereleases"
+     ],
+     "takesValue": false,
+     "label": "Exclude Prerelease",
+     "description": "Exclude Prerelease - Should prerelease be ignored for upgrades? Will be ignored if you pass `--pre`.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "use-remembered-arguments",
+     "flag": "--use-remembered-arguments",
+     "names": [
+      "userememberedargs",
+      "userememberedarguments",
+      "userememberedoptions",
+      "use-remembered-args",
+      "use-remembered-arguments",
+      "use-remembered-options"
+     ],
+     "takesValue": false,
+     "label": "Use Remembered Options for Upgrade",
+     "description": "Use Remembered Options for Upgrade - use the arguments and options used during install for upgrade. Does not override arguments being passed at runtime. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-remembered-arguments",
+     "flag": "--ignore-remembered-arguments",
+     "names": [
+      "ignorerememberedargs",
+      "ignorerememberedarguments",
+      "ignorerememberedoptions",
+      "ignore-remembered-args",
+      "ignore-remembered-arguments",
+      "ignore-remembered-options"
+     ],
+     "takesValue": false,
+     "label": "Ignore Remembered Options for Upgrade",
+     "description": "Ignore Remembered Options for Upgrade - ignore the arguments and options used during install for upgrade. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "exit-when-reboot-detected",
+     "flag": "--exit-when-reboot-detected",
+     "names": [
+      "exitwhenrebootdetected",
+      "exit-when-reboot-detected"
+     ],
+     "takesValue": false,
+     "label": "Exit When Reboot Detected",
+     "description": "Exit When Reboot Detected - Stop running install, upgrade, or uninstall when a reboot request is detected. Requires '{0}' feature to be turned on. Will exit with either {1} or {2}. Overrides the default feature '{3}' set to '{4}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-detected-reboot",
+     "flag": "--ignore-detected-reboot",
+     "names": [
+      "ignoredetectedreboot",
+      "ignore-detected-reboot"
+     ],
+     "takesValue": false,
+     "label": "Ignore Detected Reboot",
+     "description": "Ignore Detected Reboot - Ignore any detected reboots if found. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "disable-package-repository-optimizations",
+     "flag": "--disable-package-repository-optimizations",
+     "names": [
+      "disable-repository-optimizations",
+      "disable-package-repository-optimizations"
+     ],
+     "takesValue": false,
+     "label": "Disable Package Repository Optimizations",
+     "description": "Disable Package Repository Optimizations - Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When disabled, this makes queries similar to the way they were done in earlier versions of Chocolatey. Overrides the default feature '{0}' set to '{1}'.",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "pin-package",
+     "flag": "--pin-package",
+     "names": [
+      "pin",
+      "pinpackage",
+      "pin-package"
+     ],
+     "takesValue": false,
+     "label": "Pin Package",
+     "description": "Pin Package - Add a pin to the package after upgrade. Available in 1.2.0+",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "skip-hooks",
+     "flag": "--skip-hooks",
+     "names": [
+      "skiphooks",
+      "skip-hooks"
+     ],
+     "takesValue": false,
+     "label": "Skip hooks",
+     "description": "Skip hooks - Do not run hook scripts. Available in 1.2.0+",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "ignore-pinned",
+     "flag": "--ignore-pinned",
+     "names": [
+      "ignore-pinned"
+     ],
+     "takesValue": false,
+     "label": "Ignore Pinned",
+     "description": "Ignore Pinned - Ignores any pins and upgrades the package(s) anyway. Available in 2.3.0+",
+     "deprecated": false,
+     "secret": false
+    },
+    {
+     "id": "include-configured-sources",
+     "flag": "--include-configured-sources",
+     "names": [
+      "include-configured-sources"
+     ],
+     "takesValue": false,
+     "label": "Include Configured Sources",
+     "description": "Include Configured Sources - When using the '--source' option, this appends the sources that have been saved into the chocolatey.config file by 'source' command.  Available in 2.3.0+",
+     "deprecated": false,
+     "secret": false
+    }
+   ],
+   "help": "Upgrade Command\n\nUpgrades a package or a list of packages. If you do not have a package\n installed, upgrade will install it.\n\nUsage\n\nchoco upgrade <pkg|all> [<pkg2> <pkgN>] [<options/switches>]\n\nNOTE: `all` is a special package keyword that will allow you to upgrade\n all currently installed packages.\n\nSkip upgrading certain packages with `choco pin` or with the option\n `--except`.\n\nNOTE: Chocolatey Pro / Business automatically synchronizes with\n Programs and Features, ensuring automatically updating apps' versions\n (like Chrome) are up to date in Chocolatey's repository.\n\nExamples\n\nchoco upgrade chocolatey\n    choco upgrade notepadplusplus googlechrome atom 7zip\n    choco upgrade notepadplusplus googlechrome atom 7zip -dvfy\n    choco upgrade git -y --params=\"'/GitAndUnixToolsOnPath /NoAutoCrlf'\"\n    choco upgrade git -y --params=\"'/GitAndUnixToolsOnPath /NoAutoCrlf'\" --install-args=\"'/DIR=C:\\git'\"\n    # Params are package parameters, passed to the package\n    # Install args are installer arguments, appended to the silentArgs\n    #  in the package for the installer itself\n    choco upgrade nodejs.install --version 0.10.35\n    choco upgrade git -s \"'https://somewhere/out/there'\"\n    choco upgrade git -s \"'https://somewhere/protected'\" -u user -p pass\n    choco upgrade all\n    choco upgrade all --except=\"'skype,conemu'\"\n\nNOTE: See scripting in the command reference (`choco --help`) for how to\n write proper scripts and integrations.\n\nExit Codes\n\nExit codes that normally result from running this command.\n\nNormal:\n - 0: operation was successful, no issues detected\n - -1 or 1: an error has occurred\n - 2: nothing to do, no packages outdated (enhanced)\n\nNOTE: Starting in v2.3.0, if you have the feature '{2}'\n turned on, then choco will provide enhanced exit codes that allow\n better integration and scripting.\n\nPackage Exit Codes:\n - 1641: success, reboot initiated\n - 3010: success, reboot required\n - other (not listed): likely an error has occurred\n\nIn addition to normal exit codes, packages are allowed to exit\n with their own codes when the feature '{0}' is\n turned on.  Uninstall command has additional valid exit codes.\n\nReboot Exit Codes:\n - 350: pending reboot detected, no action has occurred\n - 1604: install suspended, incomplete\n\nIn addition to the above exit codes, you may also see reboot exit codes\n when the feature '{1}' is turned on. It typically requires\n the feature '{0}' to also be turned on to work properly.\n\nSee It In Action\n\nchoco upgrade: https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_upgrade.gif\n\nOptions and Switches\n\nNOTE: Options and switches apply to all items passed, so if you are\n installing multiple packages, and you use `--version=1.0.0`, it is\n going to look for and try to install version 1.0.0 of every package\n passed. So please split out multiple package calls when wanting to\n pass specific options.",
+   "source": "src/chocolatey/infrastructure.app/commands/ChocolateyUpgradeCommand.cs"
+  }
+ ],
+ "configSettings": [
+  {
+   "name": "cacheLocation",
+   "default": "",
+   "description": "Cache location if not {0} folder. Replaces `$env:{0}` value for choco.exe process. It is highly recommended this be set to make Chocolatey more deterministic in cleanup.",
+   "secret": false
+  },
+  {
+   "name": "commandExecutionTimeoutSeconds",
+   "default": "",
+   "description": "Default timeout for command execution. '0' for infinite.",
+   "secret": false
+  },
+  {
+   "name": "proxy",
+   "default": "",
+   "description": "Explicit proxy location.",
+   "secret": false
+  },
+  {
+   "name": "proxyUser",
+   "default": "",
+   "description": "Optional proxy user. Requires explicit proxy configured.",
+   "secret": false
+  },
+  {
+   "name": "proxyPassword",
+   "default": "",
+   "description": "Optional proxy password. Encrypted. Requires explicit proxy and proxyUser configured.",
+   "secret": true
+  },
+  {
+   "name": "proxyBypassList",
+   "default": "",
+   "description": "Optional proxy bypass list. Comma separated. Requires explicit proxy configured.",
+   "secret": false
+  },
+  {
+   "name": "proxyBypassOnLocal",
+   "default": "true",
+   "description": "Bypass proxy for local connections. Requires explicit proxy configured.",
+   "secret": false
+  },
+  {
+   "name": "webRequestTimeoutSeconds",
+   "default": "",
+   "description": "Default timeout for web requests.",
+   "secret": false
+  },
+  {
+   "name": "upgradeAllExceptions",
+   "default": "",
+   "description": "A comma-separated list of package names that should not be upgraded when running `choco upgrade all'. Defaults to empty.",
+   "secret": false
+  },
+  {
+   "name": "defaultTemplateName",
+   "default": "",
+   "description": "Default template name used when running 'choco new' command.",
+   "secret": false
+  },
+  {
+   "name": "defaultPushSource",
+   "default": "",
+   "description": "Default source to push packages to when running 'choco push' command.",
+   "secret": false
+  }
+ ],
+ "features": [
+  {
+   "name": "checksumFiles",
+   "default": true,
+   "description": "Checksum files when pulled in from internet (based on package)."
+  },
+  {
+   "name": "allowEmptyChecksums",
+   "default": false,
+   "description": "Allow packages to have empty/missing checksums for downloaded resources from non-secure locations (HTTP, FTP). Enabling is not recommended if using sources that download resources from the internet."
+  },
+  {
+   "name": "allowEmptyChecksumsSecure",
+   "default": true,
+   "description": "Allow packages to have empty/missing checksums for downloaded resources from secure locations (HTTPS)."
+  },
+  {
+   "name": "autoUninstaller",
+   "default": true,
+   "description": "Uninstall from programs and features without requiring an explicit uninstall script."
+  },
+  {
+   "name": "failOnAutoUninstaller",
+   "default": false,
+   "description": "Fail if automatic uninstaller fails."
+  },
+  {
+   "name": "allowGlobalConfirmation",
+   "default": false,
+   "description": "Prompt for confirmation in scripts or bypass."
+  },
+  {
+   "name": "failOnStandardError",
+   "default": false,
+   "description": "Fail if install provider writes to stderr. Not recommended for use."
+  },
+  {
+   "name": "powershellHost",
+   "default": true,
+   "description": "Use Chocolatey's built-in PowerShell host."
+  },
+  {
+   "name": "logEnvironmentValues",
+   "default": false,
+   "description": "Log Environment Values - will log values of environment before and after install (could disclose sensitive data)."
+  },
+  {
+   "name": "virusCheck",
+   "default": false,
+   "description": "Virus Check - perform virus checking on downloaded files. Licensed versions only."
+  },
+  {
+   "name": "failOnInvalidOrMissingLicense",
+   "default": false,
+   "description": "Fail On Invalid Or Missing License - allows knowing when a license is expired or not applied to a machine."
+  },
+  {
+   "name": "ignoreInvalidOptionsSwitches",
+   "default": true,
+   "description": "Ignore Invalid Options/Switches - If a switch or option is passed that is not recognized, should choco fail?"
+  },
+  {
+   "name": "usePackageExitCodes",
+   "default": true,
+   "description": "Use Package Exit Codes - Package scripts can provide exit codes. With this on, package exit codes will be what choco uses for exit when non-zero (this value can come from a dependency package). Chocolatey defines valid exit codes as 0, 1605, 1614, 1641, 3010. With this feature off, choco will exit with 0, 1, or -1 (matching previous behavior)."
+  },
+  {
+   "name": "useEnhancedExitCodes",
+   "default": false,
+   "description": "Use Enhanced Exit Codes - Chocolatey is able to provide enhanced exit codes surrounding list, search, info, outdated and other commands that don't deal directly with package operations. To see enhanced exit codes and their meanings, please run `choco [cmdname] --help`. With this feature off, choco will exit with 0, 1, or -1  (matching previous behavior)."
+  },
+  {
+   "name": "useFipsCompliantChecksums",
+   "default": false,
+   "description": "Use FIPS Compliant Checksums - Ensure checksumming done by choco uses FIPS compliant algorithms. Not recommended unless required by FIPS Mode. Enabling on an existing installation could have unintended consequences related to upgrades/uninstalls."
+  },
+  {
+   "name": "showNonElevatedWarnings",
+   "default": true,
+   "description": "Show Non-Elevated Warnings - Display non-elevated warnings."
+  },
+  {
+   "name": "showDownloadProgress",
+   "default": true,
+   "description": "Show Download Progress - Show download progress percentages in the CLI."
+  },
+  {
+   "name": "stopOnFirstPackageFailure",
+   "default": false,
+   "description": "Stop On First Package Failure - Stop running install, upgrade or uninstall on first package failure instead of continuing with others. As this will affect upgrade all, it is normally recommended to leave this off."
+  },
+  {
+   "name": "useRememberedArgumentsForUpgrades",
+   "default": false,
+   "description": "Use Remembered Arguments For Upgrades - When running upgrades, use arguments for upgrade that were used for installation ('remembered'). This is helpful when running upgrade for all packages. This is considered in preview and will be flipped to on by default in a future release."
+  },
+  {
+   "name": "ignoreUnfoundPackagesOnUpgradeOutdated",
+   "default": false,
+   "description": "Ignore Unfound Packages On Upgrade Outdated - When checking outdated or upgrades, if a package is not found against sources specified, don't report the package at all."
+  },
+  {
+   "name": "skipPackageUpgradesWhenNotInstalled",
+   "default": false,
+   "description": "Skip Packages Not Installed During Upgrade - if a package is not installed, do not install it during the upgrade process."
+  },
+  {
+   "name": "removePackageInformationOnUninstall",
+   "default": false,
+   "description": "Remove Stored Package Information On Uninstall - When a package is uninstalled, should the stored package information also be removed?"
+  },
+  {
+   "name": "logWithoutColor",
+   "default": false,
+   "description": "Log without color - Do not show colorization in logging output."
+  },
+  {
+   "name": "exitOnRebootDetected",
+   "default": false,
+   "description": "Exit On Reboot Detected - Stop running install, upgrade, or uninstall when a reboot request is detected. Requires '{0}' feature to be turned on. Will exit with either {1} or {2}. When it exits with {1}, it means pending reboot discovered prior to running operation. When it exits with {2}, it means some work completed prior to reboot request being detected."
+  },
+  {
+   "name": "logValidationResultsOnWarnings",
+   "default": true,
+   "description": "Log validation results on warnings - Should the validation results be logged if there are warnings?"
+  },
+  {
+   "name": "usePackageRepositoryOptimizations",
+   "default": true,
+   "description": "Use Package Repository Optimizations - Turn on optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should generally be left enabled, unless a repository needs to support older methods of query. When disabled, this makes queries similar to the way they were done in earlier versions of Chocolatey."
+  },
+  {
+   "name": "disableCompatibilityChecks",
+   "default": false,
+   "description": "Disable Compatibility Checks - Disable showing a warning when there is an incompatibility between Chocolatey CLI and Chocolatey Licensed Extension. Available in 1.1.0+"
+  },
+  {
+   "name": "usePackageHashValidation",
+   "default": false,
+   "description": "Use Package Hash Validation - Check the hash of the downloaded package file against the source provided hash. Only supports sources that provide SHA512 hashes. Disabled by default. Available in 2.3.0+"
+  },
+  {
+   "name": "alwaysIncludeHeaders",
+   "default": false,
+   "description": "Include header names when --limit-output is used. Requires Chocolatey CLI 2.5.0+"
+  },
+  {
+   "name": "useHttpCache",
+   "default": true,
+   "description": "Create and use HTTP caches when querying sources. Available in 2.5.0+"
+  }
+ ]
+}
