@@ -45,3 +45,7 @@ footer { padding: 36px 20px 60px; text-align: center; color: var(--onv); font-si
 @keyframes rise { from { opacity: 0; transform: translateY(30px); } }
 @keyframes beat { to { box-shadow: 0 0 0 26px transparent; } }
 @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } html { scroll-behavior: auto; } .rays { display: none; } }
+/* keep long commands inside their cards on narrow screens */
+.steps { grid-template-columns: minmax(0, 1fr); } .steps li { min-width: 0; } .steps li > * { min-width: 0; max-width: 100%; }
+pre { max-width: 100%; } .band, .band.alt > * { min-width: 0; } .steps span, .card p, .warn { overflow-wrap: anywhere; }
+@media (max-width: 520px) { .steps li { padding: 84px 18px 18px; } .shots { grid-template-columns: minmax(0, 1fr); } .grid { grid-template-columns: minmax(0, 1fr); } }
