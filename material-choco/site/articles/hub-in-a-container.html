@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=23f4df36">
+<link rel="stylesheet" href="../site.css?v=fc53e5a6">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -32,7 +32,7 @@
 <div class="progress" aria-hidden="true"></div>
 <header class="top">
   <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
-  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <nav id="nav" aria-label="Site"><a href="../features/">Features</a><a href="../screens.html">Screens</a><a href="../remote.html">Remote hub</a><a href="../download.html">Download</a><a href="../articles/" aria-current="page">Guides</a><a href="../status.html">Status</a><a href="../about-the-demo.html">Demo</a></nav>
   <div class="tools">
     <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
     <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
@@ -75,18 +75,18 @@
 <p>The handoff note records that the image was built with <code>docker build</code>, run as a container, reached on the LAN address, passed its health check, ran as the non-root user, and that a real agent enrolled against it and reported inventory. The release workflow pushed the image to the registry. HTTPS through the two variables is covered by the code path but was not exercised in a recorded check.</p>
 <h2 id="known-limits">Known limits</h2>
 <ul><li>Passkeys exist and were tested with a software passkey device only, not with a real device in a real browser.</li><li>Three fixed roles. A user cannot be limited to some machines, and every role can read job output and the history.</li><li>Secret option values and webhook addresses are encrypted in the data file, but the key lies in the same data folder unless you move it with <code>MATERIAL_CHOCO_KEY_FILE</code>. Anyone who reads the whole folder reads the key too.</li><li>Running the hub without a container (<code>npm run hub</code>) works for development and is not a supported deployment.</li></ul>
-<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/hub-in-a-container.md">docs/articles/hub-in-a-container.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/hub-in-a-container.md">docs/articles/hub-in-a-container.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/pairing-and-remote-agents.html"><h3>Pairing and remote agents</h3><p>the next step</p><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><p>read before exposing a hub</p><span class="more">Open</span></a><a class="card reveal" href="../features/users-and-roles.html"><h3>Users and roles</h3><p>give other people access</p><span class="more">Open</span></a><a class="card reveal" href="../features/status-webhooks.html"><h3>Status webhooks</h3><p>hear about failed jobs</p><span class="more">Open</span></a><a class="card reveal" href="../articles/jobs-schedules-and-history.html"><h3>Jobs, schedules and history</h3><p>what the hub does with commands</p><span class="more">Open</span></a><a class="card reveal" href="../features/hub-http-api.html"><h3>Hub HTTP API</h3><p>routes and the Postman collection</p><span class="more">Open</span></a></div>
 <nav class="pager" aria-label="More guides"><a href="getting-started.html"><small>Previous</small>Getting started on one PC</a><a class="next" href="pairing-and-remote-agents.html"><small>Next</small>Pairing and remote agents</a></nav>
 </section>
 </main>
 <footer>
-  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../features/">Features</a><a href="../screens.html">Screens</a><a href="../remote.html">Remote hub</a><a href="../download.html">Download</a><a href="../articles/">Guides</a><a href="../status.html">Status</a><a href="../about-the-demo.html">Demo</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
   <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=23f4df36"></script>
+<script src="../site.js?v=fc53e5a6"></script>
 </body>
 </html>

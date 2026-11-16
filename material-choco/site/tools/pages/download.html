@@ -1,0 +1,46 @@
+<section class="band tight">
+  <div class="dlbox">
+    <div class="dlmain">
+      <h2 id="installer">Windows installer</h2>
+      <div class="cta left"><a class="dl solid" id="dl" href="https://github.com/Ding-Ding-Projects/choco/releases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span id="dl-label">Windows installer: open the releases page</span></a></div>
+      <p id="dl-note" aria-live="polite">Looking up the newest installer. Without scripts, the button opens the releases page.</p>
+      <p class="note"><b>Not code signed.</b> Windows may show an unknown publisher warning, because nobody has paid for or applied a signing certificate. Download only from the releases page of this repository.</p>
+      <p class="warn"><b>Early build.</b> The installer is built on Windows by the release workflow, but nobody has yet installed the app on Windows and run a real install through it. See the <a href="status.html">status page</a>.</p>
+    </div>
+    <div class="dlpic">{{frame:26-desktop-app-on-linux-virtual-display.png}}</div>
+  </div>
+  <h2 id="latest">Latest five installers</h2>
+  <div id="rel-list" class="rels open"><p>This list is filled in from the GitHub releases of the project when scripts are enabled. Every release is on the <a href="https://github.com/Ding-Ding-Projects/choco/releases">releases page</a>.</p></div>
+</section>
+<section class="band alt tight">
+  <h2 id="inside">What the installer contains</h2>
+  <div class="grid">
+    <div class="card reveal"><h3>The app</h3><p>The desktop shell and the interface, with its own runtime. Nothing else has to be installed first.</p></div>
+    <div class="card reveal"><h3>The Chocolatey CLI</h3><p>A <code>choco.exe</code> built from this repository by the release workflow. On first use the app copies it to a folder it owns and leaves any Chocolatey you installed yourself alone.</p></div>
+    <div class="card reveal"><h3>The agent</h3><p>The same program can connect the PC to a hub, with or without a window: <code>MaterialChoco.exe --agent run</code>.</p></div>
+    <div class="card reveal"><h3>A Squirrel.Windows package</h3><p><code>Setup.exe</code> installs for the current user and creates the shortcuts. The release also carries <code>RELEASES</code> and the full <code>.nupkg</code>.</p></div>
+  </div>
+  <h2 id="verify" style="margin-top:36px">Checking what you downloaded</h2>
+  <div class="prose">
+    <p>There is no signature to verify, so these are the checks that exist:</p>
+    <ul>
+      <li>Take the file from the releases page of <code>Ding-Ding-Projects/choco</code>, from a release whose tag starts with <code>material-choco-v</code>. The button above links straight to that file.</li>
+      <li>Compare the file name and size with the ones shown above.</li>
+      <li id="digest-line">GitHub records a SHA-256 digest for each release file. When the lookup above succeeds and GitHub provides it, the digest of the newest installer is shown here.</li>
+      <li>Compute the digest of your download in PowerShell and compare:</li>
+    </ul>
+    <pre tabindex="0"><code>Get-FileHash .\Setup.exe -Algorithm SHA256</code></pre>
+    <p>A matching digest shows that the file is the one GitHub holds. It does not show who built it; only a signature could, and there is none.</p>
+  </div>
+</section>
+<section class="band tight">
+  <h2 id="hub-image">Hub image</h2>
+  <div class="dlbox">
+    <div class="dlmain"><p>The hub runs in a container. The image is published by the same workflow.</p><pre tabindex="0"><code>docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest</code></pre><ul class="links"><li><a href="remote.html">Remote hub in three steps</a></li><li><a href="articles/hub-in-a-container.html">Container guide</a></li></ul></div>
+    <div class="dlpic">{{frame:06-overview.png}}</div>
+  </div>
+</section>
+<section class="band block demo">
+  <div class="blocktext"><span class="eyebrow">Not ready to install?</span><h2>Try the demo first</h2><p>The real interface in your browser, against simulated machines. Nothing is installed.</p><div class="cta left"><a class="dl" href="demo/">Open the demo</a><a class="ghost" href="about-the-demo.html">What the demo is</a></div></div>
+  <div class="blockpic">{{phone:51-demo-phone.png}}</div>
+</section>

@@ -85,7 +85,7 @@ There is no built-in authenticator and no authenticator code step at sign in. Bo
 | `shared/` | `choco-schema.json`, generated from the CLI source |
 | `scripts/` | Generators: schema, vendor bundle, API reference |
 | `test/` | Unit, integration and end to end checks |
-| `site/` | The landing site. `site/tools/generate.mjs` builds its pages from `docs/articles` and `docs/features` |
+| `site/` | The landing site. `site/tools/generate.mjs` builds its pages from `site/tools/pages`, `docs/articles` and `docs/features`. The deploy workflow also publishes `ui/demo.html` as an in-browser demo at `demo/` |
 | `docs/` | Feature documents, guides, API reference, screenshots, the feature inventory |
 </details>
 
@@ -186,7 +186,7 @@ Hand-written app code, excluding `ui/vendor`, `shared/choco-schema.json`, `node_
 cat core/*.js hub/*.js desktop/*.js scripts/*.mjs test/*.js test/e2e/*.mjs test/fixtures/*.js ui/index.html ui/styles.css ui/js/*.js build*.bat | wc -l
 ```
 
-Many lines are very long (the average is about 124 bytes), so the line count understates the amount of code. The site adds 899 lines (`site/site.css`, `site/site.js`, `site/tools`), and the feature documents and guides add 2,954 lines of Markdown (`cat docs/features/*.md docs/articles/*.md | wc -l`).
+Many lines are very long (the average is about 124 bytes), so the line count understates the amount of code. The site adds 1185 lines (`site/site.css`, `site/site.js`, `site/tools`), and the feature documents and guides add 2,954 lines of Markdown (`cat docs/features/*.md docs/articles/*.md | wc -l`).
 
 Estimate for one experienced developer writing the app code by hand: at 60 to 120 finished, tested lines a day, 5187 / 120 to 5187 / 60 is about 43 to 86 working days. Because the lines are long, the upper end, or more, is the realistic one. This is an estimate, not a measurement.
 </details>

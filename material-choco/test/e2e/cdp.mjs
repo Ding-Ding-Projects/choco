@@ -13,13 +13,15 @@ export async function launch({ width = 1360, height = 900, mobile = false } = {}
   const targets = await (await fetch(`http://127.0.0.1:${port}/json`)).json();
   const ws = new WebSocket(targets.find((t) => t.type === 'page').webSocketDebuggerUrl);
   await new Promise((r) => ws.addEventListener('open', r));
-  let id = 0; const pending = new Map(); const errors = [];
-  ws.addEventListener('message', (e) => { const m = JSON.parse(e.data); if (m.id && pending.has(m.id)) { const { resolve, reject } = pending.get(m.id); pending.delete(m.id); m.error ? reject(new Error(m.error.message)) : resolve(m.result); } else if (m.method === 'Runtime.exceptionThrown') errors.push(m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text); else if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errors.push(m.params.args.map((a) => a.value || a.description).join(' ')); });
+  let id = 0; const pending = new Map(); const errors = []; const listeners = [];
+  ws.addEventListener('message', (e) => { const m = JSON.parse(e.data); if (m.method) for (const l of listeners) l(m); if (m.id && pending.has(m.id)) { const { resolve, reject } = pending.get(m.id); pending.delete(m.id); m.error ? reject(new Error(m.error.message)) : resolve(m.result); } else if (m.method === 'Runtime.exceptionThrown') errors.push(m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text); else if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errors.push(m.params.args.map((a) => a.value || a.description).join(' ')); });
   const send = (method, params = {}) => new Promise((resolve, reject) => { pending.set(++id, { resolve, reject }); ws.send(JSON.stringify({ id, method, params })); });
   await send('Runtime.enable'); await send('Page.enable');
   if (mobile) await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 2, mobile: true });
   const page = {
     errors, send,
+    // Calls fn with every protocol event, for checks that watch the network.
+    on: (fn) => { listeners.push(fn); },
     goto: async (url) => { await send('Page.navigate', { url }); await page.wait(600); },
     wait: (ms) => new Promise((r) => setTimeout(r, ms)),
     eval: async (expr) => { const r = await send('Runtime.evaluate', { expression: `(async()=>{${expr}})()`, awaitPromise: true, returnByValue: true }); if (r.exceptionDetails) throw new Error(r.exceptionDetails.exception?.description || 'eval failed'); return r.result.value; },

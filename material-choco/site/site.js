@@ -66,13 +66,13 @@
   const fmtSize = (bytes) => `${Math.round(bytes / 1048576)} MB`;
   let installer = null; // { url, version } once known
   async function findReleases() {
-    try { const c = JSON.parse(sessionStorage.getItem('mc.site.releases') || 'null'); if (c && Date.now() - c.at < 10 * 60 * 1000) return c.list; } catch { /* no cache */ }
+    try { const c = JSON.parse(sessionStorage.getItem('mc.site.releases2') || 'null'); if (c && Date.now() - c.at < 10 * 60 * 1000) return c.list; } catch { /* no cache */ }
     const res = await fetch('https://api.github.com/repos/Ding-Ding-Projects/choco/releases?per_page=30', { headers: { accept: 'application/vnd.github+json' } });
     if (!res.ok) throw new Error(res.status === 403 || res.status === 429 ? `GitHub is rate limiting this network (status ${res.status})` : `GitHub answered ${res.status}`);
     const list = (await res.json()).filter((r) => !r.draft && typeof r.tag_name === 'string' && r.tag_name.startsWith('material-choco-v'))
-      .map((r) => { const a = (r.assets || []).find((x) => /Setup.*\.exe$/i.test(x.name)); return a ? { version: r.tag_name.replace('material-choco-v', ''), date: r.published_at, size: a.size, url: a.browser_download_url, name: a.name, notes: r.html_url, pre: !!r.prerelease } : null; })
+      .map((r) => { const a = (r.assets || []).find((x) => /Setup.*\.exe$/i.test(x.name)); return a ? { version: r.tag_name.replace('material-choco-v', ''), date: r.published_at, size: a.size, url: a.browser_download_url, digest: typeof a.digest === 'string' ? a.digest : '', name: a.name, notes: r.html_url, pre: !!r.prerelease } : null; })
       .filter(Boolean).slice(0, 5);
-    try { sessionStorage.setItem('mc.site.releases', JSON.stringify({ at: Date.now(), list })); } catch { /* no cache */ }
+    try { sessionStorage.setItem('mc.site.releases2', JSON.stringify({ at: Date.now(), list })); } catch { /* no cache */ }
     return list;
   }
   const dl = $('#dl');
@@ -84,11 +84,12 @@
       const r = list[0]; installer = r;
       dl.href = r.url; label.textContent = `Download for Windows, version ${r.version}`;
       note.textContent = `${r.name}, ${fmtSize(r.size)}, published ${fmtDate(r.date)}. 64-bit Windows. Not code signed.`;
-      host.replaceChildren(el('ol', {}, list.map((x) => el('li', {}, el('b', { text: x.version + (x.pre ? ' (pre-release)' : '') }), el('span', { text: `${fmtDate(x.date)}, ${fmtSize(x.size)}` }), el('a', { href: x.url, text: 'Setup.exe', 'aria-label': `Download Setup.exe for version ${x.version}` }), el('a', { href: x.notes, text: 'Notes', 'aria-label': `Release notes for version ${x.version}` })))));
+      const dg = $('#digest-line'); if (dg && r.digest) dg.replaceChildren('SHA-256 of ' + r.name + ' as recorded by GitHub: ', el('span', { class: 'digest', text: r.digest.replace(/^sha256:/, '') })); else if (dg) dg.textContent = 'GitHub did not provide a digest for the newest installer in this lookup, so there is none to show here. The release page may list one.';
+      host?.replaceChildren(el('ol', {}, list.map((x) => el('li', {}, el('b', { text: x.version + (x.pre ? ' (pre-release)' : '') }), el('span', { text: `${fmtDate(x.date)}, ${fmtSize(x.size)}` }), el('a', { href: x.url, text: 'Setup.exe', 'aria-label': `Download Setup.exe for version ${x.version}` }), el('a', { href: x.notes, text: 'Notes', 'aria-label': `Release notes for version ${x.version}` })))));
     } catch (e) {
       label.textContent = 'Open the releases page';
       note.textContent = `The newest installer could not be looked up just now (${e.message}). The button opens the releases page instead.`;
-      host.replaceChildren(el('p', {}, 'The list could not be loaded. Every release, with its installer, is on the ', el('a', { href: RELEASES, text: 'releases page' }), '.'));
+      host?.replaceChildren(el('p', {}, 'The list could not be loaded. Every release, with its installer, is on the ', el('a', { href: RELEASES, text: 'releases page' }), '.'));
     }
   })();
 
@@ -139,13 +140,31 @@
   }
   shots.forEach((b, i) => { b.addEventListener('click', () => openShot(i)); $('img', b).addEventListener('error', () => { b.closest('figure').hidden = true; }); });
 
+  // ---- copy button on every code block -----------------------------------------------------------------
+  // Added by script, so a page without scripts shows plain code blocks and nothing that cannot work.
+  const said = el('div', { class: 'sr', role: 'status', 'aria-live': 'polite' }); document.body.append(said);
+  const COPY = 'M9 9h10v11H9zM5 15V4h10'; const DONE = 'M5 12l5 5 9-10';
+  for (const pre of $$('pre')) {
+    const wrap = el('div', { class: 'codewrap' }); pre.replaceWith(wrap); wrap.append(pre);
+    const btn = el('button', { class: 'copybtn', type: 'button', 'aria-label': 'Copy this code', title: 'Copy' }, svg(COPY)); btn.firstChild.setAttribute('class', '');
+    btn.addEventListener('click', async () => {
+      const text = pre.innerText.replace(/\n$/, ''); let ok = false;
+      try { await navigator.clipboard.writeText(text); ok = true; } catch { try { const t = el('textarea', { 'aria-hidden': 'true', style: 'position:fixed;opacity:0' }); t.value = text; document.body.append(t); t.select(); ok = document.execCommand('copy'); t.remove(); } catch { ok = false; } }
+      said.textContent = ''; setTimeout(() => { said.textContent = ok ? 'Copied' : 'Copy failed. Select the text and copy it by hand.'; }, 30);
+      btn.classList.toggle('done', ok); btn.title = ok ? 'Copied' : 'Copy failed'; btn.replaceChildren(svg(ok ? DONE : COPY)); btn.firstChild.setAttribute('class', '');
+      setTimeout(() => { btn.classList.remove('done'); btn.title = 'Copy'; btn.replaceChildren(svg(COPY)); btn.firstChild.setAttribute('class', ''); }, 1800);
+    });
+    wrap.append(btn);
+  }
+
   // ---- command palette on Ctrl+Shift+F ----------------------------------------------------------------
   let palette = null; let index = null; let shown = []; let sel = 0;
   const actions = () => [
     { kind: 'Action', title: installer ? `Download the Windows installer, version ${installer.version}` : 'Get the Windows installer', sub: installer ? 'Starts the download of Setup.exe from the release.' : 'Opens the releases page on GitHub.', words: 'download install setup exe windows installer release', run: () => { location.href = installer ? installer.url : RELEASES; } },
     { kind: 'Action', title: 'Open all releases', sub: 'Every published version, on GitHub.', words: 'releases versions older changelog', run: () => { location.href = RELEASES; } },
     ...THEMES.map((t) => ({ kind: 'Action', title: { system: 'Theme: follow the system', light: 'Theme: light', dark: 'Theme: dark' }[t] + (currentTheme() === t ? ' (current)' : ''), sub: 'Changes the look of this site and remembers it on this device.', words: 'theme appearance dark light mode colour color system', keep: true, run: () => setTheme(t) })),
-    { kind: 'Action', title: 'Open the first screenshot', sub: 'Opens the screenshot viewer on the home page.', words: 'gallery screens pictures images lightbox', run: () => { if (shots.length) openShot(0); else location.href = base + './#screens'; } },
+    { kind: 'Action', title: 'Open the first screenshot', sub: 'Opens the screenshot viewer on the home page.', words: 'gallery screens pictures images lightbox', run: () => { if (shots.length) openShot(0); else location.href = base + 'screens.html'; } },
+    { kind: 'Action', title: 'Open the demo', sub: 'The real interface in your browser, against simulated machines.', words: 'try demo simulated play', run: () => { location.href = base + 'demo/'; } },
     { kind: 'Action', title: 'View the source on GitHub', sub: 'The material-choco folder of the repository.', words: 'code repository github source', run: () => { location.href = 'https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco'; } },
     { kind: 'Action', title: 'Back to the top of this page', sub: '', words: 'top scroll start', run: () => { scrollTo({ top: 0, behavior: reduced() ? 'auto' : 'smooth' }); } },
   ];

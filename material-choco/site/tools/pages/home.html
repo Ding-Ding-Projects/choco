@@ -1,0 +1,58 @@
+<main id="main">
+<section class="hero home" id="top">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="blob" aria-hidden="true"><img src="icon.svg" alt="" width="120" height="120"></div>
+  <h1>Chocolatey, with a real interface.</h1>
+  <p class="lead">Manage packages on one Windows PC, or on every PC you look after, from a desktop app, a browser or a phone. The Chocolatey CLI ships inside.</p>
+  <div class="cta">
+    <a class="dl" id="dl" href="https://github.com/Ding-Ding-Projects/choco/releases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span id="dl-label">Windows installer: open the releases page</span></a>
+    <a class="ghost" href="demo/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>Try the demo</a>
+  </div>
+  <p class="fine" id="dl-note" aria-live="polite">Looking up the newest installer. Without scripts, the button opens the releases page.</p>
+  <p class="fine">An early build: not yet installed and proven on Windows by a person, and not code signed. <a href="status.html">Honest status</a> · <a href="download.html">All download details</a></p>
+  <div class="herodevice">{{frame:06-overview.png}}</div>
+</section>
+<p class="boundary">This site is the documentation and download page. The app runs on your Windows PC, and the hub in a container you host. The demo is a simulation in your browser.</p>
+
+<section id="what" class="band tight">
+  <h2>See it work</h2>
+  <div class="feature">
+    <div class="ftext reveal"><span class="eyebrow">Every command, every option</span><h3>23 commands and 190 options, read from the CLI source</h3><p>Each one gets a control, and the exact command is shown before it runs. When the CLI gains an option, the app gains a control after the generator runs.</p><a class="pill" href="features/">All features</a></div>
+    {{frame:11-console-every-option.png}}
+  </div>
+  <div class="feature flip">
+    <div class="ftext reveal"><span class="eyebrow">A fleet, not just a PC</span><h3>Pair machines with a one time code</h3><p>Run a command on one, some or all of them from a browser or a phone. Offline machines get the job when they return, for up to 7 days.</p><a class="pill" href="remote.html">Remote hub</a></div>
+    {{frame:32-machines-bulk-actions.png}}
+  </div>
+  <div class="feature">
+    <div class="ftext reveal"><span class="eyebrow">Hard to break by accident</span><h3>Two keys and a slider before anything is removed</h3><p>A machine can also be read only, or limited to a list of allowed commands that the agent enforces by itself.</p><a class="pill" href="articles/confirming-destructive-actions.html">How confirmation works</a></div>
+    {{frame:10-two-key-confirmation.png}}
+  </div>
+  <div class="feature flip">
+    <div class="ftext reveal"><span class="eyebrow">Loud when it matters</span><h3>Every install result takes over the screen</h3><p>A celebration when it worked. An alarm with the exit code and the last output when it did not, which stays until you dismiss it.</p><a class="pill" href="articles/install-result-takeovers.html">Install results</a></div>
+    <div class="pair">{{frame:27-install-success-takeover.png}}{{frame:28-install-failure-takeover.png}}</div>
+  </div>
+</section>
+
+<section id="demo" class="band block demo">
+  <div class="blocktext">
+    <span class="eyebrow">No install needed</span>
+    <h2>Try the demo</h2>
+    <p>The real interface, running in your browser against simulated machines. Nothing is installed, nothing is changed on your computer, and nothing leaves the browser.</p>
+    <div class="cta left"><a class="dl" href="demo/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>Open the demo</a><a class="ghost" href="about-the-demo.html">What the demo is</a></div>
+  </div>
+  <div class="blockpic">{{phone:51-demo-phone.png}}{{phone:25-phone-installed.png}}</div>
+</section>
+
+<section id="doors" class="band tight">
+  <h2>Where to next</h2>
+  <div class="doors">
+    <a class="door c1 reveal" href="features/"><img loading="lazy" src="shots/07-installed.png" alt="" width="1360" height="757"><b>Features</b><span>{{FEATURE_COUNT}} features, one page each</span></a>
+    <a class="door c2 reveal" href="screens.html"><img loading="lazy" src="shots/23-overview-dark-bilingual.png" alt="" width="1360" height="757"><b>Screens</b><span>{{SHOT_COUNT}} real captures</span></a>
+    <a class="door c3 reveal" href="remote.html"><img loading="lazy" src="shots/05-machines.png" alt="" width="1360" height="757"><b>Remote hub</b><span>One container, three steps</span></a>
+    <a class="door c4 reveal" href="download.html"><img loading="lazy" src="shots/26-desktop-app-on-linux-virtual-display.png" alt="" width="1360" height="900"><b>Download</b><span>Installer, hub image, what is inside</span></a>
+    <a class="door c5 reveal" href="articles/"><img loading="lazy" src="shots/17-help.png" alt="" width="1360" height="757"><b>Guides</b><span>{{GUIDE_COUNT}} how-to guides</span></a>
+    <a class="door c6 reveal" href="status.html"><img loading="lazy" src="shots/08-job-success.png" alt="" width="1360" height="757"><b>Status</b><span>What was checked, and what was not</span></a>
+  </div>
+</section>
+</main>

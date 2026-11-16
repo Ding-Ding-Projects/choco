@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=23f4df36">
+<link rel="stylesheet" href="../site.css?v=fc53e5a6">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -32,7 +32,7 @@
 <div class="progress" aria-hidden="true"></div>
 <header class="top">
   <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
-  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <nav id="nav" aria-label="Site"><a href="../features/" aria-current="page">Features</a><a href="../screens.html">Screens</a><a href="../remote.html">Remote hub</a><a href="../download.html">Download</a><a href="../articles/">Guides</a><a href="../status.html">Status</a><a href="../about-the-demo.html">Demo</a></nav>
   <div class="tools">
     <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
     <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
@@ -53,18 +53,18 @@
 <ul><li><code>test/roles.test.js</code>, among them <code>a viewer cannot change anything</code>, <code>a viewer may refresh the inventory and run plain read only queries</code>, <code>an operator cannot remove machines or change machine policy</code>, <code>the last administrator cannot be removed, demoted or disabled</code> and <code>a role change, a disabled account and a reset password take effect on live sessions</code>.</li><li>End to end checks <code>users are added with their roles through the Users page</code>, <code>an operator sees the role and no admin pages</code>, <code>the hub answers 403 to an operator for admin actions</code>, <code>a viewer is not offered upgrade, import or uninstall on Installed</code> and <code>the hub answers 403 to a viewer for changes and accepts a plain query</code>.</li></ul>
 <h2 id="known-limits">Known limits</h2>
 <ul><li><b>Job output and the history are visible to every role.</b> Do not give an account to someone who should not read them.</li><li>Three fixed roles. There are no custom roles and no limiting of a user to some machines.</li><li>A new user gets a password chosen by the admin. There are no invitations by email and no self-service password recovery.</li><li>Not available in the desktop app, which has one local user who is always admin.</li></ul>
-<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/users-and-roles.md">docs/features/users-and-roles.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/users-and-roles.md">docs/features/users-and-roles.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/sign-in.html"><h3>Sign in</h3><span class="more">Open</span></a><a class="card reveal" href="../features/command-allow-lists.html"><h3>Command allow lists</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><span class="more">Open</span></a></div>
 <nav class="pager" aria-label="More features"><a href="passkeys.html"><small>Previous</small>Passkeys</a><a class="next" href="pairing.html"><small>Next</small>Pairing</a></nav>
 </section>
 </main>
 <footer>
-  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../features/">Features</a><a href="../screens.html">Screens</a><a href="../remote.html">Remote hub</a><a href="../download.html">Download</a><a href="../articles/">Guides</a><a href="../status.html">Status</a><a href="../about-the-demo.html">Demo</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
   <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=23f4df36"></script>
+<script src="../site.js?v=fc53e5a6"></script>
 </body>
 </html>

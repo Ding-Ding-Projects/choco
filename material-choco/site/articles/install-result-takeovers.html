@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=23f4df36">
+<link rel="stylesheet" href="../site.css?v=fc53e5a6">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -32,7 +32,7 @@
 <div class="progress" aria-hidden="true"></div>
 <header class="top">
   <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
-  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <nav id="nav" aria-label="Site"><a href="../features/">Features</a><a href="../screens.html">Screens</a><a href="../remote.html">Remote hub</a><a href="../download.html">Download</a><a href="../articles/" aria-current="page">Guides</a><a href="../status.html">Status</a><a href="../about-the-demo.html">Demo</a></nav>
   <div class="tools">
     <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
     <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
@@ -62,18 +62,18 @@
 <p>End to end checks in <code>test/e2e/run.mjs</code>: <code>upgrade success takes over the screen</code>, <code>success takeover closes with Escape</code>, <code>install failure takes over with exit code and output</code>, <code>failure takeover stays until dismissed</code>, and <code>an install started elsewhere also gets the takeover</code>.</p>
 <h2 id="known-limits">Known limits</h2>
 <ul><li>The reduced motion path was written by rule and has not been captured or reviewed on screen.</li><li>Takeovers cover install and upgrade only. Uninstall results use the job page and notifications.</li><li>The install in these checks was performed by the test stand-in for <code>choco.exe</code>.</li></ul>
-<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/install-result-takeovers.md">docs/articles/install-result-takeovers.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/install-result-takeovers.md">docs/articles/install-result-takeovers.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/jobs-schedules-and-history.html"><h3>Jobs, schedules and history</h3><p>the full log behind a result</p><span class="more">Open</span></a><a class="card reveal" href="../articles/languages-and-accessibility.html"><h3>Languages and accessibility</h3><p>motion and sound settings</p><span class="more">Open</span></a><a class="card reveal" href="../articles/confirming-destructive-actions.html"><h3>Confirming destructive actions</h3><p>care before an action, where this is care after it</p><span class="more">Open</span></a><a class="card reveal" href="../features/install-result-takeovers.html"><h3>Install result takeovers</h3><p>the feature page</p><span class="more">Open</span></a></div>
 <nav class="pager" aria-label="More guides"><a href="confirming-destructive-actions.html"><small>Previous</small>Confirming destructive actions</a><a class="next" href="languages-and-accessibility.html"><small>Next</small>Languages and accessibility</a></nav>
 </section>
 </main>
 <footer>
-  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../features/">Features</a><a href="../screens.html">Screens</a><a href="../remote.html">Remote hub</a><a href="../download.html">Download</a><a href="../articles/">Guides</a><a href="../status.html">Status</a><a href="../about-the-demo.html">Demo</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
   <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=23f4df36"></script>
+<script src="../site.js?v=fc53e5a6"></script>
 </body>
 </html>

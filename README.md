@@ -3,6 +3,7 @@
 A desktop app and a remote management hub for the Chocolatey CLI. Manage packages on one Windows PC, or on every PC you look after, from a desktop app, a browser or a phone. The Chocolatey CLI built from this repository ships inside the app, so there is nothing else to install.
 
 - **Site, with the download button and the guides:** <https://ding-ding-projects.github.io/choco/>
+- **Demo in the browser:** <https://ding-ding-projects.github.io/choco/demo/>. The real interface against simulated machines. Nothing is installed and nothing leaves the browser.
 - **Installer:** `Setup.exe` from the newest release whose tag starts with `material-choco-v`, on the [releases page](https://github.com/Ding-Ding-Projects/choco/releases). 64-bit Windows. **Not code signed**, so Windows may show an unknown publisher warning.
 - **Hub:** `docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest`, then open `http://<host>:8080` and create the administrator.
 

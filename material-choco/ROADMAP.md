@@ -65,6 +65,8 @@ A box is ticked only when the item works and was exercised. Every tick below was
 
 - [x] Landing site live, with a download button that finds the newest installer, guides, a page per feature, a gallery and a command palette
 - [x] Site measured at 320 to 1360 px in emulation with no sideways scroll
+- [x] Site split into separate pages (features, screens, remote hub, download, guides, status, demo), with a copy button on every code block
+- [x] In-browser demo assembled into the site at `demo/` and loaded locally with no outside requests (its behaviour is checked by the app's own tests, not by the site checks)
 - [x] One document per shipped feature, and how-to guides
 - [x] Repository website field points at the site
 - [ ] Test the site on a physical phone and in other browsers

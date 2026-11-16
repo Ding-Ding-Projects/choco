@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-base="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>About the demo · Material Choco</title>
+<meta name="description" content="The Material Choco demo runs the real interface in your browser against simulated machines. Nothing is installed and nothing leaves the browser.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/about-the-demo.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="About the demo · Material Choco">
+<meta property="og:description" content="The Material Choco demo runs the real interface in your browser against simulated machines. Nothing is installed and nothing leaves the browser.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/about-the-demo.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About the demo · Material Choco">
+<meta name="twitter:description" content="The Material Choco demo runs the real interface in your browser against simulated machines. Nothing is installed and nothing leaves the browser.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css?v=fc53e5a6">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href="./"><img src="icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href="features/">Features</a><a href="screens.html">Screens</a><a href="remote.html">Remote hub</a><a href="download.html">Download</a><a href="articles/">Guides</a><a href="status.html">Status</a><a href="about-the-demo.html" aria-current="page">Demo</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main"><div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="./">Home</a></li><li><span aria-current="page">About the demo</span></li></ol><h1>The demo</h1><p class="lead"><span>The real interface of the app, running in your browser against a simulated hub. Simulated machines, nothing installed, nothing leaves the browser.</span></p></div><section class="band tight">
+  <div class="dlbox">
+    <div class="dlmain">
+      <h2 id="open">Open it</h2>
+      <div class="cta left"><a class="dl solid" href="demo/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>Open the demo</a></div>
+      <p>It opens the same interface the app and the hub use, with a banner that marks it as a demo.</p>
+      <h2 id="what" style="margin-top:28px">What it is</h2>
+      <ul class="status">
+        <li class="ok reveal"><b>The real interface.</b> The same pages, menus, confirmations and full-screen results as the app.</li>
+        <li class="ok reveal"><b>Simulated machines.</b> A pretend hub runs inside the page, with made-up machines and packages. An "install" in the demo changes only that pretend data.</li>
+        <li class="ok reveal"><b>Nothing is installed.</b> No Chocolatey command runs anywhere. Your computer is not changed.</li>
+        <li class="ok reveal"><b>Nothing leaves the browser.</b> The demo makes no network requests of its own. What you type stays in the page.</li>
+      </ul>
+    </div>
+    <div class="dlpic"><figure class="frame phone reveal"><button class="shot" type="button" data-full="shots/51-demo-phone.png" data-caption="The demo on a phone. The demo at phone width: the banner with Simulate a machine joining and Reset demo, and the Overview below." aria-label="Enlarge: The demo on a phone"><img loading="lazy" src="shots/51-demo-phone.png" alt="The demo at phone width: the banner with Simulate a machine joining and Reset demo, and the Overview below." width="780" height="1688"></button></figure></div>
+  </div>
+  <h2 id="looks">What it looks like</h2>
+  <p class="sub">A banner at the top of the demo says at all times that the machines are simulated. It has two buttons: one adds a simulated machine, the other resets the demo.</p>
+  <div class="pair wide"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>The demo: overview</span></div><button class="shot" type="button" data-full="shots/47-demo-overview.png" data-caption="The demo: overview. The in-browser demo: a banner says the machines are simulated and nothing is installed, above the Overview page with three simulated machines and 6 updates ready." aria-label="Enlarge: The demo: overview"><img loading="lazy" src="shots/47-demo-overview.png" alt="The in-browser demo: a banner says the machines are simulated and nothing is installed, above the Overview page with three simulated machines and 6 updates ready." width="1360" height="757"></button></figure><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>The demo: a machine joins</span></div><button class="shot" type="button" data-full="shots/50-demo-machine-joined.png" data-caption="The demo: a machine joins. The demo after Simulate a machine joining: the Machines page lists four simulated machines and a pairing code." aria-label="Enlarge: The demo: a machine joins"><img loading="lazy" src="shots/50-demo-machine-joined.png" alt="The demo after Simulate a machine joining: the Machines page lists four simulated machines and a pairing code." width="1360" height="757"></button></figure></div>
+  <h2 id="limits" style="margin-top:32px">What it cannot show</h2>
+  <ul class="status">
+    <li class="no reveal"><b>Real results.</b> Output, exit codes and timings in the demo come from the simulation. They show how the app reports results, not how any package behaves.</li>
+    <li class="no reveal"><b>Anything that needs a real hub or a real Windows machine.</b> Real agents, HTTPS, deliveries to other services and real installs.</li>
+    <li class="no reveal"><b>Proof.</b> The demo proves nothing about the app on Windows. For what has and has not been proven, see the <a href="status.html">status page</a>.</li>
+  </ul>
+  <ul class="links" style="margin-top:22px"><li><a href="download.html">Download the installer</a></li><li><a href="remote.html">Run a real hub</a></li><li><a href="screens.html">Real captures</a></li></ul>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href="./">Home</a><a href="features/">Features</a><a href="screens.html">Screens</a><a href="remote.html">Remote hub</a><a href="download.html">Download</a><a href="articles/">Guides</a><a href="status.html">Status</a><a href="about-the-demo.html">Demo</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="site.js?v=fc53e5a6"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<section class="band tight">
+  <div class="stats">
+    <div class="stat ok reveal"><b>88 of 88</b><span>unit and integration tests pass (<code>npm test</code>)</span></div>
+    <div class="stat ok reveal"><b>117 of 117</b><span>end to end checks pass, in a real browser against a real hub and agents</span></div>
+    <div class="stat no reveal"><b>0</b><span>installs run on Windows by a person, so far</span></div>
+    <div class="stat no reveal"><b>Unsigned</b><span>the installer carries no code signature</span></div>
+  </div>
+  <h2 id="checked">Checked</h2>
+  <ul class="status">
+    <li class="reveal ok"><b>The hub, agents and interface.</b> Covered by the automated tests and by an end to end run that drives the real interface as admin, operator and viewer. This includes the job queue, schedules, users and roles, passkeys, command allow lists, status webhooks and secrets at rest.</li>
+    <li class="reveal ok"><b>The release.</b> The workflow builds the Chocolatey CLI from this repository on Windows, packs it into the installer and publishes it, and pushes the hub image.</li>
+    <li class="reveal ok"><b>This site.</b> Every internal link is checked each time the site is built, and every page was measured at phone and desktop widths for sideways scroll and small touch targets.</li>
+  </ul>
+  <div class="statuspic">{{frame:08-job-success.png}}</div>
+  <h2 id="not-proven">Not yet proven</h2>
+  <ul class="status">
+    <li class="reveal no"><b>Windows.</b> Nobody has installed the app on Windows and run a real install, upgrade or uninstall through it. Every automated check used a test stand-in for <code>choco.exe</code>, on Linux. The two build scripts for Windows have never been run.</li>
+    <li class="reveal no"><b>Passkeys on a real device.</b> They were checked with a software passkey device and with the virtual one in Chrome.</li>
+    <li class="reveal no"><b>Accessibility.</b> Reduced motion, screen readers, display scaling and the larger text sizes have not been audited.</li>
+    <li class="reveal no"><b>Automatic updates.</b> The desktop app is written to download a newer release and announce it. That has never run on Windows.</li>
+    <li class="reveal no"><b>Secrets at rest.</b> Secret values are encrypted in the hub's data file, but the key lies in the same folder unless you move it.</li>
+  </ul>
+  <h2 id="inventory">Required features: 118 counted strictly</h2>
+  <p class="sub">The maintainer keeps a list of 118 features every app of theirs should have. This is the count for this app. A feature is "done" only when it meets the intent and a named check exercised it.</p>
+  <div class="bar" role="img" aria-label="14 done, 58 partial, 3 written and never run, 29 not built, 12 not applicable, 2 waived"><span class="b1" style="flex:14">14</span><span class="b2" style="flex:58">58</span><span class="b3" style="flex:3"></span><span class="b4" style="flex:29">29</span><span class="b5" style="flex:12">12</span><span class="b6" style="flex:2"></span></div>
+  <ul class="legend"><li><i class="b1"></i>14 done</li><li><i class="b2"></i>58 partial</li><li><i class="b3"></i>3 written, never run</li><li><i class="b4"></i>29 not built</li><li><i class="b5"></i>12 not applicable</li><li><i class="b6"></i>2 waived by the maintainer</li></ul>
+  <h2 id="not-built" style="margin-top:36px">Not built</h2>
+  <p class="sub">Signed agent updates, limiting a user to some machines, and much of that wider list. There are no authenticator codes: the maintainer removed them, and sign in is a password or a passkey.</p>
+  <h2 id="read-more">The records</h2>
+  <ul class="links"><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked, with results</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/FEATURE-INVENTORY.md">Feature inventory, row by row</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/CHANGELOG.md">Changelog</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/releases">All releases</a></li><li><a href="articles/security-model.html">Security model</a></li></ul>
+</section>

@@ -6,8 +6,10 @@
 //
 // Sources:  docs/articles/*.md   guides          -> site/articles/*.html
 //           docs/features/*.md   feature pages   -> site/features/*.html
-//           site/tools/home.html home page body  -> site/index.html
+//           site/tools/pages/*.html page bodies  -> site/index.html, screens.html, remote.html,
+//                                                   download.html, status.html, about-the-demo.html
 // Also writes site/404.html and site/search.json (the index used by the command palette).
+// The demo itself is not built here: the deploy workflow copies material-choco/ui to demo/.
 // Every page shares one header, footer, stylesheet and script.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -79,6 +81,11 @@ const SHOTS = [
   ['43-viewer-installed.png', 'Installed, as a viewer', 'Installed page for a user with the Viewer role: a line says controls that change machines are not shown, and the rows have no Upgrade buttons.', 'Users and policy'],
   ['32-machines-bulk-actions.png', 'Bulk actions on machines', 'Machines page with both machines ticked: a bar offers Refresh inventory, Upgrade everything, Act on these only, Make read only, Allow changes and Remove from hub.', 'Daily work'],
   ['38-update-downloaded-notice.png', 'Update notice', 'Desktop layout with a notification that an update has been downloaded, that the build is not code signed, and a Restart button. The capture uses a stand-in for the desktop shell and a made-up version number.', 'Desktop and phone'],
+  ['47-demo-overview.png', 'The demo: overview', 'The in-browser demo: a banner says the machines are simulated and nothing is installed, above the Overview page with three simulated machines and 6 updates ready.', 'The demo'],
+  ['48-demo-upgrade-success.png', 'The demo: an upgrade succeeds', 'The demo showing the full-screen Upgrade complete result for a simulated machine, under the demo banner.', 'The demo'],
+  ['49-demo-install-failure.png', 'The demo: an install fails', 'The demo showing the full-screen Install failed result with exit code 1 and output that is marked as simulated.', 'The demo'],
+  ['50-demo-machine-joined.png', 'The demo: a machine joins', 'The demo after Simulate a machine joining: the Machines page lists four simulated machines and a pairing code.', 'The demo'],
+  ['51-demo-phone.png', 'The demo on a phone', 'The demo at phone width: the banner with Simulate a machine joining and Reset demo, and the Overview below.', 'The demo', 'phone'],
   ['26-desktop-app-on-linux-virtual-display.png', 'Desktop window', 'The desktop app window started on Linux under a virtual display, showing the first-run check of the bundled CLI. The app has not yet been started on Windows.', 'Desktop and phone'],
   ['24-phone-overview.png', 'Overview on a phone', 'Overview page at phone width with a bottom navigation bar.', 'Desktop and phone', 'phone'],
   ['25-phone-installed.png', 'Installed on a phone', 'Installed packages page at phone width.', 'Desktop and phone', 'phone'],
@@ -158,7 +165,7 @@ function parseDoc(file, dir) {
 const readDir = (dir) => (fs.existsSync(path.join(APP, 'docs', dir)) ? fs.readdirSync(path.join(APP, 'docs', dir)).filter((f) => f.endsWith('.md') && f !== 'README.md').sort().map((f) => parseDoc(path.join(APP, 'docs', dir, f), dir)) : []);
 
 // ---- page shell ---------------------------------------------------------------------------------
-const NAV = [['./#what', 'What it does', 'home'], ['./#remote', 'Remote', 'home'], ['./#screens', 'Screens', 'home'], ['articles/', 'Guides', 'articles'], ['features/', 'Features', 'features'], ['./#status', 'Status', 'home']];
+const NAV = [['features/', 'Features', 'features'], ['screens.html', 'Screens', 'screens'], ['remote.html', 'Remote hub', 'remote'], ['download.html', 'Download', 'download'], ['articles/', 'Guides', 'articles'], ['status.html', 'Status', 'status'], ['about-the-demo.html', 'Demo', 'demo']];
 const I = { search: 'M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4', menu: 'M4 7h16M4 12h16M4 17h16', theme: 'M4 5h16v11H4zM9 20h6M12 16v4' };
 const ic = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}"/></svg>`;
 function page({ out, title, desc, body, section, type = 'article', base, absolute = false }) {
@@ -199,7 +206,7 @@ ${out === '404.html' ? '<meta name="robots" content="noindex">' : `<link rel="ca
 <div class="progress" aria-hidden="true"></div>
 <header class="top">
   <a class="brand" href="${out === 'index.html' ? '#top' : b + './'}"><img src="${b}icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
-  <nav id="nav" aria-label="Site">${NAV.map(([h, l, s]) => `<a href="${link(h)}"${s === section && s !== 'home' ? ' aria-current="page"' : ''}>${l}</a>`).join('')}<a href="${REPO}/tree/main/material-choco">Source</a></nav>
+  <nav id="nav" aria-label="Site">${NAV.map(([h, l, s]) => `<a href="${link(h)}"${s === section ? ' aria-current="page"' : ''}>${l}</a>`).join('')}</nav>
   <div class="tools">
     <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F">${ic(I.search)}<span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
     <button class="tool" type="button" id="theme-toggle" aria-label="Theme">${ic(I.theme)}</button>
@@ -208,7 +215,7 @@ ${out === '404.html' ? '<meta name="robots" content="noindex">' : `<link rel="ca
 </header>
 ${body}
 <footer>
-  <nav aria-label="Footer"><a href="${b}./">Home</a><a href="${b}articles/">Guides</a><a href="${b}features/">Features</a><a href="${REPO}/releases">Releases</a><a href="${BLOB}material-choco/HANDOFF.md">What was checked</a><a href="${BLOB}material-choco/ROADMAP.md">Roadmap</a><a href="${REPO}/tree/main/material-choco">Source</a></nav>
+  <nav aria-label="Footer"><a href="${b}./">Home</a><a href="${b}features/">Features</a><a href="${b}screens.html">Screens</a><a href="${b}remote.html">Remote hub</a><a href="${b}download.html">Download</a><a href="${b}articles/">Guides</a><a href="${b}status.html">Status</a><a href="${b}about-the-demo.html">Demo</a><a href="${REPO}/releases">Releases</a><a href="${BLOB}material-choco/HANDOFF.md">What was checked</a><a href="${BLOB}material-choco/ROADMAP.md">Roadmap</a><a href="${REPO}/tree/main/material-choco">Source</a></nav>
   <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
@@ -237,7 +244,7 @@ function docPage(d, list, kind) {
 <div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs([['../', 'Home'], up, [null, esc(d.title)]])}<h1>${esc(d.title)}</h1><p class="lead"><span>${d.leadHtml}</span></p></div>
 <div class="doc${toc ? ' withtoc' : ''}">${toc}<article class="prose">
 ${d.html}
-<p class="srclink">Source of this page: <a href="${BLOB}material-choco/docs/${d.dir}/${d.name}.md">docs/${d.dir}/${d.name}.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+<p class="srclink">Source of this page: <a href="${BLOB}material-choco/docs/${d.dir}/${d.name}.md">docs/${d.dir}/${d.name}.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related">${related}
 <nav class="pager" aria-label="More ${kind === 'Guide' ? 'guides' : 'features'}">${prev ? `<a href="${prev.name}.html"><small>Previous</small>${esc(prev.title)}</a>` : `<a href="./"><small>Back to</small>All ${kind === 'Guide' ? 'guides' : 'features'}</a>`}${next ? `<a class="next" href="${next.name}.html"><small>Next</small>${esc(next.title)}</a>` : `<a class="next" href="./"><small>Back to</small>All ${kind === 'Guide' ? 'guides' : 'features'}</a>`}</nav>
@@ -245,36 +252,59 @@ ${d.html}
 </main>`;
   return page({ out: `${d.dir}/${d.name}.html`, title: `${d.title} · Material Choco`, desc: d.desc, body, section: d.dir, base: '../' });
 }
-const featureGroups = (prefix, withFilter) => `<div class="groups">${grouped.map(([g, l]) => `<${withFilter ? 'section' : 'details'} class="group reveal">${withFilter ? `<h3>${g}</h3>` : `<summary><span class="h">${g}</span><span class="n">${l.length} features</span></summary>`}<ul>${l.map((f) => `<li${withFilter ? ` data-feature="${esc((f.title + ' ' + f.desc + ' ' + g).toLowerCase())}"` : ''}><a href="${prefix}${f.name}.html">${esc(f.title)}${withFilter ? `<small>${esc(f.desc.split(/(?<=\.)\s/)[0])}</small>` : ''}</a></li>`).join('')}</ul></${withFilter ? 'section' : 'details'}>`).join('')}</div>`;
+const shotOf = (f) => { const e = SHOTS.find(([n]) => n === f); if (!e || !shotFiles.includes(f)) { console.warn(`  note: capture ${f} is used on a page but is missing or has no caption`); return null; } const { w, h } = png(path.join(shotDir, f)); return { f, t: e[1], c: e[2], w, h }; };
+// A capture inside a device-like frame. The picture opens in the viewer like any other.
+const shotButton = (x, prefix, eager) => `<button class="shot" type="button" data-full="${prefix}shots/${x.f}" data-caption="${esc(x.t + '. ' + x.c)}" aria-label="Enlarge: ${esc(x.t)}"><img ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} src="${prefix}shots/${x.f}" alt="${esc(x.c)}" width="${x.w}" height="${x.h}"></button>`;
+const frame = (f, prefix = '', eager = false) => { const x = shotOf(f); return x ? `<figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>${esc(x.t)}</span></div>${shotButton(x, prefix, eager)}</figure>` : ''; };
+const phone = (f, prefix = '') => { const x = shotOf(f); return x ? `<figure class="frame phone reveal">${shotButton(x, prefix)}</figure>` : ''; };
+const thumb = (f, prefix = '') => { const x = shotOf(f); return x ? `<img class="thumb" loading="lazy" src="${prefix}shots/${x.f}" alt="" width="${x.w}" height="${x.h}">` : ''; };
+const GROUP_SHOT = { Packages: '07-installed.png', 'Remote management': '05-machines.png', 'Safety and feedback': '10-two-key-confirmation.png', Interface: '20-command-palette.png', 'Built-in tools': '29-base64-tools.png', 'Language, look and comfort': '22-settings-appearance-dark-bilingual.png', 'Desktop app and delivery': '26-desktop-app-on-linux-virtual-display.png' };
+const featureGroups = () => `<div class="fgroups">${grouped.map(([g, l]) => `<section class="fgroup reveal" id="${slug(g)}"><div class="fhead">${GROUP_SHOT[g] ? frame(GROUP_SHOT[g], '../') : ''}<div><h2>${g}</h2><p class="n">${l.length} features</p></div></div><ul class="flist">${l.map((f) => `<li data-feature="${esc((f.title + ' ' + f.desc + ' ' + g).toLowerCase())}"><a href="${f.name}.html">${esc(f.title)}<small>${esc(f.desc.split(/(?<=\.)\s/)[0])}</small></a></li>`).join('')}</ul></section>`).join('')}</div>`;
 const guideCards = (prefix) => `<div class="grid">${guides.map((g, i) => `<a class="card reveal" href="${prefix}${g.name}.html"><span class="num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3>${esc(g.title)}</h3><p>${esc(g.desc.split(/(?<=\.)\s/)[0])}</p><span class="more">Read the guide</span></a>`).join('')}</div>`;
+const shown = SHOTS.filter(([f]) => shotFiles.includes(f) && !HELD[f]);
+for (const f of shotFiles) if (!SHOTS.some(([s]) => s === f) && !HELD[f]) console.warn(`  note: ${f} has no caption in SHOTS and is not shown`);
+const galleryGroups = [...new Set(shown.map((s) => s[3]))];
 function gallery() {
-  const have = SHOTS.filter(([f]) => shotFiles.includes(f) && !HELD[f]);
-  for (const f of shotFiles) if (!SHOTS.some(([s]) => s === f) && !HELD[f]) console.warn(`  note: ${f} has no caption in SHOTS and is not shown`);
-  for (const [f, why] of Object.entries(HELD)) if (shotFiles.includes(f)) console.warn(`  note: ${f} is held back: ${why}`);
-  const groups = [...new Set(have.map((s) => s[3]))];
-  return groups.map((g, gi) => { const list = have.filter((s) => s[3] === g);
-    const fig = ([f, t, c, , cls]) => { const { w, h } = png(path.join(shotDir, f)); return `<figure class="reveal${cls === 'wide' ? ' wide' : ''}"><button class="shot" type="button" data-full="shots/${f}" data-caption="${esc(t + '. ' + c)}" aria-label="Enlarge: ${esc(t)}"><img loading="lazy" src="shots/${f}" alt="${esc(c)}" width="${w}" height="${h}"></button><figcaption><b>${esc(t)}</b>${esc(c)}</figcaption></figure>`; };
-    const desk = list.filter((s) => s[4] !== 'phone'); const ph = list.filter((s) => s[4] === 'phone');
-    return `<details class="fold"${gi < 2 ? ' open' : ''}><summary><span class="h">${g}</span><span class="n">${list.length} captures</span></summary>${desk.length ? `<div class="shots">${desk.map(fig).join('')}</div>` : ''}${ph.length ? `<div class="shots phones"${desk.length ? ' style="margin-top:20px"' : ''}>${ph.map(fig).join('')}</div>` : ''}</details>`; }).join('\n') + `\n<p class="count" style="margin-top:24px">${have.length} captures shown.</p>`;
+  return galleryGroups.map((g) => { const list = shown.filter((s) => s[3] === g);
+    const fig = ([f, t, c, , cls]) => { const { w, h } = png(path.join(shotDir, f)); return `<figure class="reveal${cls === 'phone' ? ' ph' : ''}"><button class="shot" type="button" data-full="shots/${f}" data-caption="${esc(t + '. ' + c)}" aria-label="Enlarge: ${esc(t)}"><img loading="lazy" src="shots/${f}" alt="${esc(c)}" width="${w}" height="${h}"></button><figcaption><b>${esc(t)}</b><span>${esc(c)}</span></figcaption></figure>`; };
+    return `<section class="galgroup" id="${slug(g)}"><h2>${g} <small>${list.length}</small></h2><div class="shots">${list.map(fig).join('')}</div></section>`; }).join('\n');
 }
+const galleryNav = () => galleryGroups.map((g) => `<li><a href="#${slug(g)}">${g}</a></li>`).join('');
 
 // ---- write everything -------------------------------------------------------------------------------
 const pages = [];
-const home = fs.readFileSync(path.join(TOOLS, 'home.html'), 'utf8').replace('{{FEATURES}}', featureGroups('features/', false)).replace('{{GUIDES}}', guideCards('articles/')).replace('{{GALLERY}}', gallery()).replace('{{FEATURE_COUNT}}', String(flat.length)).replace('{{GUIDE_COUNT}}', String(guides.length));
+const fill = (text) => text.replace(/\{\{frame:([\w.-]+)\}\}/g, (_m, f) => frame(f)).replace(/\{\{phone:([\w.-]+)\}\}/g, (_m, f) => phone(f)).replace(/\{\{thumb:([\w.-]+)\}\}/g, (_m, f) => thumb(f))
+  .replace('{{GUIDES}}', () => guideCards('articles/')).replace('{{GALLERY}}', gallery).replace('{{GALLERY_NAV}}', galleryNav).replace(/\{\{FEATURE_COUNT\}\}/g, String(flat.length)).replace(/\{\{GUIDE_COUNT\}\}/g, String(guides.length)).replace(/\{\{SHOT_COUNT\}\}/g, String(shown.length));
+const fragment = (name) => fill(fs.readFileSync(path.join(TOOLS, 'pages', name + '.html'), 'utf8'));
+const head = (trail, h1, lead, extra = '') => `<div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs(trail)}<h1>${h1}</h1><p class="lead"><span>${lead}</span></p>${extra}</div>`;
+const demoCall = (prefix) => `<section class="band block demo"><div class="blocktext"><span class="eyebrow">No install needed</span><h2>Try the demo</h2><p>The real interface in your browser, against simulated machines. Nothing is installed and nothing leaves the browser.</p><div class="cta left"><a class="dl" href="${prefix}demo/">Open the demo</a><a class="ghost" href="${prefix}about-the-demo.html">What the demo is</a></div></div><div class="blockpic">${phone('51-demo-phone.png', prefix)}</div></section>`;
 const HOME_DESC = 'A desktop app and a remote management hub for the Chocolatey CLI. Manage packages on one Windows PC or many, from a desktop app, a browser or a phone. Chocolatey ships inside.';
-pages.push(page({ out: 'index.html', title: 'Material Choco: Chocolatey with a real interface, on one PC or a whole fleet', desc: HOME_DESC, body: home, section: 'home', type: 'website', base: '' }));
+pages.push(page({ out: 'index.html', title: 'Material Choco: Chocolatey with a real interface, on one PC or a whole fleet', desc: HOME_DESC, body: fragment('home'), section: 'home', type: 'website', base: '' }));
+// Top-level pages: [file, nav section, title, description, heading, lead]
+const TOP = [
+  ['screens', 'screens', 'Screens', `${shown.length} real captures of Material Choco, taken from the running hub and agents by the end to end run.`, 'Real screens', `${shown.length} captures of the running app, grouped by what they show. A test stand-in played the part of <code>choco.exe</code>.`],
+  ['remote', 'remote', 'Remote hub', 'Run the Material Choco hub in a container and manage many Windows machines from a browser or a phone: three steps, users and roles, passkeys, allow lists, webhooks.', 'Remote hub', 'One container lets you manage every Windows machine you look after from a browser, phone included. Each machine connects out to the hub as an agent.'],
+  ['download', 'download', 'Download', 'Download the Material Choco installer for Windows and the hub container image: the newest version, what is inside, the unsigned notice and how to check the file.', 'Download', 'The Windows installer and the hub image, what is inside them, and how to check what you downloaded.'],
+  ['status', 'status', 'Status', 'The honest status of Material Choco: what was checked and with what result, what has not been proven, and the strict count of required features.', 'Honest status', 'What was checked, with numbers. What has not been proven. What is not built. Nothing here is rounded up.'],
+  ['about-the-demo', 'demo', 'About the demo', 'The Material Choco demo runs the real interface in your browser against simulated machines. Nothing is installed and nothing leaves the browser.', 'The demo', 'The real interface of the app, running in your browser against a simulated hub. Simulated machines, nothing installed, nothing leaves the browser.'],
+];
+for (const [file, section, title, desc, h1, lead] of TOP) pages.push(page({ out: file + '.html', title: `${title} · Material Choco`, desc, section, base: '', body: `<main id="main">${head([['./', 'Home'], [null, title]], h1, lead)}${fragment(file)}</main>` }));
 pages.push(page({ out: 'articles/index.html', title: 'Guides · Material Choco', desc: 'Step by step guides for Material Choco: one PC, the hub in a container, pairing, security, every command, and more.', section: 'articles', base: '../',
-  body: `<main id="main"><div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs([['../', 'Home'], [null, 'Guides']])}<h1>Guides</h1><p class="lead"><span>${guides.length} how-to guides, written from the source and the README. Each one says what has been checked and what has not.</span></p></div><section class="band">${guideCards('')}<p class="sub" style="margin-top:28px">Looking for one specific feature? The <a href="../features/">feature pages</a> cover each of them separately, or press <kbd>Ctrl+Shift+F</kbd> to search everything.</p></section></main>` }));
+  body: `<main id="main">${head([['../', 'Home'], [null, 'Guides']], 'Guides', `${guides.length} how-to guides, written from the source and the README. Each one says what has been checked and what has not.`)}<section class="band tight"><div class="guidetop">${frame('02-first-run-wizard.png', '../')}<div><h2>Start here</h2><p class="sub">New to it? Read <a href="getting-started.html">Getting started on one PC</a>, or <a href="hub-in-a-container.html">Running the hub in a container</a> if you look after several machines. Looking for one specific feature? The <a href="../features/">feature pages</a> cover each of them separately, or press <kbd>Ctrl+Shift+F</kbd> to search everything.</p></div></div>${guideCards('')}</section>${demoCall('../')}</main>` }));
 pages.push(page({ out: 'features/index.html', title: 'Features · Material Choco', desc: `Every feature that ships in Material Choco 0.1, one page each: what it is, how to use it, how it was checked and its known limits.`, section: 'features', base: '../',
-  body: `<main id="main"><div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs([['../', 'Home'], [null, 'Features']])}<h1>Features</h1><p class="lead"><span>Every feature that ships in this build has its own page: what it is, how to use it, what was checked and how, and its known limits. Features that are planned and not built are listed in the roadmap, not here.</span></p></div><section class="band"><label class="filter"><span class="sr">Filter features</span>${ic(I.search).replace('<svg', '<svg class="ic"')}<input id="feature-filter" type="search" placeholder="Filter features" autocomplete="off"></label><p class="count" id="feature-count" aria-live="polite"></p>${featureGroups('', true)}</section></main>` }));
+  body: `<main id="main">${head([['../', 'Home'], [null, 'Features']], 'Features', `${flat.length} features ship in this build. Each has its own page: what it is, how to use it, what was checked and how, and its known limits. Planned work is in the roadmap, not here.`)}<section class="band tight"><label class="filter"><span class="sr">Filter features</span>${ic(I.search).replace('<svg', '<svg class="ic"')}<input id="feature-filter" type="search" placeholder="Filter features" autocomplete="off"></label><p class="count" id="feature-count" aria-live="polite"></p>${featureGroups()}</section>${demoCall('../')}</main>` }));
 for (const g of guides) pages.push(docPage(g, guides, 'Guide'));
 for (const f of flat) pages.push(docPage(f, flat, 'Feature'));
 pages.push(page({ out: '404.html', title: 'Page not found · Material Choco', desc: 'This page does not exist on the Material Choco site.', section: '', base: '', absolute: true,
-  body: `<main id="main"><section class="hero notfound" id="top"><div class="rays" aria-hidden="true"></div><div class="blob" aria-hidden="true"><img src="/choco/icon.svg" alt="" width="120" height="120"></div><h1>Nothing is installed here.</h1><p class="lead">This address does not match any page of the Material Choco site. The page may have moved, or the link may be mistyped.</p><div class="cta"><a class="dl" href="/choco/">Go to the home page</a><button class="ghost" type="button" data-open-palette style="background:none;font:inherit;font-weight:700;font-size:1.12rem;cursor:pointer">Search the site</button></div><p class="fine">You can also browse the <a href="/choco/articles/">guides</a> or the <a href="/choco/features/">feature pages</a>.</p></section></main>` }));
+  body: `<main id="main"><section class="hero notfound" id="top"><div class="rays" aria-hidden="true"></div><div class="blob" aria-hidden="true"><img src="/choco/icon.svg" alt="" width="120" height="120"></div><h1>Nothing is installed here.</h1><p class="lead">This address does not match any page of the Material Choco site. The page may have moved, or the link may be mistyped.</p><div class="cta"><a class="dl" href="/choco/">Go to the home page</a><button class="ghost" type="button" data-open-palette style="background:none;font:inherit;font-weight:700;font-size:1.12rem;cursor:pointer">Search the site</button></div><p class="fine">Or go to <a href="/choco/features/">Features</a>, <a href="/choco/screens.html">Screens</a>, <a href="/choco/remote.html">Remote hub</a>, <a href="/choco/download.html">Download</a>, <a href="/choco/articles/">Guides</a>, <a href="/choco/status.html">Status</a> or the <a href="/choco/about-the-demo.html">demo</a>.</p></section></main>` }));
 
 const search = [
-  { kind: 'Page', title: 'Home', sub: 'Download, overview, screenshots and status.', url: './' }, { kind: 'Page', title: 'Guides', sub: `${guides.length} how-to guides.`, url: 'articles/' }, { kind: 'Page', title: 'Features', sub: `${flat.length} feature pages.`, url: 'features/' },
-  ...[['top', 'Download the installer', 'download setup windows'], ['what', 'What it does', 'highlights'], ['everything', 'Everything in this build', 'feature list all'], ['remote', 'Remote management in three steps', 'hub docker pairing agent'], ['guides', 'Guides', 'articles how to'], ['screens', 'Screenshots', 'gallery pictures captures'], ['status', 'Honest status', 'verified proven limits unsigned']].map(([id, t, w]) => ({ kind: 'Section', title: t, sub: 'On the home page.', url: './#' + id, words: w })),
+  { kind: 'Page', title: 'Home', sub: 'Download, highlights, the demo and doors to every page.', url: './' }, { kind: 'Page', title: 'Features', sub: `${flat.length} feature pages.`, url: 'features/' }, { kind: 'Page', title: 'Screens', sub: `${shown.length} real captures.`, url: 'screens.html', words: 'gallery pictures screenshots captures' },
+  { kind: 'Page', title: 'Remote hub', sub: 'The hub in a container, in three steps.', url: 'remote.html', words: 'docker pairing agent fleet' }, { kind: 'Page', title: 'Download', sub: 'Installer, hub image, what is inside, how to check the file.', url: 'download.html', words: 'setup exe windows installer release unsigned digest' },
+  { kind: 'Page', title: 'Guides', sub: `${guides.length} how-to guides.`, url: 'articles/' }, { kind: 'Page', title: 'Status', sub: 'What was checked, what was not, and the feature count.', url: 'status.html', words: 'honest verified proven limits tests inventory roadmap' },
+  { kind: 'Page', title: 'About the demo', sub: 'What the in-browser demo is and is not.', url: 'about-the-demo.html', words: 'try simulated' },
+  ...[['remote.html#steps', 'Remote management in three steps', 'Remote hub'], ['remote.html#hub', 'What the hub gives you', 'Remote hub'], ['download.html#latest', 'Latest five installers', 'Download'], ['download.html#inside', 'What the installer contains', 'Download'], ['download.html#verify', 'Checking what you downloaded', 'Download'], ['download.html#hub-image', 'Hub image', 'Download'], ['status.html#checked', 'Checked', 'Status'], ['status.html#not-proven', 'Not yet proven', 'Status'], ['status.html#inventory', 'Required features, counted strictly', 'Status'], ['about-the-demo.html#limits', 'What the demo cannot show', 'About the demo']].map(([url, t, where]) => ({ kind: 'Section', title: t, sub: `On the page: ${where}`, url })),
+  ...galleryGroups.map((g) => ({ kind: 'Section', title: `Screens: ${g}`, sub: 'On the page: Screens', url: `screens.html#${slug(g)}` })),
   ...guides.map((g) => ({ kind: 'Guide', title: g.title, sub: g.desc.split(/(?<=\.)\s/)[0], url: `articles/${g.name}.html`, words: g.toc.map((t) => t[1]).join(' ').toLowerCase() })),
   ...guides.flatMap((g) => g.toc.map(([id, t]) => ({ kind: 'Section', title: t, sub: `In the guide: ${g.title}`, url: `articles/${g.name}.html#${id}` }))),
   ...flat.map((f) => ({ kind: 'Feature', title: f.title, sub: f.desc.split(/(?<=\.)\s/)[0], url: `features/${f.name}.html` })),

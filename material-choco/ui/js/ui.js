@@ -250,3 +250,18 @@ export function miniFilter(onchange, { label = t('filter'), sample = () => [] } 
   const chip = h('md-filter-chip', { label: t('regex'), onclick: (e) => setTimeout(() => { st.regex = e.target.selected; fire(); }) });
   return { st, test: (s) => matcher(st.q, st.regex).test(s), el: h('div', { class: 'row minifilter' }, input, chip, builderBtn(sample, (pat) => { st.q = pat; st.regex = true; input.value = pat; chip.selected = true; fire(); }), err) };
 }
+
+// --- copy button on every code block ---------------------------------------------------------
+// Every <pre> gets one icon-only button as its first child. It holds no text node, so
+// pre.textContent is exactly the block's own text. A block that is rewritten (textContent = ...)
+// loses the button and gets it back from the observer; appended output leaves it in place.
+function armPre(pre) {
+  const first = pre.firstChild; if (first && first.nodeType === 1 && first.classList.contains('precopy')) return;
+  for (const old of pre.querySelectorAll(':scope > .precopy')) old.remove();
+  const b = h('button', { type: 'button', class: 'precopy', 'aria-label': tx('Copy this block'), title: tx('Copy this block'), dataset: { done: t('copied') }, onclick: async (e) => { e.preventDefault(); e.stopPropagation(); const text = pre.textContent;
+    if (!text) return announce(tx('This block is empty, so nothing was copied.'));
+    try { await navigator.clipboard.writeText(text); } catch { return toast(tx('Copy failed. Select the text and copy it by hand.'), { kind: 'err' }); }
+    b.classList.add('done'); b.replaceChildren(icon('check', 'sm')); announce(t('copied')); sound('tap'); setTimeout(() => { b.classList.remove('done'); b.replaceChildren(icon('content_copy', 'sm')); }, 1800); } }, icon('content_copy', 'sm'));
+  pre.prepend(b);
+}
+new MutationObserver((list) => { for (const m of list) { if (m.target.nodeName === 'PRE') armPre(m.target); for (const n of m.addedNodes) { if (n.nodeType !== 1) continue; if (n.nodeName === 'PRE') armPre(n); else if (n.firstElementChild) for (const pre of n.querySelectorAll('pre')) armPre(pre); } } }).observe(document.documentElement, { childList: true, subtree: true });

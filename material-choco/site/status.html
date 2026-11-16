@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-base="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Status · Material Choco</title>
+<meta name="description" content="The honest status of Material Choco: what was checked and with what result, what has not been proven, and the strict count of required features.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/status.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Status · Material Choco">
+<meta property="og:description" content="The honest status of Material Choco: what was checked and with what result, what has not been proven, and the strict count of required features.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/status.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Status · Material Choco">
+<meta name="twitter:description" content="The honest status of Material Choco: what was checked and with what result, what has not been proven, and the strict count of required features.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css?v=fc53e5a6">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href="./"><img src="icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href="features/">Features</a><a href="screens.html">Screens</a><a href="remote.html">Remote hub</a><a href="download.html">Download</a><a href="articles/">Guides</a><a href="status.html" aria-current="page">Status</a><a href="about-the-demo.html">Demo</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main"><div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="./">Home</a></li><li><span aria-current="page">Status</span></li></ol><h1>Honest status</h1><p class="lead"><span>What was checked, with numbers. What has not been proven. What is not built. Nothing here is rounded up.</span></p></div><section class="band tight">
+  <div class="stats">
+    <div class="stat ok reveal"><b>88 of 88</b><span>unit and integration tests pass (<code>npm test</code>)</span></div>
+    <div class="stat ok reveal"><b>117 of 117</b><span>end to end checks pass, in a real browser against a real hub and agents</span></div>
+    <div class="stat no reveal"><b>0</b><span>installs run on Windows by a person, so far</span></div>
+    <div class="stat no reveal"><b>Unsigned</b><span>the installer carries no code signature</span></div>
+  </div>
+  <h2 id="checked">Checked</h2>
+  <ul class="status">
+    <li class="reveal ok"><b>The hub, agents and interface.</b> Covered by the automated tests and by an end to end run that drives the real interface as admin, operator and viewer. This includes the job queue, schedules, users and roles, passkeys, command allow lists, status webhooks and secrets at rest.</li>
+    <li class="reveal ok"><b>The release.</b> The workflow builds the Chocolatey CLI from this repository on Windows, packs it into the installer and publishes it, and pushes the hub image.</li>
+    <li class="reveal ok"><b>This site.</b> Every internal link is checked each time the site is built, and every page was measured at phone and desktop widths for sideways scroll and small touch targets.</li>
+  </ul>
+  <div class="statuspic"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>A job that succeeded</span></div><button class="shot" type="button" data-full="shots/08-job-success.png" data-caption="A job that succeeded. Jobs page: job 5, choco upgrade git, with a green panel reading Finished with exit code 0 and the output below it." aria-label="Enlarge: A job that succeeded"><img loading="lazy" src="shots/08-job-success.png" alt="Jobs page: job 5, choco upgrade git, with a green panel reading Finished with exit code 0 and the output below it." width="1360" height="757"></button></figure></div>
+  <h2 id="not-proven">Not yet proven</h2>
+  <ul class="status">
+    <li class="reveal no"><b>Windows.</b> Nobody has installed the app on Windows and run a real install, upgrade or uninstall through it. Every automated check used a test stand-in for <code>choco.exe</code>, on Linux. The two build scripts for Windows have never been run.</li>
+    <li class="reveal no"><b>Passkeys on a real device.</b> They were checked with a software passkey device and with the virtual one in Chrome.</li>
+    <li class="reveal no"><b>Accessibility.</b> Reduced motion, screen readers, display scaling and the larger text sizes have not been audited.</li>
+    <li class="reveal no"><b>Automatic updates.</b> The desktop app is written to download a newer release and announce it. That has never run on Windows.</li>
+    <li class="reveal no"><b>Secrets at rest.</b> Secret values are encrypted in the hub's data file, but the key lies in the same folder unless you move it.</li>
+  </ul>
+  <h2 id="inventory">Required features: 118 counted strictly</h2>
+  <p class="sub">The maintainer keeps a list of 118 features every app of theirs should have. This is the count for this app. A feature is "done" only when it meets the intent and a named check exercised it.</p>
+  <div class="bar" role="img" aria-label="14 done, 58 partial, 3 written and never run, 29 not built, 12 not applicable, 2 waived"><span class="b1" style="flex:14">14</span><span class="b2" style="flex:58">58</span><span class="b3" style="flex:3"></span><span class="b4" style="flex:29">29</span><span class="b5" style="flex:12">12</span><span class="b6" style="flex:2"></span></div>
+  <ul class="legend"><li><i class="b1"></i>14 done</li><li><i class="b2"></i>58 partial</li><li><i class="b3"></i>3 written, never run</li><li><i class="b4"></i>29 not built</li><li><i class="b5"></i>12 not applicable</li><li><i class="b6"></i>2 waived by the maintainer</li></ul>
+  <h2 id="not-built" style="margin-top:36px">Not built</h2>
+  <p class="sub">Signed agent updates, limiting a user to some machines, and much of that wider list. There are no authenticator codes: the maintainer removed them, and sign in is a password or a passkey.</p>
+  <h2 id="read-more">The records</h2>
+  <ul class="links"><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked, with results</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/FEATURE-INVENTORY.md">Feature inventory, row by row</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/CHANGELOG.md">Changelog</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/releases">All releases</a></li><li><a href="articles/security-model.html">Security model</a></li></ul>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href="./">Home</a><a href="features/">Features</a><a href="screens.html">Screens</a><a href="remote.html">Remote hub</a><a href="download.html">Download</a><a href="articles/">Guides</a><a href="status.html">Status</a><a href="about-the-demo.html">Demo</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="site.js?v=fc53e5a6"></script>
+</body>
+</html>

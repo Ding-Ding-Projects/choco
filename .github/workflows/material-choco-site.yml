@@ -3,7 +3,7 @@ name: Material Choco site
 on:
   push:
     branches: [main]
-    paths: ['material-choco/site/**', 'material-choco/docs/articles/**', 'material-choco/docs/features/**', 'material-choco/docs/screenshots/**', 'material-choco/ui/icon.svg', 'material-choco/ui/vendor/fonts/**', 'material-choco/package.json', '.github/workflows/material-choco-site.yml']
+    paths: ['material-choco/site/**', 'material-choco/docs/articles/**', 'material-choco/docs/features/**', 'material-choco/docs/screenshots/**', 'material-choco/ui/**', 'material-choco/package.json', '.github/workflows/material-choco-site.yml']
   workflow_dispatch:
 
 permissions:
@@ -36,6 +36,14 @@ jobs:
           cp material-choco/ui/vendor/fonts/*.woff2 _site/fonts/
           cp material-choco/docs/screenshots/*.png _site/shots/
           rm -f _site/shots/zz-*.png
+          # The in-browser demo: the real interface with a simulated hub, served from demo/.
+          if [ -f material-choco/ui/demo.html ]; then
+            mkdir -p _site/demo
+            cp -r material-choco/ui/. _site/demo/
+            mv _site/demo/demo.html _site/demo/index.html
+          else
+            echo "::warning::material-choco/ui/demo.html does not exist, so the demo was not published and links to demo/ will not work."
+          fi
           version="$(node -p "require('./material-choco/package.json').version")"
           printf '{"builtAt":"%s","commit":"%s","version":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_SHA" "$version" > _site/build.json
           touch _site/.nojekyll

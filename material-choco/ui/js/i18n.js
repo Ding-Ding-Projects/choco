@@ -131,7 +131,6 @@ const X = {
   "Enable": "啟用",
   "Disable": "停用",
   "Settings hold a value; features are on or off. Open a setting to read what it does, then Set or Unset it. A feature switch runs choco feature enable or disable on that machine at once. The export follows the filter and hides the value of secret settings.": "設定有一個值；功能就係開或者閂。打開一個設定睇佢做乜，然後設定或者取消設定。功能掣會即刻喺嗰部機器度執行 choco feature enable 或者 disable。匯出會跟住篩選，亦會隱藏機密設定嘅值。",
-  "The command runs once on every ticked machine. An offline machine keeps the job in its queue for up to 7 days. Copy puts the previewed command on the clipboard, Schedule opens a new schedule with this command, and Run starts it now. Uninstall, remove and unset ask for the two key confirmation first.": "指令會喺每部剔咗嘅機器度執行一次。離線嘅機器會將工作留喺隊列最多 7 日。複製會將預覽嘅指令放入剪貼簿，時間表會用呢個指令開一個新時間表，執行就即刻開始。剷走、移除同取消設定會先要求雙鑰匙確認。",
   "Asked to cancel {a} job(s). {b} skipped because they had already ended.": "已要求取消 {a} 個工作。{b} 個因為已經完結而跳過。",
   "Saved the logs of {a} of {b} jobs in one file.": "已將 {b} 個工作入面 {a} 個嘅紀錄儲存做一個檔案。",
   "{a} of {b} jobs shown.": "顯示緊 {b} 個工作入面嘅 {a} 個。",
@@ -459,6 +458,11 @@ const X = {
   "Machine offline": "機器離線",
   "Sign in locked": "登入被鎖",
   "Test": "測試",
+  "Passkeys are checked by a real hub, so they are switched off in this demo.": "通行密鑰要由真正嘅中樞核對，所以喺呢個示範入面閂咗。",
+  "Simulated: nothing was sent": "模擬：冇傳送任何嘢",
+  "The command runs once on every ticked machine. An offline machine keeps the job in its queue for up to 7 days. The button in the corner of the preview copies the command, Schedule opens a new schedule with this command, and Run starts it now. Uninstall, remove and unset ask for the two key confirmation first.": "指令會喺每部剔咗嘅機器度執行一次。離線嘅機器會將工作留喺隊列最多 7 日。預覽角落個掣會複製指令，時間表會用呢個指令開一個新時間表，執行就即刻開始。剷走、移除同取消設定會先要求雙鑰匙確認。",
+  "Copy this block": "複製呢段內容",
+  "This block is empty, so nothing was copied.": "呢段內容係空嘅，所以冇複製任何嘢。",
 };
 // Playful variants [English, Cantonese] for funny level 4 and 5. Same facts, same numbers.
 const FUNX = {

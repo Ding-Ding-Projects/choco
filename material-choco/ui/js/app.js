@@ -68,7 +68,7 @@ function shell() {
     h('header', { class: 'topbar' }, ibtn('menu', 'Open the tab list', () => nav.classList.toggle('open'), 'menubtn'), h('div', { class: 'brand' }, markEl(), h('div', { class: 'col gap0' }, h('span', { class: 'name' }, settings.displayName || (d ? 'Material Choco' : 'Material Choco hub')), h('span', { class: 'prov' }, provenance()))),
       h('button', { class: 'scope press', onclick: scopeMenu, 'aria-haspopup': 'menu', 'aria-label': `Machines to act on: ${scopeLabel()}` }, icon('dns', 'sm'), scopeLabel(), icon('keyboard_arrow_down', 'sm')),
       h('button', { class: 'omni press', onclick: palette, 'aria-label': t('search_all') }, icon('search', 'sm'), h('span', { class: 'grow' }, t('search_all')), h('span', { class: 'hint' }, h('kbd', {}, 'Ctrl+Shift+F'))), clock,
-      settings.a11yMenu && h('md-icon-button', { 'aria-label': t('accessibility'), title: t('accessibility'), dataset: { a11y: '1' }, onclick: a11yMenu }, icon('accessibility_new')), ibtn('notifications', t('notifications'), noticeSheet), roleBadge(), !d && ibtn('logout', t('sign_out'), async () => { await api('/api/logout', { method: 'POST' }); location.reload(); })),
+      settings.a11yMenu && h('md-icon-button', { 'aria-label': t('accessibility'), title: t('accessibility'), dataset: { a11y: '1' }, onclick: a11yMenu }, icon('accessibility_new')), ibtn('notifications', t('notifications'), noticeSheet), roleBadge(), !d && !S.status.demo && ibtn('logout', t('sign_out'), async () => { await api('/api/logout', { method: 'POST' }); location.reload(); })),
     h('div', { class: 'body' }, nav, R.main), bottom));
   nav.addEventListener('click', () => nav.classList.remove('open'));
   renderPage();
