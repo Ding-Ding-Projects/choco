@@ -36,7 +36,7 @@ const WEBAUTHN_CREATE = { id: '<credential id>', response: { clientDataJSON: '<b
 const WEBAUTHN_GET = { id: '<credential id>', response: { clientDataJSON: '<base64url>', authenticatorData: '<base64url>', signature: '<base64url>', userHandle: '<base64url>' } };
 const BODIES = {
   'POST /api/setup': { name: 'admin', password: 'at least ten characters' },
-  'POST /api/login': { name: 'admin', password: 'at least ten characters', totp: '123456' },
+  'POST /api/login': { name: 'admin', password: 'at least ten characters' },
   'POST /api/login/passkey/begin': { name: 'admin' },
   'POST /api/login/passkey/finish': WEBAUTHN_GET,
   'PATCH /api/machines/:id': { name: 'PC-01', groups: ['lab'], readOnly: false, allowedCommands: ['list', 'outdated', 'upgrade'] },
@@ -46,7 +46,6 @@ const BODIES = {
   'PATCH /api/schedules/:id': { enabled: false },
   'POST /api/audit': { action: 'note', detail: 'text' },
   'POST /api/account/password': { current: 'current password', next: 'new password of ten or more' },
-  'POST /api/account/totp': { action: 'begin' },
   'POST /api/account/passkeys/begin': { password: 'current password' },
   'POST /api/account/passkeys/finish': WEBAUTHN_CREATE,
   'POST /api/users': { name: 'olga', role: 'operator', password: 'initial password of ten or more' },

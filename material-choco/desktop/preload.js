@@ -7,5 +7,7 @@ contextBridge.exposeInMainWorld('desktop', {
   relaunchElevated: () => ipcRenderer.invoke('relaunch-elevated'),
   openData: () => ipcRenderer.invoke('open-data'),
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
+  onUpdate: (fn) => ipcRenderer.on('update-state', (_e, u) => fn(u)),
+  restartToUpdate: () => ipcRenderer.invoke('restart-to-update'),
   agent: { status: () => ipcRenderer.invoke('agent-status'), connect: (o) => ipcRenderer.invoke('agent-connect', o), disconnect: () => ipcRenderer.invoke('agent-disconnect') },
 });

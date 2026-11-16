@@ -43,9 +43,9 @@ test('limit-output parsers', () => {
   assert.strictEqual(choco.parse.sources('a|https://x|True|u||3|False|False|True')[0].disabled, true);
   assert.strictEqual(choco.parse.features('checksumFiles|Enabled|Checks | files')[0].description, 'Checks | files');
 });
-test('password hashing, TOTP (RFC 6238 vector) and pairing codes', () => {
+test('password hashing, pairing codes and the sign-in limiter', () => {
   const rec = auth.hashPassword('correct horse'); assert.ok(auth.verifyPassword('correct horse', rec)); assert.ok(!auth.verifyPassword('wrong', rec));
-  assert.strictEqual(auth.totp('GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ', 59000), '287082');
+  for (const gone of ['totp', 'totpVerify', 'totpSecret', 'base32Encode', 'base32Decode']) assert.strictEqual(auth[gone], undefined, gone); // authenticator codes were removed
   assert.match(auth.pairingCode(), /^[A-HJ-NP-Z2-9]{4}-[A-HJ-NP-Z2-9]{4}$/);
   const l = new auth.Limiter(); for (let i = 0; i < 5; i++) l.fail('k'); assert.ok(l.check('k') > 0); l.ok('k'); assert.strictEqual(l.check('k'), 0);
 });

@@ -86,7 +86,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{\n \"name\": \"admin\",\n \"password\": \"at least ten characters\",\n \"totp\": \"123456\"\n}",
+       "raw": "{\n \"name\": \"admin\",\n \"password\": \"at least ten characters\"\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -482,33 +482,6 @@
       "body": {
        "mode": "raw",
        "raw": "{\n \"current\": \"current password\",\n \"next\": \"new password of ten or more\"\n}",
-       "options": {
-        "raw": {
-         "language": "json"
-        }
-       }
-      }
-     }
-    },
-    {
-     "name": "POST /api/account/totp",
-     "request": {
-      "method": "POST",
-      "header": [],
-      "url": {
-       "raw": "{{baseUrl}}/api/account/totp",
-       "host": [
-        "{{baseUrl}}"
-       ],
-       "path": [
-        "api",
-        "account",
-        "totp"
-       ]
-      },
-      "body": {
-       "mode": "raw",
-       "raw": "{\n \"action\": \"begin\"\n}",
        "options": {
         "raw": {
          "language": "json"

@@ -21,7 +21,7 @@ These files are a design. They are not the implementation and do not prove any b
 | Remote fleet | `Machines`, `Job`, `PairQr` |
 | Required features | `Settings`, `Palette` |
 | States and errors | `StateLoading`, `StateError`, `StateSuccess`, `StateEmpty`, `InstallSuccess`, `InstallError` |
-| Built-in tools | `Base64`, `Authenticator` |
+| Built-in tools | `Base64` |
 | Search | `RegexBuilder` |
 | Hub security | `PasskeySignIn`, `Users`, `Webhooks` |
 | Landing site | `Site`, `SitePhone` |
@@ -40,11 +40,11 @@ A first version was more restrained. It was replaced the same day at the maintai
 
 ## Second pass (2026-11-16)
 
-Nine boards were added for surfaces that were being built at the same time: QR pairing, Base64 tools, the built-in authenticator, the regex builder, passkey sign in, users and roles, status webhooks, and the landing site on desktop and phone. They were rendered to `frames/` and reviewed; two findings were fixed (the logo inside the landing hero shape was drawn too small, and the sign-in fields were spread apart). The QR pattern on the boards is illustrative, not a scannable code. Text in square brackets on the landing boards marks values that the live page looks up. These boards were drawn while the code was written, so the built screens may differ; compare with `material-choco/docs/screenshots` before relying on them.
+Nine boards were added (one, the built-in authenticator, was removed the same day when the maintainer decided the app has no authenticator codes) for surfaces that were being built at the same time: QR pairing, Base64 tools, the regex builder, passkey sign in, users and roles, status webhooks, and the landing site on desktop and phone. They were rendered to `frames/` and reviewed; two findings were fixed (the logo inside the landing hero shape was drawn too small, and the sign-in fields were spread apart). The QR pattern on the boards is illustrative, not a scannable code. Text in square brackets on the landing boards marks values that the live page looks up. These boards were drawn while the code was written, so the built screens may differ; compare with `material-choco/docs/screenshots` before relying on them.
 
 ## Tweaks (added 2026-11-16)
 
-Every board declares two working levers in the design tool's Tweaks tab, with the same names and defaults on all 28 boards:
+Every board declares two working levers in the design tool's Tweaks tab, with the same names and defaults on all 27 boards:
 
 | Tweak | Type | Default | Effect |
 | --- | --- | --- | --- |

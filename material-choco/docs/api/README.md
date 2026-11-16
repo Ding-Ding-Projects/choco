@@ -32,7 +32,6 @@ The table and the Postman collection [material-choco.postman_collection.json](ma
 | POST | `/api/audit` | viewer, operator, admin |
 | GET | `/api/account` | viewer, operator, admin |
 | POST | `/api/account/password` | viewer, operator, admin |
-| POST | `/api/account/totp` | viewer, operator, admin |
 | GET | `/api/account/passkeys` | viewer, operator, admin |
 | POST | `/api/account/passkeys/begin` | viewer, operator, admin |
 | POST | `/api/account/passkeys/finish` | viewer, operator, admin |
@@ -85,11 +84,19 @@ Job output and the history are visible to every role. Do not give an account to 
 | Route | Body | Answer |
 | --- | --- | --- |
 | `POST /api/setup` | `{ name, password }` (once, creates the first `admin`) | `{ ok: true }` and the session cookie |
-| `POST /api/login` | `{ name, password, totp? }` | `{ ok: true }` and the session cookie. `401` with `totpRequired: true` when a code is needed. `403` for a disabled account (only after a correct password). `429` while locked out. |
+| `POST /api/login` | `{ name, password }` | `{ ok: true }` and the session cookie. `403` for a disabled account (only after a correct password). `429` while locked out. A `totp` field is ignored. |
 | `POST /api/logout` | none | `{ ok: true }` |
-| `GET /api/account` | | `{ name, role, totpEnabled, passkeys, passkeysAvailable, desktop }` (`passkeys` is a count) |
+| `GET /api/account` | | `{ name, role, totpEnabled, passkeys, passkeysAvailable, desktop }` (`passkeys` is a count; `totpEnabled` is always `false`, see below) |
 | `POST /api/account/password` | `{ current, next }` | `{ ok: true }`. The account's other sessions are signed out. |
-| `POST /api/account/totp` | `{ action: "begin" }`, `{ action: "enable", code }`, `{ action: "disable", password }` | `begin` answers `{ secret, uri }` and is refused with `409` while an authenticator is enabled (turn it off with the password first). |
+
+### Authenticator codes were removed
+
+The hub has no authenticator code (TOTP) step. Sign-in is a password or a passkey.
+
+- `POST /api/account/totp` no longer exists and answers `404`.
+- `POST /api/login` ignores a `totp` field and never answers `totpRequired`.
+- `totpEnabled` is still present in `GET /api/account` and in each item of `GET /api/users`, and is always `false`. It is kept so that an interface written for the earlier version keeps working, and will be dropped later.
+- A hub upgraded from a version that had authenticator codes deletes every stored authenticator record when it starts and writes one history entry per affected user: `account.totp.removed` with `target` (the user name) and `wasEnabled`. The secret is not written anywhere. Those users sign in with their password alone from then on, so add a passkey if you want more than a password.
 
 ## Passkeys
 
@@ -125,8 +132,7 @@ Rules the hub applies:
 - A challenge works once and for five minutes.
 - The origin, the relying party id hash and the user-present flag must match. The signature is checked over `authenticatorData` followed by the SHA-256 of `clientDataJSON`.
 - The sign counter must move forward. A counter that does not is refused and written to the history as `account.passkey.counter`, because the passkey may have been copied. Authenticators that always report 0 are accepted.
-- An account with an authenticator code (TOTP) can only use a passkey that verified the user (PIN or biometrics). Otherwise a passkey would replace two factors with one.
-- Both open routes are limited to 60 requests a minute per address, and five failed attempts in a row lock passkey sign-in for that address with growing delays. Failed attempts answer `401` with the same message whatever the reason, and the reason is in the history. Two cases say more, both only after a valid signature: a disabled account (`403`) and an account that needs user verification.
+- Both open routes are limited to 60 requests a minute per address, and five failed attempts in a row lock passkey sign-in for that address with growing delays. Failed attempts answer `401` with the same message whatever the reason, and the reason is in the history. A disabled account answers `403`, only after a valid signature.
 
 ## Users
 
@@ -205,14 +211,13 @@ An administrator can point a webhook at any HTTPS address the hub can reach, inc
 On first start the hub creates `secret.key` (32 random bytes as hex, mode 0600) in the data directory and encrypts with AES-256-GCM:
 
 - values of options marked `secret` in `shared/choco-schema.json` (source and certificate passwords, API keys, the proxy password) inside queued jobs and inside schedules,
-- authenticator (TOTP) secrets,
 - webhook addresses.
 
 A job's secret values are decrypted only when the job is handed to its agent, and removed from the stored job when it finishes, is cancelled or expires. Data written by an older version is encrypted during the first start of this version.
 
 **What this protects:** a copy of `hub.json` on its own, such as a backup or a file attached to a support request.
 
-**What this does not protect:** anyone who can read the whole data directory reads `secret.key` too and can decrypt everything. To keep the key apart from the data, set `MATERIAL_CHOCO_KEY_FILE` to a path on another volume or secret mount. Back the key up with `hub.json`: without it, queued secrets, authenticator secrets and webhook addresses cannot be read, and the hub refuses to start with a damaged key file rather than replace it.
+**What this does not protect:** anyone who can read the whole data directory reads `secret.key` too and can decrypt everything. To keep the key apart from the data, set `MATERIAL_CHOCO_KEY_FILE` to a path on another volume or secret mount. Back the key up with `hub.json`: without it, queued secrets and webhook addresses cannot be read, and the hub refuses to start with a damaged key file rather than replace it.
 
 Other limits to know about: positional arguments and options not marked secret are stored as they are; job output is stored as the CLI printed it; passwords are salted scrypt hashes and were never stored in plain text.
 

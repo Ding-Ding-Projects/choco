@@ -240,3 +240,36 @@ details.fold > summary::-webkit-details-marker { display: none; } details.fold[o
 .drama .hint { position: absolute; bottom: 18px; left: 0; right: 0; font-size: .8125rem; opacity: .8; z-index: 2; }
 :root[data-motion=reduced] .drama .rays, :root[data-motion=reduced] .drama .ring, :root[data-motion=reduced] .drama .bit, :root[data-motion=reduced] .drama .shard, :root[data-motion=reduced] .drama.err::before, :root[data-motion=reduced] .drama.err::after { display: none; }
 @media (prefers-reduced-motion: reduce) { :root:not([data-motion=full]) .drama .rays, :root:not([data-motion=full]) .drama .ring, :root:not([data-motion=full]) .drama .bit, :root:not([data-motion=full]) .drama .shard, :root:not([data-motion=full]) .drama.err::before, :root:not([data-motion=full]) .drama.err::after { display: none; } }
+
+/* QR codes: always dark on white with a quiet zone, in both themes */
+.qr { width: min(220px, 100%); padding: 0; border-radius: 16px; overflow: hidden; background: #fff; animation: pop calc(520ms * var(--dur)) var(--spring); align-self: flex-start; }
+.qr svg { display: block; width: 100%; height: auto; }
+/* info tips */
+.explain.tip { flex: 1 1 100%; } .explain.tip b { display: block; margin-bottom: 4px; }
+.bad { color: var(--err); }
+/* text areas of the built-in tools */
+.ta { width: 100%; min-height: 180px; resize: vertical; padding: 14px; border-radius: 14px; border: 1px solid var(--ol); background: var(--bg); color: var(--on); font: inherit; font-size: .9375rem; line-height: 1.5; transition: border-color 200ms, box-shadow 200ms; }
+.ta.mono { font-family: var(--mono); font-size: .8125rem; overflow-wrap: anywhere; } .ta:hover { border-color: var(--on); } .ta:focus-visible { outline: 3px solid var(--pri); outline-offset: 0; border-color: transparent; }
+/* pattern builder preview */
+.rxlist { display: flex; flex-direction: column; gap: 4px; max-height: 220px; overflow: auto; }
+.rxrow { display: flex; align-items: center; gap: 10px; padding: 6px 12px; border-radius: 12px; background: var(--s2); color: var(--onv); animation: rise calc(260ms * var(--dur)) var(--spring) both; } .rxrow.hit { background: var(--okc); color: var(--onokc); }
+/* tab strip: drag and drop reordering */
+.tab[draggable=true] { -webkit-user-drag: element; } .tab.dragging { opacity: .45; transform: scale(.96); }
+.tab.dropbefore { box-shadow: 0 -3px 0 0 var(--ter); border-radius: 12px; } .tab.dropafter { box-shadow: 0 3px 0 0 var(--ter); border-radius: 12px; }
+/* custom logo */
+.mark.custom { background: none; overflow: hidden; } .mark.custom:hover { rotate: 0deg; } .mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.mark.big { width: 72px; height: 72px; border-radius: 22px; } .mark.big svg { width: 44px; height: 44px; }
+/* appearance presets */
+.looks { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.look { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 10px 14px; border-radius: 20px; border: 1px solid var(--olv); background: var(--bg); text-align: left; }
+.look[aria-pressed=true] { border-color: var(--pri); background: var(--pc); color: var(--onpc); border-radius: 28px; }
+.look i { width: 36px; height: 36px; flex: none; border-radius: 38% 62% 55% 45% / 48% 40% 60% 52%; background: oklch(.55 calc(.14 * var(--lc)) var(--lh)); transition: border-radius 400ms var(--spring), rotate 400ms var(--spring); } .look:hover i { rotate: 40deg; border-radius: 50%; } .look i.dark { background: oklch(.25 .03 var(--lh)); border: 2px solid var(--ol); }
+/* time fields */
+.timef { min-width: 130px; } input.time { height: var(--target); min-height: 44px; padding: 0 14px; border-radius: 14px; border: 1px solid var(--ol); background: var(--bg); color: var(--on); font: inherit; font-family: var(--mono); }
+.bulk > b { flex: 1 0 auto; }
+.sheet > *:not(.palette) { flex-shrink: 0; }
+/* sign in with a passkey */
+.passkeybtn { --md-filled-button-container-height: 64px; --md-filled-button-container-shape: 24px; --md-filled-button-label-text-size: 1.0625rem; width: 100%; }
+.or { display: flex; align-items: center; gap: 14px; color: var(--onv); font-size: .8125rem; } .or::before, .or::after { content: ''; flex: 1; border-top: 1px solid var(--olv); }
+.topbar .badge { align-self: center; min-height: 32px; }
+@media (max-width: 860px) { .topbar .badge[data-role] { display: none; } }

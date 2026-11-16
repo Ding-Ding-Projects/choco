@@ -150,3 +150,9 @@ Count by catalogue entry: 28 done, 33 partial, 1 written and not run, 48 not bui
 | Feature | State | Notes |
 | --- | --- | --- |
 | Items that apply only to the instructions repository (three), to games (two), or to private repositories (one) | Not applicable | |
+
+## Waived by the maintainer
+
+| Feature | Date | Notes |
+| --- | --- | --- |
+| Built-in authenticator, and authenticator codes at hub sign in | 2026-11-16 | The maintainer decided this app has no authenticator codes. Sign in is passkey or password. |

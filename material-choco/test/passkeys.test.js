@@ -8,7 +8,6 @@ const crypto = require('node:crypto');
 const fs = require('node:fs');
 const { startHub, cleanup, client, setupAdmin, PASSWORD } = require('./helpers');
 const webauthn = require('../hub/webauthn');
-const auth = require('../hub/auth');
 
 const sha256 = (b) => crypto.createHash('sha256').update(b).digest();
 const b64u = (b) => Buffer.from(b).toString('base64url');
@@ -175,13 +174,8 @@ test('RS256 passkeys register and sign in', async () => {
   assert.strictEqual((await finishLogin(rsa.get(await loginOptions(), { origin }))).status, 401); // a removed passkey no longer signs in
   await reset();
 });
-test('an account with an authenticator code needs a passkey that verifies the user', async () => {
-  const begin = (await admin('/api/account/totp', { method: 'POST', body: { action: 'begin' } })).data;
-  assert.strictEqual((await admin('/api/account/totp', { method: 'POST', body: { action: 'enable', code: auth.totp(begin.secret) } })).status, 200);
-  const noUv = await finishLogin(key.get(await loginOptions(), { origin, flags: 0x01 })); assert.strictEqual(noUv.status, 401); assert.match(noUv.data.error, /PIN or biometrics/);
-  assert.strictEqual((await finishLogin(key.get(await loginOptions(), { origin, flags: 0x05 }))).status, 200); await anon('/api/logout', { method: 'POST' });
-  assert.strictEqual((await admin('/api/account/totp', { method: 'POST', body: { action: 'disable', password: PASSWORD } })).status, 200);
-  assert.strictEqual((await finishLogin(key.get(await loginOptions(), { origin, flags: 0x01 }))).status, 200); await anon('/api/logout', { method: 'POST' });
+test('a passkey that only confirms presence signs in: there is no second step', async () => {
+  assert.strictEqual((await finishLogin(key.get(await loginOptions(), { origin, flags: 0x01 }))).status, 200); assert.strictEqual((await anon('/api/status')).data.user, 'admin'); await anon('/api/logout', { method: 'POST' });
 });
 test('password sign-in still works next to passkeys', async () => {
   const c = client(h.port, { host: HOST() }); assert.strictEqual((await c('/api/login', { method: 'POST', body: { name: 'admin', password: PASSWORD } })).status, 200); assert.strictEqual((await c('/api/status')).data.authenticated, true);

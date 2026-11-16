@@ -79,11 +79,13 @@ function createHub({ dataDir, desktop = false, host = '0.0.0.0', port = 8080, tl
   // Accounts from before roles existed belonged to the single administrator.
   for (const u of db.users) if (u.role === undefined) u.role = 'admin'; else if (!isRole(u.role)) u.role = 'viewer';
   // Secrets at rest: queued jobs and schedules keep their secret option values encrypted,
-  // finished jobs keep none, authenticator secrets are encrypted. This also upgrades data
-  // written by versions that stored these values as plain text.
+  // finished jobs keep none. This also upgrades data written by versions that stored these
+  // values as plain text.
   for (const j of db.jobs) j.spec = j.state === 'queued' ? vault.sealSpec(j.spec) : vault.wipeSpec(j.spec);
   for (const sch of db.schedules) sch.spec = vault.sealSpec(sch.spec);
-  for (const u of db.users) if (u.totp && u.totp.secret && !vault.isSealed(u.totp.secret)) u.totp.secret = vault.seal(u.totp.secret, 'totp');
+  // Authenticator codes were removed from the hub. A record left by an older version is
+  // deleted, so nobody is locked out by a step that no longer exists and no secret stays on disk.
+  for (const u of db.users) if (Object.hasOwn(u, 'totp')) { const wasEnabled = !!(u.totp && u.totp.enabled); delete u.totp; audit('hub', 'account.totp.removed', { target: u.name, wasEnabled }); }
   store.flush();
 
   // ---- webhooks -------------------------------------------------------------------
@@ -271,7 +273,7 @@ function createHub({ dataDir, desktop = false, host = '0.0.0.0', port = 8080, tl
     if (!u || !okPass) { audit(name || '(none)', 'login.failed', { ip: ip(req) }); loginFailed(key, name, req); throw new HttpError(401, 'Wrong name or password'); }
     // Only someone who knows the password learns that the account is disabled.
     if (u.disabled) { audit(u.name, 'login.refused', { ip: ip(req), reason: 'disabled' }); throw new HttpError(403, 'This account is disabled. Ask an administrator.'); }
-    if (u.totp && u.totp.enabled) { if (!b.totp) return send(res, 401, { error: 'Enter the 6 digit code from your authenticator', totpRequired: true }); if (!auth.totpVerify(vault.open(u.totp.secret, 'totp'), b.totp)) { loginFailed(key, name, req); throw new HttpError(401, 'Wrong authenticator code'); } }
+    // There is no authenticator code step. A `totp` field sent by an older interface is ignored.
     limiter.ok(key); u.lastLogin = new Date().toISOString(); store.save(); startSession(res, u.name, req); audit(u.name, 'login.ok', { ip: ip(req) }); send(res, 200, { ok: true });
   }, { open: true });
   route('POST', '/api/logout', (req, res) => { const t = cookie(req, 'mc_session'); if (t) sessions.delete(auth.sha256(t)); res.setHeader('set-cookie', 'mc_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'); send(res, 200, { ok: true }); }, { open: true });
@@ -345,21 +347,12 @@ function createHub({ dataDir, desktop = false, host = '0.0.0.0', port = 8080, tl
   route('DELETE', '/api/schedules/:id', (req, res, p, s) => { const i = db.schedules.findIndex((x) => x.id === p.id); if (i < 0) throw new HttpError(404, 'No such schedule'); const [gone] = db.schedules.splice(i, 1); store.save(); audit(s.user, 'schedule.remove', { schedule: gone.name }); send(res, 200, { ok: true }); }, { role: 'operator' });
   route('GET', '/api/audit', (req, res) => { const u = new URL(req.url, 'http://x'); send(res, 200, store.readAudit(Math.min(Number(u.searchParams.get('limit')) || 500, 5000))); });
   route('POST', '/api/audit', async (req, res, p, s) => { const b = await readBody(req); audit(s.user, 'ui.' + String(b.action || 'note').replace(/[^\w.-]/g, '').slice(0, 40), { detail: String(b.detail || '').slice(0, 300) }); send(res, 200, { ok: true }); }, { role: 'viewer' });
-  route('GET', '/api/account', (req, res, p, s) => { const u = db.users.find((x) => x.name === s.user); send(res, 200, { name: s.user, role: s.role, totpEnabled: !!(u && u.totp && u.totp.enabled), passkeys: u && u.passkeys ? u.passkeys.length : 0, passkeysAvailable: !!rpInfo(req).available, desktop }); });
+  route('GET', '/api/account', (req, res, p, s) => { const u = db.users.find((x) => x.name === s.user); send(res, 200, { name: s.user, role: s.role, totpEnabled: false /* kept for older interfaces; authenticator codes were removed */, passkeys: u && u.passkeys ? u.passkeys.length : 0, passkeysAvailable: !!rpInfo(req).available, desktop }); });
   route('POST', '/api/account/password', async (req, res, p, s) => {
     const u = db.users.find((x) => x.name === s.user); if (!u) throw new HttpError(409, 'The desktop app has no password');
     const b = await readBody(req); if (!auth.verifyPassword(String(b.current || ''), u.pass)) throw new HttpError(401, 'Current password is wrong');
     if (String(b.next || '').length < 10) throw new HttpError(400, 'Password must be at least 10 characters');
     u.pass = auth.hashPassword(b.next); store.flush(); dropSessions(u.name, s); audit(s.user, 'account.password'); send(res, 200, { ok: true }); // other devices are signed out
-  }, { role: 'viewer' });
-  route('POST', '/api/account/totp', async (req, res, p, s) => {
-    const u = db.users.find((x) => x.name === s.user); if (!u) throw new HttpError(409, 'The desktop app has no sign in');
-    const b = await readBody(req);
-    // The authenticator secret is stored encrypted (see hub/secrets.js) and shown once, here.
-    if (b.action === 'begin') { if (u.totp && u.totp.enabled) throw new HttpError(409, 'Turn the authenticator off before setting up a new one'); const secret = auth.totpSecret(); u.totp = { secret: vault.seal(secret, 'totp'), enabled: false }; store.flush(); return send(res, 200, { secret, uri: `otpauth://totp/Material%20Choco:${encodeURIComponent(u.name)}?secret=${secret}&issuer=Material%20Choco` }); }
-    if (b.action === 'enable') { if (!u.totp || !auth.totpVerify(vault.open(u.totp.secret, 'totp'), b.code)) throw new HttpError(400, 'That code does not match'); u.totp.enabled = true; store.flush(); audit(s.user, 'account.totp.enable'); return send(res, 200, { ok: true }); }
-    if (b.action === 'disable') { if (!auth.verifyPassword(String(b.password || ''), u.pass)) throw new HttpError(401, 'Password is wrong'); delete u.totp; store.flush(); audit(s.user, 'account.totp.disable'); return send(res, 200, { ok: true }); }
-    throw new HttpError(400, 'Unknown action');
   }, { role: 'viewer' });
 
   // ---- passkeys: the signed-in user's own credentials ------------------------------------------
@@ -426,15 +419,12 @@ function createHub({ dataDir, desktop = false, host = '0.0.0.0', port = 8080, tl
       refuse(e.message);
     }
     if (u.disabled) { audit(u.name, 'login.refused', { ip: ip(req), reason: 'disabled', method: 'passkey' }); throw new HttpError(403, 'This account is disabled. Ask an administrator.'); }
-    // An account with an authenticator code has two factors. A passkey may only replace both
-    // when the authenticator itself verified the person (PIN or biometrics).
-    if (u.totp && u.totp.enabled && !checked.userVerified) refuse('User verification is required for this account', 401, 'This account needs a passkey that verifies you with a PIN or biometrics. Sign in with your password and code instead.');
     cred.counter = checked.counter; cred.lastUsed = new Date().toISOString(); cred.backedUp = checked.backedUp; u.lastLogin = cred.lastUsed; store.flush();
     limiter.ok(key); startSession(res, u.name, req); audit(u.name, 'login.ok', { ip: ip(req), method: 'passkey', passkey: cred.name }); send(res, 200, { ok: true });
   }, { open: true });
 
   // ---- users (administrators only) ---------------------------------------------------------------
-  const publicUser = (u) => ({ name: u.name, role: u.role, disabled: !!u.disabled, createdAt: u.createdAt || null, lastLogin: u.lastLogin || null, totpEnabled: !!(u.totp && u.totp.enabled), passkeys: (u.passkeys || []).length });
+  const publicUser = (u) => ({ name: u.name, role: u.role, disabled: !!u.disabled, createdAt: u.createdAt || null, lastLogin: u.lastLogin || null, totpEnabled: false, passkeys: (u.passkeys || []).length });
   const targetUser = (p) => { let name; try { name = decodeURIComponent(p.name); } catch { throw new HttpError(400, 'Bad user name'); } const u = userByName(name); if (!u) throw new HttpError(404, 'No such user'); return u; };
   const noDesktopUsers = () => { if (desktop) throw new HttpError(409, 'The desktop app has no user accounts'); };
   route('GET', '/api/users', (req, res) => send(res, 200, db.users.map(publicUser)), { role: 'admin' });

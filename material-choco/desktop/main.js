@@ -44,6 +44,17 @@ if (agentAt >= 0) {
       win.once('ready-to-show', () => win.show());
       await win.loadURL(`${origin}/?launch=${hub.launchToken}`);
       hub.createJob(hub.db.machines.find((m) => m.local), { kind: 'inventory' }, 'startup');
+      // Squirrel.Windows updates from the newest release. The packages are not code signed.
+      if (process.platform === 'win32' && app.isPackaged) {
+        const { autoUpdater } = require('electron'); const send = (u) => { if (win && !win.isDestroyed()) win.webContents.send('update-state', u); };
+        try {
+          autoUpdater.setFeedURL({ url: 'https://github.com/Ding-Ding-Projects/choco/releases/latest/download' });
+          autoUpdater.on('update-downloaded', (_e, _notes, name) => send({ state: 'ready', version: name }));
+          autoUpdater.on('error', (err) => send({ state: 'error', message: String((err && err.message) || err).slice(0, 200) }));
+          ipcMain.handle('restart-to-update', (e) => { if (fromUi(e)) autoUpdater.quitAndInstall(); });
+          setTimeout(() => autoUpdater.checkForUpdates(), 15000); setInterval(() => autoUpdater.checkForUpdates(), 6 * 3600 * 1000);
+        } catch (err) { send({ state: 'error', message: String(err.message).slice(0, 200) }); }
+      }
       if (process.env.MATERIAL_CHOCO_SCREENSHOT) setTimeout(async () => { fs.writeFileSync(process.env.MATERIAL_CHOCO_SCREENSHOT, (await win.webContents.capturePage()).toPNG()); app.quit(); }, 6000);
     }
 

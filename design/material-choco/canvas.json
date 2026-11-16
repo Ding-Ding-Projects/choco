@@ -2,7 +2,7 @@
  "v": 3,
  "createdOnFiles": {
   "v": 1,
-  "at": "2026-11-16T15:06:46Z"
+  "at": "2026-11-16T15:50:29Z"
  },
  "title": "Material Choco",
  "launch": {
@@ -235,15 +235,6 @@
    "page": "tools",
    "expand": "fill"
   },
-  "Authenticator.dc.html": {
-   "x": 1440,
-   "y": 0,
-   "w": 1360,
-   "h": 820,
-   "title": "Built-in authenticator",
-   "page": "tools",
-   "expand": "fill"
-  },
   "RegexBuilder.dc.html": {
    "x": 0,
    "y": 0,
@@ -335,7 +326,6 @@
   "InstallSuccess.dc.html",
   "InstallError.dc.html",
   "Base64.dc.html",
-  "Authenticator.dc.html",
   "RegexBuilder.dc.html",
   "PasskeySignIn.dc.html",
   "Users.dc.html",
@@ -407,7 +397,7 @@
    "y": -300,
    "text": "Built-in tools",
    "kind": "title1",
-   "maxW": 2800,
+   "maxW": 1360,
    "page": "tools"
   },
   "t_search": {

@@ -2,8 +2,8 @@
 // Encryption of secret values at rest (AES-256-GCM, Node built-ins only).
 //
 // What this protects: a copy of hub.json on its own (a backup, a support bundle, a
-// mis-sent file) does not reveal queued source passwords, API keys, authenticator
-// secrets or webhook addresses.
+// mis-sent file) does not reveal queued source passwords, API keys or
+// webhook addresses.
 // What this does NOT protect: anyone who can read the whole data directory also reads
 // the key file next to hub.json and can decrypt everything. Set MATERIAL_CHOCO_KEY_FILE
 // to keep the key on a different volume if that matters to you.
