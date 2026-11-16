@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Link preview when the address is shared</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wdth,wght@8..144,100..125,400..800&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}
+a{color:#006A6A}a:hover{color:#002020}
+@keyframes mc-rise{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes mc-slide{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+@keyframes mc-pop{0%{transform:scale(.8)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes mc-pulse{0%{box-shadow:0 0 0 0 rgba(0,106,106,.55)}100%{box-shadow:0 0 0 14px rgba(0,106,106,0)}}
+@keyframes mc-alarm{0%{box-shadow:0 0 0 0 rgba(186,26,26,.5)}100%{box-shadow:0 0 0 22px rgba(186,26,26,0)}}
+@keyframes mc-shake{0%,100%{transform:none}15%{transform:translateX(-10px) rotate(-1deg)}30%{transform:translateX(9px) rotate(1deg)}45%{transform:translateX(-6px)}60%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+@keyframes mc-shimmer{from{background-position:-480px 0}to{background-position:480px 0}}
+@keyframes mc-wave{from{background-position:0 0}to{background-position:48px 0}}
+@keyframes mc-morph{0%,100%{border-radius:38% 62% 55% 45%/48% 40% 60% 52%;transform:rotate(0)}33%{border-radius:60% 40% 38% 62%/55% 62% 38% 45%}66%{border-radius:45% 55% 62% 38%/38% 48% 52% 62%;transform:rotate(18deg)}}
+@keyframes mc-spin{to{transform:rotate(360deg)}}
+@keyframes mc-draw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+@keyframes mc-confetti{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(150px) rotate(300deg);opacity:0}}
+@keyframes mc-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes d-iris{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(150% at 50% 50%)}}
+@keyframes d-stamp{0%{opacity:0;transform:scale(3.4) rotate(-18deg)}55%{opacity:1;transform:scale(.86) rotate(3deg)}75%{transform:scale(1.08) rotate(-1deg)}100%{transform:scale(1)}}
+@keyframes d-title{0%{opacity:0;transform:translateY(60px) scale(.7);letter-spacing:12px}60%{opacity:1;transform:translateY(-8px) scale(1.06)}100%{transform:none;letter-spacing:-1px}}
+@keyframes d-ring{from{transform:scale(.2);opacity:.9}to{transform:scale(3.2);opacity:0}}
+@keyframes d-ray{to{transform:rotate(360deg)}}
+@keyframes d-fall{0%{transform:translateY(-80px) rotate(0)}100%{transform:translateY(860px) rotate(700deg)}}
+@keyframes d-quake{10%{transform:translate(-14px,6px) rotate(-.6deg)}20%{transform:translate(12px,-8px) rotate(.5deg)}30%{transform:translate(-10px,-4px)}40%{transform:translate(9px,7px)}50%{transform:translate(-6px,3px)}60%{transform:translate(5px,-3px)}70%{transform:translate(-3px,2px)}}
+@keyframes d-glitch{0%,100%{text-shadow:none;transform:none}20%{text-shadow:-6px 0 rgba(0,255,255,.55),6px 0 rgba(255,0,255,.55);transform:skewX(-6deg)}40%{text-shadow:5px 0 rgba(0,255,255,.55),-5px 0 rgba(255,0,255,.55);transform:skewX(4deg)}}
+@keyframes d-scan{to{background-position:0 24px}}
+.mc-press{transition:transform 180ms cubic-bezier(.2,1.4,.4,1),border-radius 260ms,filter 180ms}.mc-press:hover{transform:scale(1.04);filter:brightness(1.06)}.mc-press:active{transform:scale(.95);border-radius:12px}
+.mc-lift{transition:transform 260ms cubic-bezier(.2,1.3,.4,1),box-shadow 260ms}.mc-lift:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(42,23,8,.12)}
+.mc-still,.mc-still *{animation:none !important;transition:none !important}
+@media (prefers-reduced-motion: reduce){*{animation-duration:1ms !important;animation-iteration-count:1 !important;transition-duration:1ms !important}}
+</style>
+</helmet>
+<div class="{{motionClass}}">
+<div style="font-family: Roboto, system-ui, sans-serif; background: #FCF8F6; color: #211A16; min-height: 624px; box-sizing: border-box; padding: 32px; display: flex; flex-direction: column; gap: 18px; "><h1 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: 40px; font-weight: 700; animation: mc-slide 520ms cubic-bezier(0.2, 1.35, 0.4, 1) 0ms both">What people see when the link is pasted into a chat</h1><div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;  --fx: 1 1 200px; "><section aria-label="Chat message with a link preview" style="flex: 1 1 520px; min-width: 0; background: #2B2D31; color: #F2F3F5; border-radius: 24px; padding: 20px; display: flex; gap: 14px; animation: mc-rise 520ms cubic-bezier(0.2, 1.35, 0.4, 1) 0ms both"><span aria-hidden="true" style="width: 44px; height: 44px; border-radius: 22px; background: #006A6A; flex: none"></span><div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 15px"><b>mei</b> <span style="font-size: 12px; color: #C4C9CE">Today at 10:58</span></span><span style="font-size: 15px">This is the tool I mentioned: <span style="color: #7CC4FF">https://[SITE ADDRESS]/</span></span><div style="border-left: 4px solid {{accent}}; background: #1E1F22; border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 12px; color: #C4C9CE">Material Choco</span><span style="font-size: 16px; font-weight: 700; color: #7CC4FF">Material Choco: Chocolatey, with a real interface</span><span style="font-size: 14px; color: #DBDEE1">Manage packages on one Windows PC, or on every PC you look after, from a desktop app, a browser or a phone.</span><div role="img" aria-label="Link preview picture: the Material Choco mark, the line Chocolatey, with a real interface, and a small picture of the Overview page" style="aspect-ratio: 1280 / 640; border-radius: 14px; overflow: hidden; background: radial-gradient(circle at 24% 30%, #7A3A10, #2A1708 78%); color: #FFEDE3; display: flex; align-items: center; gap: 4%; padding: 5%; box-sizing: border-box" data-clip-ok="1"><div style="flex: 1; display: flex; flex-direction: column; gap: 10px"><svg role="img" aria-label="Material Choco" width="56" height="56" viewBox="0 0 28 28" style="flex: none"><rect x="2" y="2" width="24" height="24" rx="7" fill="{{accent}}"></rect><path d="M8 9h12M8 14h12M8 19h12M12 9v10M16 9v10" stroke="#FFDBC8" stroke-width="1.8" stroke-linecap="round" fill="none"></path></svg><span style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; font-size: 32px; font-weight: 800; line-height: 1.02">Chocolatey, with a real interface.</span><span style="font-size: 14px">Material Choco</span></div><div style="flex: 1; aspect-ratio: 16 / 10; border-radius: 12px; background: #FCF8F6; display: flex; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.4)"><span style="width: 22%; background: #F1EBE8; display: flex; flex-direction: column; gap: 5px; padding: 8px 6px"><span style="height: 7px; border-radius: 4px; background: {{accent}}"></span><span style="height: 7px; border-radius: 4px; background: #E5DFDC"></span><span style="height: 7px; border-radius: 4px; background: #E5DFDC"></span><span style="height: 7px; border-radius: 4px; background: #E5DFDC"></span></span><span style="flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 10px"><span style="height: 30%; border-radius: 10px; background: #2A1708"></span><span style="flex: 1; border-radius: 10px; background: #EBE5E2"></span></span></div></div></div></div></section><section class="mc-lift" style="animation: mc-rise 620ms cubic-bezier(0.2, 1.35, 0.4, 1) 70ms both; background: #F7F1EE; border-radius: 28px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; --fx: none; flex: 1 1 460px"><span style="font-size: 15px; font-weight: 700; color: #211A16">What every page sends</span><div style="position: relative; min-width: 0;  "><pre style="margin: 0; padding: 14px; border-radius: 14px; background: #1F1512; color: #F5EFEA; font-family: 'Roboto Mono', monospace; font-size: 12px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; ; padding-right: 56px; min-height: 52px; box-sizing: border-box">&lt;meta property="og:title" content="Material Choco: Chocolatey, with a real interface"&gt;
+&lt;meta property="og:description" content="Manage packages on one Windows PC, or on every PC ..."&gt;
+&lt;meta property="og:url" content="https://[SITE ADDRESS]/"&gt;
+&lt;meta property="og:type" content="website"&gt;
+&lt;meta property="og:site_name" content="Material Choco"&gt;
+&lt;meta property="og:image" content="https://[SITE ADDRESS]/social-preview.[HASH].png"&gt;
+&lt;meta property="og:image:width" content="1280"&gt;
+&lt;meta property="og:image:height" content="640"&gt;
+&lt;meta property="og:image:alt" content="The Material Choco overview page"&gt;
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="theme-color" content="{{accent}}"&gt;</pre><button type="button" aria-label="Copy" class="mc-press" style="position: absolute; top: 4px; right: 4px; width: 44px; height: 44px; border-radius: 12px; border: 0; background: rgba(74,56,47,0.92); color: #F5EFEA; display: inline-flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M9 9h11v11H9zM5 15H4V4h11v1"></path></svg></button></div><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0; --fx: none; "><div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; font-size: 14px"><span style="flex: 0 0 180px; color: #53433B; font-size: 13px">Picture</span><span style="flex: 1 1 200px; min-width: 0; color: #211A16; overflow-wrap: anywhere"><span style="font-family: 'Roboto Mono', monospace; font-size: 13px">social-preview.png</span> at the repository root, 1280 by 640</span></div><div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; font-size: 14px"><span style="flex: 0 0 180px; color: #53433B; font-size: 13px">Made from</span><span style="flex: 1 1 200px; min-width: 0; color: #211A16; overflow-wrap: anywhere">A real screenshot of the Overview page, by a script</span></div><div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; font-size: 14px"><span style="flex: 0 0 180px; color: #53433B; font-size: 13px">Site copy</span><span style="flex: 1 1 200px; min-width: 0; color: #211A16; overflow-wrap: anywhere">The same bytes. Its address changes when the picture changes.</span></div><div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; font-size: 14px"><span style="flex: 0 0 180px; color: #53433B; font-size: 13px">Anyone can fetch it</span><span style="flex: 1 1 200px; min-width: 0; color: #211A16; overflow-wrap: anywhere">No sign in, and crawlers are not blocked</span></div></div></section></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#8A3F0B","options":["#8A3F0B","#006A6A","#A6276A","#3E5BA9"],"section":"Look"},"motion":{"editor":"boolean","default":true,"section":"Look"},"$preview":{"width":1360,"height":624}}'>
+class Component extends DCLogic {
+renderVals() {
+const accent = this.props.accent ?? '#8A3F0B';
+return { accent: accent, motionClass: (this.props.motion ?? true) ? '' : 'mc-still' };
+}
+}
+</script>
+</body>
+</html>

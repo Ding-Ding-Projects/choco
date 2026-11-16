@@ -1,0 +1,596 @@
+{
+ "Main.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Onboarding.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Installed.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Install.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Updates.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Config.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Console.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Machines.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Job.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Settings.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Palette.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Phone.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Desktop.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "StateLoading.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "StateError.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "StateSuccess.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "StateEmpty.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "InstallSuccess.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "InstallError.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "PairQr.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Base64.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "RegexBuilder.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "PasskeySignIn.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Users.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Webhooks.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "LanguageModes.dc.html": [
+  "accent",
+  "motion",
+  "language"
+ ],
+ "FunnyLevels.dc.html": [
+  "accent",
+  "motion",
+  "emoji"
+ ],
+ "PersonalWording.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "WordingDrop.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "SchoolMode.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Narration.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "ActionSounds.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "TimedSettings.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "DisplayName.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "FocusModes.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "StartupSurprise.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "ComponentRegister.dc.html": [
+  "accent",
+  "motion",
+  "dark",
+  "density"
+ ],
+ "ReducedMotion.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "LiveChart.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "AppearanceEditor.dc.html": [
+  "accent",
+  "motion",
+  "tab"
+ ],
+ "ColourPicker.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "LogoStudio.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Panels.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Filters.dc.html": [
+  "accent",
+  "motion",
+  "filters"
+ ],
+ "AccessibilityTools.dc.html": [
+  "accent",
+  "motion",
+  "dark",
+  "stage"
+ ],
+ "UnsavedWork.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "OnboardingStages.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Extensions.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "TabStrip.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "TabCatalogue.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "RegexWorkbench.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "ContextMenu.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "MenuShortcuts.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "RichControls.dc.html": [
+  "accent",
+  "motion",
+  "density"
+ ],
+ "GuidedForm.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "InfoPanel.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SettingExplained.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "BuilderPresets.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SuperConfirm.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "ElementLock.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "SupportTickets.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "UnlockLadder.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "AboutFree.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "History.dc.html": [
+  "accent",
+  "motion",
+  "density",
+  "stage"
+ ],
+ "ExportDialog.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "BulkPreview.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Changelog.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "HelpBrowser.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "RenderedNotes.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Notifications.dc.html": [
+  "accent",
+  "motion",
+  "dark",
+  "count"
+ ],
+ "Base64Files.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "FileConverter.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "TypeGenerator.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "JsonEditor.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "VirtualDisks.dc.html": [
+  "accent",
+  "motion",
+  "density",
+  "stage"
+ ],
+ "GameServers.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "WorldGenerator.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "LocalModels.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "OpenInEditor.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "DownloadHandoff.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "PublishSource.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "ProgressRecovery.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Annotate.dc.html": [
+  "accent",
+  "motion",
+  "toolbar"
+ ],
+ "FeatureInventory.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "VersionStamp.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "ReadmeScreens.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ReadmeRecording.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "DesignParity.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "DesignFolder.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ClippingMatrix.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ScreenshotGallery.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SiteHome.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SiteHomePhone.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SiteFeatures.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SiteScreens.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SiteDownloadPage.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SiteStatusPage.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "DemoMode.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "SiteSettings.dc.html": [
+  "accent",
+  "motion",
+  "dark"
+ ],
+ "SiteDiagram.dc.html": [
+  "accent",
+  "motion",
+  "step"
+ ],
+ "SiteDownload.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "SiteArticle.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "SitePhoneMenu.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "FontManifest.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "LinkPreview.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "RepoHome.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "WordingBoundary.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "StatusSurface.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "BuildCompanion.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "BuildRunCommand.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "BuildDependencies.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "BundledTools.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Installer.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "UpdateBanner.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "AppIcon.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ReleaseNotes.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ReleaseLineCounts.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ReleaseCodeName.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "WorkflowRun.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "RunnerSelection.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Readme.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ReadmeEstimate.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "AgentsFile.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "WordingLockCheck.dc.html": [
+  "accent",
+  "motion",
+  "stage"
+ ],
+ "Roadmap.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "FeatureDocs.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ApiCollection.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Wiki.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Handoff.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "CloseoutPrompt.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "Discussions.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "ProjectBoard.dc.html": [
+  "accent",
+  "motion"
+ ],
+ "OperationalSkill.dc.html": [
+  "accent",
+  "motion"
+ ]
+}

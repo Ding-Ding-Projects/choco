@@ -47,7 +47,8 @@ a{color:#006A6A}a:hover{color:#002020}
 <script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#8A3F0B","options":["#8A3F0B","#006A6A","#A6276A","#3E5BA9"],"section":"Look"},"motion":{"editor":"boolean","default":true,"section":"Look"},"$preview":{"width":900,"height":620}}'>
 class Component extends DCLogic {
 renderVals() {
-return { accent: this.props.accent ?? '#8A3F0B', motionClass: (this.props.motion ?? true) ? '' : 'mc-still' };
+const accent = this.props.accent ?? '#8A3F0B';
+return { accent: accent, motionClass: (this.props.motion ?? true) ? '' : 'mc-still' };
 }
 }
 </script>

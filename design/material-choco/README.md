@@ -12,21 +12,30 @@ These files are a design. They are not the implementation and do not prove any b
 
 ## Pages and boards
 
+133 boards on 20 pages (2026-11-16). Every entry of the feature catalogue that applies to this product has a board, including features that are not built yet: a board is a design, not proof that the feature exists. `material-choco/docs/FEATURE-INVENTORY.md` says what is built. `tweaks.json` lists each board's Tweaks. The old single-page `Site` and `SitePhone` boards were retired when the site was split into pages.
+
 | Page | Boards |
 | --- | --- |
-| Front door | `Main` (overview), `Onboarding` |
-| Packages | `Installed`, `Install`, `Updates` |
-| Configuration | `Config` |
-| Console and authoring | `Console` |
-| Remote fleet | `Machines`, `Job`, `PairQr` |
-| Required features | `Settings`, `Palette` |
-| States and errors | `StateLoading`, `StateError`, `StateSuccess`, `StateEmpty`, `InstallSuccess`, `InstallError` |
-| Built-in tools | `Base64` |
-| Search | `RegexBuilder` |
-| Hub security | `PasskeySignIn`, `Users`, `Webhooks` |
-| Landing site | `Site`, `SitePhone` |
-| Phone | `Phone` |
-| Desktop app | `Desktop` |
+| Front door (2) | `Main`, `Onboarding` |
+| Packages (3) | `Installed`, `Install`, `Updates` |
+| Configuration (1) | `Config` |
+| Console and authoring (1) | `Console` |
+| Remote fleet (3) | `Machines`, `Job`, `PairQr` |
+| States and errors (6) | `StateLoading`, `StateError`, `StateSuccess`, `StateEmpty`, `InstallSuccess`, `InstallError` |
+| Language, voice and personalisation (12) | `Settings`, `LanguageModes`, `FunnyLevels`, `PersonalWording`, `WordingDrop`, `SchoolMode`, `Narration`, `ActionSounds`, `TimedSettings`, `DisplayName`, `FocusModes`, `StartupSurprise` |
+| Design, appearance and layout (10) | `ComponentRegister`, `ReducedMotion`, `LiveChart`, `AppearanceEditor`, `ColourPicker`, `LogoStudio`, `Panels`, `Filters`, `AccessibilityTools`, `UnsavedWork` |
+| Navigation, search and commands (14) | `Palette`, `RegexBuilder`, `OnboardingStages`, `Extensions`, `TabStrip`, `TabCatalogue`, `RegexWorkbench`, `ContextMenu`, `MenuShortcuts`, `RichControls`, `GuidedForm`, `InfoPanel`, `SettingExplained`, `BuilderPresets` |
+| Safety, locks and sign in (7) | `PasskeySignIn`, `Users`, `SuperConfirm`, `ElementLock`, `SupportTickets`, `UnlockLadder`, `AboutFree` |
+| Records, history and messages (7) | `History`, `ExportDialog`, `BulkPreview`, `Changelog`, `HelpBrowser`, `RenderedNotes`, `Notifications` |
+| Built-in tools and hand-off (14) | `Base64`, `Base64Files`, `FileConverter`, `TypeGenerator`, `JsonEditor`, `VirtualDisks`, `GameServers`, `WorldGenerator`, `LocalModels`, `OpenInEditor`, `DownloadHandoff`, `PublishSource`, `ProgressRecovery`, `Annotate` |
+| Completeness and evidence (8) | `FeatureInventory`, `VersionStamp`, `ReadmeScreens`, `ReadmeRecording`, `DesignParity`, `DesignFolder`, `ClippingMatrix`, `ScreenshotGallery` |
+| Landing site and shared links (16) | `SiteHome`, `SiteHomePhone`, `SiteFeatures`, `SiteScreens`, `SiteDownloadPage`, `SiteStatusPage`, `DemoMode`, `SiteSettings`, `SiteDiagram`, `SiteDownload`, `SiteArticle`, `SitePhoneMenu`, `FontManifest`, `LinkPreview`, `RepoHome`, `WordingBoundary` |
+| Status reporting (2) | `Webhooks`, `StatusSurface` |
+| Build and install (7) | `BuildCompanion`, `BuildRunCommand`, `BuildDependencies`, `BundledTools`, `Installer`, `UpdateBanner`, `AppIcon` |
+| Release pipeline (5) | `ReleaseNotes`, `ReleaseLineCounts`, `ReleaseCodeName`, `WorkflowRun`, `RunnerSelection` |
+| Repository records (13) | `Readme`, `ReadmeEstimate`, `AgentsFile`, `WordingLockCheck`, `Roadmap`, `FeatureDocs`, `ApiCollection`, `Wiki`, `Handoff`, `CloseoutPrompt`, `Discussions`, `ProjectBoard`, `OperationalSkill` |
+| Phone (1) | `Phone` |
+| Desktop app (1) | `Desktop` |
 
 ## Look
 
@@ -44,7 +53,7 @@ Nine boards were added (one, the built-in authenticator, was removed the same da
 
 ## Tweaks (added 2026-11-16)
 
-Every board declares two working levers in the design tool's Tweaks tab, with the same names and defaults on all 27 boards:
+Every board declares two working levers in the design tool's Tweaks tab, with the same names and defaults on every board:
 
 | Tweak | Type | Default | Effect |
 | --- | --- | --- | --- |

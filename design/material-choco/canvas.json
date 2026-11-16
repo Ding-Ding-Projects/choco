@@ -2,7 +2,7 @@
  "v": 3,
  "createdOnFiles": {
   "v": 1,
-  "at": "2026-11-16T15:50:29Z"
+  "at": "2026-11-16T17:14:08Z"
  },
  "title": "Material Choco",
  "launch": {
@@ -31,28 +31,56 @@
    "name": "Remote fleet"
   },
   {
-   "id": "features",
-   "name": "Required features"
-  },
-  {
    "id": "states",
    "name": "States and errors"
   },
   {
-   "id": "tools",
-   "name": "Built-in tools"
+   "id": "language",
+   "name": "Language, voice and personalisation"
   },
   {
-   "id": "search",
-   "name": "Search"
+   "id": "design",
+   "name": "Design, appearance and layout"
+  },
+  {
+   "id": "navigation",
+   "name": "Navigation, search and commands"
   },
   {
    "id": "security",
-   "name": "Hub security"
+   "name": "Safety, locks and sign in"
+  },
+  {
+   "id": "records",
+   "name": "Records, history and messages"
+  },
+  {
+   "id": "tools",
+   "name": "Built-in tools and hand-off"
+  },
+  {
+   "id": "evidence",
+   "name": "Completeness and evidence"
   },
   {
    "id": "site",
-   "name": "Landing site"
+   "name": "Landing site and shared links"
+  },
+  {
+   "id": "status",
+   "name": "Status reporting"
+  },
+  {
+   "id": "build",
+   "name": "Build and install"
+  },
+  {
+   "id": "release",
+   "name": "Release pipeline"
+  },
+  {
+   "id": "repo",
+   "name": "Repository records"
   },
   {
    "id": "phone",
@@ -122,7 +150,7 @@
    "x": 0,
    "y": 0,
    "w": 1360,
-   "h": 1040,
+   "h": 1180,
    "title": "Console, every command",
    "page": "authoring",
    "expand": "fill"
@@ -152,24 +180,6 @@
    "h": 720,
    "title": "Pairing with a QR code",
    "page": "fleet",
-   "expand": "fill"
-  },
-  "Settings.dc.html": {
-   "x": 0,
-   "y": 0,
-   "w": 1360,
-   "h": 1000,
-   "title": "Settings",
-   "page": "features",
-   "expand": "fill"
-  },
-  "Palette.dc.html": {
-   "x": 1440,
-   "y": 0,
-   "w": 1360,
-   "h": 760,
-   "title": "Command palette",
-   "page": "features",
    "expand": "fill"
   },
   "StateLoading.dc.html": {
@@ -209,8 +219,8 @@
    "expand": "fill"
   },
   "InstallSuccess.dc.html": {
-   "x": 3920,
-   "y": 0,
+   "x": 0,
+   "y": 740,
    "w": 1360,
    "h": 760,
    "title": "Install success takeover",
@@ -218,30 +228,336 @@
    "expand": "fill"
   },
   "InstallError.dc.html": {
-   "x": 5360,
-   "y": 0,
+   "x": 1440,
+   "y": 740,
    "w": 1360,
    "h": 760,
    "title": "Install failure takeover",
    "page": "states",
    "expand": "fill"
   },
-  "Base64.dc.html": {
+  "Settings.dc.html": {
    "x": 0,
    "y": 0,
    "w": 1360,
-   "h": 820,
-   "title": "Base64 tools",
-   "page": "tools",
+   "h": 1000,
+   "title": "Settings",
+   "page": "language",
+   "expand": "fill"
+  },
+  "LanguageModes.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Language modes",
+   "page": "language",
+   "expand": "fill"
+  },
+  "FunnyLevels.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Playfulness levels and dialog emoji",
+   "page": "language",
+   "expand": "fill"
+  },
+  "PersonalWording.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Personal wording file",
+   "page": "language",
+   "expand": "fill"
+  },
+  "WordingDrop.dc.html": {
+   "x": 0,
+   "y": 1120,
+   "w": 1360,
+   "h": 776,
+   "title": "Drop a wording file on the window",
+   "page": "language",
+   "expand": "fill"
+  },
+  "SchoolMode.dc.html": {
+   "x": 1440,
+   "y": 1120,
+   "w": 1360,
+   "h": 886,
+   "title": "School mode",
+   "page": "language",
+   "expand": "fill"
+  },
+  "Narration.dc.html": {
+   "x": 2880,
+   "y": 1120,
+   "w": 1360,
+   "h": 1010,
+   "title": "Spoken narrator and voices",
+   "page": "language",
+   "expand": "fill"
+  },
+  "ActionSounds.dc.html": {
+   "x": 4320,
+   "y": 1120,
+   "w": 1360,
+   "h": 886,
+   "title": "Action sounds",
+   "page": "language",
+   "expand": "fill"
+  },
+  "TimedSettings.dc.html": {
+   "x": 0,
+   "y": 2250,
+   "w": 1360,
+   "h": 1096,
+   "title": "Timed and external settings",
+   "page": "language",
+   "expand": "fill"
+  },
+  "DisplayName.dc.html": {
+   "x": 1440,
+   "y": 2250,
+   "w": 1360,
+   "h": 886,
+   "title": "Renaming the app",
+   "page": "language",
+   "expand": "fill"
+  },
+  "FocusModes.dc.html": {
+   "x": 2880,
+   "y": 2250,
+   "w": 1360,
+   "h": 886,
+   "title": "Focus modes",
+   "page": "language",
+   "expand": "fill"
+  },
+  "StartupSurprise.dc.html": {
+   "x": 4320,
+   "y": 2250,
+   "w": 1360,
+   "h": 915,
+   "title": "Startup surprise and its photo source",
+   "page": "language",
+   "expand": "fill"
+  },
+  "ComponentRegister.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1326,
+   "title": "Component register",
+   "page": "design",
+   "expand": "fill"
+  },
+  "ReducedMotion.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 955,
+   "title": "Reduced motion path",
+   "page": "design",
+   "expand": "fill"
+  },
+  "LiveChart.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 1018,
+   "title": "Live chart",
+   "page": "design",
+   "expand": "fill"
+  },
+  "AppearanceEditor.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 1066,
+   "title": "Appearance editor for one element",
+   "page": "design",
+   "expand": "fill"
+  },
+  "ColourPicker.dc.html": {
+   "x": 0,
+   "y": 1446,
+   "w": 1360,
+   "h": 1337,
+   "title": "Colour picker and translator",
+   "page": "design",
+   "expand": "fill"
+  },
+  "LogoStudio.dc.html": {
+   "x": 1440,
+   "y": 1446,
+   "w": 1360,
+   "h": 886,
+   "title": "Logo presets and custom picture",
+   "page": "design",
+   "expand": "fill"
+  },
+  "Panels.dc.html": {
+   "x": 2880,
+   "y": 1446,
+   "w": 1360,
+   "h": 937,
+   "title": "Panels that resize, move and stay in view",
+   "page": "design",
+   "expand": "fill"
+  },
+  "Filters.dc.html": {
+   "x": 4320,
+   "y": 1446,
+   "w": 1360,
+   "h": 886,
+   "title": "Collapsible filters and statistics",
+   "page": "design",
+   "expand": "fill"
+  },
+  "AccessibilityTools.dc.html": {
+   "x": 0,
+   "y": 2903,
+   "w": 1360,
+   "h": 886,
+   "title": "Accessibility tools menu",
+   "page": "design",
+   "expand": "fill"
+  },
+  "UnsavedWork.dc.html": {
+   "x": 1440,
+   "y": 2903,
+   "w": 1360,
+   "h": 886,
+   "title": "Closing with unsaved work",
+   "page": "design",
+   "expand": "fill"
+  },
+  "Palette.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Command palette",
+   "page": "navigation",
    "expand": "fill"
   },
   "RegexBuilder.dc.html": {
-   "x": 0,
+   "x": 1440,
    "y": 0,
    "w": 1360,
    "h": 800,
    "title": "Regex builder",
-   "page": "search",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "OnboardingStages.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 643,
+   "title": "First run setup: resume, failed step, finish",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "Extensions.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Extensions manager and consent",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "TabStrip.dc.html": {
+   "x": 0,
+   "y": 1006,
+   "w": 1360,
+   "h": 1032,
+   "title": "Tab strip: pins, groups, overflow, docking",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "TabCatalogue.dc.html": {
+   "x": 1440,
+   "y": 1006,
+   "w": 1360,
+   "h": 671,
+   "title": "New tab catalogue and closing tabs by text",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "RegexWorkbench.dc.html": {
+   "x": 2880,
+   "y": 1006,
+   "w": 1360,
+   "h": 886,
+   "title": "Regex workbench",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "ContextMenu.dc.html": {
+   "x": 4320,
+   "y": 1006,
+   "w": 1360,
+   "h": 886,
+   "title": "Context menu with a filter and live controls",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "MenuShortcuts.dc.html": {
+   "x": 0,
+   "y": 2158,
+   "w": 1360,
+   "h": 886,
+   "title": "Keyboard shortcuts, as shown in menus",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "RichControls.dc.html": {
+   "x": 1440,
+   "y": 2158,
+   "w": 1360,
+   "h": 886,
+   "title": "Real controls wherever a value is shown",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "GuidedForm.dc.html": {
+   "x": 2880,
+   "y": 2158,
+   "w": 1360,
+   "h": 886,
+   "title": "Guided form: add a source",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "InfoPanel.dc.html": {
+   "x": 4320,
+   "y": 2158,
+   "w": 1360,
+   "h": 886,
+   "title": "Info button and its panel",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "SettingExplained.dc.html": {
+   "x": 0,
+   "y": 3164,
+   "w": 1360,
+   "h": 886,
+   "title": "Settings that explain themselves",
+   "page": "navigation",
+   "expand": "fill"
+  },
+  "BuilderPresets.dc.html": {
+   "x": 1440,
+   "y": 3164,
+   "w": 1360,
+   "h": 886,
+   "title": "Package builder: start from a preset",
+   "page": "navigation",
    "expand": "fill"
   },
   "PasskeySignIn.dc.html": {
@@ -262,31 +578,696 @@
    "page": "security",
    "expand": "fill"
   },
-  "Webhooks.dc.html": {
+  "SuperConfirm.dc.html": {
    "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Two key confirmation, every stage",
+   "page": "security",
+   "expand": "fill"
+  },
+  "ElementLock.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Locking one element",
+   "page": "security",
+   "expand": "fill"
+  },
+  "SupportTickets.dc.html": {
+   "x": 0,
+   "y": 1006,
+   "w": 1360,
+   "h": 886,
+   "title": "Support Tickets recovery desk",
+   "page": "security",
+   "expand": "fill"
+  },
+  "UnlockLadder.dc.html": {
+   "x": 1440,
+   "y": 1006,
+   "w": 1360,
+   "h": 800,
+   "title": "Lockout games",
+   "page": "security",
+   "expand": "fill"
+  },
+  "AboutFree.dc.html": {
+   "x": 2880,
+   "y": 1006,
+   "w": 1360,
+   "h": 886,
+   "title": "About: free, honest, no nagging",
+   "page": "security",
+   "expand": "fill"
+  },
+  "History.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "History with filters, compare and restore",
+   "page": "records",
+   "expand": "fill"
+  },
+  "ExportDialog.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 941,
+   "title": "Export with formats and archive options",
+   "page": "records",
+   "expand": "fill"
+  },
+  "BulkPreview.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Bulk action: review, progress, partial result",
+   "page": "records",
+   "expand": "fill"
+  },
+  "Changelog.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 918,
+   "title": "Changelog viewer",
+   "page": "records",
+   "expand": "fill"
+  },
+  "HelpBrowser.dc.html": {
+   "x": 0,
+   "y": 1061,
+   "w": 1360,
+   "h": 922,
+   "title": "Offline help browser",
+   "page": "records",
+   "expand": "fill"
+  },
+  "RenderedNotes.dc.html": {
+   "x": 1440,
+   "y": 1061,
+   "w": 1360,
+   "h": 886,
+   "title": "Release notes shown as formatted text",
+   "page": "records",
+   "expand": "fill"
+  },
+  "Notifications.dc.html": {
+   "x": 2880,
+   "y": 1061,
+   "w": 1360,
+   "h": 886,
+   "title": "Notifications and the notification centre",
+   "page": "records",
+   "expand": "fill"
+  },
+  "Base64.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 820,
+   "title": "Base64 tools",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "Base64Files.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 968,
+   "title": "Base64 for files",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "FileConverter.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 913,
+   "title": "File converter",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "TypeGenerator.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 1309,
+   "title": "Type generator",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "JsonEditor.dc.html": {
+   "x": 0,
+   "y": 1429,
+   "w": 1360,
+   "h": 886,
+   "title": "JSON editor",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "VirtualDisks.dc.html": {
+   "x": 1440,
+   "y": 1429,
+   "w": 1360,
+   "h": 886,
+   "title": "Virtual disk manager",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "GameServers.dc.html": {
+   "x": 2880,
+   "y": 1429,
+   "w": 1360,
+   "h": 886,
+   "title": "Minecraft server creator and manager",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "WorldGenerator.dc.html": {
+   "x": 4320,
+   "y": 1429,
+   "w": 1360,
+   "h": 886,
+   "title": "World generator",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "LocalModels.dc.html": {
+   "x": 0,
+   "y": 2435,
+   "w": 1360,
+   "h": 886,
+   "title": "Local model manager",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "OpenInEditor.dc.html": {
+   "x": 1440,
+   "y": 2435,
+   "w": 1360,
+   "h": 886,
+   "title": "Open in an editor",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "DownloadHandoff.dc.html": {
+   "x": 2880,
+   "y": 2435,
+   "w": 1360,
+   "h": 445,
+   "title": "Download hand-off from the browser",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "PublishSource.dc.html": {
+   "x": 4320,
+   "y": 2435,
+   "w": 1360,
+   "h": 886,
+   "title": "Publish package source to a code host",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "ProgressRecovery.dc.html": {
+   "x": 0,
+   "y": 3441,
+   "w": 1360,
+   "h": 739,
+   "title": "Progress in the dialog, recovery beside the failure",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "Annotate.dc.html": {
+   "x": 1440,
+   "y": 3441,
+   "w": 1360,
+   "h": 961,
+   "title": "Drawing on a screenshot",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "FeatureInventory.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1073,
+   "title": "Feature inventory record",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "VersionStamp.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 585,
+   "title": "Version and build time on the first screen",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "ReadmeScreens.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 1731,
+   "title": "README: screenshots and workflow diagram",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "ReadmeRecording.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 1154,
+   "title": "README: screen recording",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "DesignParity.dc.html": {
+   "x": 0,
+   "y": 1851,
+   "w": 1360,
+   "h": 698,
+   "title": "Design reference viewer",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "DesignFolder.dc.html": {
+   "x": 1440,
+   "y": 1851,
+   "w": 1360,
+   "h": 598,
+   "title": "Design files in the repository",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "ClippingMatrix.dc.html": {
+   "x": 2880,
+   "y": 1851,
+   "w": 1360,
+   "h": 635,
+   "title": "Clipping matrix for one screen",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "ScreenshotGallery.dc.html": {
+   "x": 4320,
+   "y": 1851,
+   "w": 1360,
+   "h": 936,
+   "title": "Public screenshot gallery",
+   "page": "evidence",
+   "expand": "fill"
+  },
+  "SiteHome.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 2399,
+   "title": "Site: Home",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteHomePhone.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 390,
+   "h": 2023,
+   "title": "Site: Home on a phone",
+   "page": "site"
+  },
+  "SiteFeatures.dc.html": {
+   "x": 1910,
+   "y": 0,
+   "w": 1360,
+   "h": 2948,
+   "title": "Site: Features",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteScreens.dc.html": {
+   "x": 3350,
+   "y": 0,
+   "w": 1360,
+   "h": 1759,
+   "title": "Site: Screens gallery",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteDownloadPage.dc.html": {
+   "x": 0,
+   "y": 3068,
+   "w": 1360,
+   "h": 1224,
+   "title": "Site: Download",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteStatusPage.dc.html": {
+   "x": 1440,
+   "y": 3068,
+   "w": 1360,
+   "h": 1252,
+   "title": "Site: Status",
+   "page": "site",
+   "expand": "fill"
+  },
+  "DemoMode.dc.html": {
+   "x": 2880,
+   "y": 3068,
+   "w": 1360,
+   "h": 1006,
+   "title": "In-browser demo of the app",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteSettings.dc.html": {
+   "x": 4320,
+   "y": 3068,
+   "w": 1360,
+   "h": 1192,
+   "title": "Site settings",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteDiagram.dc.html": {
+   "x": 0,
+   "y": 4440,
+   "w": 1360,
+   "h": 657,
+   "title": "Site: animated workflow diagram",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteDownload.dc.html": {
+   "x": 1440,
+   "y": 4440,
+   "w": 1360,
+   "h": 750,
+   "title": "Site: download button on Home",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SiteArticle.dc.html": {
+   "x": 2880,
+   "y": 4440,
+   "w": 1360,
+   "h": 1424,
+   "title": "Site: one article per feature",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SitePhoneMenu.dc.html": {
+   "x": 4320,
+   "y": 4440,
+   "w": 390,
+   "h": 1158,
+   "title": "Site on a phone: menu, search and settings in view",
+   "page": "site"
+  },
+  "FontManifest.dc.html": {
+   "x": 0,
+   "y": 5984,
+   "w": 1360,
+   "h": 886,
+   "title": "Fonts shipped inside the app",
+   "page": "site",
+   "expand": "fill"
+  },
+  "LinkPreview.dc.html": {
+   "x": 1440,
+   "y": 5984,
+   "w": 1360,
+   "h": 624,
+   "title": "Link preview when the address is shared",
+   "page": "site",
+   "expand": "fill"
+  },
+  "RepoHome.dc.html": {
+   "x": 2880,
+   "y": 5984,
+   "w": 1360,
+   "h": 699,
+   "title": "Repository page with the link to the site",
+   "page": "site",
+   "expand": "fill"
+  },
+  "WordingBoundary.dc.html": {
+   "x": 4320,
+   "y": 5984,
+   "w": 1360,
+   "h": 562,
+   "title": "Shipped wording before sign in, personal wording after",
+   "page": "site",
+   "expand": "fill"
+  },
+  "Webhooks.dc.html": {
+   "x": 0,
    "y": 0,
    "w": 1360,
    "h": 780,
    "title": "Status webhooks",
-   "page": "security",
+   "page": "status",
    "expand": "fill"
   },
-  "Site.dc.html": {
+  "StatusSurface.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Status page of this app",
+   "page": "status",
+   "expand": "fill"
+  },
+  "BuildCompanion.dc.html": {
    "x": 0,
    "y": 0,
    "w": 1360,
-   "h": 1700,
-   "title": "Landing site, desktop",
-   "page": "site",
+   "h": 655,
+   "title": "Build window: Build, Build and run, Build installer",
+   "page": "build",
    "expand": "fill"
   },
-  "SitePhone.dc.html": {
+  "BuildRunCommand.dc.html": {
    "x": 1440,
    "y": 0,
-   "w": 390,
-   "h": 1500,
-   "title": "Landing site, phone",
-   "page": "site"
+   "w": 1360,
+   "h": 877,
+   "title": "README: one command to build and run",
+   "page": "build",
+   "expand": "fill"
+  },
+  "BuildDependencies.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 683,
+   "title": "Dependency fetcher",
+   "page": "build",
+   "expand": "fill"
+  },
+  "BundledTools.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 886,
+   "title": "Bundled tools",
+   "page": "build",
+   "expand": "fill"
+  },
+  "Installer.dc.html": {
+   "x": 0,
+   "y": 1006,
+   "w": 1360,
+   "h": 704,
+   "title": "Windows installer",
+   "page": "build",
+   "expand": "fill"
+  },
+  "UpdateBanner.dc.html": {
+   "x": 1440,
+   "y": 1006,
+   "w": 1360,
+   "h": 886,
+   "title": "Automatic updates",
+   "page": "build",
+   "expand": "fill"
+  },
+  "AppIcon.dc.html": {
+   "x": 2880,
+   "y": 1006,
+   "w": 1360,
+   "h": 692,
+   "title": "App icon at every size",
+   "page": "build",
+   "expand": "fill"
+  },
+  "ReleaseNotes.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1419,
+   "title": "Release page: what was built, what ran, timing",
+   "page": "release",
+   "expand": "fill"
+  },
+  "ReleaseLineCounts.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 993,
+   "title": "Release page: line counts",
+   "page": "release",
+   "expand": "fill"
+  },
+  "ReleaseCodeName.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 812,
+   "title": "Release page: code name and photo reference",
+   "page": "release",
+   "expand": "fill"
+  },
+  "WorkflowRun.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 675,
+   "title": "Workflow run: dependency checks and uploaded logs",
+   "page": "release",
+   "expand": "fill"
+  },
+  "RunnerSelection.dc.html": {
+   "x": 0,
+   "y": 1539,
+   "w": 1360,
+   "h": 824,
+   "title": "Workflow run: which runner was chosen and why",
+   "page": "release",
+   "expand": "fill"
+  },
+  "Readme.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1084,
+   "title": "README: short top, folded reference",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "ReadmeEstimate.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 1003,
+   "title": "README: size and effort estimate",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "AgentsFile.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 960,
+   "title": "AGENTS.md: vocabulary block and sanitized rules",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "WordingLockCheck.dc.html": {
+   "x": 4320,
+   "y": 0,
+   "w": 1360,
+   "h": 516,
+   "title": "Build output: wording lock check",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "Roadmap.dc.html": {
+   "x": 0,
+   "y": 1204,
+   "w": 1360,
+   "h": 1044,
+   "title": "ROADMAP.md checklist",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "FeatureDocs.dc.html": {
+   "x": 1440,
+   "y": 1204,
+   "w": 1360,
+   "h": 798,
+   "title": "Feature documents: index and one article",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "ApiCollection.dc.html": {
+   "x": 2880,
+   "y": 1204,
+   "w": 1360,
+   "h": 910,
+   "title": "API request collection",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "Wiki.dc.html": {
+   "x": 4320,
+   "y": 1204,
+   "w": 1360,
+   "h": 703,
+   "title": "Wiki kept in step with the site",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "Handoff.dc.html": {
+   "x": 0,
+   "y": 2368,
+   "w": 1360,
+   "h": 1017,
+   "title": "HANDOFF.md and the handoff section on an issue",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "CloseoutPrompt.dc.html": {
+   "x": 1440,
+   "y": 2368,
+   "w": 1360,
+   "h": 636,
+   "title": "CLOSEOUT_PROMPT.md",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "Discussions.dc.html": {
+   "x": 2880,
+   "y": 2368,
+   "w": 1360,
+   "h": 515,
+   "title": "Discussions: progress thread and release announcement",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "ProjectBoard.dc.html": {
+   "x": 4320,
+   "y": 2368,
+   "w": 1360,
+   "h": 514,
+   "title": "Project board linked to the repository",
+   "page": "repo",
+   "expand": "fill"
+  },
+  "OperationalSkill.dc.html": {
+   "x": 0,
+   "y": 3505,
+   "w": 1360,
+   "h": 1075,
+   "title": "Operating notes for this repository",
+   "page": "repo",
+   "expand": "fill"
   },
   "Phone.dc.html": {
    "x": 0,
@@ -317,21 +1298,127 @@
   "Machines.dc.html",
   "Job.dc.html",
   "PairQr.dc.html",
-  "Settings.dc.html",
-  "Palette.dc.html",
   "StateLoading.dc.html",
   "StateError.dc.html",
   "StateSuccess.dc.html",
   "StateEmpty.dc.html",
   "InstallSuccess.dc.html",
   "InstallError.dc.html",
-  "Base64.dc.html",
+  "Settings.dc.html",
+  "LanguageModes.dc.html",
+  "FunnyLevels.dc.html",
+  "PersonalWording.dc.html",
+  "WordingDrop.dc.html",
+  "SchoolMode.dc.html",
+  "Narration.dc.html",
+  "ActionSounds.dc.html",
+  "TimedSettings.dc.html",
+  "DisplayName.dc.html",
+  "FocusModes.dc.html",
+  "StartupSurprise.dc.html",
+  "ComponentRegister.dc.html",
+  "ReducedMotion.dc.html",
+  "LiveChart.dc.html",
+  "AppearanceEditor.dc.html",
+  "ColourPicker.dc.html",
+  "LogoStudio.dc.html",
+  "Panels.dc.html",
+  "Filters.dc.html",
+  "AccessibilityTools.dc.html",
+  "UnsavedWork.dc.html",
+  "Palette.dc.html",
   "RegexBuilder.dc.html",
+  "OnboardingStages.dc.html",
+  "Extensions.dc.html",
+  "TabStrip.dc.html",
+  "TabCatalogue.dc.html",
+  "RegexWorkbench.dc.html",
+  "ContextMenu.dc.html",
+  "MenuShortcuts.dc.html",
+  "RichControls.dc.html",
+  "GuidedForm.dc.html",
+  "InfoPanel.dc.html",
+  "SettingExplained.dc.html",
+  "BuilderPresets.dc.html",
   "PasskeySignIn.dc.html",
   "Users.dc.html",
+  "SuperConfirm.dc.html",
+  "ElementLock.dc.html",
+  "SupportTickets.dc.html",
+  "UnlockLadder.dc.html",
+  "AboutFree.dc.html",
+  "History.dc.html",
+  "ExportDialog.dc.html",
+  "BulkPreview.dc.html",
+  "Changelog.dc.html",
+  "HelpBrowser.dc.html",
+  "RenderedNotes.dc.html",
+  "Notifications.dc.html",
+  "Base64.dc.html",
+  "Base64Files.dc.html",
+  "FileConverter.dc.html",
+  "TypeGenerator.dc.html",
+  "JsonEditor.dc.html",
+  "VirtualDisks.dc.html",
+  "GameServers.dc.html",
+  "WorldGenerator.dc.html",
+  "LocalModels.dc.html",
+  "OpenInEditor.dc.html",
+  "DownloadHandoff.dc.html",
+  "PublishSource.dc.html",
+  "ProgressRecovery.dc.html",
+  "Annotate.dc.html",
+  "FeatureInventory.dc.html",
+  "VersionStamp.dc.html",
+  "ReadmeScreens.dc.html",
+  "ReadmeRecording.dc.html",
+  "DesignParity.dc.html",
+  "DesignFolder.dc.html",
+  "ClippingMatrix.dc.html",
+  "ScreenshotGallery.dc.html",
+  "SiteHome.dc.html",
+  "SiteHomePhone.dc.html",
+  "SiteFeatures.dc.html",
+  "SiteScreens.dc.html",
+  "SiteDownloadPage.dc.html",
+  "SiteStatusPage.dc.html",
+  "DemoMode.dc.html",
+  "SiteSettings.dc.html",
+  "SiteDiagram.dc.html",
+  "SiteDownload.dc.html",
+  "SiteArticle.dc.html",
+  "SitePhoneMenu.dc.html",
+  "FontManifest.dc.html",
+  "LinkPreview.dc.html",
+  "RepoHome.dc.html",
+  "WordingBoundary.dc.html",
   "Webhooks.dc.html",
-  "Site.dc.html",
-  "SitePhone.dc.html",
+  "StatusSurface.dc.html",
+  "BuildCompanion.dc.html",
+  "BuildRunCommand.dc.html",
+  "BuildDependencies.dc.html",
+  "BundledTools.dc.html",
+  "Installer.dc.html",
+  "UpdateBanner.dc.html",
+  "AppIcon.dc.html",
+  "ReleaseNotes.dc.html",
+  "ReleaseLineCounts.dc.html",
+  "ReleaseCodeName.dc.html",
+  "WorkflowRun.dc.html",
+  "RunnerSelection.dc.html",
+  "Readme.dc.html",
+  "ReadmeEstimate.dc.html",
+  "AgentsFile.dc.html",
+  "WordingLockCheck.dc.html",
+  "Roadmap.dc.html",
+  "FeatureDocs.dc.html",
+  "ApiCollection.dc.html",
+  "Wiki.dc.html",
+  "Handoff.dc.html",
+  "CloseoutPrompt.dc.html",
+  "Discussions.dc.html",
+  "ProjectBoard.dc.html",
+  "OperationalSkill.dc.html",
   "Phone.dc.html",
   "Desktop.dc.html"
  ],
@@ -376,53 +1463,109 @@
    "maxW": 4240,
    "page": "fleet"
   },
-  "t_features": {
-   "x": 0,
-   "y": -300,
-   "text": "Required features",
-   "kind": "title1",
-   "maxW": 2800,
-   "page": "features"
-  },
   "t_states": {
    "x": 0,
    "y": -300,
    "text": "States and errors",
    "kind": "title1",
-   "maxW": 6720,
+   "maxW": 3840,
    "page": "states"
   },
-  "t_tools": {
+  "t_language": {
    "x": 0,
    "y": -300,
-   "text": "Built-in tools",
+   "text": "Language, voice and personalisation",
    "kind": "title1",
-   "maxW": 1360,
-   "page": "tools"
+   "maxW": 5680,
+   "page": "language"
   },
-  "t_search": {
+  "t_design": {
    "x": 0,
    "y": -300,
-   "text": "Search",
+   "text": "Design, appearance and layout",
    "kind": "title1",
-   "maxW": 1360,
-   "page": "search"
+   "maxW": 5680,
+   "page": "design"
+  },
+  "t_navigation": {
+   "x": 0,
+   "y": -300,
+   "text": "Navigation, search and commands",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "navigation"
   },
   "t_security": {
    "x": 0,
    "y": -300,
-   "text": "Hub security",
+   "text": "Safety, locks and sign in",
    "kind": "title1",
-   "maxW": 4240,
+   "maxW": 5680,
    "page": "security"
+  },
+  "t_records": {
+   "x": 0,
+   "y": -300,
+   "text": "Records, history and messages",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "records"
+  },
+  "t_tools": {
+   "x": 0,
+   "y": -300,
+   "text": "Built-in tools and hand-off",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "tools"
+  },
+  "t_evidence": {
+   "x": 0,
+   "y": -300,
+   "text": "Completeness and evidence",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "evidence"
   },
   "t_site": {
    "x": 0,
    "y": -300,
-   "text": "Landing site",
+   "text": "Landing site and shared links",
    "kind": "title1",
-   "maxW": 1830,
+   "maxW": 5680,
    "page": "site"
+  },
+  "t_status": {
+   "x": 0,
+   "y": -300,
+   "text": "Status reporting",
+   "kind": "title1",
+   "maxW": 2800,
+   "page": "status"
+  },
+  "t_build": {
+   "x": 0,
+   "y": -300,
+   "text": "Build and install",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "build"
+  },
+  "t_release": {
+   "x": 0,
+   "y": -300,
+   "text": "Release pipeline",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "release"
+  },
+  "t_repo": {
+   "x": 0,
+   "y": -300,
+   "text": "Repository records",
+   "kind": "title1",
+   "maxW": 5680,
+   "page": "repo"
   },
   "t_phone": {
    "x": 0,
