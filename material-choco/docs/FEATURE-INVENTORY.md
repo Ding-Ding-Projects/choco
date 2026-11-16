@@ -117,7 +117,7 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | 39 | Recovery desk for a locked-out person | Not built | |
 | 40 | Play-your-way-out unlock steps | Not built | |
 | 41 | Built-in authenticator for one time codes | Waived | Built, then removed on 2026-11-16 by decision of the maintainer. |
-| 42 | QR code for registering a one time code | Waived | Confirmed by the maintainer on 2026-11-16. Follows from the row above: the hub has no one time code step. The QR code for pairing a machine is a different feature and exists. |
+| 42 | QR code for registering a one time code | Waived | Treated as waived because it follows from the row above; the maintainer has been asked to confirm this row explicitly. the hub has no one time code step. The QR code for pairing a machine is a different feature and exists. |
 | 43 | Free, and honest about it | Done | Nothing is paid, gated or advertised; there is no payment code in the source. |
 
 2 Done + 3 Not built + 2 Waived = 7.
