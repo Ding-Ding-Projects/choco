@@ -49,3 +49,7 @@ footer { padding: 36px 20px 60px; text-align: center; color: var(--onv); font-si
 .steps { grid-template-columns: minmax(0, 1fr); } .steps li { min-width: 0; } .steps li > * { min-width: 0; max-width: 100%; }
 pre { max-width: 100%; } .band, .band.alt > * { min-width: 0; } .steps span, .card p, .warn { overflow-wrap: anywhere; }
 @media (max-width: 520px) { .steps li { padding: 84px 18px 18px; } .shots { grid-template-columns: minmax(0, 1fr); } .grid { grid-template-columns: minmax(0, 1fr); } }
+/* belt and braces for small screens and for Safari: never rely on a grid track to hold a long line */
+html, body { max-width: 100%; overflow-x: clip; }
+.steps { display: flex; flex-direction: column; } .steps li { max-width: 100%; overflow: hidden; }
+@media (max-width: 760px) { pre { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; } }
