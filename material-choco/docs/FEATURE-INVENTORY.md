@@ -22,9 +22,9 @@ Every check named below ran against a test stand-in for `choco.exe`, on Linux. N
 | State | Entries |
 | --- | --- |
 | Done | 14 |
-| Partial | 58 |
+| Partial | 63 |
 | Written, never run | 3 |
-| Not built | 29 |
+| Not built | 24 |
 | Not applicable | 12 |
 | Waived | 2 |
 | **Total** | **118** |
@@ -39,15 +39,15 @@ Per category (Done + Partial + Written + Not built + Not applicable + Waived = e
 | Safety, locks and sign in | 2 | 0 | 0 | 3 | 0 | 2 | 7 |
 | Records, history and messages | 0 | 6 | 0 | 1 | 0 | 0 | 7 |
 | Built-in tools and hand-off | 0 | 2 | 0 | 8 | 2 | 0 | 12 |
-| Completeness and evidence | 1 | 5 | 0 | 2 | 0 | 0 | 8 |
+| Completeness and evidence | 1 | 6 | 0 | 1 | 0 | 0 | 8 |
 | Site and shared links | 2 | 6 | 0 | 0 | 1 | 0 | 9 |
 | Status reporting | 0 | 0 | 0 | 3 | 1 | 0 | 4 |
-| Build and install | 0 | 3 | 3 | 1 | 1 | 0 | 8 |
-| Release pipeline | 1 | 4 | 0 | 2 | 1 | 0 | 8 |
-| Repository records | 6 | 3 | 0 | 5 | 0 | 0 | 14 |
+| Build and install | 0 | 4 | 3 | 0 | 1 | 0 | 8 |
+| Release pipeline | 1 | 6 | 0 | 0 | 1 | 0 | 8 |
+| Repository records | 6 | 4 | 0 | 4 | 0 | 0 | 14 |
 | Deliverables of the instructions repository | 0 | 0 | 0 | 0 | 3 | 0 | 3 |
 | Games | 0 | 0 | 0 | 0 | 2 | 0 | 2 |
-| **Total** | **14** | **58** | **3** | **29** | **12** | **2** | **118** |
+| **Total** | **14** | **63** | **3** | **24** | **12** | **2** | **118** |
 
 Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 58. 0+0+0+0+0+0+0+0+0+3+0+0+0+0 = 3. 2+1+1+3+1+8+2+0+3+1+2+5+0+0 = 29. 1+0+0+0+0+2+0+1+1+1+1+0+3+2 = 12. 0+0+0+2+0+0+0+0+0+0+0+0+0+0 = 2. And 14+58+3+29+12+2 = 118.
 
@@ -165,10 +165,10 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | 66 | Screen recording | Not built | |
 | 67 | Comparison of the build with the design reference | Partial | The design boards were rendered to pictures and two were compared with captures by eye. There is no tool that renders the reference and no frame by frame comparison. |
 | 68 | Design files in the repository | Done | `design/material-choco`: 27 boards, each with accent and motion controls, plus rendered frames. A larger pass with a board per required feature is in progress and not published. |
-| 69 | Clipping check at many sizes and scales | Not built | The app has one overflow check at one phone width. |
+| 69 | Clipping check at many sizes and scales | Partial | `test/e2e/clipping.mjs` checks 20 pages at 6 widths, 3 scale factors and 2 text sizes. Its first full run passed 15 of 36 sizes: one finding at 320 px, the rest at 200 percent text. The findings are not fixed yet. |
 | 70 | Public screenshot gallery | Partial | The site has a gallery of every capture with a viewer. The entry asks for a separate public gallery, which does not exist. |
 
-1 Done + 5 Partial + 2 Not built = 8.
+1 Done + 6 Partial + 1 Not built = 8.
 
 ## Site and shared links (9)
 
@@ -203,14 +203,14 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | --- | --- | --- | --- |
 | 84 | `build.bat` and `build-installer.bat` | Written, never run | They exist in `material-choco/`, because the repository root holds the CLI's own `build.bat`. Neither has been run. |
 | 85 | One command that builds and runs on a fresh Windows | Written, never run | `build.bat` is written to do this. Never run. |
-| 86 | Script that fetches every dependency | Not built | No separate script. `build.bat` is written to fetch Node.js itself. |
+| 86 | Script that fetches every dependency | Partial | `scripts/fetch-deps.mjs` with `.sh` and `.bat` wrappers; run on Linux in a clean copy, 4 of 4 steps. The `.bat` wrapper and the changed `build.bat` lines were never run. |
 | 87 | Everything bundled in the installer | Partial | The release workflow builds the CLI from this repository and packs it into the installer. The installed app has never been started, so working offline is unproven. |
 | 88 | Squirrel.Windows installer | Partial | `Setup.exe`, `RELEASES` and the full package are published by the workflow. No delta packages, and never installed. |
 | 89 | Signing only where a format requires it | Not applicable | Nothing in the release requires a signature. Releases are unsigned and say so. |
 | 90 | Automatic updates | Written, never run | The desktop shell is written to check the newest release, and the interface announces a downloaded update (`a downloaded update is announced as not code signed`, against a stand-in for the desktop shell). Never run on Windows. |
 | 91 | Original icon, packaged | Partial | A multi-resolution icon is in the repository and the installer was built with it. Nobody has seen it installed. |
 
-3 Partial + 3 Written, never run + 1 Not built + 1 Not applicable = 8.
+4 Partial + 3 Written, never run + 1 Not applicable = 8.
 
 ## Release pipeline (8)
 
@@ -219,13 +219,13 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | 92 | A release on every push | Done | `.github/workflows/material-choco-release.yml`. Run 43807632449 was green and published `material-choco-v0.1.2`; later pushes published later versions. |
 | 93 | Workflow timing in the release notes | Partial | The notes state the build time in seconds. Not the start and end times the entry asks for. |
 | 94 | Line counts in the release notes, counted by the workflow | Partial | The workflow counts and states one total. No counter script in the repository and no table by kind. |
-| 95 | Photo references in releases | Not built | |
-| 96 | Code names for releases | Not built | |
+| 95 | Photo references in releases | Partial | Release notes link to a Wikimedia Commons search for the dish. 11 of 64 searches were confirmed to return pictures. |
+| 96 | Code names for releases | Partial | `scripts/release-name.mjs`, 64 dishes, 7 unit tests. The romanised names were not checked against a reference. |
 | 97 | Workflow jobs that set up their own tools | Partial | The jobs install what they need on hosted runners. There is no written inventory of those tools. |
 | 98 | Choosing a runner by inspection | Partial | Hosted runners only, chosen in the file. Nothing is inspected first. |
 | 99 | Encrypted builder for private repositories | Not applicable | This repository is public. |
 
-1 Done + 4 Partial + 2 Not built + 1 Not applicable = 8.
+1 Done + 6 Partial + 1 Not applicable = 8.
 
 ## Repository records (14)
 
@@ -244,9 +244,9 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | 110 | Closeout prompt | Partial | `CLOSEOUT_PROMPT.md` is current in the working tree. The entry also asks for proof that it reached the remote, which this pass did not do. |
 | 111 | Discussions as a running record | Not built | |
 | 112 | Project board | Not built | |
-| 113 | Operational skill for the repository | Not built | |
+| 113 | Operational skill for the repository | Partial | `.claude/skills/material-choco-ops/SKILL.md`. Written from the repository files; its release verification commands were not executed. |
 
-6 Done + 3 Partial + 5 Not built = 14.
+6 Done + 4 Partial + 4 Not built = 14.
 
 ## Deliverables of the instructions repository (3)
 

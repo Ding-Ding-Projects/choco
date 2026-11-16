@@ -4,6 +4,14 @@
 
 Releases are published by the workflow as 0.1.x, one per push. This file describes the 0.1 line as a whole.
 
+### Site, demo and releases
+
+- The landing site is split into pages: home, features, screens, remote hub, download, guides and status.
+- The real interface runs as a labelled demo in the browser against simulated machines. Nothing is installed and nothing leaves the browser.
+- Every code block in the app and on the site has a copy button.
+- Each release carries a dim sum code name, a link to public photos of the dish, SHA-256 sums of the installers and the run's timing.
+- One script fetches every dependency. A clipping check covers many sizes, scale factors and text sizes.
+
 ### Packages
 
 - Every Chocolatey CLI command and option is available, generated from the CLI source in this repository.

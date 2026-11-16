@@ -2,7 +2,7 @@ name: Material Choco release
 
 # Builds the Chocolatey CLI from this repository, bundles it into the Material Choco desktop
 # app, builds the Squirrel.Windows installer and the hub container image, and publishes one
-# uniquely tagged release. By the maintainer's standing decision this workflow gates on no
+# uniquely tagged release with a dim sum code name. By the maintainer's standing decision this workflow gates on no
 # tests; the release notes say which checks were run before the push.
 on:
   push:
@@ -72,21 +72,48 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.meta.outputs.version }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          STARTED: ${{ steps.meta.outputs.started }}
         run: |
           cd material-choco
-          elapsed=$(( $(date +%s) - ${{ steps.meta.outputs.started }} ))
+          elapsed=$(( $(date +%s) - STARTED ))
           lines=$(git ls-files core hub desktop scripts test 'ui/*.html' 'ui/*.css' 'ui/js' | xargs cat | wc -l)
+          # The code name and the photo reference come from scripts/release-name.mjs.
+          title="Material Choco ${VERSION} $(node scripts/release-name.mjs "${VERSION}" --format title)"
           {
-            echo "Material Choco ${{ steps.meta.outputs.version }}, built from commit ${GITHUB_SHA}."
+            node scripts/release-name.mjs "${VERSION}" --format markdown
+            echo
+            echo "Material Choco ${VERSION}, built from commit ${GITHUB_SHA}."
             echo
             echo "- Installer: Squirrel.Windows (Setup.exe, RELEASES and the full .nupkg are attached)."
             echo "- The Chocolatey CLI inside the app was built from this repository in this run. Nothing else needs to be installed."
             echo "- The files are **not code signed**. Windows may show an unknown publisher or SmartScreen warning. No authenticity claim is made."
-            echo "- Hub image: \`ghcr.io/ding-ding-projects/material-choco-hub:${{ steps.meta.outputs.version }}\`"
+            echo "- Hub image: \`ghcr.io/ding-ding-projects/material-choco-hub:${VERSION}\`"
             echo "- This workflow ran the CLI build with its unit tests. It did not run the Material Choco tests; see HANDOFF.md in material-choco for the checks run before the push."
             echo "- Hand-written lines counted by this run: ${lines}. Build time up to publishing: ${elapsed} s."
+            echo
+            echo "### Installer files and SHA-256 sums"
+            echo
+            echo "The installers are unsigned. A sum below shows that a download matches the file this run built. It does not show who built it."
+            echo
+            echo "| File as built | Size in bytes | SHA-256 |"
+            echo "| --- | --- | --- |"
+            count=0
+            for f in dist/squirrel-windows/*; do
+              [ -f "$f" ] || continue
+              count=$(( count + 1 ))
+              echo "| \`$(basename "$f")\` | $(wc -c < "$f" | tr -d ' ') | \`$(sha256sum "$f" | cut -d ' ' -f 1)\` |"
+            done
+            echo
+            echo "GitHub shows a space in an attached file name as a dot. On Windows, \`Get-FileHash <file> -Algorithm SHA256\` prints the sum of a download."
           } > notes.md
-          gh release create "${{ steps.meta.outputs.tag }}" dist/squirrel-windows/* --title "Material Choco ${{ steps.meta.outputs.version }}" --notes-file notes.md --target "${GITHUB_SHA}"
+          if [ "$count" -eq 0 ]; then
+            echo "No installer files were found in dist/squirrel-windows." >&2
+            exit 1
+          fi
+          cat notes.md
+          gh release create "${TAG}" dist/squirrel-windows/* --title "${title}" --notes-file notes.md --target "${GITHUB_SHA}"
 
   hub-image:
     if: github.repository == 'Ding-Ding-Projects/choco'
@@ -113,3 +140,45 @@ jobs:
           tags: |
             ghcr.io/ding-ding-projects/material-choco-hub:0.1.${{ github.run_number }}
             ghcr.io/ding-ding-projects/material-choco-hub:latest
+
+  release-timing:
+    # Runs after both build jobs have ended, so the times cover the whole workflow run.
+    needs: [installer, hub-image]
+    if: ${{ always() && needs.installer.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Append the workflow run times to the release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.installer.outputs.tag }}
+          HUB_RESULT: ${{ needs.hub-image.result }}
+        run: |
+          # The start time is the one GitHub recorded for this run, not a clock read inside a job.
+          started="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" --jq .run_started_at)"
+          if ! printf '%s' "$started" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$'; then
+            echo "GitHub did not return a start time for this run: ${started}" >&2
+            exit 1
+          fi
+          completed="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          seconds=$(( $(date -u -d "$completed" +%s) - $(date -u -d "$started" +%s) ))
+          if [ "$seconds" -lt 0 ]; then
+            echo "The completion time ${completed} is before the start time ${started}." >&2
+            exit 1
+          fi
+          gh release view "${TAG}" --json body --jq .body > notes.md
+          {
+            echo
+            echo "### Workflow run times (UTC)"
+            echo
+            echo "- Started: ${started}"
+            echo "- Completed: ${completed}. This is the moment the last job of the run wrote these lines, after the installer job and the hub image job had ended."
+            echo "- Total duration: $(( seconds / 60 )) min $(( seconds % 60 )) s (${seconds} s)"
+            echo "- Hub container image job: ${HUB_RESULT}"
+            echo "- Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID} (attempt ${GITHUB_RUN_ATTEMPT})"
+          } >> notes.md
+          cat notes.md
+          gh release edit "${TAG}" --notes-file notes.md

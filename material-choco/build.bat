@@ -29,11 +29,10 @@ if not exist "choco-bundle\choco.exe" (
   powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop'; $e=Get-ChildItem ..\code_drop -Recurse -Filter choco.exe | Sort-Object { if ($_.FullName -match 'choco_merged') {0} elseif ($_.FullName -match '_PublishedApps') {1} else {2} } | Select-Object -First 1; if (-not $e) { throw 'choco.exe was not produced' }; New-Item -ItemType Directory -Force choco-bundle | Out-Null; Copy-Item (Join-Path $e.DirectoryName '*') choco-bundle -Recurse -Force" || goto :fail
 ) else ( echo   Using the existing choco-bundle folder )
 
-echo [3/5] npm packages
-call npm ci || goto :fail
-echo [4/5] Schema and UI bundle
+echo [3/5] Schema from the CLI source
 call node scripts\gen-schema.mjs || goto :fail
-call node scripts\build-vendor.mjs || goto :fail
+echo [4/5] npm packages, UI bundle and schema check (scripts\fetch-deps.mjs)
+call node scripts\fetch-deps.mjs || goto :fail
 if "%BUILD_ONLY%"=="1" goto :ok
 echo [5/5] Starting Material Choco
 call npx electron . || goto :fail

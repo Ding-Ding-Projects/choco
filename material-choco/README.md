@@ -157,8 +157,8 @@ node site/tools/generate.mjs     # rebuild the site pages
 
 | Command | What it does | Result on 2026-11-16 |
 | --- | --- | --- |
-| `npm test` | Unit and integration tests. They start a real hub and a real agent in-process and cover the schema, argument validation, sign in, passkeys, roles, secrets at rest, webhooks, allow lists, jobs, schedules and history. | 88 of 88 pass |
-| `npm run test:e2e` | Drives the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer, and refreshes the screenshots. | 117 of 117 checks pass |
+| `npm test` | Unit and integration tests. They start a real hub and a real agent in-process and cover the schema, argument validation, sign in, passkeys, roles, secrets at rest, webhooks, allow lists, jobs, schedules and history. | 95 of 95 pass |
+| `npm run test:e2e` | Drives the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer, and refreshes the screenshots. | 121 of 121 checks pass |
 
 Both use `test/fixtures/fake-choco.js` in place of `choco.exe`. Neither proves anything about the real CLI on Windows.
 </details>
@@ -170,7 +170,7 @@ Both use `test/fixtures/fake-choco.js` in place of `choco.exe`. Neither proves a
 | [HANDOFF.md](HANDOFF.md) | What was checked, with results, and what was not |
 | [ROADMAP.md](ROADMAP.md) | Checklist of what is done and what is next |
 | [CHANGELOG.md](CHANGELOG.md) | Changes by version |
-| [docs/FEATURE-INVENTORY.md](docs/FEATURE-INVENTORY.md) | State of each of the 118 required features: 14 done, 58 partial, 3 written and never run, 29 not built, 12 not applicable, 2 waived |
+| [docs/FEATURE-INVENTORY.md](docs/FEATURE-INVENTORY.md) | State of each of the 118 required features: 14 done, 63 partial, 3 written and never run, 24 not built, 12 not applicable, 2 waived |
 | [docs/features](docs/features/README.md) | One document per shipped feature |
 | [docs/articles](docs/articles/README.md) | How-to guides |
 | [docs/api](docs/api/README.md) | Hub HTTP API |

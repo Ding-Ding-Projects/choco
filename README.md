@@ -137,7 +137,7 @@ MaterialChoco.exe --agent run
 
 | | |
 | --- | --- |
-| **Checked** | `npm test`: 88 of 88 pass. End to end run in headless Chrome against a real hub and agent processes: 117 of 117 checks pass. The hub image builds, runs and is published. The release workflow builds the CLI from this repository on Windows, packs it into the installer and publishes it. The site is live and was measured at phone widths. |
+| **Checked** | `npm test`: 95 of 95 pass. End to end run in headless Chrome against a real hub and agent processes: 121 of 121 checks pass. The hub image builds, runs and is published. The release workflow builds the CLI from this repository on Windows, packs it into the installer and publishes it. The site is live and was measured at phone widths. |
 | **Not proven** | Nobody has installed the app on Windows and run a real install, upgrade or uninstall through it. Every automated check used a test stand-in for `choco.exe`, on Linux. Passkeys were checked with a software passkey device and Chrome's virtual one, not a real device. `build.bat` and `build-installer.bat` have never been run. No screen reader pass and no accessibility audit. |
 | **Not signed** | The installer is not code signed. |
 | **Not built** | Signed agent updates, limiting a user to some machines, and much of the maintainer's wider feature catalogue. The exact count is in the feature inventory. |

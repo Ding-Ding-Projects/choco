@@ -16,6 +16,8 @@
     "start": "electron .",
     "test": "node --test test/*.test.js",
     "test:e2e": "node test/e2e/run.mjs",
+    "test:clip": "node test/e2e/clipping.mjs",
+    "deps": "node scripts/fetch-deps.mjs",
     "dist": "electron-builder --win squirrel --x64 --publish never"
   },
   "devDependencies": {

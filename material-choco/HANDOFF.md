@@ -14,8 +14,8 @@ Date: 2026-11-16. Branch: `main`. This file states what exists, what was checked
 
 | Check | Result | When and by whom |
 | --- | --- | --- |
-| `npm test`: unit and integration tests with a real hub and a real agent in-process | 88 of 88 pass | 2026-11-16, run in the build session |
-| `npm run test:e2e`: the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer | 117 of 117 checks pass, with no browser console errors | 2026-11-16, run in the build session |
+| `npm test`: unit and integration tests with a real hub and a real agent in-process | 95 of 95 pass | 2026-11-16, run in the build session |
+| `npm run test:e2e`: the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer | 121 of 121 checks pass, with no browser console errors | 2026-11-16, run in the build session |
 | Schema drift check against the C# source | matches | part of `npm test` |
 | API reference and Postman collection match the route table | match | part of `npm test` |
 | Hub image built with `docker build`, run as a container, reached on the LAN address, health check | healthy, runs as the non-root user `node` | 2026-11-15, earlier state of the hub |
@@ -24,6 +24,9 @@ Date: 2026-11-16. Branch: `main`. This file states what exists, what was checked
 | Release workflow, run 43807632449 on `windows-latest` | green. The CLI was built from this repository and `choco.exe --version` printed `2.9.0-materialch-20261116-68069424` on the runner. `Setup.exe`, `RELEASES` and the full `.nupkg` were published as release `material-choco-v0.1.2`. The hub image was pushed to `ghcr.io/ding-ding-projects/material-choco-hub`. | 2026-11-16 |
 | Later pushes | published later versions. The live site showed 0.1.5 as the newest at 10:38 local time on 2026-11-16. | 2026-11-16 |
 | Landing site, assembled as the workflow does and served locally | see "Site checks" below | 2026-11-16 |
+| `node test/e2e/demo.mjs`: the in-browser demo served under a sub-path, no hub | 24 of 24 checks pass, no request left the page | 2026-11-16 |
+| `node test/e2e/clipping.mjs`: 20 pages at 6 widths, 3 scale factors, 2 text sizes | 15 of 36 sizes pass. One finding at 320 px wide (the bottom bar on Settings); every other finding is at 200 percent text. Not fixed. | 2026-11-16, one full run |
+| `node scripts/fetch-deps.mjs` in a clean copy on Linux | 4 of 4 steps pass | 2026-11-16 |
 | Landing site, live | reachable, and measured at phone widths with no sideways scroll | 2026-11-16 |
 | Repository website field | reads back `https://ding-ding-projects.github.io/choco/` | 2026-11-16 |
 
@@ -57,11 +60,16 @@ The site was assembled into a scratch folder exactly as the workflow does, serve
 - `--limit-output` row formats for `apikey list`, `template list` and `rule list` were written from the source, not from real output.
 - Reduced motion, screen readers, display scaling and the larger text sizes were not captured or audited.
 - The site was not tested on a physical phone, in landscape, or in browsers other than Chrome. Link previews in chat apps were not tested.
+- The clipping findings at 200 percent text and at 320 px are known and open.
+- The release workflow's code name, checksum table and timing job were dry-run locally with a stand-in for `gh`; see the release page for the first real result.
+- `fetch-deps.bat` and the changed lines of `build.bat` were never run.
+- The demo's schedules never fire, and the demo was not tried on a physical phone.
+- Design Tweaks were not exercised inside the design tool.
 - No independent security review.
 
 ## Remaining work
 
-See `ROADMAP.md`. The next milestone is the Windows proof. The state of every required feature is in `docs/FEATURE-INVENTORY.md`: 14 done, 58 partial, 3 written and never run, 29 not built, 12 not applicable, 2 waived, of 118.
+See `ROADMAP.md`. The next milestone is the Windows proof. The state of every required feature is in `docs/FEATURE-INVENTORY.md`: 14 done, 63 partial, 3 written and never run, 24 not built, 12 not applicable, 2 waived, of 118.
 
 ## Design pass notes
 
