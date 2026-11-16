@@ -27,6 +27,10 @@ In every check except the last row the CLI was `test/fixtures/fake-choco.js`, a 
 
 The first workflow run (43807552624) failed on a YAML quoting error in the file; the second commit fixed it.
 
+## 2026-11-16: install result takeovers
+
+Added full-screen success and failure takeovers for install and upgrade jobs, with a setting. End to end run: 31 of 31 checks passed, including that the failure takeover stays until dismissed and that installs started outside the current browser also trigger it. `npm test`: 22 passed. Reduced motion for the takeovers was written by rule and not captured. Merged to `main`.
+
 ## Not verified
 
 - The installer has been built on Windows but never installed or started there. The app has not run the real `choco.exe` yet. `build.bat` and `build-installer.bat` have not been run.

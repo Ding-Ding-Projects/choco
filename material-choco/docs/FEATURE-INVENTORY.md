@@ -27,7 +27,7 @@ Count by catalogue entry: 28 done, 33 partial, 1 written and not run, 48 not bui
 | --- | --- | --- |
 | Material Design 3 Expressive conformance | Partial | Buttons, fields, switches, checkboxes, chips, sliders and selects are Material Web components. Cards, tables, tabs, menus and sheets are hand-written CSS on the same tokens. No per-surface component register. |
 | Destinations instead of one long page, frameless desktop window | Done | Window verified on Linux under a virtual display only. |
-| Motion with a complete reduced-motion path | Done | Enter, press, hover, page change, loading, success and error motion. Reduced motion checked by rule, not by capture. |
+| Motion with a complete reduced-motion path | Done | Enter, press, hover, page change, loading, success and error motion, plus full-screen takeovers for every install and upgrade result. Reduced motion checked by rule, not by capture. |
 | Live charts | Partial | One live line of active jobs. No scrub, no keyboard scrubbing. |
 | Per-element appearance editor | Not built | |
 | Infinite colour picker and translator | Partial | Continuous hue and vividness field, keyboard path, HEX input, HEX, RGB, HSL and OKLCH readouts, contrast figure. No CMYK, LAB, named colours or rainbow. |

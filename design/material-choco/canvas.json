@@ -2,7 +2,7 @@
  "v": 3,
  "createdOnFiles": {
   "v": 1,
-  "at": "2026-11-16T04:33:52Z"
+  "at": "2026-11-16T14:57:17Z"
  },
  "title": "Material Choco",
  "launch": {
@@ -183,6 +183,24 @@
    "page": "states",
    "expand": "fill"
   },
+  "InstallSuccess.dc.html": {
+   "x": 3920,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Install success takeover",
+   "page": "states",
+   "expand": "fill"
+  },
+  "InstallError.dc.html": {
+   "x": 5360,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Install failure takeover",
+   "page": "states",
+   "expand": "fill"
+  },
   "Phone.dc.html": {
    "x": 0,
    "y": 0,
@@ -217,6 +235,8 @@
   "StateError.dc.html",
   "StateSuccess.dc.html",
   "StateEmpty.dc.html",
+  "InstallSuccess.dc.html",
+  "InstallError.dc.html",
   "Phone.dc.html",
   "Desktop.dc.html"
  ],
@@ -274,7 +294,7 @@
    "y": -300,
    "text": "States and errors",
    "kind": "title1",
-   "maxW": 3840,
+   "maxW": 6720,
    "page": "states"
   },
   "t_phone": {

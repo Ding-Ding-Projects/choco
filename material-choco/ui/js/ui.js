@@ -135,3 +135,32 @@ export function levelUp(text) { const el = h('div', { class: 'levelup', role: 's
 export function skeleton(rows = 5) { return h('div', { class: 'card', 'aria-busy': 'true', 'aria-label': 'Loading' }, h('div', { class: 'wave' }), Array.from({ length: rows }, (_x, i) => h('div', { class: 'row nowrap' }, h('span', { class: 'skel', style: 'width:18px;height:18px' }), h('span', { class: 'skel', style: `width:${[34, 26, 40, 22, 30][i % 5]}%` }), h('span', { class: 'grow' }), h('span', { class: 'skel', style: 'width:72px' })))); }
 export function errorPanel(title, detail, output, actions = []) { sound('err'); return h('section', { class: 'errpanel', role: 'alert' }, h('span', { class: 'mk' }, icon('close', 'xl')), h('div', { class: 'col grow' }, h('h2', { class: 'h2', style: 'font-size:1.75rem' }, title), h('p', {}, detail), output && h('pre', { class: 'log cmd' }, output), h('div', { class: 'row' }, actions))); }
 export function emptyState(ic, title, text, action) { return h('div', { class: 'card empty rise' }, h('div', { class: 'float' }, h('span', { class: 'blob pc' }, icon(ic, 'xl'))), h('h2', { class: 'h2' }, title), h('p', { class: 'muted' }, text), action); }
+
+// --- full-screen takeover for install and upgrade results -----------------------------------
+// One overlay at a time. More successes that arrive while it is open are counted on it;
+// failures queue and are shown one by one, and stay until dismissed.
+const dramaQueue = []; let dramaNow = null;
+const TICK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>'; const CROSS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+export function drama(item) {
+  if (dramaNow && dramaNow.kind === 'ok' && item.kind === 'ok') { dramaNow.count += 1; dramaNow.bump(item); return; }
+  dramaQueue.push(item); if (!dramaNow) nextDrama();
+}
+function nextDrama() {
+  const item = dramaQueue.shift(); if (!item) { dramaNow = null; return; }
+  const ok = item.kind === 'ok'; const calm = reducedMotion(); const opener = document.activeElement; let timer = null;
+  const sub = h('p', { class: 'sub' }, item.detail);
+  const el = h('div', { class: 'drama ' + (ok ? 'ok' : 'err'), role: ok ? 'status' : 'alertdialog', 'aria-modal': ok ? null : 'true', 'aria-label': item.title, tabindex: '-1' });
+  const close = () => { if (!el.isConnected || el.classList.contains('out')) return; clearTimeout(timer); el.classList.add('out'); setTimeout(() => { el.remove(); opener?.focus?.(); nextDrama(); }, calm ? 0 : 340); };
+  const stage = h('div', { class: 'stage' }, h('div', { class: 'medal', html: ok ? TICK : CROSS }), h('div', { class: 'big' }, emoji(ok ? '🎉' : '💥'), item.title), h('div', { class: 'what' }, item.command), sub,
+    !ok && item.output ? h('pre', { tabindex: '0', 'aria-label': 'Last lines of output' }, item.output) : null,
+    !ok ? h('div', { class: 'acts' }, h('button', { type: 'button', onclick: () => { close(); item.open?.(); } }, 'Open the full log'), h('button', { type: 'button', class: 'ghost', onclick: close }, t('close'))) : null);
+  el.append(h('div', { class: 'rays' }), h('div', { class: 'ring' }), h('div', { class: 'ring', style: 'animation-delay:.5s' }), stage, h('div', { class: 'hint' }, ok ? 'Click or press Escape to continue' : 'Press Escape to dismiss'));
+  if (!calm) {
+    if (ok) { const cols = ['#fff', 'var(--pc)', 'var(--sc)', 'var(--tc)', 'var(--okc)', '#ffd54a']; for (let i = 0; i < 70; i++) el.append(h('span', { class: 'bit', style: `left:${Math.random() * 100}%;background:${cols[i % cols.length]};--dx:${(Math.random() - 0.5) * 30}vw;--rot:${(Math.random() - 0.5) * 1400}deg;animation-duration:${1.8 + Math.random() * 2.2}s;animation-delay:${Math.random() * 1.4}s;width:${8 + Math.random() * 10}px` })); }
+    else for (let i = 0; i < 18; i++) { const a = (i / 18) * Math.PI * 2; el.append(h('span', { class: 'shard', style: `--sx:${Math.cos(a) * (30 + Math.random() * 30)}vmax;--sy:${Math.sin(a) * (30 + Math.random() * 30)}vmax;--rot:${(Math.random() - 0.5) * 900}deg` })); }
+  }
+  el.addEventListener('keydown', (e) => { if (e.key === 'Escape' || (ok && (e.key === 'Enter' || e.key === ' '))) { e.preventDefault(); e.stopPropagation(); close(); } if (!ok && e.key === 'Tab') { const f = [...el.querySelectorAll('button, pre')]; const i = f.indexOf(document.activeElement); e.preventDefault(); f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus(); } });
+  if (ok) { el.addEventListener('click', close); timer = setTimeout(close, 5200); }
+  dramaNow = { kind: item.kind, count: 1, bump: (more) => { clearTimeout(timer); timer = setTimeout(close, 4200); sub.replaceChildren(h('b', {}, `${dramaNow.count} installs finished. `), `Latest: ${more.command}`); sound('ok'); } };
+  document.body.append(el); (ok ? el : el.querySelector('.acts button')).focus(); sound(ok ? 'level' : 'bad');
+}

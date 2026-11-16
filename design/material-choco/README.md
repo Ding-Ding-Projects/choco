@@ -20,7 +20,7 @@ These files are a design. They are not the implementation and do not prove any b
 | Console and authoring | `Console` |
 | Remote fleet | `Machines`, `Job` |
 | Required features | `Settings`, `Palette` |
-| States and errors | `StateLoading`, `StateError`, `StateSuccess`, `StateEmpty` |
+| States and errors | `StateLoading`, `StateError`, `StateSuccess`, `StateEmpty`, `InstallSuccess`, `InstallError` |
 | Phone | `Phone` |
 | Desktop app | `Desktop` |
 
@@ -29,6 +29,10 @@ These files are a design. They are not the implementation and do not prove any b
 Material Design 3 Expressive. One seed colour (a burnt cocoa, `#8A3F0B`), teal and berry as supporting colours, neutral low-chroma surfaces, a dark hero block. Roboto Flex at 112% width for display text, Roboto for body, Roboto Mono for commands. Shapes are large and deliberately uneven on hero panels. Motion: staggered spring entrance, press squash, hover lift, a morphing shape, a live pulse, a wave progress bar, shimmer skeletons, an error shake with an alarm ring, a self-drawing tick with confetti. Every animation is disabled under `prefers-reduced-motion`.
 
 A first version was more restrained. It was replaced the same day at the maintainer's request for a bolder look with motion in every state, error states included.
+
+## Install result takeovers (added 2026-11-16)
+
+`InstallSuccess` and `InstallError` are full-screen takeovers shown when an install or upgrade finishes. Success: the screen opens like an iris, rotating rays, expanding rings, a stamped and morphing medal with a self-drawing tick, a sprung headline, falling confetti; it closes on click, Escape, or after 5 seconds. Failure: a white flash, scan lines, a quake, a stamped cross, a glitching headline, the exit code and the last lines of output, and two actions; it stays until dismissed. Under reduced motion the rays, rings, confetti, flash and scan lines are removed and the panel appears in place. Both were rendered to `frames/` and compared with the real app captures `27` and `28` in `material-choco/docs/screenshots`. Difference: the app adds an emoji to the headline when the dialog emoji setting is on, and shows flying shards on failure.
 
 ## Stageshow skill
 

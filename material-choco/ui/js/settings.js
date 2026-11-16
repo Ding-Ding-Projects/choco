@@ -2,7 +2,7 @@
 export const DEFAULTS = {
   lang: 'en', funnyEn: 5, funnyYue: 5, dialogEmoji: true, school: false, schoolName: 'School mode', schoolPin: '',
   theme: 'system', density: 'comfortable', motion: 'system', hue: 50, chroma: 1, textScale: 1, contrast: 'normal', targets: 'normal', focusRing: 'normal',
-  sounds: true, volume: 0.5, narration: false, narrationLang: 'en', voiceEn: '', voiceYue: '', rate: 1, pitch: 1,
+  drama: true, sounds: true, volume: 0.5, narration: false, narrationLang: 'en', voiceEn: '', voiceYue: '', rate: 1, pitch: 1,
   focusMode: false, lowStim: false, timeAware: false, oneThing: false, momentum: false,
   displayName: '', paletteSize: 'card', a11yMenu: true, closedTabs: [], pinnedTabs: [], collapsed: {}, onboarded: false, autoRefresh: true,
   defaultGlobal: { confirm: true, 'no-progress': true, 'no-color': true }, knownTabs: [],

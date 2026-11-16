@@ -2,6 +2,7 @@
 
 ## 0.1.0 (unreleased)
 
+- Every install or upgrade that finishes takes over the screen: a celebration on success, an alarm with the exit code and last output on failure. A setting turns it off.
 - First version of the desktop app, the hub and the remote agent.
 - Every Chocolatey CLI command and option is available, generated from the CLI source in this repository.
 - The Chocolatey CLI built from this repository ships inside the app.

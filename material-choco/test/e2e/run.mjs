@@ -51,9 +51,17 @@ try {
   await go('installed'); await p.wait(700); await p.shot(path.join(shots, '07-installed.png'));
   // upgrade one package on BUILD-01
   await p.eval(`const card=document.querySelector('[data-machine]'); [...card.querySelectorAll('md-text-button')].find(b=>b.textContent.includes('Upgrade')).click()`);
-  await p.until(`document.querySelector('.toast.ok')`, 15000); check('upgrade job succeeds and reports it', true);
+  await p.until(`document.querySelector('.drama.ok')`, 15000); check('upgrade success takes over the screen', (await text()).includes('Upgrade complete')); await p.wait(1700); await p.shot(path.join(shots, '27-install-success-takeover.png'));
+  await p.key('Escape'); await p.until(`!document.querySelector('.drama')`, 4000); check('success takeover closes with Escape', true);
+  await p.eval(`const ms=await (await fetch('/api/machines')).json(); await fetch('/api/jobs',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({machineIds:[ms[0].id],spec:{kind:'choco',command:'install',args:['no-such-package'],global:{confirm:true}}})})`);
+  await p.until(`document.querySelector('.drama.err')`, 15000); await p.wait(1800); await p.shot(path.join(shots, '28-install-failure-takeover.png'));
+  check('install failure takes over with exit code and output', /Install failed/.test(await text()) && /exit code 1/.test(await text()) && /not found/.test(await text()));
+  await p.wait(6000); check('failure takeover stays until dismissed', await p.eval(`return !!document.querySelector('.drama.err')`));
+  await p.eval(`[...document.querySelectorAll('.drama .acts button')].find(b=>b.textContent==='Close').click()`); await p.until(`!document.querySelector('.drama')`, 4000);
+  await p.eval(`const ms=await (await fetch('/api/machines')).json(); await fetch('/api/jobs',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({machineIds:[ms[0].id],spec:{kind:'choco',command:'upgrade',args:['git'],global:{confirm:true}}})})`); await p.until(`document.querySelector('.drama.ok')`, 15000); check('an install started elsewhere also gets the takeover', true); await p.key('Escape'); await p.until(`!document.querySelector('.drama')`, 4000);
   await p.until(`document.querySelector('[data-machine]').innerText.includes('2.47.1')`, 8000); check('inventory refreshes after a change', true);
-  await p.eval(`document.querySelector('.toast.ok button').click()`); await p.wait(900); await p.shot(path.join(shots, '08-job-success.png'));
+  await go('jobs'); await p.eval(`[...document.querySelectorAll('.prow')].find(b=>b.textContent.includes('choco upgrade git')).click()`);
+  await p.wait(900); await p.shot(path.join(shots, '08-job-success.png'));
   check('job page shows the success state with exit code', (await text()).includes('Finished with exit code 0'));
   // destructive: uninstall needs both keys and the slider
   await go('installed'); await p.wait(500);

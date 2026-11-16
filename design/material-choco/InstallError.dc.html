@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Install failure takeover</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wdth,wght@8..144,100..125,400..800&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}
+a{color:#006A6A}a:hover{color:#002020}
+@keyframes mc-rise{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes mc-slide{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+@keyframes mc-pop{0%{transform:scale(.8)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes mc-pulse{0%{box-shadow:0 0 0 0 rgba(0,106,106,.55)}100%{box-shadow:0 0 0 14px rgba(0,106,106,0)}}
+@keyframes mc-alarm{0%{box-shadow:0 0 0 0 rgba(186,26,26,.5)}100%{box-shadow:0 0 0 22px rgba(186,26,26,0)}}
+@keyframes mc-shake{0%,100%{transform:none}15%{transform:translateX(-10px) rotate(-1deg)}30%{transform:translateX(9px) rotate(1deg)}45%{transform:translateX(-6px)}60%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+@keyframes mc-shimmer{from{background-position:-480px 0}to{background-position:480px 0}}
+@keyframes mc-wave{from{background-position:0 0}to{background-position:48px 0}}
+@keyframes mc-morph{0%,100%{border-radius:38% 62% 55% 45%/48% 40% 60% 52%;transform:rotate(0)}33%{border-radius:60% 40% 38% 62%/55% 62% 38% 45%}66%{border-radius:45% 55% 62% 38%/38% 48% 52% 62%;transform:rotate(18deg)}}
+@keyframes mc-spin{to{transform:rotate(360deg)}}
+@keyframes mc-draw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+@keyframes mc-confetti{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(150px) rotate(300deg);opacity:0}}
+@keyframes mc-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes d-iris{from{clip-path:circle(0% at 50% 50%)}to{clip-path:circle(150% at 50% 50%)}}
+@keyframes d-stamp{0%{opacity:0;transform:scale(3.4) rotate(-18deg)}55%{opacity:1;transform:scale(.86) rotate(3deg)}75%{transform:scale(1.08) rotate(-1deg)}100%{transform:scale(1)}}
+@keyframes d-title{0%{opacity:0;transform:translateY(60px) scale(.7);letter-spacing:12px}60%{opacity:1;transform:translateY(-8px) scale(1.06)}100%{transform:none;letter-spacing:-1px}}
+@keyframes d-ring{from{transform:scale(.2);opacity:.9}to{transform:scale(3.2);opacity:0}}
+@keyframes d-ray{to{transform:rotate(360deg)}}
+@keyframes d-fall{0%{transform:translateY(-80px) rotate(0)}100%{transform:translateY(860px) rotate(700deg)}}
+@keyframes d-quake{10%{transform:translate(-14px,6px) rotate(-.6deg)}20%{transform:translate(12px,-8px) rotate(.5deg)}30%{transform:translate(-10px,-4px)}40%{transform:translate(9px,7px)}50%{transform:translate(-6px,3px)}60%{transform:translate(5px,-3px)}70%{transform:translate(-3px,2px)}}
+@keyframes d-glitch{0%,100%{text-shadow:none;transform:none}20%{text-shadow:-6px 0 rgba(0,255,255,.55),6px 0 rgba(255,0,255,.55);transform:skewX(-6deg)}40%{text-shadow:5px 0 rgba(0,255,255,.55),-5px 0 rgba(255,0,255,.55);transform:skewX(4deg)}}
+@keyframes d-scan{to{background-position:0 24px}}
+.mc-press{transition:transform 180ms cubic-bezier(.2,1.4,.4,1),border-radius 260ms,filter 180ms}.mc-press:hover{transform:scale(1.04);filter:brightness(1.06)}.mc-press:active{transform:scale(.95);border-radius:12px}
+.mc-lift{transition:transform 260ms cubic-bezier(.2,1.3,.4,1),box-shadow 260ms}.mc-lift:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(42,23,8,.12)}
+@media (prefers-reduced-motion: reduce){*{animation-duration:1ms !important;animation-iteration-count:1 !important;transition-duration:1ms !important}}
+</style>
+</helmet>
+<div style="font-family: Roboto, system-ui, sans-serif; position: relative; overflow: hidden; min-height: 760px; box-sizing: border-box; padding: 40px 24px; display: flex; align-items: center; justify-content: center; text-align: center; color: #FFFFFF; background: radial-gradient(circle at 50% 40%, #8C1D18, #2A0503 72%); animation: d-iris 700ms cubic-bezier(0.2, 0, 0, 1) both"><span aria-hidden="true" style="position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 10px, rgba(0,0,0,0.14) 10px 12px); animation: d-scan 600ms linear infinite"></span><span aria-hidden="true" style="position: absolute; left: 50%; top: 40%; width: 240px; height: 240px; margin: -120px 0 0 -120px; border-radius: 50%; border: 6px solid #FF8A80; animation: d-ring 1.6s ease-out 0ms infinite"></span><span aria-hidden="true" style="position: absolute; left: 50%; top: 40%; width: 240px; height: 240px; margin: -120px 0 0 -120px; border-radius: 50%; border: 6px solid #FF8A80; animation: d-ring 1.6s ease-out 400ms infinite"></span><div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; max-width: 900px"><div style="display: flex; flex-direction: column; align-items: center; gap: 18px; animation: d-quake 700ms 120ms both"><span aria-hidden="true" style="width: 200px; height: 200px; display: inline-flex; align-items: center; justify-content: center; background: #FFFFFF; color: #BA1A1A; border-radius: 36px; box-shadow: 0 20px 80px rgba(0,0,0,0.5); animation: d-stamp 620ms cubic-bezier(0.2, 1.6, 0.3, 1) 120ms both"><svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6L6 18" style="stroke-dasharray: 60; animation: mc-draw 700ms ease-out 900ms both"></path></svg></span><h1 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; font-stretch: 125%; margin: 0; font-size: 96px; font-weight: 800; line-height: 0.95; text-shadow: 0 8px 40px rgba(0,0,0,0.45); animation: d-title 600ms cubic-bezier(0.2, 1.35, 0.4, 1) 300ms both, d-glitch 900ms steps(2) 900ms 2">Install failed</h1><div style="font-family: 'Roboto Mono', monospace; font-size: 18px; background: rgba(0,0,0,0.32); padding: 10px 18px; border-radius: 16px; animation: mc-rise 600ms cubic-bezier(0.2, 1.35, 0.4, 1) 900ms both">choco install no-such-package --confirm --no-progress --no-color</div><p style="margin: 0; font-size: 17px">LAB-PC-07 reported exit code 1. Nothing else was changed by this job.</p><pre style="margin: 0; text-align: left; padding: 14px; border-radius: 16px; background: rgba(0,0,0,0.6); color: #FFD9D4; font-family: 'Roboto Mono', monospace; font-size: 13px; white-space: pre-wrap">no-such-package not installed. The package was not found with the source(s) listed.
+Chocolatey installed 0/1 packages. 1 packages failed.</pre><div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center"><button type="button" class="mc-press" style="font-family: Roboto, system-ui, sans-serif; height: 52px; padding: 0 26px; border-radius: 26px; border: 2px solid #FFFFFF; background: #FFFFFF; color: #7A1410; font-weight: 700; font-size: 16px">Open the full log</button><button type="button" class="mc-press" style="font-family: Roboto, system-ui, sans-serif; height: 52px; padding: 0 26px; border-radius: 26px; border: 2px solid #FFFFFF; background: transparent; color: #FFFFFF; font-weight: 700; font-size: 16px">Close</button></div><p style="margin: 0; font-size: 13px; opacity: 0.85">Stays until dismissed. Escape also closes it.</p></div></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":760}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

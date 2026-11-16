@@ -108,7 +108,7 @@ npm start                        # desktop app
 <details><summary>What runs</summary>
 
 - `npm test`: 22 unit and integration tests. They start a real hub and a real agent in-process.
-- `npm run test:e2e`: drives the real UI in headless Chrome against a real hub and two agent processes, 27 checks, and refreshes the screenshots.
+- `npm run test:e2e`: drives the real UI in headless Chrome against a real hub and two agent processes, 31 checks, and refreshes the screenshots.
 </details>
 
 ## Size
