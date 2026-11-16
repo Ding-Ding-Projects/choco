@@ -98,7 +98,8 @@ jobs:
           node-version: 22
       - name: Stamp build information
         working-directory: material-choco
-        run: node -e "require('fs').writeFileSync('shared/build-info.json', JSON.stringify({version: '0.1.' + process.env.GITHUB_RUN_NUMBER, builtAt: new Date().toISOString(), commit: process.env.GITHUB_SHA}))"
+        run: |
+          node -e "require('fs').writeFileSync('shared/build-info.json', JSON.stringify({version: '0.1.' + process.env.GITHUB_RUN_NUMBER, builtAt: new Date().toISOString(), commit: process.env.GITHUB_SHA}))"
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
