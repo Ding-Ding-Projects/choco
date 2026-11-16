@@ -2,7 +2,7 @@
  "info": {
   "name": "Material Choco hub",
   "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-  "description": "Generated from hub/server.js. Sign in with POST /api/login first; the session cookie is then sent automatically."
+  "description": "Generated from hub/server.js by scripts/gen-api-docs.mjs. Sign in with POST /api/login first; the session cookie is then sent automatically."
  },
  "variable": [
   {
@@ -15,6 +15,10 @@
   },
   {
    "key": "id",
+   "value": ""
+  },
+  {
+   "key": "name",
    "value": ""
   }
  ],
@@ -56,7 +60,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"name\": \"admin\",\n \"password\": \"at least ten characters\"\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -82,7 +86,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"name\": \"admin\",\n \"password\": \"at least ten characters\",\n \"totp\": \"123456\"\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -169,7 +173,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"name\": \"PC-01\",\n \"groups\": [\n  \"lab\"\n ],\n \"readOnly\": false,\n \"allowedCommands\": [\n  \"list\",\n  \"outdated\",\n  \"upgrade\"\n ]\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -213,7 +217,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"readOnly\": false,\n \"groups\": [\n  \"lab\"\n ]\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -239,7 +243,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"machineIds\": [\n  \"{{id}}\"\n ],\n \"spec\": {\n  \"kind\": \"choco\",\n  \"command\": \"upgrade\",\n  \"args\": [\n   \"git\"\n  ],\n  \"options\": {},\n  \"global\": {\n   \"confirm\": true\n  }\n }\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -345,7 +349,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"name\": \"Nightly upgrade\",\n \"time\": \"03:00\",\n \"days\": [],\n \"target\": {\n  \"all\": true\n },\n \"spec\": {\n  \"kind\": \"choco\",\n  \"command\": \"upgrade\",\n  \"args\": [\n   \"all\"\n  ],\n  \"options\": {},\n  \"global\": {\n   \"confirm\": true\n  }\n }\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -372,7 +376,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"enabled\": false\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -433,7 +437,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"action\": \"note\",\n \"detail\": \"text\"\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -477,7 +481,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"current\": \"current password\",\n \"next\": \"new password of ten or more\"\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -500,6 +504,359 @@
         "api",
         "account",
         "totp"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"action\": \"begin\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/account/passkeys",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account/passkeys",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account",
+        "passkeys"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/account/passkeys/begin",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account/passkeys/begin",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account",
+        "passkeys",
+        "begin"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"password\": \"current password\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /api/account/passkeys/finish",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account/passkeys/finish",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account",
+        "passkeys",
+        "finish"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"id\": \"<credential id>\",\n \"response\": {\n  \"clientDataJSON\": \"<base64url>\",\n  \"attestationObject\": \"<base64url>\",\n  \"transports\": [\n   \"internal\"\n  ]\n },\n \"name\": \"My laptop\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE /api/account/passkeys/:id",
+     "request": {
+      "method": "DELETE",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/account/passkeys/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "account",
+        "passkeys",
+        "{{id}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/login/passkey/begin",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/login/passkey/begin",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "login",
+        "passkey",
+        "begin"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"name\": \"admin\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "POST /api/login/passkey/finish",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/login/passkey/finish",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "login",
+        "passkey",
+        "finish"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"id\": \"<credential id>\",\n \"response\": {\n  \"clientDataJSON\": \"<base64url>\",\n  \"authenticatorData\": \"<base64url>\",\n  \"signature\": \"<base64url>\",\n  \"userHandle\": \"<base64url>\"\n }\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "GET /api/users",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/users",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "users"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/users",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/users",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "users"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"name\": \"olga\",\n \"role\": \"operator\",\n \"password\": \"initial password of ten or more\"\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "PATCH /api/users/:name",
+     "request": {
+      "method": "PATCH",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/users/{{name}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "users",
+        "{{name}}"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"role\": \"viewer\",\n \"disabled\": false\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE /api/users/:name",
+     "request": {
+      "method": "DELETE",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/users/{{name}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "users",
+        "{{name}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "GET /api/webhooks",
+     "request": {
+      "method": "GET",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/webhooks",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "webhooks"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/webhooks",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/webhooks",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "webhooks"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"name\": \"Ops channel\",\n \"url\": \"https://example.com/hook\",\n \"format\": \"json\",\n \"events\": [\n  \"job.failed\",\n  \"machine.offline\",\n  \"login.lockout\"\n ],\n \"offlineMinutes\": 10,\n \"enabled\": true\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "PATCH /api/webhooks/:id",
+     "request": {
+      "method": "PATCH",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/webhooks/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "webhooks",
+        "{{id}}"
+       ]
+      },
+      "body": {
+       "mode": "raw",
+       "raw": "{\n \"enabled\": false\n}",
+       "options": {
+        "raw": {
+         "language": "json"
+        }
+       }
+      }
+     }
+    },
+    {
+     "name": "DELETE /api/webhooks/:id",
+     "request": {
+      "method": "DELETE",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/webhooks/{{id}}",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "webhooks",
+        "{{id}}"
+       ]
+      }
+     }
+    },
+    {
+     "name": "POST /api/webhooks/:id/test",
+     "request": {
+      "method": "POST",
+      "header": [],
+      "url": {
+       "raw": "{{baseUrl}}/api/webhooks/{{id}}/test",
+       "host": [
+        "{{baseUrl}}"
+       ],
+       "path": [
+        "api",
+        "webhooks",
+        "{{id}}",
+        "test"
        ]
       },
       "body": {
@@ -552,7 +909,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"code\": \"XXXX-XXXX\",\n \"name\": \"PC-01\",\n \"info\": {\n  \"hostname\": \"PC-01\",\n  \"os\": \"Windows_NT 10.0\",\n  \"arch\": \"x64\",\n  \"agentVersion\": \"0.1.0\"\n }\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -583,7 +940,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"info\": {\n  \"hostname\": \"PC-01\",\n  \"agentVersion\": \"0.1.0\"\n }\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -616,7 +973,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"chunk\": \"text printed by the command\\n\"\n}",
        "options": {
         "raw": {
          "language": "json"
@@ -649,7 +1006,7 @@
       },
       "body": {
        "mode": "raw",
-       "raw": "{}",
+       "raw": "{\n \"code\": 0,\n \"stderr\": \"\",\n \"timedOut\": false,\n \"cancelled\": false,\n \"rejected\": false\n}",
        "options": {
         "raw": {
          "language": "json"

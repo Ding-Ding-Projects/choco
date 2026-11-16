@@ -13,7 +13,12 @@ class Agent extends EventEmitter {
   constructor({ configFile, policy = {} }) { super(); this.configFile = configFile; this.policy = policy; this.config = null; this.running = false; this.abort = null; this.state = 'disconnected'; this.lastError = ''; this.load(); }
   load() { try { this.config = JSON.parse(fs.readFileSync(this.configFile, 'utf8')); } catch { this.config = null; } }
   save() { fs.mkdirSync(path.dirname(this.configFile), { recursive: true }); fs.writeFileSync(this.configFile, JSON.stringify(this.config, null, 1), { mode: 0o600 }); }
-  status() { return { connected: !!this.config, hubUrl: this.config?.hubUrl || '', machineId: this.config?.machineId || '', state: this.state, lastError: this.lastError, readOnly: !!this.config?.readOnly }; }
+  // Local command allow list: the one given to this process wins, otherwise the one saved
+  // in the agent's own config file. null means no restriction. The hub cannot change it.
+  allowList() { const a = this.policy.allow !== undefined ? this.policy.allow : this.config?.allow; return Array.isArray(a) ? a : null; }
+  setAllowList(allow) { if (!this.config) throw new Error('Not enrolled. Run the enroll command first.'); if (allow) this.config.allow = allow; else delete this.config.allow; this.save(); }
+  info() { const allow = this.allowList(); return runner.machineInfo({ agentVersion: pkg.version, ...(allow ? { allow } : {}) }); }
+  status() { return { connected: !!this.config, hubUrl: this.config?.hubUrl || '', machineId: this.config?.machineId || '', state: this.state, lastError: this.lastError, readOnly: !!this.config?.readOnly, allow: this.allowList() }; }
   setState(s, err = '') { this.state = s; this.lastError = err; this.emit('state', this.status()); }
 
   static checkUrl(hubUrl, allowInsecure) {
@@ -23,12 +28,12 @@ class Agent extends EventEmitter {
     return u.origin;
   }
 
-  async enroll({ hubUrl, code, name, allowInsecure = false, readOnly = false }) {
+  async enroll({ hubUrl, code, name, allowInsecure = false, readOnly = false, allow = undefined }) {
     const origin = Agent.checkUrl(hubUrl, allowInsecure);
-    const res = await fetch(origin + '/agent/enroll', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code: String(code || '').trim().toUpperCase(), name, info: runner.machineInfo({ agentVersion: pkg.version }), readOnly }) });
+    const res = await fetch(origin + '/agent/enroll', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ code: String(code || '').trim().toUpperCase(), name, info: runner.machineInfo({ agentVersion: pkg.version, ...(Array.isArray(allow) ? { allow } : {}) }), readOnly }) });
     const body = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(body.error || `Hub answered ${res.status}`);
-    this.config = { hubUrl: origin, machineId: body.machineId, token: body.token, readOnly: !!(readOnly || body.readOnly), allowInsecure };
+    this.config = { hubUrl: origin, machineId: body.machineId, token: body.token, readOnly: !!(readOnly || body.readOnly), allowInsecure, ...(Array.isArray(allow) ? { allow } : {}) };
     this.save(); return this.status();
   }
   disconnect() { this.stop(); this.config = null; try { fs.rmSync(this.configFile, { force: true }); } catch { /* nothing to remove */ } this.setState('disconnected'); }
@@ -49,7 +54,7 @@ class Agent extends EventEmitter {
       try {
         this.abort = new AbortController();
         const t = setTimeout(() => this.abort.abort(), 40000);
-        const reply = await this.call('POST', '/agent/poll', { info: runner.machineInfo({ agentVersion: pkg.version }) }, this.abort.signal).finally(() => clearTimeout(t));
+        const reply = await this.call('POST', '/agent/poll', { info: this.info() }, this.abort.signal).finally(() => clearTimeout(t));
         this.setState('online'); backoff = 1000;
         for (const job of reply.jobs || []) await this.runJob(job);
       } catch (e) {
@@ -66,7 +71,7 @@ class Agent extends EventEmitter {
     const flush = () => { if (!buffer) return; const chunk = buffer; buffer = ''; flushing = flushing.then(() => this.call('POST', `/agent/jobs/${job.id}/output`, { chunk }).then((r) => { if (r && r.cancel) cancel.abort(); }).catch(() => {})); };
     const timer = setInterval(flush, 700);
     let result;
-    try { result = await runner.execute(job.spec, { policy: { ...this.policy, readOnly: this.config.readOnly }, signal: cancel.signal, onData: (_s, t) => { buffer += t; if (buffer.length > 16384) flush(); } }); }
+    try { result = await runner.execute(job.spec, { policy: { ...this.policy, readOnly: this.config.readOnly, allow: this.allowList() }, signal: cancel.signal, onData: (_s, t) => { buffer += t; if (buffer.length > 16384) flush(); } }); }
     catch (e) { result = { code: -1, stderr: String(e.message) }; }
     clearInterval(timer); flush(); await flushing;
     const done = { code: result.code, stderr: (result.stderr || '').slice(-8000), durationMs: result.durationMs || 0, timedOut: !!result.timedOut, cancelled: !!result.cancelled, rejected: !!result.rejected, inventory: result.inventory, files: result.files };

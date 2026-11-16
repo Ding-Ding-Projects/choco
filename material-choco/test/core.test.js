@@ -15,6 +15,7 @@ test('schema covers every command file', () => {
   for (const c of choco.schema.commands) for (const o of c.options) { assert.ok(o.flag.startsWith('-')); assert.ok(o.names.length); }
   assert.ok(choco.schema.commands.find((c) => c.name === 'install').options.length >= 30);
 });
+test('API reference and Postman collection match the route table in hub/server.js', () => { execFileSync('node', [path.join(__dirname, '..', 'scripts', 'gen-api-docs.mjs'), '--check'], { stdio: 'pipe' }); });
 test('buildArgs builds validated arguments without a shell', () => {
   const b = choco.buildArgs({ command: 'install', args: ['git'], options: { version: '2.0', 'install-arguments': '/S & calc.exe', prerelease: true }, global: { confirm: true } });
   assert.deepStrictEqual(b.argv, ['install', 'git', '--version=2.0', '--install-arguments=/S & calc.exe', '--prerelease', '--confirm']);

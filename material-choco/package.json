@@ -14,7 +14,7 @@
     "hub": "node hub/server.js",
     "agent": "node core/agent-cli.js",
     "start": "electron .",
-    "test": "node --test test/core.test.js test/hub.test.js", "test:e2e": "node test/e2e/run.mjs",
+    "test": "node --test test/*.test.js", "test:e2e": "node test/e2e/run.mjs",
     "dist": "electron-builder --win squirrel --x64 --publish never"
   },
   "devDependencies": {

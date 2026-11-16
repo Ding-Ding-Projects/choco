@@ -30,7 +30,13 @@ const totpSecret = () => base32Encode(crypto.randomBytes(20));
 class Limiter {
   constructor() { this.map = new Map(); }
   check(key) { const r = this.map.get(key); return r && r.until > Date.now() ? Math.ceil((r.until - Date.now()) / 1000) : 0; }
-  fail(key) { const r = this.map.get(key) || { n: 0, until: 0 }; r.n += 1; if (r.n >= 5) r.until = Date.now() + Math.min(15 * 60, 2 ** (r.n - 5) * 30) * 1000; this.map.set(key, r); }
+  // Returns the lockout in seconds when this failure locks the key, otherwise 0.
+  fail(key) {
+    if (this.map.size > 20000) { const now = Date.now(); for (const [k, v] of this.map) if (v.until < now) this.map.delete(k); } // forget old entries instead of growing without bound
+    const r = this.map.get(key) || { n: 0, until: 0 }; r.n += 1; let seconds = 0;
+    if (r.n >= 5) { seconds = Math.min(15 * 60, 2 ** (r.n - 5) * 30); r.until = Date.now() + seconds * 1000; }
+    this.map.set(key, r); return seconds;
+  }
   ok(key) { this.map.delete(key); }
 }
 module.exports = { hashPassword, verifyPassword, sha256, token, safeEqual, pairingCode, totp, totpVerify, totpSecret, base32Encode, base32Decode, Limiter };

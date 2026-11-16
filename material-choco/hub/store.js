@@ -16,13 +16,13 @@ class Store {
     if (this.timer) { clearTimeout(this.timer); this.timer = null; }
     const tmp = this.file + '.tmp'; fs.writeFileSync(tmp, JSON.stringify(this.data), { mode: 0o600 }); fs.renameSync(tmp, this.file);
   }
-  audit(entry) { const row = { at: new Date().toISOString(), ...entry }; fs.appendFileSync(this.auditFile, JSON.stringify(row) + '\n'); return row; }
+  audit(entry) { const row = { at: new Date().toISOString(), ...entry }; fs.appendFileSync(this.auditFile, JSON.stringify(row) + '\n', { mode: 0o600 }); return row; }
   readAudit(limit = 500) {
     let text = ''; try { text = fs.readFileSync(this.auditFile, 'utf8'); } catch { return []; }
     const lines = text.trim().split('\n').filter(Boolean); return lines.slice(-limit).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean).reverse();
   }
   jobLog(id) { return path.join(this.dir, 'jobs', `${id}.log`); }
-  appendJobLog(id, chunk) { const f = this.jobLog(id); let size = 0; try { size = fs.statSync(f).size; } catch { /* new */ } if (size < 2 * 1024 * 1024) fs.appendFileSync(f, chunk); }
+  appendJobLog(id, chunk) { const f = this.jobLog(id); let size = 0; try { size = fs.statSync(f).size; } catch { /* new */ } if (size < 2 * 1024 * 1024) fs.appendFileSync(f, chunk, { mode: 0o600 }); } // new log files are private: output can contain what the CLI printed
   readJobLog(id) { try { return fs.readFileSync(this.jobLog(id), 'utf8'); } catch { return ''; } }
 }
 module.exports = { Store };

@@ -138,9 +138,44 @@ function classify(spec) {
   return { mutating, destructive };
 }
 
+// Ids of the options in a spec whose values are secret according to the schema, as
+// [section, id] pairs where section is "options" or "global". Used by the hub to
+// encrypt those values at rest. Unknown commands and unknown ids yield nothing.
+function secretOptions(spec) {
+  const out = []; if (!spec || typeof spec !== 'object' || spec.kind === 'inventory') return out;
+  const cmd = commandByName.get(String(spec.command || ''));
+  const scan = (section, lookup) => {
+    const values = spec[section]; if (!values || typeof values !== 'object') return;
+    for (const id of Object.keys(values)) { const opt = lookup(id); if (opt && opt.secret && opt.takesValue) out.push([section, id]); }
+  };
+  if (cmd) scan('options', (id) => cmd.options.find((o) => o.id === id));
+  scan('global', (id) => globalById.get(id));
+  return out;
+}
+
+// Canonical command name ("search" for the alias "find"), or null when unknown.
+const canonicalCommand = (name) => { const c = commandByName.get(String(name || '')); return c ? c.name : null; };
+
+// Turns "list, upgrade" or ["list", "upgrade"] into a sorted list of canonical command
+// names. Throws on a name that is not a choco command. Returns null for "no restriction".
+function parseAllowList(value) {
+  if (value === null || value === undefined) return null;
+  const parts = (Array.isArray(value) ? value : String(value).split(',')).map((x) => String(x).trim()).filter(Boolean);
+  if (parts.length > 64) throw new SpecError('Too many commands in the allow list');
+  const names = new Set();
+  for (const p of parts) { const c = canonicalCommand(p); if (!c) throw new SpecError(`Unknown choco command in the allow list: ${p.slice(0, 40)}`); names.add(c); }
+  return [...names].sort();
+}
+// True when the allow list (null means everything) permits this spec. Inventory jobs
+// only run fixed read only queries and are always permitted.
+function allowedBy(allow, spec) {
+  if (!Array.isArray(allow) || !spec || spec.kind !== 'choco') return true;
+  const c = canonicalCommand(spec.command); return !!c && allow.includes(c);
+}
+
 function isElevated() {
   if (process.platform !== 'win32') return typeof process.getuid === 'function' && process.getuid() === 0;
   try { require('node:child_process').execFileSync('fltmc', { stdio: 'ignore', windowsHide: true }); return true; } catch { return false; }
 }
 
-module.exports = { schema, findChoco, buildArgs, run, parse, inventory, isElevated, classify, SpecError, commandByName };
+module.exports = { schema, findChoco, buildArgs, run, parse, inventory, isElevated, classify, SpecError, commandByName, secretOptions, canonicalCommand, parseAllowList, allowedBy };

@@ -39,6 +39,13 @@ test('wrong passwords are refused and then locked out', async () => {
 });
 test('cross-site requests are refused', async () => { assert.strictEqual((await call('/api/pairing', { method: 'POST', body: {}, headers: { origin: 'https://evil.example' } })).status, 403); });
 test('static files cannot escape the UI folder', async () => { const r = await fetch(base + '/..%2f..%2fpackage.json'); assert.notStrictEqual(r.status, 200); });
+test('malformed request addresses and bodies get a 400 and do not stop the hub', async () => {
+  const raw = (target, body) => new Promise((resolve, reject) => { const u = new URL(base); const req = require('node:http').request({ host: u.hostname, port: u.port, path: target, method: body === undefined ? 'GET' : 'POST', headers: { cookie, ...(body === undefined ? {} : { 'content-type': 'application/json' }) } }, (res) => { res.resume(); res.on('end', () => resolve(res.statusCode)); }); req.on('error', reject); if (body !== undefined) req.write(body); req.end(); });
+  for (const target of ['//', '///', '//[']) assert.strictEqual(await raw(target), 400, target);
+  assert.strictEqual(await raw('/%E0%A4%A'), 400); assert.strictEqual(await raw('/a%00b'), 400);
+  for (const body of ['null', '[]', '5', '"text"', '{bad']) assert.strictEqual(await raw('/api/pairing', body), 400, body);
+  assert.strictEqual((await call('/api/status')).status, 200);
+});
 test('agent enrolls with a one time code and reports inventory from the bundled CLI', async () => {
   const p = (await call('/api/pairing', { method: 'POST', body: {} })).data; assert.match(p.code, /^\w{4}-\w{4}$/);
   agent = new Agent({ configFile: path.join(tmp, 'agent', 'agent.json') });

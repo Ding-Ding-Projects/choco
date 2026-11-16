@@ -11,7 +11,9 @@ function machineInfo(extra = {}) {
   return { hostname: os.hostname(), platform: process.platform, os: `${os.type()} ${os.release()}`, arch: os.arch(), elevated: choco.isElevated(), ...extra };
 }
 
-// policy: { readOnly: boolean, chocoPath?: string }
+// policy: { readOnly: boolean, chocoPath?: string, allow?: string[] }
+// policy.allow is the local command allow list of this machine. It is set on the machine
+// itself and nothing the hub sends can widen it.
 async function execute(spec, { policy = {}, onData, signal } = {}) {
   const cli = bundle.resolve(policy);
   const chocoPath = cli.exe;
@@ -25,6 +27,7 @@ async function execute(spec, { policy = {}, onData, signal } = {}) {
   let built;
   try { built = choco.buildArgs({ ...spec, global: { ...spec.global, ...extra } }); } catch (e) { return { code: -1, stderr: e.message, rejected: true }; }
   const mutates = choco.classify(spec).mutating;
+  if (!choco.allowedBy(policy.allow, spec)) return { code: -1, stderr: `This agent only allows these choco commands: ${policy.allow.join(', ') || '(none)'}. It refused "${built.command.name}".`, rejected: true };
   if (policy.readOnly && mutates) return { code: -1, stderr: 'This agent is read only and refused a command that changes the machine.', rejected: true };
   if (!chocoPath) return { code: -1, stderr: 'The bundled Chocolatey CLI is missing from this build.', rejected: true };
   let tmpDir = null; const argv = built.argv.slice();
