@@ -89,7 +89,7 @@ See [docs/api/README.md](docs/api/README.md) and the Postman collection [docs/ap
 
 `build.bat` in this folder builds the CLI from the repository root, installs npm packages, and starts the app. `build-installer.bat` produces the Squirrel.Windows installer in `dist\squirrel-windows`. Both accept `/s`, `--silent` or `SILENT=1`. The repository root already has the Chocolatey project's own `build.bat`, so these live here.
 
-These two scripts and the release workflow were written on Linux and have **not been run on Windows yet**.
+These two scripts were written on Linux and have **not been run on Windows yet**. The release workflow does the same steps on a hosted Windows runner and has produced a working build of the installer; the installed app itself has not been started on Windows yet.
 </details>
 
 <details><summary>Any platform, for development</summary>

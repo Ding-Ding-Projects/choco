@@ -2,7 +2,7 @@
 
 The maintainer's shared catalogue lists 117 feature ids; its category table adds up to 118 entries, which is the number counted here. This is the honest state of each for Material Choco 0.1.0, written by hand on 2026-11-15. "Done" means it works in the running app and was exercised. "Partial" names what is missing. "Written, not run" means the code exists and has never been executed on Windows.
 
-Count by catalogue entry: 27 done, 31 partial, 4 written and not run, 48 not built, 8 not applicable. Several rows below stand for more than one entry and say how many.
+Count by catalogue entry: 28 done, 33 partial, 1 written and not run, 48 not built, 8 not applicable. Several rows below stand for more than one entry and say how many.
 
 ## Language, voice and personalisation
 
@@ -115,8 +115,8 @@ Count by catalogue entry: 27 done, 31 partial, 4 written and not run, 48 not bui
 | --- | --- | --- |
 | Build entry points | Written, not run | `build.bat` and `build-installer.bat` in this folder. The repository root already has the CLI's own `build.bat`. |
 | One build-and-run command, dependency fetcher | Partial | `build.bat` fetches a portable Node.js when needed. Not run on Windows. |
-| Everything bundled | Written, not run | Installer carries the runtime and the CLI built from this repository. |
-| Squirrel.Windows installer | Written, not run | Configured in `package.json`. First real build is the first workflow run. |
+| Everything bundled | Partial | The workflow built the CLI from this repository and packed it into the installer. Not yet installed and started on Windows. |
+| Squirrel.Windows installer | Partial | Built by the workflow: Setup.exe, RELEASES and the full .nupkg. Not yet installed on Windows. No delta packages. |
 | Self-signing | Not built | Releases say they are unsigned. |
 | Automatic updates | Not built | |
 | Original icon | Done | `desktop/icon.ico`, multi-resolution. |
@@ -125,7 +125,7 @@ Count by catalogue entry: 27 done, 31 partial, 4 written and not run, 48 not bui
 
 | Feature | State | Notes |
 | --- | --- | --- |
-| A release on every push | Written, not run | `.github/workflows/material-choco-release.yml`. |
+| A release on every push | Done | `.github/workflows/material-choco-release.yml`, first green run published `material-choco-v0.1.2`. |
 | Timing and line counts in release notes | Partial | Both are written by the workflow. |
 | Photo references and code names in releases | Not built | Two catalogue items. |
 | CI bootstrap, runner selection | Partial | Hosted runners only. |

@@ -21,12 +21,16 @@ Date: 2026-11-15. Branch: `feature/material-choco`.
 | Desktop app launched on Linux under a virtual display, window captured | started, signed in automatically, bundled CLI check passed |
 | Schema drift check against the C# source | matches |
 
-In all of these the CLI was `test/fixtures/fake-choco.js`, a stand-in, because the machine was Linux without .NET Framework.
+| Release workflow, run 43807632449 on `windows-latest` | green. The CLI was built from this repository, found at `code_drop\temp\_PublishedApps\choco_merged\choco.exe`, and `choco.exe --version` printed `2.9.0-materialch-20261116-68069424` on the runner. `Material Choco Setup 0.1.2.exe` (126 MB), `RELEASES` and the full `.nupkg` were published as release `material-choco-v0.1.2`. The hub image job pushed to GHCR. |
+
+In every check except the last row the CLI was `test/fixtures/fake-choco.js`, a stand-in, because the machine was Linux without .NET Framework.
+
+The first workflow run (43807552624) failed on a YAML quoting error in the file; the second commit fixed it.
 
 ## Not verified
 
-- Nothing has run on Windows. Not the installer, not the real `choco.exe` under the app, not `build.bat`, not `build-installer.bat`.
-- The release workflow has never run. In particular the step that finds `choco.exe` under `code_drop` is a search, because the exact output folder was not confirmed.
+- The installer has been built on Windows but never installed or started there. The app has not run the real `choco.exe` yet. `build.bat` and `build-installer.bat` have not been run.
+- The installer is unsigned.
 - Whether the CLI built from this repository unpacks its helper files correctly when `ChocolateyInstall` points at the app-owned folder.
 - `--limit-output` row formats for `apikey list`, `template list` and `rule list` were written from the source, not from real output. Those pages show raw output where no parser applies.
 - Reduced motion, screen readers and display scaling were not captured or audited.

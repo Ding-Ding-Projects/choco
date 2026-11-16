@@ -19,7 +19,7 @@ A box is ticked only when the item works and was exercised. See `docs/FEATURE-IN
 
 ## 0.2: prove it on Windows
 
-- [ ] First green run of the release workflow
+- [x] First green run of the release workflow (run 43807632449, release `material-choco-v0.1.2`)
 - [ ] Install from `Setup.exe` on a clean Windows machine and run a real install, upgrade and uninstall with the bundled CLI
 - [ ] Confirm the bundled CLI unpacks its helper files into the app-owned folder on first run
 - [ ] Run `build.bat` and `build-installer.bat` on Windows
