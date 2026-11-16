@@ -51,6 +51,11 @@
   const io = 'IntersectionObserver' in window && !reduced() ? new IntersectionObserver((entries) => { for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }, { rootMargin: '0px 0px -6% 0px' }) : null;
   $$('details').forEach((d) => d.addEventListener('toggle', () => { if (d.open) $$('.reveal', d).forEach((n) => n.classList.add('in')); }));
   $$('.reveal').forEach((n, i) => { n.style.setProperty('--i', i % 6); if (io) io.observe(n); else n.classList.add('in'); });
+  // Safety net: the observer can miss an element (inside a fold, or in the last strip of the page that never crosses its margin).
+  // Anything on screen is shown on the next scroll, resize or after a short wait, so content can never stay invisible.
+  const showVisible = () => { for (const n of $$('.reveal:not(.in)')) { const b = n.getBoundingClientRect(); if (b.width && b.top < innerHeight && b.bottom > 0) n.classList.add('in'); } };
+  let showTimer = 0; const showSoon = () => { clearTimeout(showTimer); showTimer = setTimeout(showVisible, 120); };
+  addEventListener('scroll', showSoon, { passive: true }); addEventListener('resize', showSoon); setTimeout(showVisible, 1200);
 
   // ---- installer lookup ---------------------------------------------------------------------------
   // Finds the newest release whose tag starts with material-choco-v and that carries a Setup .exe,
