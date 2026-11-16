@@ -87,6 +87,19 @@ Open, and why:
 - The frames were rendered without the design tool's runtime; fonts come from Google Fonts at render time.
 - Sample machine and package names on the boards are illustrative.
 
+## Changes from the first Windows run (added 2026-11-16)
+
+`WindowsRun.dc.html` (page Phone, beside the phone overview) draws five states that shipped in 0.1.17 after the app was first used on Windows: the top bar and bottom bar with text at 200 percent on a 320 px screen, a source switch locked while its job runs, the update notice that stays until it is closed, the one-line demo banner on a phone, and the site's feature index with its category bar. These were built first and drawn afterwards; the board records them so the canvas matches the app. Rendered frames: `frames/WindowsRun.png` (1360 px) and `frames/WindowsRun-390.png` (390 px).
+
+Stageshow for this pass: a fresh install succeeded. It has the same 372 files with the same content as the pinned copy at `299140fafd08df55a9c234e610c3f64af3f45531`; the only difference is that the install on Windows wrote CRLF line endings, so the pinned copy was not refreshed. Read: `SKILL.md`, and the rules of `references/craft.md` (Restraint) and `references/framing.md` (Small formats and the page). Gold example copied: none, for the same reason as before. Applied: three to five real strings per card with placeholder bars only in the phone body, each idea said once, the page as the ground with no plate behind the cards. Not applicable: the cursor, loop, satellite and phone-cropping rules.
+
+Review from the frames, with the board's own markup rendered in Chrome at 1360 and 390 px:
+
+1. Fixed: at 390 px the board was 429 px wide (a 380 px grid minimum, 48 px padding, and a 320 px phone inside a padded card). It now fits 390 exactly.
+2. Fixed: the frame height in the index was an estimate (1240); it is the measured 1042.
+3. Open: on a phone the update notice becomes a tall, narrow column, because its buttons stay on the same line as the text. The app behaves the same way; changing it is a design decision not yet made, so the board shows the app as it is.
+4. Open: the demo banner is drawn inside a padded card, so it wraps more than the real banner, which spans the whole screen.
+
 ## Differences between the design and the built app
 
 - The app uses Material Web components for controls, so buttons, switches and fields differ slightly from the boards.

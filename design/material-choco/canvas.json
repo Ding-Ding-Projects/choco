@@ -1285,6 +1285,15 @@
    "title": "Desktop app window",
    "page": "desktop",
    "expand": "fill"
+  },
+  "WindowsRun.dc.html": {
+   "x": 470,
+   "y": 0,
+   "w": 1360,
+   "h": 1042,
+   "title": "Changes from the first Windows run",
+   "page": "phone",
+   "expand": "fill"
   }
  },
  "order": [
@@ -1420,7 +1429,8 @@
   "ProjectBoard.dc.html",
   "OperationalSkill.dc.html",
   "Phone.dc.html",
-  "Desktop.dc.html"
+  "Desktop.dc.html",
+  "WindowsRun.dc.html"
  ],
  "notes": {
   "t_front": {

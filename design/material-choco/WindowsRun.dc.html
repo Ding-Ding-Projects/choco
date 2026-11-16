@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Changes from the first Windows run</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Flex:opsz,wdth,wght@8..144,100..125,400..800&family=Roboto+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}
+a{color:#006A6A}a:hover{color:#002020}
+@keyframes wr-rise{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes wr-spin{to{transform:rotate(360deg)}}
+.wr-still,.wr-still *{animation:none !important;transition:none !important}
+@media (prefers-reduced-motion: reduce){*{animation-duration:1ms !important;animation-iteration-count:1 !important}}
+</style>
+</helmet>
+<div class="{{motionClass}}">
+<div style="font-family: Roboto, system-ui, sans-serif; background: #FCF8F6; color: #211A16; box-sizing: border-box; padding: clamp(16px, 4vw, 48px); display: flex; flex-direction: column; gap: 32px; max-width: 1360px">
+<header style="display: flex; flex-direction: column; gap: 8px; max-width: 760px">
+<span style="font-size: 13px; font-weight: 600; letter-spacing: .4px; color: #53433B">Material Choco 0.1.17</span>
+<h1 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: clamp(30px, 5vw, 44px); font-weight: 700; line-height: 1.05">What the first Windows run changed</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #53433B">Five states that now ship. Each was found by using the released app on Windows 11 with its real Chocolatey CLI, or by the clipping check at text 200 percent.</p>
+</header>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 24px; align-items: start">
+
+<section style="animation: wr-rise 560ms cubic-bezier(.2,1.3,.4,1) 0ms both; background: #F7F1EE; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 16px; grid-row: span 2">
+<h2 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: 20px; font-weight: 600">Text at 200 percent, 320 px wide</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #53433B">The machine picker and the search pill keep one line and shorten. The bottom bar shortens its labels; each button keeps its full name for screen readers.</p>
+<div style="align-self: center; width: 320px; max-width: 100%; box-sizing: border-box; border-radius: 28px; overflow: hidden; background: #FCF8F6; border: 1px solid #D8C2B8">
+<div style="background: #F1EBE8; padding: 12px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px"><svg role="img" aria-label="Material Choco" width="40" height="40" viewBox="0 0 28 28" style="flex: none"><rect x="2" y="2" width="24" height="24" rx="7" fill="{{accent}}"></rect><path d="M8 9h12M8 14h12M8 19h12M12 9v10M16 9v10" stroke="#FFDBC8" stroke-width="1.8" stroke-linecap="round" fill="none"></path></svg><span style="font-size: 28px; font-weight: 500; line-height: 1.15">Material Choco hub</span></div>
+<button type="button" aria-label="Machines to act on: All machines (3)" style="height: 52px; border-radius: 26px; border: 1px solid #85736A; background: #FCF8F6; color: #211A16; display: flex; align-items: center; gap: 10px; padding: 0 16px; font: inherit; font-size: 28px; min-width: 0"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><rect x="4" y="4" width="16" height="6" rx="1.5"></rect><rect x="4" y="14" width="16" height="6" rx="1.5"></rect></svg><span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left">All machines (3)</span><svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M6 9l6 6 6-6"></path></svg></button>
+<button type="button" aria-label="Search commands, packages, settings" style="height: 52px; border-radius: 26px; border: 0; background: #E9E1DD; color: #53433B; display: flex; align-items: center; gap: 10px; padding: 0 16px; font: inherit; font-size: 28px; min-width: 0"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"></path></svg><span style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left">Search commands, packages, settings</span></button>
+</div>
+<div style="padding: 16px 16px 8px; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; font-size: 64px; font-weight: 700; line-height: 1">Overview</span>
+<div style="height: 18px; border-radius: 9px; background: #E9E1DD; width: 80%"></div>
+<div style="height: 18px; border-radius: 9px; background: #E9E1DD; width: 60%"></div>
+</div>
+<nav aria-label="Main" style="display: flex; background: #F1EBE8; padding: 8px 2px 12px">
+<a href="#" aria-label="Overview" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; font-size: 24px; font-weight: 500; color: #211A16"><span style="width: 100%; max-width: 60px; height: 40px; border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; background: #FFDBC8; color: #311300"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></svg></span><span style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Overview</span></a>
+<a href="#" aria-label="Installed" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; font-size: 24px; font-weight: 500; color: #53433B"><span style="width: 100%; max-width: 60px; height: 40px; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"></path></svg></span><span style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Installed</span></a>
+<a href="#" aria-label="Updates" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; font-size: 24px; font-weight: 500; color: #53433B"><span style="width: 100%; max-width: 60px; height: 40px; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"></path></svg></span><span style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Updates</span></a>
+<a href="#" aria-label="Jobs" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; font-size: 24px; font-weight: 500; color: #53433B"><span style="width: 100%; max-width: 60px; height: 40px; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg></span><span style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">Jobs</span></a>
+<a href="#" aria-label="More" style="flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; font-size: 24px; font-weight: 500; color: #53433B"><span style="width: 100%; max-width: 60px; height: 40px; display: inline-flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></span><span style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">More</span></a>
+</nav>
+</div>
+</section>
+
+<section style="animation: wr-rise 560ms cubic-bezier(.2,1.3,.4,1) 80ms both; background: #F7F1EE; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: 20px; font-weight: 600">A switch while its job runs</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #53433B">With the real CLI a source change takes about 25 seconds. The switch shows the requested state and is locked until the machine's inventory is read again, so a second press cannot queue the same command.</p>
+<div style="background: #FCF8F6; border-radius: 20px; border: 1px solid #D8C2B8; padding: 14px 16px; display: flex; align-items: center; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0"><span style="font-size: 15px; font-weight: 600">chocolatey</span><span style="font-family: 'Roboto Mono', monospace; font-size: 12px; color: #53433B; overflow-wrap: anywhere">https://community.chocolatey.org/api/v2/</span></div>
+<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #53433B; white-space: nowrap"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="animation: wr-spin 900ms linear infinite"><path d="M12 3a9 9 0 1 0 9 9"></path></svg>Turning off</span>
+<button type="button" role="switch" aria-checked="false" aria-disabled="true" aria-busy="true" aria-label="Source chocolatey enabled" style="width: 52px; height: 32px; border-radius: 16px; border: 2px solid #85736A; background: #E9E1DD; position: relative; flex: none; opacity: .62; cursor: not-allowed; padding: 0"><span aria-hidden="true" style="position: absolute; left: 6px; top: 6px; width: 16px; height: 16px; border-radius: 8px; background: #85736A"></span></button>
+</div>
+</section>
+
+<section style="animation: wr-rise 560ms cubic-bezier(.2,1.3,.4,1) 160ms both; background: #F7F1EE; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: 20px; font-weight: 600">The update notice stays</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #53433B">It used to vanish after a minute. Now it stays until Restart or Close.</p>
+<div role="status" style="background: #362F2B; color: #FBEEE8; border-radius: 16px; padding: 14px 12px 14px 18px; display: flex; align-items: center; gap: 12px; box-shadow: 0 6px 18px rgba(42,23,8,.18)">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="flex: none"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5h.01"></path></svg>
+<span style="flex: 1; min-width: 0; font-size: 14px; line-height: 1.4">Update 0.1.18 has been downloaded and installs when the app restarts. This build is not code signed, so its publisher cannot be verified by Windows.</span>
+<button type="button" style="border: 0; background: transparent; color: #FFB68C; font: inherit; font-size: 14px; font-weight: 700; height: 44px; padding: 0 12px; border-radius: 22px; cursor: pointer">Restart</button>
+<button type="button" aria-label="Close" style="border: 0; background: transparent; color: #FBEEE8; width: 44px; height: 44px; border-radius: 22px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</section>
+
+<section style="animation: wr-rise 560ms cubic-bezier(.2,1.3,.4,1) 240ms both; background: #F7F1EE; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: 20px; font-weight: 600">The demo banner on a phone</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #53433B">One line instead of a third of the screen: 80 px or less, checked at 390 px wide.</p>
+<div style="width: 390px; max-width: 100%; align-self: center; color: #FCF8F6; border-radius: 16px; padding: 6px 10px; display: flex; align-items: center; gap: 6px; font-size: 12px; line-height: 1.3; box-sizing: border-box; background: {{accent}}">
+<b style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; font-size: 12px; letter-spacing: .5px; text-transform: uppercase; padding: 2px 6px; border-radius: 10px; background: #FCF8F6; color: {{accent}}">Demo</b>
+<span style="flex: 1 1 0; min-width: 0">Simulated machines. Nothing leaves this browser. <a href="#" style="color: inherit; font-weight: 700">Site</a></span>
+<button type="button" aria-label="Simulate a machine joining" style="min-height: 44px; padding: 0 10px; border-radius: 22px; border: 2px solid currentColor; background: transparent; color: inherit; font: inherit; font-weight: 700; white-space: nowrap">Add machine</button>
+<button type="button" aria-label="Reset demo" style="min-height: 44px; padding: 0 10px; border-radius: 22px; border: 2px solid currentColor; background: transparent; color: inherit; font: inherit; font-weight: 700; white-space: nowrap">Reset</button>
+</div>
+</section>
+
+<section style="animation: wr-rise 560ms cubic-bezier(.2,1.3,.4,1) 320ms both; background: #F7F1EE; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="font-family: 'Roboto Flex', Roboto, system-ui, sans-serif; font-stretch: 112%; margin: 0; font-size: 20px; font-weight: 600">The site's feature index</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #53433B">A category bar above the 61 features. On a phone the page drops its repeated pictures and one-line summaries: 4,820 px instead of 10,301.</p>
+<nav aria-label="Feature categories" style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Packages <span style="font-weight: 400; color: #53433B">14</span></a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Remote management <span style="font-weight: 400; color: #53433B">18</span></a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Safety and feedback <span style="font-weight: 400; color: #53433B">4</span></a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Interface <span style="font-weight: 400; color: #53433B">12</span></a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Built-in tools <span style="font-weight: 400; color: #53433B">1</span></a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Language, look and comfort <span style="font-weight: 400; color: #53433B">9</span></a>
+<a href="#" style="display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 22px; background: #FCF8F6; color: #211A16; text-decoration: none; font-weight: 700; font-size: 14px">Desktop app and delivery <span style="font-weight: 400; color: #53433B">3</span></a>
+</nav>
+</section>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#8A3F0B","options":["#8A3F0B","#006A6A","#A6276A","#3E5BA9"],"section":"Look"},"motion":{"editor":"boolean","default":true,"section":"Look"},"$preview":{"width":1360,"height":1042}}'>
+class Component extends DCLogic {
+renderVals() {
+return { accent: this.props.accent ?? '#8A3F0B', motionClass: (this.props.motion ?? true) ? '' : 'wr-still' };
+}
+}
+</script>
+</body>
+</html>
