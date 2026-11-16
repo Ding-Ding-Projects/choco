@@ -20,7 +20,7 @@ The window shows only the local interface: links to other sites open in your def
 
 ## Known limits
 
-- **Not yet started on Windows.** The installer was built there and has not been installed or run.
+- **Started and used on Windows 11** on 2026-11-16. That run found and fixed: the app not opening after the installer, settings lost at every restart (the built-in hub now keeps its port), and the update notice disappearing after a minute.
 - The desktop shell asks the newest release for updates, and the interface announces a downloaded update with a **Restart** button and the statement that the build is not code signed. This has only been exercised with a stand-in for the desktop shell, never on Windows. Until it has, treat updates as manual.
 - The installer and the app are not code signed.
 

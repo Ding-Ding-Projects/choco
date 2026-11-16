@@ -9,7 +9,7 @@ A desktop app and a remote management hub for the Chocolatey CLI in this reposit
 
 **Hub:** `docker compose up -d` in this folder, then open `http://<host>:8080` and create the administrator.
 
-**Status:** an early build. The automated checks pass, and nobody has yet installed the app on Windows and run a real install through it. Read [HANDOFF.md](HANDOFF.md) for exactly what was checked and what was not.
+**Status:** an early, unsigned build. The automated checks pass on Linux and on Windows, and the released app was installed on Windows 11 and used with its real Chocolatey CLI on 2026-11-16. Read [HANDOFF.md](HANDOFF.md) for exactly what was checked and what was not.
 
 Contents: [What it does](#what-it-does) · [How it fits together](#how-it-fits-together) · [Security](#security) · [Build](#build) · [Tests](#tests) · [Documents](#documents) · [Size](#size) · [Licence](#licence)
 
@@ -130,7 +130,7 @@ The longer version is the [security model](docs/articles/security-model.md).
 
 `build.bat` in this folder builds the CLI from the repository root, installs npm packages, and starts the app. `build-installer.bat` produces the Squirrel.Windows installer in `dist\squirrel-windows`. Both accept `/s`, `--silent` or `SILENT=1`. The repository root already has the Chocolatey project's own `build.bat`, so these live here.
 
-These two scripts were written on Linux and have **never been run**. The release workflow does the same steps on a hosted Windows runner and publishes the installer; the installed app itself has not been started on Windows yet.
+Both were run from a clean clone on Windows 11 on 2026-11-16 and work: `build-installer.bat` produced an unsigned installer and `build.bat` started the app. They use a checksum-verified Node.js 22 when the PATH has another version, and the CLI build needs the .NET SDK and the Visual Studio build tools, which they do not install. The release workflow does the same steps on a hosted Windows runner, and the released app was installed and used on Windows on the same day.
 </details>
 
 <details><summary>Any platform, for development</summary>

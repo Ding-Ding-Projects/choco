@@ -7,7 +7,7 @@ A desktop app and a remote management hub for the Chocolatey CLI. Manage package
 - **Installer:** `Setup.exe` from the newest release whose tag starts with `material-choco-v`, on the [releases page](https://github.com/Ding-Ding-Projects/choco/releases). 64-bit Windows. **Not code signed**, so Windows may show an unknown publisher warning.
 - **Hub:** `docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest`, then open `http://<host>:8080` and create the administrator.
 
-> **Early build, said plainly.** The installer is built on Windows by the release workflow, but nobody has yet installed the app on Windows and run a real install through it. Every automated check so far used a test stand-in for `choco.exe`. See [Honest status](#honest-status).
+> **Early build, said plainly.** The release was installed on Windows 11 on 2026-11-16 and used with the real Chocolatey CLI inside it: install, upgrade, pin, sources, features, uninstall and an automatic update all worked. The automated checks use a test stand-in for `choco.exe` and pass on Linux and Windows. The installer is not code signed. See [Honest status](#honest-status).
 
 This repository is a **fork of the [Chocolatey CLI](https://github.com/chocolatey/choco)**. The CLI source is unchanged; the app lives in [`material-choco/`](material-choco/README.md). See [About this fork](#about-this-fork).
 
@@ -137,8 +137,8 @@ MaterialChoco.exe --agent run
 
 | | |
 | --- | --- |
-| **Checked** | `npm test`: 95 of 95 pass. End to end run in headless Chrome against a real hub and agent processes: 121 of 121 checks pass. The hub image builds, runs and is published. The release workflow builds the CLI from this repository on Windows, packs it into the installer and publishes it. The site is live and was measured at phone widths. |
-| **Not proven** | Nobody has installed the app on Windows and run a real install, upgrade or uninstall through it. Every automated check used a test stand-in for `choco.exe`, on Linux. Passkeys were checked with a software passkey device and Chrome's virtual one, not a real device. `build.bat` and `build-installer.bat` have never been run. No screen reader pass and no accessibility audit. |
+| **Checked** | On Windows 11 (2026-11-16): release 0.1.16 matched its SHA-256 sums, installed, and with its real CLI installed, upgraded, pinned and uninstalled a package and changed a source and a feature; 0.1.15 updated itself to 0.1.16; a job sent from the hub ran there; `build.bat` and `build-installer.bat` worked from a clean clone. Automated, on Linux and Windows: `npm test` 95 of 95, end to end run 121 of 121, demo 26 of 26, clipping check 36 of 36 sizes. The site is live and was measured at phone widths. |
+| **Not proven** | A build on a Windows machine with nothing installed. Passkeys on a real device (they were checked with a software passkey device and Chrome's virtual one; over plain HTTP on a LAN address browsers do not offer them). Working offline. No screen reader pass and no accessibility audit. |
 | **Not signed** | The installer is not code signed. |
 | **Not built** | Signed agent updates, limiting a user to some machines, and much of the maintainer's wider feature catalogue. The exact count is in the feature inventory. |
 

@@ -58,12 +58,20 @@ try {
   check('users respond like the hub: the last admin is protected', await p.eval(`const u=await (await fetch('/api/users')).json(); return u.find(x=>x.name==='demo').role==='admin' && [...document.querySelectorAll('.toast.err')].some(t=>t.textContent.includes('last enabled administrator'))`)); await p.eval(`document.querySelectorAll('.toast button:last-child').forEach(b=>b.click())`);
   await go('settings'); await p.wait(400); await p.eval(`[...document.querySelectorAll('md-filter-chip')].find(c=>c.label.startsWith('Sign in')).click()`); await p.until(`document.querySelector('[data-pk-unavailable]')`);
   check('passkeys are shown as unavailable in the demo, not faked', await p.eval(`return document.querySelector('[data-pk-unavailable]').textContent.includes('switched off in this demo') && ![...document.querySelectorAll('[data-passkeys] md-filled-tonal-button')].length && !document.querySelector('.topbar md-icon-button[title="Sign out"]')`));
+  // A schedule for the current minute runs at the next 20 second check, as in the hub.
+  const fired = await p.eval(`const wait=(ms)=>new Promise(r=>setTimeout(r,ms)); if (new Date().getSeconds() > 30) await wait((61 - new Date().getSeconds()) * 1000);
+    const n=new Date(); const time=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+    const r=await fetch('/api/schedules',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:'Check now',time,days:[],target:{all:true},spec:{kind:'inventory'}})}); if(!r.ok) return 'create failed '+r.status;
+    for (let i=0;i<30;i++){ const j=await (await fetch('/api/jobs')).json(); const list=j.jobs||j; if (list.some(x=>x.by==='schedule:Check now')) return 'ran'; await wait(1000); } return 'did not run';`);
+  check('a schedule in the demo runs at its time', fired === 'ran', fired);
   await p.eval(`document.getElementById('demo-reset').click()`); await p.wait(1500); await p.until(`document.querySelector('.topbar')`, 15000); await p.wait(600);
   check('Reset demo puts the sample state back', await p.eval(`const ms=await (await fetch('/api/machines')).json(); const hooks=await (await fetch('/api/webhooks')).json(); return ms.length===3 && hooks.webhooks.length===0 && ms.find(m=>m.name==='DESK-ANNA').inventory.packages.find(p=>p.name==='git').version==='2.46.0'`));
   check('no browser console errors on the desktop width', p.errors.length === 0, p.errors.slice(0, 3).join(' | ')); await p.close();
   await open({ width: 390, height: 844, mobile: true });
   check('at phone width the demo has no horizontal overflow', await p.eval(`return document.documentElement.scrollWidth <= window.innerWidth + 1`)); await p.shot(path.join(shots, '51-demo-phone.png'));
   check('at phone width the banner and the three machines are present', await p.eval(`const ms=await (await fetch('/api/machines')).json(); const b=document.querySelector('.demobanner'); return ms.length===3 && b.getBoundingClientRect().top===0 && b.getBoundingClientRect().width<=window.innerWidth && !!document.querySelector('.bottomnav')`));
+  const bannerHeight = await p.eval(`return Math.round(document.querySelector('.demobanner').getBoundingClientRect().height)`);
+  check('at phone width the banner takes at most 80 px', bannerHeight <= 80, `${bannerHeight} px`);
   await p.eval(`[...document.querySelectorAll('.bottomnav button')].find(b=>b.textContent.includes('Installed')).click()`); await p.wait(900);
   check('at phone width the Installed page has no horizontal overflow', await p.eval(`return document.documentElement.scrollWidth <= window.innerWidth + 1 && document.querySelectorAll('[data-machine]').length===3`));
   check('no browser console errors at phone width', p.errors.length === 0, p.errors.slice(0, 3).join(' | '));

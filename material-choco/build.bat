@@ -42,6 +42,9 @@ if not exist "choco-bundle\choco.exe" (
     git clone --quiet --no-tags --local "%~dp0.." "!CLI_SRC!" || goto :fail
     type nul > "!CLI_SRC!\.material-choco-cli-src"
   )
+  rem Started from PowerShell 7, the CLI build's Windows PowerShell would inherit PowerShell 7's module
+  rem path and fail to load PackageManagement. Cleared, Windows PowerShell builds its own default path.
+  set "PSModulePath="
   pushd "!CLI_SRC!"
   rem The app needs choco.exe only. Packing the CLI into .nupkg files is skipped: on a local main
   rem checkout its package version comes out as "2.x.y-", which choco pack refuses.

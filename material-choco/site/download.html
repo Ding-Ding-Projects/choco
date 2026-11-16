@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="site.css?v=fc53e5a6">
+<link rel="stylesheet" href="site.css?v=e85f9cbe">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -48,7 +48,7 @@
       <p class="note"><b>Not code signed.</b> Windows may show an unknown publisher warning, because nobody has paid for or applied a signing certificate. Download only from the releases page of this repository.</p>
       <p class="warn"><b>Early build.</b> The installer is built on Windows by the release workflow, but nobody has yet installed the app on Windows and run a real install through it. See the <a href="status.html">status page</a>.</p>
     </div>
-    <div class="dlpic"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Desktop window</span></div><button class="shot" type="button" data-full="shots/26-desktop-app-on-linux-virtual-display.png" data-caption="Desktop window. The desktop app window started on Linux under a virtual display, showing the first-run check of the bundled CLI. The app has not yet been started on Windows." aria-label="Enlarge: Desktop window"><img loading="lazy" src="shots/26-desktop-app-on-linux-virtual-display.png" alt="The desktop app window started on Linux under a virtual display, showing the first-run check of the bundled CLI. The app has not yet been started on Windows." width="1360" height="900"></button></figure></div>
+    <div class="dlpic"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Desktop window</span></div><button class="shot" type="button" data-full="shots/26-desktop-app-on-linux-virtual-display.png" data-caption="Desktop window. The desktop app window started on Linux under a virtual display, showing the first-run check of the bundled CLI. The captures that follow were taken from the released app on Windows." aria-label="Enlarge: Desktop window"><img loading="lazy" src="shots/26-desktop-app-on-linux-virtual-display.png" alt="The desktop app window started on Linux under a virtual display, showing the first-run check of the bundled CLI. The captures that follow were taken from the released app on Windows." width="1360" height="900"></button></figure></div>
   </div>
   <h2 id="latest">Latest five installers</h2>
   <div id="rel-list" class="rels open"><p>This list is filled in from the GitHub releases of the project when scripts are enabled. Every release is on the <a href="https://github.com/Ding-Ding-Projects/choco/releases">releases page</a>.</p></div>
@@ -78,12 +78,12 @@
   <h2 id="hub-image">Hub image</h2>
   <div class="dlbox">
     <div class="dlmain"><p>The hub runs in a container. The image is published by the same workflow.</p><pre tabindex="0"><code>docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest</code></pre><ul class="links"><li><a href="remote.html">Remote hub in three steps</a></li><li><a href="articles/hub-in-a-container.html">Container guide</a></li></ul></div>
-    <div class="dlpic"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Overview</span></div><button class="shot" type="button" data-full="shots/06-overview.png" data-caption="Overview. Overview page: a banner says 4 updates are ready with an Upgrade everything button, then counts of machines, packages, updates and running jobs, and a needs attention list." aria-label="Enlarge: Overview"><img loading="lazy" src="shots/06-overview.png" alt="Overview page: a banner says 4 updates are ready with an Upgrade everything button, then counts of machines, packages, updates and running jobs, and a needs attention list." width="1360" height="757"></button></figure></div>
+    <div class="dlpic"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>Overview</span></div><button class="shot" type="button" data-full="shots/06-overview.png" data-caption="Overview. Overview page: a banner says 4 updates are ready with an Upgrade everything button, then counts of machines, packages, updates and running jobs, and a needs attention list." aria-label="Enlarge: Overview"><img loading="lazy" src="shots/06-overview.png" alt="Overview page: a banner says 4 updates are ready with an Upgrade everything button, then counts of machines, packages, updates and running jobs, and a needs attention list." width="1338" height="746"></button></figure></div>
   </div>
 </section>
 <section class="band block demo">
   <div class="blocktext"><span class="eyebrow">Not ready to install?</span><h2>Try the demo first</h2><p>The real interface in your browser, against simulated machines. Nothing is installed.</p><div class="cta left"><a class="dl" href="demo/">Open the demo</a><a class="ghost" href="about-the-demo.html">What the demo is</a></div></div>
-  <div class="blockpic"><figure class="frame phone reveal"><button class="shot" type="button" data-full="shots/51-demo-phone.png" data-caption="The demo on a phone. The demo at phone width: the banner with Simulate a machine joining and Reset demo, and the Overview below." aria-label="Enlarge: The demo on a phone"><img loading="lazy" src="shots/51-demo-phone.png" alt="The demo at phone width: the banner with Simulate a machine joining and Reset demo, and the Overview below." width="780" height="1688"></button></figure></div>
+  <div class="blockpic"><figure class="frame phone reveal"><button class="shot" type="button" data-full="shots/51-demo-phone.png" data-caption="The demo on a phone. The demo at phone width: a one-line banner with Add machine and Reset, and the Overview below." aria-label="Enlarge: The demo on a phone"><img loading="lazy" src="shots/51-demo-phone.png" alt="The demo at phone width: a one-line banner with Add machine and Reset, and the Overview below." width="780" height="1688"></button></figure></div>
 </section>
 </main>
 <footer>
@@ -92,6 +92,6 @@
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="site.js?v=fc53e5a6"></script>
+<script src="site.js?v=e85f9cbe"></script>
 </body>
 </html>

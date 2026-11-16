@@ -4,6 +4,28 @@
 
 Releases are published by the workflow as 0.1.x, one per push. This file describes the 0.1 line as a whole.
 
+### First run on Windows (2026-11-16)
+
+The released app was installed on Windows 11 and used with the real Chocolatey CLI inside it. That run found these problems, now fixed:
+
+- The app now opens after the installer finishes. It used to quit, because it treated the installer's first-run signal as an event to handle.
+- Settings, the finished first-run wizard and the personal wording file now survive a restart. The built-in hub used to take a new port at every start, and the window's storage belongs to the address.
+- The switches for sources and features stay on the requested state and locked while their job runs, so a second press cannot queue the same command again.
+- The config page counts settings the machine reports beyond the schema in its total ("12 of 11" before).
+- The hub link card shows the agent's state once it comes online, instead of "disconnected".
+- The update notice stays until it is closed or Restart is pressed; it used to vanish after a minute.
+- `build.bat` and `build-installer.bat` work from a clean clone on Windows: a tagged commit no longer gives the CLI build an invalid version, the CLI is not packed into packages the app does not use, a checksum-verified Node.js 22 is used when the PATH has another version, npm 11 is allowed to run the Electron and esbuild install scripts, and a start from PowerShell 7 no longer breaks the CLI build.
+- The schema, API reference and site checks pass on a Windows checkout with CRLF line endings.
+- The tests run on Windows, and screenshots no longer follow the machine's light or dark theme.
+
+### Layout and the demo (2026-11-16)
+
+- No clipping at any of the 36 checked sizes, including text at 200 percent on a 320 px screen: the phone bottom bar, long option names, page titles, buttons, setting rows and the top bar now fit.
+- The clipping check names hidden causes too, inside component shadow parts and in text that runs past its box.
+- Schedules run in the demo, as in the hub.
+- The demo banner takes one line on a phone instead of a third of the screen.
+- The site's feature index has a category bar, and on a phone it is less than half as long.
+
 ### Site, demo and releases
 
 - The landing site is split into pages: home, features, screens, remote hub, download, guides and status.

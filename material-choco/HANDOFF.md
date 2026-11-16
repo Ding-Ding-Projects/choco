@@ -5,71 +5,95 @@ Date: 2026-11-16. Branch: `main`. This file states what exists, what was checked
 ## What exists
 
 - `material-choco/`: the desktop app, the hub, the agent, the shared interface, tests, documents and the landing site.
-- `design/material-choco/`: the design canvas export, 27 boards with rendered frames. A larger pass that adds a board per required feature is in progress and is not published.
+- `design/material-choco/`: the design canvas export with a board for every catalogue feature.
 - Workflows `.github/workflows/material-choco-release.yml` and `.github/workflows/material-choco-site.yml`.
 - Root files `README.md` (rewritten for this fork), `AGENTS.md` and `CLOSEOUT_PROMPT.md`.
 - No file of the Chocolatey CLI itself was changed.
 
+## The first run on Windows (2026-11-16)
+
+Machine: a physical Windows 11 Pro computer (build 26200) that already had a system Chocolatey 2.7.3 with 26 packages, Node.js 26, Docker and several .NET SDKs. The app was run on a separate, hidden desktop and driven through its window; nothing ran elevated.
+
+| Step | Result |
+| --- | --- |
+| Download release `material-choco-v0.1.16` and compare with the release notes | `Setup.exe`, the full `.nupkg` and `RELEASES` all match their published SHA-256 sums. `Get-AuthenticodeSignature` reports `NotSigned`. The release is a normal release (not draft, not prerelease). |
+| Install with `Setup.exe` | Installed for the current user into `%LOCALAPPDATA%\MaterialChoco` with Start menu and desktop shortcuts, no administrator prompt. **The app did not open afterwards** (fixed, see below). |
+| First run | The wizard ran all four steps with Next and Done. Step 1 reported "Bundled Chocolatey CLI 2.8.0-beta202611-20261116-c1baab2f is ready" from `%LOCALAPPDATA%\MaterialChoco\chocolatey\choco.exe`. |
+| Helper files | The bundled CLI's `helpers` (35 PowerShell function files), `redirects`, `tools`, `config` and `logs` are in the app-owned folder; `lib` and `bin` appear with the first package. The Machine `ChocolateyInstall` variable still points at the system Chocolatey, and the system package list was byte for byte unchanged after every step. |
+| Install from the Console | `choco install jq --version=1.7.1`: exit 0 in 33 s, the success takeover appeared, `jq.exe --version` printed `jq-1.7.1` from the app's own `bin`. |
+| Upgrade from Installed | The row showed "1.8.2 available"; Upgrade: exit 0 in 36 s, success takeover, `jq-1.8.2`. |
+| A failing install | `choco install` of a package that does not exist: exit 1, the failure takeover with the real CLI output, staying until closed. |
+| Pin, unpin | Pin `jq` from the Pins page and Unpin: both exit 0; `choco pin list` agreed each time. |
+| Source and feature | The community source off and on, and `showDownloadProgress` off and on, from their switches; `choco source list` and `choco feature list` agreed. **A second press while the first job ran queued the same command again** (fixed). |
+| Uninstall | From the row menu with both keys and the slider: exit 0; `lib` and `bin` empty afterwards. |
+| Personal wording file | Dropped on the window: the celebration showed, all entries were stored, and the role chip changed. |
+| Automatic update | An installed 0.1.15 (sums checked) found 0.1.16 31 s after starting, downloaded it into `app-0.1.16` and showed "Update 0.1.16 has been downloaded and installs when the app restarts. This build is not code signed ...". The next start through the Start menu launcher ran 0.1.16. Restart itself was not pressed: **the notice had disappeared after 60 s** (fixed). |
+| Hub | The published image `material-choco-hub:0.1.16` ran with the repository's Compose file, healthy, reporting version 0.1.16 and commit `c1baab2f` on the LAN address. The desktop app paired with a one time code (plain HTTP allowed for the LAN). From a browser at 375 px wide (an emulated phone), `choco install jq` was sent to the machine and finished with exit 0 in 34 s, with the success takeover on the phone layout. |
+| Passkeys | Not tried with a real device. The hub reports passkeys unavailable over plain HTTP on a LAN address, which browsers require; this needs the hub on HTTPS with a certificate the phone trusts. |
+| Uninstall the app | `Update.exe --uninstall` removed the install folder, both shortcuts and the uninstall entry; PATH, `ChocolateyInstall` and the system Chocolatey were unchanged. **The data folder `%APPDATA%\Material Choco` (settings, hub data, history) stays**, and the packages installed through the app are deleted with the install folder. |
+| `scripts\fetch-deps.bat` in a clean clone | Failed at the schema check on a CRLF checkout (fixed); then 4 of 4 steps. |
+| `build-installer.bat` in a clean clone | Failed five ways (fixed, see below); then built the CLI from source (version 2.3.0, its unit tests included), the schema, the npm packages and the UI bundle, and produced an unsigned `Material Choco Setup 0.1.0.exe`, the full package and `RELEASES` in 408 s. |
+| `build.bat` in a clean clone | Built with a downloaded, checksum-verified Node.js 22 and started the app, whose first-run check passed. |
+
+Every CLI call took about 25 seconds on this machine, even `pin add`; the automated checks with the stand-in hid that completely.
+
+### Problems the Windows run found, fixed in this change
+
+1. The app quit right after `Setup.exe`, because it treated `--squirrel-firstrun` as an install event.
+2. Settings, the finished first-run wizard and the personal wording file were lost at every start: the built-in hub took a new port each time, and browser storage belongs to the origin. The port is now kept in the data folder and reused.
+3. The source and feature switches snapped back while their job ran, so a second press queued the same command. They now show the requested state and stay locked until the inventory is read again.
+4. The config page said "12 of 11": settings the machine reports beyond the schema are now counted in the total.
+5. The hub link card kept saying "disconnected" after a successful pairing.
+6. The update notice vanished after 60 seconds; it now stays until closed.
+7. `build.bat` on a released commit: the CLI build took the release tag as its version and restore failed silently. A tagged commit is now built from a local copy without tags in `%LOCALAPPDATA%\mcb` (a short name, because the CLI's test files come close to the 260 character path limit).
+8. `build.bat` then failed packing the CLI (`2.3.0-` is not a valid package version on a local `main` checkout). The packing steps are skipped; the app only needs `choco.exe`.
+9. Node.js 26 left Electron unpacked during `npm ci`. `build.bat` now uses a portable Node.js 22, checked against its published SHA-256, when the PATH has another version.
+10. npm 11 skips install scripts unless they are approved; `package.json` approves the Electron and esbuild versions in use.
+11. Started from PowerShell 7, the CLI build failed in its script analyser (the module path of PowerShell 7 was inherited). `build.bat` clears that variable for the CLI build.
+12. The schema, API reference and site `--check` modes failed on a checkout with CRLF line endings.
+13. The tests could not run on Windows: the stand-in CLI is a Node.js script, now started through Node.js on Windows by a test-only switch (`MATERIAL_CHOCO_CLI_NODE`, set only by `test/fixtures/stand-in.js`). The end to end captures no longer follow the machine's dark or light theme.
+
 ## Checks and their results
 
-| Check | Result | When and by whom |
+| Check | Result | When |
 | --- | --- | --- |
-| `npm test`: unit and integration tests with a real hub and a real agent in-process | 95 of 95 pass | 2026-11-16, run in the build session |
-| `npm run test:e2e`: the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer | 121 of 121 checks pass, with no browser console errors | 2026-11-16, run in the build session |
-| Schema drift check against the C# source | matches | part of `npm test` |
-| API reference and Postman collection match the route table | match | part of `npm test` |
-| Hub image built with `docker build`, run as a container, reached on the LAN address, health check | healthy, runs as the non-root user `node` | 2026-11-15, earlier state of the hub |
-| A real agent enrolled against that container and reported inventory | passed | 2026-11-15 |
-| Desktop app launched on Linux under a virtual display | started, signed in automatically, bundled CLI check passed with the stand-in | 2026-11-15, once |
-| Release workflow, run 43807632449 on `windows-latest` | green. The CLI was built from this repository and `choco.exe --version` printed `2.9.0-materialch-20261116-68069424` on the runner. `Setup.exe`, `RELEASES` and the full `.nupkg` were published as release `material-choco-v0.1.2`. The hub image was pushed to `ghcr.io/ding-ding-projects/material-choco-hub`. | 2026-11-16 |
-| Later pushes | published later versions. The live site showed 0.1.5 as the newest at 10:38 local time on 2026-11-16. | 2026-11-16 |
-| Landing site, assembled as the workflow does and served locally | see "Site checks" below | 2026-11-16 |
-| `node test/e2e/demo.mjs`: the in-browser demo served under a sub-path, no hub | 24 of 24 checks pass, no request left the page | 2026-11-16 |
-| `node test/e2e/clipping.mjs`: 20 pages at 6 widths, 3 scale factors, 2 text sizes | 15 of 36 sizes pass. One finding at 320 px wide (the bottom bar on Settings); every other finding is at 200 percent text. Not fixed. | 2026-11-16, one full run |
-| `node scripts/fetch-deps.mjs` in a clean copy on Linux | 4 of 4 steps pass | 2026-11-16 |
-| Landing site, live | reachable, and measured at phone widths with no sideways scroll | 2026-11-16 |
-| Repository website field | reads back `https://ding-ding-projects.github.io/choco/` | 2026-11-16 |
+| `npm test` | 95 of 95 pass on Windows (before the fixes it was 76 of 81, with one test file not loading) | 2026-11-16 |
+| `node test/e2e/run.mjs` (real interface in headless Chrome, real hub and agent processes, stand-in CLI) | 121 of 121 on Windows; the screenshots in `docs/screenshots` were retaken there | 2026-11-16 |
+| `node test/e2e/demo.mjs` | 26 of 26 on Windows, including two new checks that failed on the old code: a schedule runs at its time (it did not run), and the banner on a phone is at most 80 px tall (it was 133 px) | 2026-11-16 |
+| `node test/e2e/clipping.mjs` | 36 of 36 sizes on Windows; it was 15 of 36. See the note under "Not verified" | 2026-11-16 |
+| Schema, API reference and site checks | match, on Linux and on a Windows CRLF checkout | 2026-11-16 |
+| Release workflow | green for every push; newest release at the time of the Windows run was 0.1.16 | 2026-11-16 |
+| Site feature index at 390 px wide | 4,820 px tall, was 10,301 px; no sideways scroll | 2026-11-16 |
+| Public text scan for private wording | every changed text file and the commit messages pass | 2026-11-16 |
 
-In every automated check the CLI was `test/fixtures/fake-choco.js`, a stand-in, because the machines were Linux without .NET Framework. The only place the real CLI ran is the release workflow, where it printed its version.
+The earlier Linux results (95 of 95, 121 of 121, the site checks, the hub container and the first workflow runs) are in the history of this file.
 
-The first workflow run (43807552624) failed on a YAML quoting error; the next commit fixed it.
+## Not verified
 
-### Site checks
+- A build on a Windows machine with nothing installed: the machine used already had the .NET SDK and the Visual Studio build tools that the CLI build needs, and `build.bat` does not install them.
+- Pressing Restart in the update notice (it vanished before it could be pressed; it now stays). Delta updates do not exist.
+- Passkeys with a real device, and the hub on HTTPS through `MATERIAL_CHOCO_TLS_CERT` and `MATERIAL_CHOCO_TLS_KEY`.
+- A physical phone: the phone checks used a browser at phone width on the same computer.
+- Working without a network, and packages that run a system installer (they need Restart as administrator, which was not used).
+- The clipping check finds only things that are too wide. At 200 percent text the top bar's labels overlapped the row below; that was found by looking at a capture and fixed, not by the check.
+- On a phone at 200 percent text the bottom bar labels are shortened ("Ov…"); the buttons keep their full names for screen readers.
+- Screen readers, display scaling beyond the checked factors, and reduced motion by audit.
+- Status webhooks to a real chat service; an independent security review.
+- `--limit-output` row formats for `apikey list`, `template list` and `rule list` were written from the source, not seen.
+- Every push to any branch publishes a normal release that the installed apps update to. A work-in-progress branch therefore cannot be pushed as a backup without shipping it.
 
-The site was assembled into a scratch folder exactly as the workflow does, served with `python3 -m http.server` under `/choco/`, and driven with the repository's own Chrome driver. The numbers of the last run are in the closing report of the session that produced this file; in short: every internal link, image and fragment resolved, every page was measured at 320, 360, 390, 768 and 1360 px with no sideways scroll and no touch target under 44 px, and the palette, lightbox, theme toggle, phone menu, release lookup, its fallback and reduced motion were each exercised.
+## Remaining work
+
+See `ROADMAP.md`. The state of every required feature is in `docs/FEATURE-INVENTORY.md`: 16 done, 64 partial, 24 not built, 12 not applicable, 2 waived, of 118. The largest open items are the features that do not exist at all: the per-element appearance editor, element locks with the recovery desk, extension support, the other built-in tools, Status Hub registration, screen recording, and the project board and discussions (manual steps in `docs/REPOSITORY-SETUP.md`).
 
 ## History of this build
 
 - 2026-11-15: first version. Desktop app, hub, agent, every CLI command from the generated schema, two key confirmation, three language modes.
-- 2026-11-16: full-screen results for installs and upgrades.
-- 2026-11-16: Base64 tools, pattern builder, bulk actions and exports, timed settings, custom logo and presets, changelog viewer, QR code for pairing, one list of keyboard shortcuts, general context menu, tab reordering, wider Cantonese coverage, update notice in the desktop layout.
-- 2026-11-16: hub hardening. Passkeys with the password as fallback, users with admin, operator and viewer roles, per-machine command allow lists enforced in the hub and in the agent, status webhooks, secret option values and webhook addresses encrypted at rest.
-- 2026-11-16: **authenticator codes removed by decision of the maintainer.** The built-in authenticator page is gone, and the hub has no one time code step: the route was removed, a hub upgraded from an earlier build deletes stored records at start and writes one history entry per affected user. Sign in is a password or a passkey.
-- 2026-11-16: landing site with guides, a page per feature, gallery and command palette; one document per feature; these records rewritten and the feature inventory recounted strictly.
-
-## Not verified
-
-- **Nothing has been installed and run on Windows by a person.** The installer was built there. The installed app has never been started, and the app has never run the real `choco.exe`.
-- `build.bat` and `build-installer.bat` have never been run.
-- The installer is unsigned.
-- Whether the CLI built from this repository unpacks its helper files correctly when `ChocolateyInstall` points at the app-owned folder.
-- Automatic updates: the desktop shell is written to fetch a newer release. Only the notice in the interface was exercised, against a stand-in for the desktop shell.
-- Passkeys were verified with a software passkey device in the unit tests and with Chrome's virtual passkey device in the end to end run. No real fingerprint reader, phone or security key was used.
-- Status webhooks were delivered to receivers on the same computer only.
-- HTTPS through `MATERIAL_CHOCO_TLS_CERT` and `MATERIAL_CHOCO_TLS_KEY` was not exercised in a recorded check.
-- `--limit-output` row formats for `apikey list`, `template list` and `rule list` were written from the source, not from real output.
-- Reduced motion, screen readers, display scaling and the larger text sizes were not captured or audited.
-- The site was not tested on a physical phone, in landscape, or in browsers other than Chrome. Link previews in chat apps were not tested.
-- The clipping findings at 200 percent text and at 320 px are known and open.
-- The release workflow's code name, checksum table and timing job were dry-run locally with a stand-in for `gh`; see the release page for the first real result.
-- `fetch-deps.bat` and the changed lines of `build.bat` were never run.
-- The demo's schedules never fire, and the demo was not tried on a physical phone.
-- Design Tweaks were not exercised inside the design tool.
-- No independent security review.
-
-## Remaining work
-
-See `ROADMAP.md`. The next milestone is the Windows proof. The state of every required feature is in `docs/FEATURE-INVENTORY.md`: 14 done, 63 partial, 3 written and never run, 24 not built, 12 not applicable, 2 waived, of 118.
+- 2026-11-16: full-screen results for installs and upgrades; Base64 tools, pattern builder, bulk actions and exports, timed settings, custom logo and presets, changelog viewer, QR code for pairing, keyboard shortcuts, context menu, tab reordering, Cantonese coverage, update notice.
+- 2026-11-16: hub hardening: passkeys with password fallback, roles, per-machine allow lists, status webhooks, secrets encrypted at rest.
+- 2026-11-16: **authenticator codes removed by decision of the maintainer**, and the matching QR code entry waived; both confirmed by the maintainer the same day.
+- 2026-11-16: landing site, demo, release code names and checksums.
+- 2026-11-16: first install and use on Windows; the fixes listed above; no clipping at any checked size.
 
 ## Design pass notes
 

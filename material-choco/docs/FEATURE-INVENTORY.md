@@ -15,15 +15,15 @@ The maintainer keeps a catalogue of features that every app of theirs is expecte
 
 This count is deliberately strict. "Done" does not mean "something with that name exists". Shipped features that go beyond the catalogue, such as roles, passkeys and command allow lists, are documented under [features](features/README.md) and are not counted here.
 
-Every check named below ran against a test stand-in for `choco.exe`, on Linux. Nobody has installed the app on Windows and run a real install through it. That limit applies to every row.
+The automated checks named below run against a test stand-in for `choco.exe`. Since 2026-11-16 they also pass on Windows (95 of 95 unit and integration tests, 121 of 121 end to end checks, 26 of 26 demo checks). On the same day the released app was installed on a real Windows 11 machine and used with the real `choco.exe` inside it: install, upgrade, pin, source, feature and uninstall, an automatic update from 0.1.15 to 0.1.16, and a job sent from the hub. Rows that this proof touches say so; the details are in [HANDOFF.md](../HANDOFF.md).
 
 ## Totals
 
 | State | Entries |
 | --- | --- |
-| Done | 14 |
-| Partial | 63 |
-| Written, never run | 3 |
+| Done | 16 |
+| Partial | 64 |
+| Written, never run | 0 |
 | Not built | 24 |
 | Not applicable | 12 |
 | Waived | 2 |
@@ -39,17 +39,17 @@ Per category (Done + Partial + Written + Not built + Not applicable + Waived = e
 | Safety, locks and sign in | 2 | 0 | 0 | 3 | 0 | 2 | 7 |
 | Records, history and messages | 0 | 6 | 0 | 1 | 0 | 0 | 7 |
 | Built-in tools and hand-off | 0 | 2 | 0 | 8 | 2 | 0 | 12 |
-| Completeness and evidence | 1 | 6 | 0 | 1 | 0 | 0 | 8 |
+| Completeness and evidence | 2 | 5 | 0 | 1 | 0 | 0 | 8 |
 | Site and shared links | 2 | 6 | 0 | 0 | 1 | 0 | 9 |
 | Status reporting | 0 | 0 | 0 | 3 | 1 | 0 | 4 |
-| Build and install | 0 | 4 | 3 | 0 | 1 | 0 | 8 |
+| Build and install | 1 | 6 | 0 | 0 | 1 | 0 | 8 |
 | Release pipeline | 1 | 6 | 0 | 0 | 1 | 0 | 8 |
 | Repository records | 6 | 4 | 0 | 4 | 0 | 0 | 14 |
 | Deliverables of the instructions repository | 0 | 0 | 0 | 0 | 3 | 0 | 3 |
 | Games | 0 | 0 | 0 | 0 | 2 | 0 | 2 |
-| **Total** | **14** | **63** | **3** | **24** | **12** | **2** | **118** |
+| **Total** | **16** | **64** | **0** | **24** | **12** | **2** | **118** |
 
-Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 58. 0+0+0+0+0+0+0+0+0+3+0+0+0+0 = 3. 2+1+1+3+1+8+2+0+3+1+2+5+0+0 = 29. 1+0+0+0+0+2+0+1+1+1+1+0+3+2 = 12. 0+0+0+2+0+0+0+0+0+0+0+0+0+0 = 2. And 14+58+3+29+12+2 = 118.
+Column sums: 0+1+1+2+0+0+2+2+0+1+1+6+0+0 = 16. 10+9+10+0+6+2+5+6+0+6+6+4+0+0 = 64. 0 written and never run. 2+1+1+3+1+8+1+0+3+0+0+4+0+0 = 24. 1+0+0+0+0+2+0+1+1+1+1+0+3+2 = 12. 0+0+0+2+0+0+0+0+0+0+0+0+0+0 = 2. And 16+64+0+24+12+2 = 118. (The previous version of this line did not match its own table; it was recomputed from the rows.)
 
 ## Language, voice and personalisation (13)
 
@@ -117,7 +117,7 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | 39 | Recovery desk for a locked-out person | Not built | |
 | 40 | Play-your-way-out unlock steps | Not built | |
 | 41 | Built-in authenticator for one time codes | Waived | Built, then removed on 2026-11-16 by decision of the maintainer. |
-| 42 | QR code for registering a one time code | Waived | Treated as waived because it follows from the row above; the maintainer has been asked to confirm this row explicitly. the hub has no one time code step. The QR code for pairing a machine is a different feature and exists. |
+| 42 | QR code for registering a one time code | Waived | Confirmed by the maintainer on 2026-11-16 together with the row above. The hub has no one time code step. The QR code for pairing a machine is a different feature and exists. |
 | 43 | Free, and honest about it | Done | Nothing is paid, gated or advertised; there is no payment code in the source. |
 
 2 Done + 3 Not built + 2 Waived = 7.
@@ -160,15 +160,15 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 | # | Entry | State | Notes |
 | --- | --- | --- | --- |
 | 63 | This inventory, and every feature in every surface | Partial | The inventory exists and is recounted. The parity it asks for is what this file shows is not reached. |
-| 64 | Version and build time on the first screen | Partial | Shown on the sign in screen and the top bar. Every observed copy says "build time unavailable", because no copy from the release build has been started. |
+| 64 | Version and build time on the first screen | Done | Shown on the sign in screen, the top bar and the first-run wizard. The installed release on Windows showed "Version 0.1.16, built 11/16/2026, 12:52:54 EST", and the hub container reports the same version and commit from `/api/status` (2026-11-16). |
 | 65 | Real screenshots wherever a surface is described | Partial | 44 real captures from the end to end run, used in both READMEs, the site and the guides. The CLI in them is a stand-in, not every state is captured, and they were not taken on Windows. |
 | 66 | Screen recording | Not built | |
 | 67 | Comparison of the build with the design reference | Partial | The design boards were rendered to pictures and two were compared with captures by eye. There is no tool that renders the reference and no frame by frame comparison. |
 | 68 | Design files in the repository | Done | `design/material-choco`: 27 boards, each with accent and motion controls, plus rendered frames. A larger pass with a board per required feature is in progress and not published. |
-| 69 | Clipping check at many sizes and scales | Partial | `test/e2e/clipping.mjs` checks 20 pages at 6 widths, 3 scale factors and 2 text sizes. Its first full run passed 15 of 36 sizes: one finding at 320 px, the rest at 200 percent text. The findings are not fixed yet. |
+| 69 | Clipping check at many sizes and scales | Partial | `test/e2e/clipping.mjs` checks 20 pages at 6 widths, 3 scale factors and 2 text sizes. Its first full run passed 15 of 36 sizes. After the fixes of 2026-11-16 it passes 36 of 36 on Windows, and it now names hidden causes too (shadow parts of components, text that runs past its box). It only looks for things that are too wide: an overlap at 200 percent text in the top bar was found by eye, not by the check, and fixed. |
 | 70 | Public screenshot gallery | Partial | The site has a gallery of every capture with a viewer. The entry asks for a separate public gallery, which does not exist. |
 
-1 Done + 6 Partial + 1 Not built = 8.
+2 Done + 5 Partial + 1 Not built = 8.
 
 ## Site and shared links (9)
 
@@ -201,16 +201,16 @@ Column sums: 0+1+1+2+0+0+1+2+0+0+1+6+0+0 = 14. 10+9+10+0+6+2+5+6+0+3+4+3+0+0 = 5
 
 | # | Entry | State | Notes |
 | --- | --- | --- | --- |
-| 84 | `build.bat` and `build-installer.bat` | Written, never run | They exist in `material-choco/`, because the repository root holds the CLI's own `build.bat`. Neither has been run. |
-| 85 | One command that builds and runs on a fresh Windows | Written, never run | `build.bat` is written to do this. Never run. |
-| 86 | Script that fetches every dependency | Partial | `scripts/fetch-deps.mjs` with `.sh` and `.bat` wrappers; run on Linux in a clean copy, 4 of 4 steps. The `.bat` wrapper and the changed `build.bat` lines were never run. |
-| 87 | Everything bundled in the installer | Partial | The release workflow builds the CLI from this repository and packs it into the installer. The installed app has never been started, so working offline is unproven. |
-| 88 | Squirrel.Windows installer | Partial | `Setup.exe`, `RELEASES` and the full package are published by the workflow. No delta packages, and never installed. |
+| 84 | `build.bat` and `build-installer.bat` | Done | They live in `material-choco/`, because the repository root holds the CLI's own `build.bat`. On 2026-11-16, from a clean clone on Windows 11: `build-installer.bat` built the CLI from source and produced an unsigned `Setup.exe`, `RELEASES` and full package in 408 s, and `build.bat` built and started the app. The first runs failed in five ways, all fixed and listed in HANDOFF.md. |
+| 85 | One command that builds and runs on a fresh Windows | Partial | `build.bat` builds and starts the app on a Windows machine that already had Git, the .NET SDK and Visual Studio build tools. It fetches a checksum-verified Node.js 22 itself, but not the .NET build tools, so a truly fresh Windows is not covered. |
+| 86 | Script that fetches every dependency | Partial | `scripts/fetch-deps.mjs` with `.sh` and `.bat` wrappers: 4 of 4 steps in a clean copy on Linux and, after a line ending fix, on Windows. It fetches what the app needs, not the .NET tools the CLI build needs. |
+| 87 | Everything bundled in the installer | Partial | The installed app ran the bundled CLI on Windows with no separate Chocolatey install: it unpacked to `%LOCALAPPDATA%\MaterialChoco\chocolatey` and the system Chocolatey was left untouched. Working without a network was not tested. |
+| 88 | Squirrel.Windows installer | Partial | Installed, run, updated and uninstalled on Windows 11 (2026-11-16); the release files matched their published SHA-256 sums and are `NotSigned`. No delta packages. Uninstall leaves the app's data folder in `%APPDATA%\Material Choco`. |
 | 89 | Signing only where a format requires it | Not applicable | Nothing in the release requires a signature. Releases are unsigned and say so. |
-| 90 | Automatic updates | Written, never run | The desktop shell is written to check the newest release, and the interface announces a downloaded update (`a downloaded update is announced as not code signed`, against a stand-in for the desktop shell). Never run on Windows. |
+| 90 | Automatic updates | Partial | On Windows, an installed 0.1.15 found 0.1.16 within 31 s of starting, downloaded it and showed "Update 0.1.16 has been downloaded ... not code signed", and the next start through the Start menu launcher ran 0.1.16 (2026-11-16). The Restart button itself was not pressed, because the notice disappeared after 60 seconds; it now stays until closed. Delta updates do not exist. |
 | 91 | Original icon, packaged | Partial | A multi-resolution icon is in the repository and the installer was built with it. Nobody has seen it installed. |
 
-4 Partial + 3 Written, never run + 1 Not applicable = 8.
+1 Done + 6 Partial + 1 Not applicable = 8.
 
 ## Release pipeline (8)
 

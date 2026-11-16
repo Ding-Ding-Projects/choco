@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=fc53e5a6">
+<link rel="stylesheet" href="../site.css?v=e85f9cbe">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -45,7 +45,7 @@
 <h2 id="create-a-pairing-code">Create a pairing code</h2>
 <ol><li>Sign in to the hub and open <b>Machines</b>.</li><li>In <b>Pair a new machine</b>, decide whether the agent should be read only (see below), then choose <b>New pairing code</b>.</li><li>The hub shows a code like <code>XXXX-XXXX</code>, its expiry time, and the exact command for the machine.</li></ol>
 <p>A code works once and expires after 10 minutes. The hub stores only a hash of it. A fold under the code draws a QR code holding the hub address and the code, for reading with another device; the desktop app does not scan it yet.</p>
-<figure><button class="shot" type="button" data-full="../shots/04-machines-pairing-code.png" data-caption="Machines page with a new pairing code and the enroll command." aria-label="Enlarge: Machines page with a new pairing code and the enroll command."><img loading="lazy" src="../shots/04-machines-pairing-code.png" alt="Machines page with a new pairing code and the enroll command." width="1360" height="757"></button><figcaption>Machines page with a new pairing code and the enroll command.</figcaption></figure>
+<figure><button class="shot" type="button" data-full="../shots/04-machines-pairing-code.png" data-caption="Machines page with a new pairing code and the enroll command." aria-label="Enlarge: Machines page with a new pairing code and the enroll command."><img loading="lazy" src="../shots/04-machines-pairing-code.png" alt="Machines page with a new pairing code and the enroll command." width="1338" height="746"></button><figcaption>Machines page with a new pairing code and the enroll command.</figcaption></figure>
 <h2 id="enter-it-in-the-desktop-app">Enter it in the desktop app</h2>
 <p>On the Windows machine, open Material Choco, go to <b>Machines</b>, and use <b>Connect this PC to a hub</b>: enter the hub address and the code. The app keeps managing the PC locally and also serves the hub.</p>
 <h2 id="or-enroll-a-server-without-a-desktop-session">Or enroll a server without a desktop session</h2>
@@ -65,7 +65,7 @@ MaterialChoco.exe --agent run</code></pre>
 <h2 id="what-the-agent-does-once-paired">What the agent does once paired</h2>
 <ul><li>It long-polls the hub for jobs. A machine counts as online when it was seen in the last 75 seconds.</li><li>It runs one job at a time through the bundled Chocolatey CLI and streams the output back while the job runs.</li><li>After a command that changes the machine it re-reads the inventory: packages, outdated packages, sources, config, features and pins.</li><li>If the hub cannot be reached it retries with a growing delay, up to 30 seconds between attempts.</li><li>If the hub answers that the token is no longer accepted, the agent stops and reports that it must be enrolled again.</li></ul>
 <p>Jobs for an offline machine wait in the hub for up to 7 days, then expire.</p>
-<figure><button class="shot" type="button" data-full="../shots/05-machines.png" data-caption="Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in." aria-label="Enlarge: Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in."><img loading="lazy" src="../shots/05-machines.png" alt="Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in." width="1360" height="757"></button><figcaption>Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in.</figcaption></figure>
+<figure><button class="shot" type="button" data-full="../shots/05-machines.png" data-caption="Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in." aria-label="Enlarge: Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in."><img loading="lazy" src="../shots/05-machines.png" alt="Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in." width="1338" height="746"></button><figcaption>Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in.</figcaption></figure>
 <h2 id="names-groups-and-removal">Names, groups and removal</h2>
 <p>Open a machine's menu (the three dots, right click, or <code>Shift+F10</code>) for <b>Open packages</b>, <b>Refresh inventory</b>, <b>Rename, groups, policy</b> and <b>Remove from hub</b>. Groups are free text labels that schedules can target.</p>
 <p><b>Remove from hub</b> asks for the two key confirmation. The hub then forgets the machine, its inventory and its token, and cancels its queued jobs. Nothing is uninstalled on the machine itself. The agent's token stops working at once.</p>
@@ -86,6 +86,6 @@ MaterialChoco.exe --agent run</code></pre>
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=fc53e5a6"></script>
+<script src="../site.js?v=e85f9cbe"></script>
 </body>
 </html>

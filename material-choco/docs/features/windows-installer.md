@@ -18,9 +18,11 @@ Download `Setup.exe` from the [project site](https://ding-ding-projects.github.i
 
 ## Known limits
 
-- **Built, not installed.** Nobody has run the installer on Windows or started the installed app.
-- Not code signed. There is no signature to verify; download only from the releases page of this repository.
-- `build.bat` and `build-installer.bat` were written on Linux and have not been run on Windows.
+- Installed, used, updated and uninstalled on Windows 11 on 2026-11-16. The installer needs no administrator rights; it installs for the current user into `%LOCALAPPDATA%\MaterialChoco`.
+- Not code signed: `Get-AuthenticodeSignature` reports `NotSigned`. Compare the SHA-256 sums in the release notes instead.
+- In 0.1.16 and earlier the app does not open by itself after installing; start it from the Start menu.
+- Uninstalling removes the install folder, the shortcuts and the packages installed through the app. The app's data folder `%APPDATA%\Material Choco` stays.
+- `build.bat` and `build-installer.bat` were run from a clean clone on Windows; see [Build and test](../articles/build-and-test.md).
 - No delta packages.
 
 ## Related

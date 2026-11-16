@@ -18,4 +18,4 @@ How-to guides for Material Choco. They are the source of the guide pages on the 
 
 Each shipped feature also has its own reference page under [../features](../features/README.md).
 
-Honest status of everything described here: the automated checks run against a test stand-in for `choco.exe`. Nobody has yet installed the app on Windows and run a real install through it. See [HANDOFF.md](../../HANDOFF.md).
+Honest status of everything described here: the automated checks run against a test stand-in for `choco.exe`, on Linux and on Windows. The released app was also installed on Windows 11 and used with its real CLI on 2026-11-16. See [HANDOFF.md](../../HANDOFF.md).

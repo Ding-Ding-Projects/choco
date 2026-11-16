@@ -56,12 +56,19 @@ const MEASURE = `
   if (docWidth > limit + 1) {
     // Name the innermost elements that reach past the right edge, so the cause can be found.
     // An element inside a scrolling or clipping box that itself fits does not widen the document.
-    const contained = (el) => { for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) { if (getComputedStyle(a).overflowX !== 'visible' && a.getBoundingClientRect().right <= limit + 1) return true; } return false; };
+    const up = (a) => a.parentElement || (a.parentNode && a.parentNode.host) || null; // crosses shadow root boundaries
+    const contained = (el) => { for (let a = up(el); a && a !== document.body; a = up(a)) { if (getComputedStyle(a).overflowX !== 'visible' && a.getBoundingClientRect().right <= limit + 1) return true; } return false; };
     const past = [...document.body.querySelectorAll('*')].filter((el) => shown(el) && el.getBoundingClientRect().right > limit + 1 && !contained(el));
     // Drawing parts inside an icon say nothing useful; the element that holds the icon does.
     const holder = (el) => { const svg = el.closest('svg'); const h = svg ? svg.parentElement : el; return h && h.tagName === 'I' && h.parentElement ? h.parentElement : h; };
-    const inner = [...new Set(past.filter((el) => !past.some((o) => o !== el && el.contains(o))).map(holder))].slice(0, 4);
-    out.document = { scrollWidth: docWidth, widest: inner.map((el) => ({ selector: short(el), text: words(el), right: Math.round(el.getBoundingClientRect().right) })) };
+    let inner = [...new Set(past.filter((el) => !past.some((o) => o !== el && el.contains(o))).map(holder))].slice(0, 4); let hiddenCause = false;
+    // When nothing visible reaches past the edge, a hidden or invisible element is widening the page: name that instead.
+    // Material components keep their parts in shadow roots, which querySelectorAll does not enter.
+    const deep = (root, acc = []) => { for (const el of root.querySelectorAll('*')) { acc.push(el); if (el.shadowRoot) deep(el.shadowRoot, acc); } return acc; };
+    // Text is not an element: a long unbreakable word reaches past the edge while its box does not, so the reach of the content counts too.
+    const reach = (el) => { const r = el.getBoundingClientRect(); return Math.max(r.right, getComputedStyle(el).overflowX === 'visible' ? r.left + el.scrollWidth : 0); };
+    if (!inner.length) { const any = deep(document.body).filter((el) => reach(el) > limit + 1 && !contained(el)); inner = [...new Set(any.filter((el) => !any.some((o) => o !== el && el.contains(o))).map(holder))].slice(0, 4); hiddenCause = inner.length > 0; }
+    out.document = { scrollWidth: docWidth, widest: inner.map((el) => ({ selector: (hiddenCause ? '(not visible) ' : '') + short(el), text: words(el), right: Math.round(el.getBoundingClientRect().right) })) };
   }
   for (const el of document.querySelectorAll(${JSON.stringify(TARGETS)})) {
     if (!shown(el) || el.clientWidth === 0) continue;

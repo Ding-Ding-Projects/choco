@@ -183,6 +183,22 @@
   };
   let ready = boot();
 
+  // ---- schedules run as in the hub: checked every 20 seconds, once per day at their minute -------------
+  function tickSchedules(now = new Date()) {
+    if (!db) return;
+    const hhmm = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0'); const day = now.toDateString();
+    for (const s of db.schedules) {
+      if (!s.enabled || s.time !== hhmm || s.lastRunDay === day) continue;
+      if (Array.isArray(s.days) && s.days.length && !s.days.includes(now.getDay())) continue;
+      s.lastRunDay = day; s.lastRun = now.toISOString(); let n = 0;
+      const t = s.target || { all: true };
+      const machines = t.all ? db.machines : t.group ? db.machines.filter((m) => (m.groups || []).includes(t.group)) : db.machines.filter((m) => (t.machineIds || []).includes(m.id));
+      for (const m of machines) { try { createJob(m, clone(s.spec), `schedule:${s.name}`); n++; } catch { /* read only machines and allow lists skip it, as in the hub */ } }
+      audit('scheduler', 'schedule.run', { schedule: s.name, jobs: n });
+    }
+  }
+  setInterval(() => tickSchedules(), 20000);
+
   // ---- the fetch replacement ------------------------------------------------------------------------
   const json = (status, data) => new Response(JSON.stringify(data), { status, headers: { 'content-type': 'application/json' } });
   window.fetch = async (input, init = {}) => {

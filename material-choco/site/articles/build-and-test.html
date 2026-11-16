@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=fc53e5a6">
+<link rel="stylesheet" href="../site.css?v=e85f9cbe">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -60,7 +60,9 @@ npm run test:e2e     # end to end run in headless Chrome</code></pre>
 <p>Both use <code>test/fixtures/fake-choco.js</code>, a small stand-in for <code>choco.exe</code>, because the checks run on Linux. Package names and versions in the screenshots come from that stand-in. The numbers of tests and checks, and their last recorded results, are in <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">HANDOFF.md</a>.</p>
 <h2 id="build-on-windows">Build on Windows</h2>
 <p><code>build.bat</code> builds the CLI from the repository root, installs the npm packages and starts the app. <code>build-installer.bat</code> produces the Squirrel.Windows installer in <code>dist\squirrel-windows</code>. Both accept <code>/s</code>, <code>--silent</code> or <code>SILENT=1</code>.</p>
-<blockquote><p>These two scripts were written on Linux and have <b>not been run on Windows yet</b>.</p></blockquote>
+<p>Both were run from a clean clone on Windows 11 on 2026-11-16: <code>build-installer.bat</code> built the CLI from source and produced an unsigned installer in about seven minutes, and <code>build.bat</code> built and started the app. Things to know:</p>
+<ul><li><code>build.bat</code> uses Node.js 22, as the release workflow does. When the PATH has another version it downloads a portable Node.js 22 into <code>%LOCALAPPDATA%\MaterialChocoBuild</code> and checks its SHA-256 first, because newer Node.js versions fail to unpack Electron.</li><li>On a commit that carries a release tag, the CLI is built from a copy without tags in <code>%LOCALAPPDATA%\mcb</code>, because the CLI build would otherwise take the tag as its version. The short folder name keeps the CLI's test files under the 260 character path limit.</li><li>The CLI build needs the .NET SDK and the Visual Studio build tools. The script does not install those.</li><li>Only one copy of Material Choco runs at a time. Close an installed copy before <code>build.bat</code> starts the one it built.</li></ul>
+<blockquote><p>A machine with nothing installed was not tried.</p></blockquote>
 <h2 id="the-release-workflow">The release workflow</h2>
 <p><code>.github/workflows/material-choco-release.yml</code> does the same steps on a hosted Windows runner: it builds the CLI from this repository, packs it into the app, and publishes <code>Setup.exe</code>, <code>RELEASES</code> and the full <code>.nupkg</code> as a release whose tag starts with <code>material-choco-v</code>. It also builds and pushes the hub image. The installer is not code signed.</p>
 <p>The handoff note records the first green run and the release it produced. It also records what that run does not prove: the installer was built, and was not installed or started.</p>
@@ -81,6 +83,6 @@ npm run test:e2e     # end to end run in headless Chrome</code></pre>
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=fc53e5a6"></script>
+<script src="../site.js?v=e85f9cbe"></script>
 </body>
 </html>

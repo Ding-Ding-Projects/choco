@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=fc53e5a6">
+<link rel="stylesheet" href="../site.css?v=e85f9cbe">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -50,7 +50,7 @@
 <h2 id="what-was-checked">What was checked</h2>
 <p><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">HANDOFF.md</a> records that the app was launched on Linux under a virtual display, signed in automatically and passed the bundled CLI check with the test stand-in. One capture of that window is in the screenshots. The update notice is covered by the end to end checks <code>a downloaded update is announced as not code signed</code> and <code>Restart asks the desktop app to restart into the update</code>, which run against a stand-in for the desktop shell.</p>
 <h2 id="known-limits">Known limits</h2>
-<ul><li><b>Not yet started on Windows.</b> The installer was built there and has not been installed or run.</li><li>The desktop shell asks the newest release for updates, and the interface announces a downloaded update with a <b>Restart</b> button and the statement that the build is not code signed. This has only been exercised with a stand-in for the desktop shell, never on Windows. Until it has, treat updates as manual.</li><li>The installer and the app are not code signed.</li></ul>
+<ul><li><b>Started and used on Windows 11</b> on 2026-11-16. That run found and fixed: the app not opening after the installer, settings lost at every restart (the built-in hub now keeps its port), and the update notice disappearing after a minute.</li><li>The desktop shell asks the newest release for updates, and the interface announces a downloaded update with a <b>Restart</b> button and the statement that the build is not code signed. This has only been exercised with a stand-in for the desktop shell, never on Windows. Until it has, treat updates as manual.</li><li>The installer and the app are not code signed.</li></ul>
 <p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/desktop-app.md">docs/features/desktop-app.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/windows-installer.html"><h3>Windows installer</h3><span class="more">Open</span></a><a class="card reveal" href="../features/bundled-cli.html"><h3>Bundled CLI</h3><span class="more">Open</span></a><a class="card reveal" href="../features/remote-agent.html"><h3>Remote agent</h3><span class="more">Open</span></a></div>
@@ -63,6 +63,6 @@
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=fc53e5a6"></script>
+<script src="../site.js?v=e85f9cbe"></script>
 </body>
 </html>

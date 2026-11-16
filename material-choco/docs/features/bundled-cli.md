@@ -24,7 +24,8 @@ If the CLI cannot be started, pages show **Chocolatey CLI is not available** wit
 
 ## Known limits
 
-- The installed app has not been started on Windows, so the real `choco.exe` has not yet been run by the app.
+- Run by the installed app on Windows 11 on 2026-11-16: the first-run check reported the bundled CLI ready, it unpacked its helper files into `%LOCALAPPDATA%\MaterialChoco\chocolatey`, and real installs, upgrades and uninstalls went through it. Each call took about 25 seconds on that machine, even a pin.
+- Without administrator rights, a package that only unpacks files installs fine; one that runs a system installer usually needs **Restart as administrator**.
 - Whether the CLI unpacks its helper files correctly when `ChocolateyInstall` points at the app-owned folder is unconfirmed.
 - A development checkout has no bundled CLI. See [Build and test from source](../articles/build-and-test.md).
 

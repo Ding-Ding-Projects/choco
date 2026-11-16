@@ -2,7 +2,7 @@
 
 Install the desktop app and manage Chocolatey packages on the Windows PC it runs on. No hub, no account and no separate Chocolatey install are needed.
 
-> **Early build.** The installer is produced on Windows by the release workflow, but nobody has yet installed the app on Windows and run a real install through it. The steps below describe what the source does. Please treat the first run as a trial, and read the [handoff note](../../HANDOFF.md) for what was checked.
+> **Early build.** The release was installed on Windows 11 on 2026-11-16 and used with the real Chocolatey CLI inside it: install, upgrade, pin, sources, features, uninstall and an automatic update all worked. It is still an early, unsigned build; read the [handoff note](../../HANDOFF.md) for exactly what was checked and what was not.
 
 ## Before you start
 
@@ -58,9 +58,12 @@ Commands you start get three global options by default: `--confirm`, `--no-progr
 
 ## Known limits
 
-- Not yet installed or started on Windows by anyone. Whether the bundled CLI unpacks its helper files correctly into the app-owned folder is unconfirmed.
+- Installed and used on Windows 11 on 2026-11-16 with the real CLI inside the app. The bundled CLI unpacks into `%LOCALAPPDATA%\MaterialChoco\chocolatey`, and packages you install go there too, not into a Chocolatey you may already have.
+- Uninstalling the app removes that folder, and with it the record of every package installed through the app. A package whose own installer put files elsewhere keeps those files. The app's settings and history stay in `%APPDATA%\Material Choco`.
+- Without administrator rights, packages that only unpack files (such as `jq`) install fine; packages that run a system installer usually need **Restart as administrator**.
 - The installer is unsigned.
-- The app is written to look for a newer release, download it, and announce it with a **Restart** button and a reminder that the build is not code signed. That path has never run on Windows. Do not rely on it yet; download new versions from the releases page.
+- The app looks for a newer release within a minute of starting and every six hours, downloads it and shows a notice with a **Restart** button and a reminder that the build is not code signed. This was seen on Windows: 0.1.15 updated itself to 0.1.16.
+- In 0.1.16 and earlier the app does not open by itself after the installer finishes; start it from the Start menu. Fixed in the next version.
 
 ## Related
 

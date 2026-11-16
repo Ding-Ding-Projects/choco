@@ -18,6 +18,12 @@ node scripts/fetch-deps.mjs
 
 This runs `npm ci`, rebuilds `ui/vendor` with `scripts/build-vendor.mjs`, and runs `node scripts/gen-schema.mjs --check`. It prints a summary and exits non-zero when any step failed. `scripts/fetch-deps.sh` and `scripts\fetch-deps.bat` call the same script.
 
+### On Windows
+
+All checks below also run on Windows (verified 2026-11-16). Set `CHROME_BIN` to Chrome, for example `C:\Program Files\Google\Chrome\Application\chrome.exe`, for the end to end, demo and clipping runs. The tests start the stand-in CLI through Node.js there (`test/fixtures/stand-in.js` sets `MATERIAL_CHOCO_CLI_NODE`); never set that variable for the app itself. A checkout with `core.autocrlf` is fine: the `--check` modes ignore CRLF.
+
+To try the installed app without touching the visible desktop, start it with `--remote-debugging-port=<port> --remote-debugging-address=127.0.0.1` on a hidden desktop and drive its single page target. Only one copy runs at a time, so close an installed copy before `build.bat` starts the one it built.
+
 ## 2. Unit and integration tests
 
 ```
@@ -79,7 +85,9 @@ It reports pages, internal references checked and problems, and exits 1 when a l
 
 To see the code name of a release without running the workflow: `node material-choco/scripts/release-name.mjs 0.1.<run number>`.
 
-Local Windows builds: `material-choco\build.bat` builds and starts the app, and `material-choco\build-installer.bat` builds the installer. Nothing is code signed, and no signing step may be added.
+Local Windows builds: `material-choco\build.bat` builds and starts the app, and `material-choco\build-installer.bat` builds the installer. Nothing is code signed, and no signing step may be added. Both work from a clean clone (verified 2026-11-16, about seven minutes with the CLI build). They need the .NET SDK and the Visual Studio build tools for the CLI, use a checksum-verified Node.js 22 when the PATH has another version, build a tagged commit's CLI from a copy without tags in `%LOCALAPPDATA%\mcb`, and skip packing the CLI into packages.
+
+Every push to any branch publishes a normal release that installed apps update to. Do not push a work-in-progress branch as a backup.
 
 ## 8. Verify a release
 

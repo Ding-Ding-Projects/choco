@@ -21,12 +21,14 @@ A box is ticked only when the item works and was exercised. Every tick below was
 ## 0.2: prove it on Windows
 
 - [x] Release workflow green: CLI built from this repository, installer and hub image published (run 43807632449, release `material-choco-v0.1.2`, later versions since)
-- [ ] Install from `Setup.exe` on a clean Windows machine and run a real install, upgrade and uninstall with the bundled CLI
-- [ ] Confirm the bundled CLI unpacks its helper files into the app-owned folder on first run
-- [ ] Run `build.bat` and `build-installer.bat` on Windows
-- [ ] Recapture every screenshot on Windows with the real CLI
-- [ ] See an automatic update download and install on Windows (the code and the notice are written; never run there)
-- [ ] Run a headless agent on Windows, and decide whether to install it as a service
+- [x] Install from `Setup.exe` on Windows and run a real install, upgrade and uninstall with the bundled CLI (Windows 11, 2026-11-16; the machine was not a clean one: it already had Chocolatey, which the app left untouched)
+- [x] Confirm the bundled CLI unpacks its helper files into the app-owned folder on first run
+- [x] Run `build.bat` and `build-installer.bat` on Windows, from a clean clone (five fixes were needed; see HANDOFF.md)
+- [ ] Recapture every screenshot on Windows with the real CLI (the end to end captures were retaken on Windows with the stand-in CLI; four captures of the installed app with the real CLI were added)
+- [x] See an automatic update download and install on Windows (0.1.15 to 0.1.16; the next start ran 0.1.16)
+- [ ] Press Restart in the update notice and see the new version start (the notice used to vanish after a minute; it now stays)
+- [ ] Build on a Windows machine with nothing installed
+- [ ] Run a headless agent on Windows, and decide whether to install it as a service (the desktop app's own agent was paired with a hub and ran a job)
 
 ## 0.3: hub hardening
 
@@ -36,7 +38,8 @@ A box is ticked only when the item works and was exercised. Every tick below was
 - [x] Encrypt secret option values and webhook addresses at rest (the key lies in the data folder unless moved)
 - [x] QR code for pairing a machine
 - [x] Status webhooks for failed jobs, offline machines and sign in lockouts
-- [ ] Sign in with a passkey on a real device, by a person
+- [x] Pair a Windows machine with the published hub image and run a job on it from a phone-width browser (2026-11-16)
+- [ ] Sign in with a passkey on a real device, by a person (needs the hub on HTTPS: over plain HTTP on a LAN address browsers do not offer passkeys)
 - [ ] Deliver a webhook to a real chat service
 - [ ] Limit a user to some machines
 - [ ] Signed agent updates
@@ -58,7 +61,9 @@ A box is ticked only when the item works and was exercised. Every tick below was
 - [x] Personal wording file reaches notifications, error panels and full-screen results
 - [ ] Translate the older pages that still hold English sentences
 - [ ] Tab groups and docking
-- [ ] Screen reader pass and a check of the larger text sizes
+- [x] No clipping at 6 widths, 3 scale factors and text at 100 and 200 percent (36 of 36 sizes, 2026-11-16)
+- [ ] Screen reader pass
+- [ ] Teach the clipping check to find overlaps, not only things that are too wide
 - [ ] Capture and review the reduced motion path
 
 ## Site and documents
@@ -69,6 +74,8 @@ A box is ticked only when the item works and was exercised. Every tick below was
 - [x] In-browser demo assembled into the site at `demo/` and loaded locally with no outside requests (its behaviour is checked by the app's own tests, not by the site checks)
 - [x] One document per shipped feature, and how-to guides
 - [x] Repository website field points at the site
+- [x] Demo schedules run at their time, and the demo banner takes one line on a phone (checked by `test/e2e/demo.mjs`)
+- [x] Feature index: a category bar, and on a phone 4,820 px instead of 10,301 px (measured at 390 px wide)
 - [ ] Test the site on a physical phone and in other browsers
 - [ ] Upload the link preview picture as the repository's own preview, and test a shared link in a chat app
 - [ ] Language modes on the site

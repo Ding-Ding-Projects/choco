@@ -45,7 +45,14 @@ Both use `test/fixtures/fake-choco.js`, a small stand-in for `choco.exe`, becaus
 
 `build.bat` builds the CLI from the repository root, installs the npm packages and starts the app. `build-installer.bat` produces the Squirrel.Windows installer in `dist\squirrel-windows`. Both accept `/s`, `--silent` or `SILENT=1`.
 
-> These two scripts were written on Linux and have **not been run on Windows yet**.
+Both were run from a clean clone on Windows 11 on 2026-11-16: `build-installer.bat` built the CLI from source and produced an unsigned installer in about seven minutes, and `build.bat` built and started the app. Things to know:
+
+- `build.bat` uses Node.js 22, as the release workflow does. When the PATH has another version it downloads a portable Node.js 22 into `%LOCALAPPDATA%\MaterialChocoBuild` and checks its SHA-256 first, because newer Node.js versions fail to unpack Electron.
+- On a commit that carries a release tag, the CLI is built from a copy without tags in `%LOCALAPPDATA%\mcb`, because the CLI build would otherwise take the tag as its version. The short folder name keeps the CLI's test files under the 260 character path limit.
+- The CLI build needs the .NET SDK and the Visual Studio build tools. The script does not install those.
+- Only one copy of Material Choco runs at a time. Close an installed copy before `build.bat` starts the one it built.
+
+> A machine with nothing installed was not tried.
 
 ## The release workflow
 

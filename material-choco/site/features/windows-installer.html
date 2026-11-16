@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=fc53e5a6">
+<link rel="stylesheet" href="../site.css?v=e85f9cbe">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -50,7 +50,7 @@
 <h2 id="what-was-checked">What was checked</h2>
 <p><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">HANDOFF.md</a> records the first green run of the workflow, the version the freshly built <code>choco.exe</code> printed on the runner, and the release it published with the installer, <code>RELEASES</code> and the <code>.nupkg</code>.</p>
 <h2 id="known-limits">Known limits</h2>
-<ul><li><b>Built, not installed.</b> Nobody has run the installer on Windows or started the installed app.</li><li>Not code signed. There is no signature to verify; download only from the releases page of this repository.</li><li><code>build.bat</code> and <code>build-installer.bat</code> were written on Linux and have not been run on Windows.</li><li>No delta packages.</li></ul>
+<ul><li>Installed, used, updated and uninstalled on Windows 11 on 2026-11-16. The installer needs no administrator rights; it installs for the current user into <code>%LOCALAPPDATA%\MaterialChoco</code>.</li><li>Not code signed: <code>Get-AuthenticodeSignature</code> reports <code>NotSigned</code>. Compare the SHA-256 sums in the release notes instead.</li><li>In 0.1.16 and earlier the app does not open by itself after installing; start it from the Start menu.</li><li>Uninstalling removes the install folder, the shortcuts and the packages installed through the app. The app's data folder <code>%APPDATA%\Material Choco</code> stays.</li><li><code>build.bat</code> and <code>build-installer.bat</code> were run from a clean clone on Windows; see <a href="../articles/build-and-test.html">Build and test</a>.</li><li>No delta packages.</li></ul>
 <p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/windows-installer.md">docs/features/windows-installer.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/desktop-app.html"><h3>Desktop app</h3><span class="more">Open</span></a><a class="card reveal" href="../features/bundled-cli.html"><h3>Bundled CLI</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/build-and-test.html"><h3>Build and test from source</h3><span class="more">Open</span></a></div>
@@ -63,6 +63,6 @@
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=fc53e5a6"></script>
+<script src="../site.js?v=e85f9cbe"></script>
 </body>
 </html>

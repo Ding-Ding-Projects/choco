@@ -4,7 +4,7 @@ One page per feature that ships in Material Choco 0.1. Each page has the same fo
 
 These files are also the source of the [feature pages on the project site](https://ding-ding-projects.github.io/choco/features/).
 
-Honest status that applies to every page here: the automated checks ran against a test stand-in for `choco.exe`, on Linux. Nobody has yet installed the app on Windows and run a real install through it. The installer is not code signed. See [HANDOFF.md](../../HANDOFF.md).
+Honest status that applies to every page here: the automated checks run against a test stand-in for `choco.exe`, on Linux and on Windows. The released app was also installed on Windows 11 and used with its real CLI on 2026-11-16. The installer is not code signed. See [HANDOFF.md](../../HANDOFF.md).
 
 ## Packages
 
