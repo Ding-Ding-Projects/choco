@@ -37,6 +37,8 @@ Machine: a physical Windows 11 Pro computer (build 26200) that already had a sys
 
 Every CLI call took about 25 seconds on this machine, even `pin add`; the automated checks with the stand-in hid that completely.
 
+After these fixes were pushed, release `material-choco-v0.1.17` (built from `77d36440`; its three files matched their published SHA-256 sums) was installed on the same machine: it opened by itself when the installer finished, and after a restart it came back on the same local address with the first-run wizard still marked done. It was then uninstalled, and the machine matched the state recorded before the first install.
+
 ### Problems the Windows run found, fixed in this change
 
 1. The app quit right after `Setup.exe`, because it treated `--squirrel-firstrun` as an install event.

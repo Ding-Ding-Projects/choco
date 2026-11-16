@@ -2,25 +2,23 @@
 
 ```text
 Repository: Ding-Ding-Projects/choco, branch main. A fork of the Chocolatey CLI; the CLI source is unchanged.
-Read first: AGENTS.md, README.md, material-choco/README.md, material-choco/HANDOFF.md, material-choco/ROADMAP.md and material-choco/docs/FEATURE-INVENTORY.md.
+Read first: AGENTS.md, README.md, material-choco/README.md, material-choco/HANDOFF.md, material-choco/ROADMAP.md, material-choco/docs/FEATURE-INVENTORY.md and .claude/skills/material-choco-ops/SKILL.md.
 
-State on 2026-11-16: Material Choco 0.1 is built: a desktop app, a hub that runs in a container, and a remote agent for the Chocolatey CLI, with the CLI built from this repository bundled inside the app. The hub has passkeys with password fallback, users with admin, operator and viewer roles, per-machine command allow lists, status webhooks, and encryption at rest for secret option values and webhook addresses. By decision of the maintainer there are no authenticator codes: the built-in authenticator and the one time code step at sign in were removed. On Linux, npm test passes 88 of 88 and the end to end run passes 117 of 117. A test fixture stood in for choco.exe in every check.
+State on 2026-11-16: Material Choco 0.1 is a desktop app, a hub that runs in a container, and a remote agent for the Chocolatey CLI, with the CLI built from this repository bundled inside the app. Newest release: material-choco-v0.1.17 ("Zi Ma Wu"), built from commit 77d36440, normal release, unsigned; its three files match the SHA-256 sums in its notes. Hub image ghcr.io/ding-ding-projects/material-choco-hub:0.1.17. Site: https://ding-ding-projects.github.io/choco/ (serves commit 77d36440).
 
-Published: the release workflow is green (first green run 43807632449, release material-choco-v0.1.2; later pushes published later versions). It builds the CLI on Windows, bundles it, builds the unsigned Squirrel.Windows installer and pushes the hub image to ghcr.io/ding-ding-projects/material-choco-hub. The landing site is live at https://ding-ding-projects.github.io/choco/ and the repository's website field points at it. The site pages are generated: edit material-choco/docs/articles or material-choco/docs/features, then run node material-choco/site/tools/generate.mjs.
+Proven on a physical Windows 11 machine on 2026-11-16: 0.1.16 installed from Setup.exe and, with the real CLI inside the app, installed, upgraded, pinned, unpinned and uninstalled a package and turned a source and a feature off and on, with both full-screen results; the bundled CLI unpacked into the app's own folder and left an existing system Chocolatey untouched. 0.1.15 updated itself to 0.1.16. The published hub image paired with the app by a one time code and ran a job sent from a phone-width browser. build.bat and build-installer.bat work from a clean clone, also when started from PowerShell 7. Uninstalling restores the machine except the app's data folder, which stays by design. Release 0.1.17 then confirmed the two biggest fixes: it opens by itself after the installer, and a restart keeps settings.
 
-Not proven: nothing has been installed and run on Windows by a person. Passkeys were verified with a software passkey device and Chrome's virtual one only. build.bat and build-installer.bat have never been run. Automatic updates have never run.
+Checks, on Windows, on commit 77d36440: npm test 95 of 95; test/e2e/run.mjs 121 of 121; test/e2e/demo.mjs 26 of 26; test/e2e/clipping.mjs 36 of 36 sizes; schema, API reference and site checks match; site link check 0 problems. Set CHROME_BIN to Chrome for the browser checks.
 
-Feature inventory, counted strictly against the 118 required features: 14 done, 58 partial, 3 written and never run, 29 not built, 12 not applicable, 2 waived.
+Feature inventory, counted strictly against the 118 required features: 16 done, 64 partial, 24 not built, 12 not applicable, 2 waived (both waivers confirmed by the maintainer).
+
+Not proven: a build on a Windows machine with nothing installed (the .NET build tools are not fetched); pressing Restart in the update notice; passkeys on a real device (needs the hub on HTTPS, since browsers do not offer passkeys over plain HTTP on a LAN address); a physical phone; working offline; packages that need administrator rights; screen readers. The clipping check only finds things that are too wide, not overlaps.
 
 Next, in this order:
-1. Download Setup.exe from the newest material-choco release and install it on a clean Windows machine. Run a real install, upgrade and uninstall through the app. Confirm the bundled CLI works with ChocolateyInstall pointing at the app-owned folder.
-2. Run material-choco/build.bat and build-installer.bat on Windows.
-3. Sign in to a hub with a passkey on a real device. Deliver a status webhook to a real receiver.
-4. Recapture the screenshots on Windows with the real CLI. Add a caption for each new capture to SHOTS in material-choco/site/tools/generate.mjs and regenerate the site.
-5. Record the real results in HANDOFF.md, tick ROADMAP.md only for what worked and was exercised, and update the inventory in the same change.
-6. Continue with the open boxes in ROADMAP.md.
+1. Put the hub on HTTPS with MATERIAL_CHOCO_TLS_CERT and MATERIAL_CHOCO_TLS_KEY and sign in with a passkey from a real phone.
+2. Build the features that do not exist, designing each on the design canvas first (boards exist for most): the per-element appearance editor, element locks with the recovery desk and unlock ladder, extension support, the built-in tools (file converter, type generator and JSON editor, virtual disks, game servers, world generator, local models, annotation), Status Hub registration, the startup dish surprise, rendered provider text, screen recording. The project board and discussions need the manual steps in material-choco/docs/REPOSITORY-SETUP.md.
+3. Finish the partial inventory rows; each row names the missing part. Give the clipping check an overlap test.
+4. Record real results in HANDOFF.md, tick ROADMAP.md only for what worked and was exercised, and update CHANGELOG.md and the inventory in the same change.
 
-Open items outside the code: the design pass that adds a board per required feature is in progress and not published; the link preview picture (material-choco/site/og.png) has not been uploaded as the repository's own preview; the earlier design pass used a pinned copy of its design skill because a fresh install was blocked, so redo that part of the design review when a fresh install is possible.
-
-Rules that bit before: write public files in ordinary professional English and scan them against the private word list before publishing; do not tick a roadmap box or mark an inventory row Done without a named check; do not change files under src/.
+Rules that bit before: every push to any branch publishes a normal release that installed apps update to, so never push a work-in-progress branch as a backup; write public files in ordinary professional English and scan them against the private word list before publishing; do not tick a roadmap box or mark an inventory row Done without a named check; do not change files under src/; on Windows a checkout with core.autocrlf is fine.
 ```
