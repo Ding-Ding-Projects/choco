@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Pairing and remote agents · Material Choco</title>
+<meta name="description" content="A Windows machine joins a hub by entering a one time pairing code. After that it connects out to the hub as an agent, so the hub never needs to reach into the machine's network.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/articles/pairing-and-remote-agents.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pairing and remote agents · Material Choco">
+<meta property="og:description" content="A Windows machine joins a hub by entering a one time pairing code. After that it connects out to the hub as an agent, so the hub never needs to reach into the machine's network.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/articles/pairing-and-remote-agents.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pairing and remote agents · Material Choco">
+<meta name="twitter:description" content="A Windows machine joins a hub by entering a one time pairing code. After that it connects out to the hub as an agent, so the hub never needs to reach into the machine's network.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../articles/">Guides</a></li><li><span aria-current="page">Pairing and remote agents</span></li></ol><h1>Pairing and remote agents</h1><p class="lead"><span>A Windows machine joins a hub by entering a one time pairing code. After that it connects out to the hub as an agent, so the hub never needs to reach into the machine's network.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#create-a-pairing-code">Create a pairing code</a></li><li><a href="#enter-it-in-the-desktop-app">Enter it in the desktop app</a></li><li><a href="#or-enroll-a-server-without-a-desktop-session">Or enroll a server without a desktop session</a></li><li><a href="#https-and-the-opt-in-for-plain-http">HTTPS and the opt-in for plain HTTP</a></li><li><a href="#read-only-agents">Read only agents</a></li><li><a href="#limit-a-machine-to-some-commands">Limit a machine to some commands</a></li><li><a href="#what-the-agent-does-once-paired">What the agent does once paired</a></li><li><a href="#names-groups-and-removal">Names, groups and removal</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="create-a-pairing-code">Create a pairing code</h2>
+<ol><li>Sign in to the hub and open <b>Machines</b>.</li><li>In <b>Pair a new machine</b>, decide whether the agent should be read only (see below), then choose <b>New pairing code</b>.</li><li>The hub shows a code like <code>XXXX-XXXX</code>, its expiry time, and the exact command for the machine.</li></ol>
+<p>A code works once and expires after 10 minutes. The hub stores only a hash of it. A fold under the code draws a QR code holding the hub address and the code, for reading with another device; the desktop app does not scan it yet.</p>
+<figure><button class="shot" type="button" data-full="../shots/04-machines-pairing-code.png" data-caption="Machines page with a new pairing code and the enroll command." aria-label="Enlarge: Machines page with a new pairing code and the enroll command."><img loading="lazy" src="../shots/04-machines-pairing-code.png" alt="Machines page with a new pairing code and the enroll command." width="1360" height="757"></button><figcaption>Machines page with a new pairing code and the enroll command.</figcaption></figure>
+<h2 id="enter-it-in-the-desktop-app">Enter it in the desktop app</h2>
+<p>On the Windows machine, open Material Choco, go to <b>Machines</b>, and use <b>Connect this PC to a hub</b>: enter the hub address and the code. The app keeps managing the PC locally and also serves the hub.</p>
+<h2 id="or-enroll-a-server-without-a-desktop-session">Or enroll a server without a desktop session</h2>
+<pre tabindex="0"><code>MaterialChoco.exe --agent enroll --hub https://hub.example:8443 --code XXXX-XXXX
+MaterialChoco.exe --agent run</code></pre>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Command</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><code>--agent enroll --hub URL --code CODE</code></td><td>Pairs this machine. Optional: <code>--name NAME</code>, <code>--read-only</code>, <code>--allow-insecure</code></td></tr><tr><td><code>--agent run</code></td><td>Connects and waits for jobs. Prints each state change</td></tr><tr><td><code>--agent status</code></td><td>Prints the hub address, machine id, state and last error as JSON</td></tr><tr><td><code>--agent disconnect</code></td><td>Deletes the local pairing. The hub still lists the machine until you remove it there</td></tr></tbody></table></div>
+<p>The headless agent keeps its pairing in <code>agent.json</code> under <code>%ProgramData%\MaterialChoco</code> (or the folder named by <code>MATERIAL_CHOCO_DATA</code>). <code>--agent run</code> stays in the foreground. Starting it at boot, for example with Task Scheduler, is up to you: the app does not install a Windows service.</p>
+<h2 id="https-and-the-opt-in-for-plain-http">HTTPS and the opt-in for plain HTTP</h2>
+<p>The agent refuses <code>http://</code> addresses unless the hub is on the same computer. For a trusted LAN without TLS you can opt in with <code>--allow-insecure</code>, or the matching switch in the app. Anyone on that network can then read the traffic, including the agent's token, so prefer HTTPS.</p>
+<h2 id="read-only-agents">Read only agents</h2>
+<p>A read only agent refuses every command that changes the machine: install, upgrade, uninstall, push, and the changing subcommands of pin, source, config, feature, apikey and cache. Inventory, search, list and info still work, and so does a dry run.</p>
+<p>When a machine is paired as read only, with the switch on the pairing code or with <code>--read-only</code> on the machine, the refusal is enforced twice: the hub refuses to queue such a job, and the agent itself refuses it again if one arrives anyway. You can also turn read only on later from the machine's menu under <b>Rename, groups, policy</b>; that later switch is enforced by the hub only.</p>
+<h2 id="limit-a-machine-to-some-commands">Limit a machine to some commands</h2>
+<p>Read only is all or nothing. For a finer limit, an admin can tick the commands the hub accepts for a machine under <b>Rename, groups, policy</b>, <b>Allowed commands</b>. The machine can also carry its own list, which the hub cannot change:</p>
+<pre tabindex="0"><code>MaterialChoco.exe --agent enroll --hub https://hub.example:8443 --code XXXX-XXXX --allow list,outdated,upgrade</code></pre>
+<p>A job outside either list is not created, and the agent refuses it by itself if one arrives. See <a href="../features/command-allow-lists.html">command allow lists</a>.</p>
+<h2 id="what-the-agent-does-once-paired">What the agent does once paired</h2>
+<ul><li>It long-polls the hub for jobs. A machine counts as online when it was seen in the last 75 seconds.</li><li>It runs one job at a time through the bundled Chocolatey CLI and streams the output back while the job runs.</li><li>After a command that changes the machine it re-reads the inventory: packages, outdated packages, sources, config, features and pins.</li><li>If the hub cannot be reached it retries with a growing delay, up to 30 seconds between attempts.</li><li>If the hub answers that the token is no longer accepted, the agent stops and reports that it must be enrolled again.</li></ul>
+<p>Jobs for an offline machine wait in the hub for up to 7 days, then expire.</p>
+<figure><button class="shot" type="button" data-full="../shots/05-machines.png" data-caption="Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in." aria-label="Enlarge: Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in."><img loading="lazy" src="../shots/05-machines.png" alt="Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in." width="1360" height="757"></button><figcaption>Two paired machines, one of them read only. In this capture the agents ran on Linux with the test stand-in.</figcaption></figure>
+<h2 id="names-groups-and-removal">Names, groups and removal</h2>
+<p>Open a machine's menu (the three dots, right click, or <code>Shift+F10</code>) for <b>Open packages</b>, <b>Refresh inventory</b>, <b>Rename, groups, policy</b> and <b>Remove from hub</b>. Groups are free text labels that schedules can target.</p>
+<p><b>Remove from hub</b> asks for the two key confirmation. The hub then forgets the machine, its inventory and its token, and cancels its queued jobs. Nothing is uninstalled on the machine itself. The agent's token stops working at once.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li>Test <code>agent enrolls with a one time code and reports inventory from the bundled CLI</code> and test <code>removing a machine revokes its agent</code> in <code>test/hub.test.js</code>.</li><li>Test <code>read only machines refuse changes in the hub and in the agent</code>.</li><li>End to end checks <code>a pairing code works only once</code>, <code>two agents enrolled and reported inventory through the bundled CLI</code>, <code>read only machine refuses a change</code> and <code>unknown agent token is refused</code> in <code>test/e2e/run.mjs</code>.</li></ul>
+<p>In all of these the CLI was the test stand-in, and the agents ran on Linux.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>No agent has yet run on Windows against the real <code>choco.exe</code>.</li><li>No Windows service is installed for the headless agent.</li><li>Agent updates are not signed.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/pairing-and-remote-agents.md">docs/articles/pairing-and-remote-agents.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/hub-in-a-container.html"><h3>Running the hub in a container</h3><p>start the hub first</p><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><p>what a paired machine trusts</p><span class="more">Open</span></a><a class="card reveal" href="../articles/jobs-schedules-and-history.html"><h3>Jobs, schedules and history</h3><p>running commands on many machines</p><span class="more">Open</span></a><a class="card reveal" href="../features/read-only-agents.html"><h3>Read only agents</h3><p>the feature page</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More guides"><a href="hub-in-a-container.html"><small>Previous</small>Running the hub in a container</a><a class="next" href="security-model.html"><small>Next</small>Security model</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

@@ -1,51 +1,81 @@
 # Material Choco roadmap
 
-A box is ticked only when the item works and was exercised. See `docs/FEATURE-INVENTORY.md` for the required-feature catalogue.
+A box is ticked only when the item works and was exercised. Every tick below was exercised with a test stand-in for `choco.exe`, on Linux, unless the line says otherwise. See `docs/FEATURE-INVENTORY.md` for the required-feature catalogue.
 
 ## 0.1: first working build
 
 - [x] Schema of every CLI command and option generated from the C# source, with a drift test
 - [x] CLI wrapper with validated arguments and no shell
-- [x] Hub: setup, sign in, authenticator codes, lockout, sessions
+- [x] Hub: setup, sign in with a password, lockout, sessions
 - [x] Agents: one time pairing, long polling, live output, cancel, read only mode
-- [x] Job queue for offline machines, 7 day expiry
+- [x] Job queue for offline machines (the 7 day expiry is written and has no test)
 - [x] Schedules
 - [x] Pages for installed, discover, updates, sources, config, features, pins, API keys, cache and templates, package builder, console, jobs, history, help, settings
 - [x] Two key confirmation for destructive actions
 - [x] Three language modes, theme from a seed colour, command palette, accessibility tools
+- [x] Full-screen results for installs and upgrades
 - [x] Hub container image built and run locally, agent connected to it
-- [x] Desktop app started on Linux under a virtual display
+- [x] Desktop app started once on Linux under a virtual display
 - [x] Design files in `design/material-choco`
 
 ## 0.2: prove it on Windows
 
-- [x] First green run of the release workflow (run 43807632449, release `material-choco-v0.1.2`)
+- [x] Release workflow green: CLI built from this repository, installer and hub image published (run 43807632449, release `material-choco-v0.1.2`, later versions since)
 - [ ] Install from `Setup.exe` on a clean Windows machine and run a real install, upgrade and uninstall with the bundled CLI
 - [ ] Confirm the bundled CLI unpacks its helper files into the app-owned folder on first run
 - [ ] Run `build.bat` and `build-installer.bat` on Windows
 - [ ] Recapture every screenshot on Windows with the real CLI
-- [ ] Automatic updates from the Squirrel feed
+- [ ] See an automatic update download and install on Windows (the code and the notice are written; never run there)
+- [ ] Run a headless agent on Windows, and decide whether to install it as a service
 
 ## 0.3: hub hardening
 
-- [ ] Passkeys with password fallback
-- [ ] More than one user, with roles
-- [ ] Per-machine command allow list
-- [ ] Encrypt queued job secrets at rest
-- [ ] QR code for pairing and for authenticator setup
+- [x] Passkeys with password fallback (verified with a software passkey device and Chrome's virtual one, not a real device)
+- [x] More than one user, with admin, operator and viewer roles
+- [x] Per-machine command allow list, enforced in the hub and in the agent
+- [x] Encrypt secret option values and webhook addresses at rest (the key lies in the data folder unless moved)
+- [x] QR code for pairing a machine
+- [x] Status webhooks for failed jobs, offline machines and sign in lockouts
+- [ ] Sign in with a passkey on a real device, by a person
+- [ ] Deliver a webhook to a real chat service
+- [ ] Limit a user to some machines
+- [ ] Signed agent updates
+- [ ] Rotation of the key for secrets at rest
+- [ ] Exercise HTTPS through the two certificate variables in a recorded check
+- [ ] Independent security review
 
-## Later: required-feature catalogue
+## 0.4: interface
 
-- [ ] Full translation of every page, and playful variants for every message
-- [ ] Regex builder beside every search
-- [ ] Tab groups, drag reorder, docking
-- [ ] Context menu, info button and guide on every control
-- [ ] Per-element appearance editor and locks
-- [ ] Scheduled settings
-- [ ] Landing site with a verified download button
-- [ ] Status reporting integrations
-- [ ] The built-in tools set
+- [x] Pattern builder beside every regex switch
+- [x] Tabs: close, pin, reorder by drag and by keyboard
+- [x] General context menu on elements without their own
+- [x] One list of keyboard shortcuts, shown in menus, the palette and Help
+- [x] Bulk actions on packages, machines, sources and jobs; export of lists as CSV, JSON and Markdown
+- [x] Timed settings for six settings, and a theme schedule
+- [x] Custom logo and appearance presets with undo
+- [x] Changelog viewer with a filter
+- [x] Base64 tools
+- [x] Personal wording file reaches notifications, error panels and full-screen results
+- [ ] Translate the older pages that still hold English sentences
+- [ ] Tab groups and docking
+- [ ] Screen reader pass and a check of the larger text sizes
+- [ ] Capture and review the reduced motion path
 
-## Deliberately not doing
+## Site and documents
 
+- [x] Landing site live, with a download button that finds the newest installer, guides, a page per feature, a gallery and a command palette
+- [x] Site measured at 320 to 1360 px in emulation with no sideways scroll
+- [x] One document per shipped feature, and how-to guides
+- [x] Repository website field points at the site
+- [ ] Test the site on a physical phone and in other browsers
+- [ ] Upload the link preview picture as the repository's own preview, and test a shared link in a chat app
+- [ ] Language modes on the site
+
+## Decided against
+
+- **Authenticator codes.** The built-in authenticator and the one time code step at sign in were built and then removed on 2026-11-16 by decision of the maintainer. Sign in is a password or a passkey.
 - A root-level `build.bat` for this app: the repository root already has the Chocolatey CLI's own `build.bat`.
+
+## Later: the rest of the required-feature catalogue
+
+Not started: extension support, per-element appearance editor and locks, the recovery desk and unlock steps, the file converter and the other built-in tools, a screen recording, status reporting integrations, release code names. The inventory lists each one.

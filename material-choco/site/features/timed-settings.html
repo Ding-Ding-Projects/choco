@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Timed settings · Material Choco</title>
+<meta name="description" content="Let settings switch by the clock: a dark theme in the evening, quieter results at night.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/timed-settings.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Timed settings · Material Choco">
+<meta property="og:description" content="Let settings switch by the clock: a dark theme in the evening, quieter results at night.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/timed-settings.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Timed settings · Material Choco">
+<meta name="twitter:description" content="Let settings switch by the clock: a dark theme in the evening, quieter results at night.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Timed settings</span></li></ol><h1>Timed settings</h1><p class="lead"><span>Let settings switch by the clock: a dark theme in the evening, quieter results at night.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>Two things, both following the clock of your device:</p>
+<ul><li><b>Switch theme by time of day</b>, under <b>Settings</b>, <b>Appearance</b>: the dark theme between two times and the light theme for the rest of the day.</li><li><b>Timed settings</b>, its own tab in Settings: rules for theme, density, motion, contrast, action sounds and full-screen install results. A rule has a value, a start, an end and optional weekdays.</li></ul>
+<p>While a rule is active it wins over the stored setting. The stored setting is never changed and returns when the rule ends. When two active rules set the same setting, the one lower in the list wins. A rule whose end is earlier than its start runs past midnight, and its weekdays name the day it starts on. Rules are checked every minute, and the page lists what is in force right now.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Open <b>Settings</b>, <b>Timed settings</b>, choose the setting, the value, the times and the days, and press <b>Add rule</b>. Each rule has a switch to pause it and a delete button. The list can be exported.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p>End to end checks <code>timed settings start with nothing in force</code>, <code>a timed rule with equal start and end is refused</code>, <code>an active timed rule replaces the setting without changing the stored value</code>, <code>timed windows handle midnight and weekdays</code>, <code>deleting the rule returns the stored setting</code>, <code>theme switches by time of day and leaves the theme choice alone</code> and <code>turning the theme schedule off returns the chosen theme</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>Rules exist for the six settings named above, not for every setting.</li><li>Rules follow the device clock and are stored per browser. They only act while the app is open.</li><li>Settings cannot be loaded from an outside source such as a file on a server.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/timed-settings.md">docs/features/timed-settings.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/theme-and-seed-colour.html"><h3>Theme and seed colour</h3><span class="more">Open</span></a><a class="card reveal" href="../features/settings.html"><h3>Settings that explain themselves</h3><span class="more">Open</span></a><a class="card reveal" href="../features/focus-modes.html"><h3>Focus modes</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="custom-logo-and-presets.html"><small>Previous</small>Custom logo and presets</a><a class="next" href="accessibility-tools.html"><small>Next</small>Accessibility tools</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

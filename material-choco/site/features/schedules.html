@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Schedules · Material Choco</title>
+<meta name="description" content="Run a command every day, or on chosen days of the week, on all machines, a group, or a chosen set.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/schedules.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Schedules · Material Choco">
+<meta property="og:description" content="Run a command every day, or on chosen days of the week, on all machines, a group, or a chosen set.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/schedules.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Schedules · Material Choco">
+<meta name="twitter:description" content="Run a command every day, or on chosen days of the week, on all machines, a group, or a chosen set.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Schedules</span></li></ol><h1>Schedules</h1><p class="lead"><span>Run a command every day, or on chosen days of the week, on all machines, a group, or a chosen set.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>A schedule belongs to the hub. It has a name, a command, a target, a time of day and optional days of the week. At that time the hub creates one job per target machine, once per day.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Open <b>Schedules</b>, <b>New schedule</b>:</p>
+<ul><li><b>What to run:</b> upgrade all packages, or refresh the inventory. To schedule any other command, build it in the Console and press <b>Schedule</b> there.</li><li><b>Where:</b> all machines, including ones paired later; the machines selected right now; or a group.</li><li><b>Time of day</b> is in the hub's time zone, which the form names. No day selected means every day.</li></ul>
+<p>Each schedule has a switch to pause it and shows when it last ran. Offline machines get the job when they return, within 7 days. Read only machines are skipped for commands that change them.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p>Test <code>schedules create jobs at their time, once per day</code> in <code>test/hub.test.js</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>One time per day per schedule. No intervals and no cron expressions.</li><li>The time follows the hub's clock. Around a daylight saving change a schedule can run an hour off or be skipped that day.</li><li>If the hub is down at the scheduled minute, that day's run is missed and is not made up.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/schedules.md">docs/features/schedules.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/console.html"><h3>Console</h3><span class="more">Open</span></a><a class="card reveal" href="../features/offline-job-queue.html"><h3>Offline job queue</h3><span class="more">Open</span></a><a class="card reveal" href="../features/machine-scope-and-groups.html"><h3>Machine selection and groups</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="offline-job-queue.html"><small>Previous</small>Offline job queue</a><a class="next" href="history.html"><small>Next</small>History</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

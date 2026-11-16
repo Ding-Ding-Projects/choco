@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Hub HTTP API · Material Choco</title>
+<meta name="description" content="The JSON API that the interface and the agents use, documented with a Postman collection.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/hub-http-api.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hub HTTP API · Material Choco">
+<meta property="og:description" content="The JSON API that the interface and the agents use, documented with a Postman collection.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/hub-http-api.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hub HTTP API · Material Choco">
+<meta name="twitter:description" content="The JSON API that the interface and the agents use, documented with a Postman collection.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Hub HTTP API</span></li></ol><h1>Hub HTTP API</h1><p class="lead"><span>The JSON API that the interface and the agents use, documented with a Postman collection.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>Browser routes live under <code>/api/</code> and need the session cookie from <code>POST /api/login</code> or from a passkey sign in. Each route names the roles that may call it. They refuse cross-site requests. Agent routes live under <code>/agent/</code> and need <code>Authorization: Bearer &lt;agent token&gt;</code>. All bodies are JSON. <code>GET /api/events</code> is a server-sent event stream of machine, job, output and history events.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>The reference, with the role for every route, passkeys, users, the allow list, webhooks and secrets at rest, is in <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/api/README.md">docs/api/README.md</a>, and <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/api/material-choco.postman_collection.json">material-choco.postman_collection.json</a> can be imported into Postman. A minimal session:</p>
+<pre tabindex="0"><code>curl -c jar -H 'content-type: application/json' -d '{&quot;name&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;...&quot;}' https://hub.example/api/login
+curl -b jar https://hub.example/api/machines</code></pre>
+<p>Jobs are created with <code>POST /api/jobs</code> and a body of <code>machineIds</code> and a <code>spec</code> with <code>kind</code>, <code>command</code>, and optional <code>subcommand</code>, <code>args</code>, <code>options</code> and <code>global</code>.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p><code>test/hub.test.js</code> drives the hub entirely through this API. End to end checks <code>API refuses requests without a session</code>, <code>same origin request with session is accepted</code> and <code>unknown agent token is refused</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>There are no API tokens for scripts. A script signs in with an account's password and keeps the cookie. Give it an account with the least role that does the job.</li><li>The API is not versioned and may change between releases.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/hub-http-api.md">docs/features/hub-http-api.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/hub.html"><h3>Hub</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/build-and-test.html"><h3>Build and test from source</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="secrets-at-rest.html"><small>Previous</small>Secrets at rest</a><a class="next" href="two-key-confirmation.html"><small>Next</small>Two key confirmation</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

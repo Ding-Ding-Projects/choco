@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Theme and seed colour · Material Choco</title>
+<meta name="description" content="Light and dark themes, both derived from one seed colour that you can change.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/theme-and-seed-colour.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Theme and seed colour · Material Choco">
+<meta property="og:description" content="Light and dark themes, both derived from one seed colour that you can change.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/theme-and-seed-colour.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Theme and seed colour · Material Choco">
+<meta name="twitter:description" content="Light and dark themes, both derived from one seed colour that you can change.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Theme and seed colour</span></li></ol><h1>Theme and seed colour</h1><p class="lead"><span>Light and dark themes, both derived from one seed colour that you can change.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>The interface follows Material Design 3 Expressive. Every colour is computed from one hue and one vividness value, so changing the seed recolours the whole app consistently in light and dark. The default seed is a cocoa brown.</p>
+<p>Settings under <b>Appearance</b>: <b>Theme</b> (light, dark, or follow the system), <b>Density</b> (comfortable or compact, which shrinks controls to 40 px), <b>Motion</b>, the <b>seed colour</b> field, <b>Vividness</b>, and a <b>Display name</b> shown in the title bar and the tab title. The same tab can <a href="../features/timed-settings.html">switch the theme by time of day</a> and holds the <a href="../features/custom-logo-and-presets.html">logo and the presets</a>.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<ul><li>Drag in the colour field, or focus it and use the arrow keys, to change hue and vividness. A hue slider sits beside it.</li><li>Or type a HEX colour to take its hue.</li><li>The readout shows the resulting primary colour as HEX, RGB, HSL and OKLCH, with its contrast against the text drawn on it.</li></ul>
+<h2 id="what-was-checked">What was checked</h2>
+<p>End to end check <code>dark theme applies</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>HEX is the only typed input. Named colours and other colour spaces are not accepted.</li><li>Individual elements cannot be styled separately.</li><li>The display name changes the title only. It does not rename files, ids or update feeds.</li><li>Buttons, fields, switches, checkboxes, chips, sliders and selects are Material Web components; cards, tables, tabs, menus and dialogs are hand-written on the same colour tokens.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/theme-and-seed-colour.md">docs/features/theme-and-seed-colour.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/accessibility-tools.html"><h3>Accessibility tools</h3><span class="more">Open</span></a><a class="card reveal" href="../features/settings.html"><h3>Settings that explain themselves</h3><span class="more">Open</span></a><a class="card reveal" href="../features/focus-modes.html"><h3>Focus modes</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="school-mode.html"><small>Previous</small>School mode</a><a class="next" href="custom-logo-and-presets.html"><small>Next</small>Custom logo and presets</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

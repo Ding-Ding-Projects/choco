@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Read only agents · Material Choco</title>
+<meta name="description" content="A machine can be paired so that it reports everything and changes nothing.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/read-only-agents.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Read only agents · Material Choco">
+<meta property="og:description" content="A machine can be paired so that it reports everything and changes nothing.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/read-only-agents.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Read only agents · Material Choco">
+<meta name="twitter:description" content="A machine can be paired so that it reports everything and changes nothing.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Read only agents</span></li></ol><h1>Read only agents</h1><p class="lead"><span>A machine can be paired so that it reports everything and changes nothing.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>A read only agent refuses every command that changes the machine or publishes something: <code>install</code>, <code>upgrade</code>, <code>uninstall</code>, <code>unpackself</code>, <code>push</code>, and every subcommand of <code>pin</code>, <code>source</code>, <code>config</code>, <code>feature</code>, <code>apikey</code> and <code>cache</code> other than <code>list</code>, <code>get</code> and <code>info</code>. Inventory, <code>search</code>, <code>list</code>, <code>info</code>, <code>outdated</code> and dry runs with <code>--what-if</code> still work.</p>
+<p>It is enforced in two places. The hub refuses to queue such a job for a read only machine and says why. The agent checks again on the machine and refuses with its own message, so a hub that was tampered with cannot talk a read only agent into a change.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Any one of:</p>
+<ul><li>Turn on <b>Read only agent</b> before creating the pairing code.</li><li>Add <code>--read-only</code> to <code>--agent enroll</code> on the machine.</li><li>Later, as an admin, open the machine's menu, <b>Rename, groups, policy</b>, and turn on read only. This later switch is enforced by the hub only; the agent keeps the setting it was paired with.</li></ul>
+<p>A read only machine has a <b>Read only</b> badge on every page. Schedules skip it for commands that would change it.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li>Test <code>read only machines refuse changes in the hub and in the agent</code> in <code>test/hub.test.js</code>.</li><li>Test <code>classify marks changing and destructive commands</code> in <code>test/core.test.js</code>.</li><li>End to end check <code>read only machine refuses a change</code>.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>The agent stores the read only setting it was paired with. If a machine was paired as read only, turning the switch off in the hub does not lift it: the agent keeps refusing until it is enrolled again. If read only is turned on later in the hub, only the hub enforces it.</li><li>The classification is by command name. It has not been reviewed against every option of the real CLI.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/read-only-agents.md">docs/features/read-only-agents.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/pairing.html"><h3>Pairing</h3><span class="more">Open</span></a><a class="card reveal" href="../features/command-allow-lists.html"><h3>Command allow lists</h3><p>a finer limit than read only</p><span class="more">Open</span></a><a class="card reveal" href="../features/command-preview-and-dry-run.html"><h3>Command preview and dry run</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="remote-agent.html"><small>Previous</small>Remote agent</a><a class="next" href="command-allow-lists.html"><small>Next</small>Command allow lists</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

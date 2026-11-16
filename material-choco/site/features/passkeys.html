@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Passkeys · Material Choco</title>
+<meta name="description" content="Sign in to the hub with a fingerprint, a face, a device PIN or a security key. The password stays as the fallback.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/passkeys.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Passkeys · Material Choco">
+<meta property="og:description" content="Sign in to the hub with a fingerprint, a face, a device PIN or a security key. The password stays as the fallback.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/passkeys.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Passkeys · Material Choco">
+<meta name="twitter:description" content="Sign in to the hub with a fingerprint, a face, a device PIN or a security key. The password stays as the fallback.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Passkeys</span></li></ol><h1>Passkeys</h1><p class="lead"><span>Sign in to the hub with a fingerprint, a face, a device PIN or a security key. The password stays as the fallback.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>A passkey (WebAuthn) is an extra way to sign in to a hub account. Nothing secret leaves your device: the hub stores a public key. An account can hold up to 20 passkeys. ES256 and RS256 keys are accepted, and the hub asks for no attestation, so it never trusts a claim about the model of the device.</p>
+<p>Rules the hub applies:</p>
+<ul><li>A challenge works once and for five minutes, and the origin and the site must match.</li><li>A sign counter that does not move forward is refused and written to the history, because the passkey may have been copied.</li><li>Repeated failures from one address lock passkey sign in for a growing time, and a disabled account cannot sign in with its passkey.</li></ul>
+<h2 id="how-to-use-it">How to use it</h2>
+<ul><li><b>Add one:</b> <b>Settings</b>, <b>Sign in and locks</b>, <b>Passkeys</b>. Enter your current password, give the passkey a name, press <b>Add a passkey</b>, and answer the prompt of your device. The list shows each passkey with when it was added and last used.</li><li><b>Sign in:</b> on the sign in screen choose the passkey button. Typing your name first is only needed for security keys that do not store accounts.</li><li><b>Remove one:</b> from the list, after the <a href="../features/two-key-confirmation.html">two key confirmation</a>.</li></ul>
+<p>Passkeys need HTTPS or <code>localhost</code>, and a host name instead of an IP address. Where they cannot work, the button is hidden and the settings page says why. Behind a reverse proxy that changes the <code>Host</code> header, set <code>MATERIAL_CHOCO_ORIGIN</code>, for example <code>https://hub.example.com</code>. A passkey only works on the host name it was registered on.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li><code>test/passkeys.test.js</code>, among them <code>register an ES256 passkey and list it</code>, <code>sign in with a passkey, without typing a name</code>, <code>a replayed assertion is refused: each challenge works once</code>, <code>a sign counter that does not move forward is refused and recorded</code> and <code>password sign-in still works next to passkeys</code>. These use a software passkey device written for the tests.</li><li>End to end checks <code>the sign-in screen offers a passkey first on a host name, with the password below</code>, <code>adding a passkey needs the current password</code>, <code>a passkey is added and listed with its name</code>, <code>Use a passkey signs in without the password</code>, <code>a passkey is deleted after the two key confirmation</code> and <code>the passkey button is hidden where passkeys cannot work</code>. These use the virtual passkey device of headless Chrome.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li><b>Tested with a software passkey device only.</b> No person has yet signed in with a real fingerprint reader, phone or security key in a real browser.</li><li>The password cannot be removed from an account. A passkey adds a way in; it does not close the other.</li><li>No independent review of the WebAuthn code has been done.</li><li>Not available in the desktop app, which has no sign in.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/passkeys.md">docs/features/passkeys.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/sign-in.html"><h3>Sign in</h3><span class="more">Open</span></a><a class="card reveal" href="../features/users-and-roles.html"><h3>Users and roles</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="sign-in.html"><small>Previous</small>Sign in</a><a class="next" href="users-and-roles.html"><small>Next</small>Users and roles</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

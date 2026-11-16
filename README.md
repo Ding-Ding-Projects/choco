@@ -1,224 +1,195 @@
-# Chocolatey - like yum or apt-get, but for Windows
-You can just call me choco.
+# Material Choco
 
-![Chocolatey Logo](https://rawcdn.githack.com/chocolatey/choco/14a627932c78c8baaba6bef5f749ebfa1957d28d/docs/logo/chocolateyicon.gif "Chocolatey")
+A desktop app and a remote management hub for the Chocolatey CLI. Manage packages on one Windows PC, or on every PC you look after, from a desktop app, a browser or a phone. The Chocolatey CLI built from this repository ships inside the app, so there is nothing else to install.
 
-[![](https://img.shields.io/chocolatey/dt/chocolatey.svg)](https://community.chocolatey.org/packages/chocolatey)
-[![](https://img.shields.io/chocolatey/v/chocolatey.svg)](https://community.chocolatey.org/packages/chocolatey)
-[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/chocolatey/choco?label=docker&logo=docker&sort=semver)](https://hub.docker.com/r/chocolatey/choco)
-[![Project Stats](https://www.openhub.net/p/chocolatey/widgets/project_thin_badge.gif)](https://www.openhub.net/p/chocolatey)
-[![Coverage Status](https://coveralls.io/repos/github/chocolatey/choco/badge.svg?branch=develop)](https://coveralls.io/github/chocolatey/choco?branch=develop)
+- **Site, with the download button and the guides:** <https://ding-ding-projects.github.io/choco/>
+- **Installer:** `Setup.exe` from the newest release whose tag starts with `material-choco-v`, on the [releases page](https://github.com/Ding-Ding-Projects/choco/releases). 64-bit Windows. **Not code signed**, so Windows may show an unknown publisher warning.
+- **Hub:** `docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest`, then open `http://<host>:8080` and create the administrator.
 
-<!-- TOC -->
+> **Early build, said plainly.** The installer is built on Windows by the release workflow, but nobody has yet installed the app on Windows and run a real install through it. Every automated check so far used a test stand-in for `choco.exe`. See [Honest status](#honest-status).
 
-- [Build Status](#build-status)
-- [Chat Room](#chat-room)
-- [Support Chocolatey!](#support-chocolatey)
-- [See Chocolatey In Action](#see-chocolatey-in-action)
-- [Etiquette Regarding Communication](#etiquette-regarding-communication)
-- [Information](#information)
-  - [Documentation](#documentation)
-  - [Requirements](#requirements)
-  - [License / Credits](#license--credits)
-- [Submitting Issues](#submitting-issues)
-- [Contributing](#contributing)
-- [Committers](#committers)
-  - [Compiling / Building Source](#compiling--building-source)
-    - [Windows](#windows)
-    - [Other Platforms](#other-platforms)
-      - [Prerequisites:](#prerequisites)
-      - [Before building:](#before-building)
-      - [Build Process:](#build-process)
-  - [Testing](#testing)
-  - [Installing on Other Platforms:](#installing-on-other-platforms)
-- [Credits](#credits)
+This repository is a **fork of the [Chocolatey CLI](https://github.com/chocolatey/choco)**. The CLI source is unchanged; the app lives in [`material-choco/`](material-choco/README.md). See [About this fork](#about-this-fork).
 
-<!-- /TOC -->
+Contents: [Screens](#screens) · [What it does](#what-it-does) · [Hub quick start](#hub-quick-start) · [Honest status](#honest-status) · [Where to read more](#where-to-read-more) · [About this fork](#about-this-fork)
 
-## Build Status
+## Screens
 
-| GitHub Action                                                                                                                                                                                                  |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/chocolatey/choco/build.yml?branch=develop&logo=github)](https://github.com/chocolatey/choco/actions/workflows/build.yml)  |
+Every picture here is a capture of the running hub and agents, taken by the project's end to end run in headless Chrome. They are not drawings. In that run a small test stand-in played the part of `choco.exe`, because the capture machine runs Linux, so package names and versions in the pictures come from the stand-in. The full set is in [`material-choco/docs/screenshots`](material-choco/docs/screenshots) and on the [site](https://ding-ding-projects.github.io/choco/#screens).
 
-## Chat Room
+![Overview page: a banner says 4 updates are ready with an Upgrade everything button, then counts of machines, packages, updates and running jobs, and a needs attention list.](material-choco/docs/screenshots/06-overview.png)
 
-Come join in the conversation about Chocolatey in our Community Chat Room.
+<details><summary><b>Daily work: packages, console, jobs</b> (4 captures)</summary>
 
-[![Discord](https://img.shields.io/discord/778552361454141460?logo=Discord)](https://ch0.co/community)
+![Installed page: packages of each machine with installed version, status, tick boxes and export.](material-choco/docs/screenshots/07-installed.png)
 
-Please make sure you've read over and agree with the [etiquette regarding communication](#etiquette-regarding-communication).
+*Installed packages per machine, with bulk selection and export.*
 
-## Support Chocolatey!
+![Lower half of the Console page: the exact command that will run, the machines to run it on, and Copy, Schedule and Run buttons.](material-choco/docs/screenshots/11-console-every-option.png)
 
- * Purchase [Chocolatey Pro / Chocolatey for Business](https://chocolatey.org/pricing#compare)
+*Console: every command and option, with the exact command shown before it runs.*
 
-## See Chocolatey In Action
+![Jobs page: a job that failed with exit code 1, a red panel with Run again and Copy output, and the output.](material-choco/docs/screenshots/12-job-failed.png)
 
-Chocolatey FOSS install showing tab completion and `refreshenv` (a way to update environment variables without restarting your shell):
+*A failed job with its exit code, its output and the recovery actions.*
 
-![install](https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/choco_install.gif "Wat? Tab completion and updating environment variables!")
+![Command palette filtered with the word pin: the Pins page and the choco pin command.](material-choco/docs/screenshots/20-command-palette.png)
 
-[Chocolatey Pro](https://chocolatey.org/compare) showing private CDN download cache and virus scan protection:
+*Command palette on Ctrl+Shift+F.*
 
-![install w/pro](https://raw.githubusercontent.com/wiki/chocolatey/choco/images/gifs/chocopro_install_stopped.gif "Chocolatey Pro availability now! A great option for individuals looking for that community PLUS option.")
+</details>
 
-## Etiquette Regarding Communication
+<details><summary><b>Safety and feedback</b> (3 captures)</summary>
 
-If you are an open source user requesting support, please remember that most folks in the Chocolatey community are volunteers that have lives outside of open source and are not paid to ensure things work for you, so please be considerate of others' time when you are asking for things. Many of us have families that also need time as well and only have so much time to give on a daily basis. A little consideration and patience can go a long way. After all, you are using a pretty good tool without cost. It may not be perfect (yet), and we know that.
+![Confirmation before uninstalling a package: key A is held, key B is not, and the slider is still locked.](material-choco/docs/screenshots/10-two-key-confirmation.png)
 
-If you are using a [commercial edition of Chocolatey](https://chocolatey.org/compare#compare), you have different terms! Please see [support](https://chocolatey.org/support).
+*Destructive actions need two keys and then a slider.*
 
-## Information
+![Full-screen celebration reading Upgrade complete, with the command and exit code 0.](material-choco/docs/screenshots/27-install-success-takeover.png)
 
- * [Chocolatey Website and Community Package Repository](https://community.chocolatey.org)
- * [Mailing List](https://groups.google.com/group/chocolatey) / [Release Announcements Only Mailing List](https://groups.google.com/group/chocolatey-announce) / [Build Status Mailing List](http://groups.google.com/group/chocolatey-build-status)
- * [Twitter](https://twitter.com/chocolateynuget) / [Facebook](https://www.facebook.com/ChocolateySoftware) / [GitHub](https://github.com/chocolatey)
- * [Blog](https://blog.chocolatey.org/) / [Newsletter](https://chocolatey.us8.list-manage1.com/subscribe?u=86a6d80146a0da7f2223712e4&id=73b018498d)
- * [Documentation](https://docs.chocolatey.org/en-us/) / [Support](https://chocolatey.org/support)
+*An upgrade that succeeded takes over the screen.*
 
-### Documentation
+![Full-screen red alarm reading Install failed, with the command, exit code 1, the output, and Open the full log and Close buttons.](material-choco/docs/screenshots/28-install-failure-takeover.png)
 
-Please see the [docs](https://docs.chocolatey.org/en-us/)
+*An install that failed takes over the screen and stays until dismissed. The install was made to fail on purpose.*
 
-Give `choco.exe --help` a shot (or `choco.exe -h`). For specific commands, add the command and then the help switch e.g. `choco.exe install --help`.
+</details>
 
-### Requirements
+<details><summary><b>Hub: users, passkeys, policy</b> (3 captures)</summary>
 
-* .NET Framework 4.8+
-* PowerShell 2.0+
-* Windows Server 2008 R2+ / Windows 10+
-  - See our documentation on the [support lifecycle and supported operating systems](https://docs.chocolatey.org/en-us/information/support-lifecycle) for additional information
+![Sign in screen of a hub: a Use a passkey button first, then name and password fields.](material-choco/docs/screenshots/44-sign-in-with-passkey.png)
 
-### License / Credits
+*Sign in with a passkey or a password. The passkey in the test run came from the browser's virtual passkey device.*
 
-Apache 2.0 - see [LICENSE](https://github.com/chocolatey/choco/blob/master/LICENSE) and [NOTICE](https://github.com/chocolatey/choco/blob/master/NOTICE) files.
+![Users and roles page: three accounts with Viewer, Operator and Admin buttons and a note that the last admin is protected.](material-choco/docs/screenshots/41-users-and-roles.png)
 
-## Submitting Issues
+*Users with admin, operator and viewer roles.*
 
-![submitting issues](https://cloud.githubusercontent.com/assets/63502/12534554/6ea7cc04-c224-11e5-82ad-3805d0b5c724.png)
+![Edit dialog of a machine: display name, groups, the read only switch, and the list of allowed commands.](material-choco/docs/screenshots/40-machine-allowed-commands.png)
 
- * If you are having issue with a package, please see [Request Package Fixes or Updates / Become a maintainer of an existing package](https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process).
- * If you are looking for packages to be added to the community feed (aka https://community.chocolatey.org/packages), please see [Package Requests](https://docs.chocolatey.org/en-us/community-repository/users/package-triage-process#package-request-package-missing).
+*Per-machine policy: read only, and a list of allowed commands.*
 
- 1. Start with [Troubleshooting](https://docs.chocolatey.org/en-us/troubleshooting) and the [FAQ](https://docs.chocolatey.org/en-us/faqs) to see if your question or issue already has an answer.
- 1. If not found or resolved, please follow one of the following avenues:
-    * If you are a licensed customer, please see [support](https://chocolatey.org/support). You can also log an issue to [Licensed Issues](https://github.com/chocolatey/chocolatey-licensed-issues) and we will submit issues to all other places on your behalf. Another avenue is to use email support to have us submit tickets and other avenues on your behalf (allowing you to maintain privacy).
-    * If it is an enhancement request or issue with the website (the community package repository aka [https://community.chocolatey.org](https://community.chocolatey.org)), please submit the issue to the [Chocolatey.org repo](https://github.com/chocolatey/home).
-    * If you have found an issue with the GUI (Chocolatey GUI) or you want to submit an enhancement, please see [the ChocolateyGUI repository](https://github.com/chocolatey/ChocolateyGUI#submitting-issues).
-    * If you have found an issue with the client (choco.exe), you are in the right place. Keep reading below.
+</details>
 
-Observe the following help for submitting an issue:
+<details><summary><b>Look, language and phone</b> (2 captures)</summary>
 
-Prerequisites:
+![Overview page in the dark theme with English labels and a Cantonese line beneath each.](material-choco/docs/screenshots/23-overview-dark-bilingual.png)
 
- * The issue has to do with choco itself and is not a package or website issue.
- * Please check to see if your issue already exists with a quick search of the issues. Start with one relevant term and then add if you get too many results.
- * You are not submitting an "Enhancement". Enhancements should observe [CONTRIBUTING](https://github.com/chocolatey/choco/blob/develop/CONTRIBUTING.md) guidelines.
- * You are not submitting a question - questions are better served as [emails](https://groups.google.com/group/chocolatey) or [Community Chat questions](https://ch0.co/community-support).
- * Please make sure you've read over and agree with the [etiquette regarding communication](#etiquette-regarding-communication).
+*Dark theme, bilingual mode.*
 
-Submitting a ticket:
+<img src="material-choco/docs/screenshots/24-phone-overview.png" alt="Overview page at phone width with a bottom navigation bar." width="300">
 
- * We'll need debug and verbose output, so please run and capture the log with `-dv` or `--debug --verbose`. You can submit that with the issue or create a gist and link it.
- * **Please note** that the debug/verbose output for some commands may have sensitive data (passwords or API keys) related to Chocolatey, so please remove those if they are there prior to submitting the issue.
- * choco.exe logs to a file in `$env:ChocolateyInstall\log\`. You can grab the specific log output from there so you don't have to capture or redirect screen output. Please limit the amount included to just the command run (the log is appended to with every command).
- * Please save the log output in a [gist](https://gist.github.com) (save the file as `log.sh`) and link to the gist from the issue. Feel free to create it as secret so it doesn't fill up against your public gists. Anyone with a direct link can still get to secret gists. If you accidentally include secret information in your gist, please delete it and create a new one (gist history can be seen by anyone) and update the link in the ticket (issue history is not retained except by email - deleting the gist ensures that no one can get to it). Using gists this way also keeps accidental secrets from being shared in the ticket in the first place as well.
- * We'll need the entire log output from the run, so please don't limit it down to areas you feel are relevant. You may miss some important details we'll need to know. This will help expedite issue triage.
- * It's helpful to include the version of choco, the version of the OS, and the version of PowerShell (Posh) - the debug script should capture all of those pieces of information.
- * Include screenshots and/or animated gifs whenever possible, they help show us exactly what the problem is.
+*The hub at phone width.*
 
-## Contributing
+</details>
 
-If you would like to contribute code or help squash a bug or two, that's awesome. Please familiarize yourself with [CONTRIBUTING](https://github.com/chocolatey/choco/blob/develop/CONTRIBUTING.md).
+## What it does
 
-This project uses an [.editorconfig](https://editorconfig.org) file in order to help maintain consistency of code.
-Errors and warnings produced by not following these defined conventions will in future be enforced at build time, so ensure your contributions adhere to the rules defined in it and produce no warnings or errors in Visual Studio.
+- **Every Chocolatey command and option.** The list is generated from the C# source of the CLI in this repository: 23 commands, 190 command options, 24 global options, 11 config settings and 30 features at the time of writing. A test fails when the list no longer matches the source.
+- **Nothing to install first.** The installer carries its own runtime and a `choco.exe` built from this repository.
+- **A fleet, not just a PC.** Pair machines to a hub with a one time code. Run a command on one, some or all. Jobs for an offline machine wait up to 7 days.
+- **Hard to break by accident.** Destructive actions need two keys and a slider. A machine can be read only, or limited to a list of allowed commands.
+- **You see what will run.** Every form shows the exact command, with a dry run. Source passwords and API keys are masked in records.
+- **Loud when it matters.** Every install or upgrade that finishes takes over the screen with the result.
 
-## Committers
+<details><summary>Pages of the app</summary>
 
-Committers, you should be very familiar with [COMMITTERS](https://github.com/chocolatey/choco/blob/develop/COMMITTERS.md).
+Overview, Machines, Installed, Discover, Updates, Sources, Config and features, Pins, API keys, Cache and templates, Package builder, Console, Base64 tools, Jobs, Schedules, History, Help, Settings, and for hub admins Users and roles and Status webhooks.
 
-### Compiling / Building Source
+</details>
 
-There is a `build.bat`/`build.sh` file that creates a necessary generated file named `SolutionVersion.cs`. It must be run at least once before Visual Studio will build.
+<details><summary>Hub features</summary>
 
-#### Windows
+- Sign in with a password or a passkey. There are no authenticator codes; the maintainer removed them on 2026-11-16.
+- Users with three roles: admin, operator, viewer. The hub checks the role on every request.
+- One time pairing codes, with a QR code. Read only agents. Per-machine command allow lists, enforced by the hub and, when set on the machine, by the agent itself.
+- Job queue with live output, cancel, exit codes and exported logs. Daily or weekly schedules.
+- Append-only history with export.
+- Status webhooks for failed jobs, offline machines and sign in lockouts. Job output is never sent.
+- Secret option values and webhook addresses are encrypted in the hub's data file. Anyone who can read the whole data folder can also read the key, unless you move the key.
 
-Prerequisites:
+</details>
 
-The following are a minimum set of requirements to successfully complete the build process:
+<details><summary>Interface</summary>
 
- * .NET Framework 4.8
- * .NET Framework 4.8 Dev Pack
- * Visual Studio 2019 or Visual Studio 2019 Build Tools
- * .NET SDK (i.e. ability to install .NET Global tools using `dotnet tool install`)
+Material Design 3 Expressive, themed from one seed colour, light and dark. English, Hong Kong Cantonese and bilingual modes. Tabs that can be closed, pinned and reordered. A command palette, context menus with a filter, a pattern builder for regular expressions, bulk actions and exports on lists, timed settings, a custom logo, accessibility tools, and a reduced motion path for every animation.
 
-There is a `setup.ps1` file at the root of this repository, which can be used to install all of the above.
+</details>
 
-Build Process:
+## Hub quick start
 
- * Run `build.bat`.
-
-> [!IMPORTANT]
-> It is assumed that Chocolatey CLI is installed on the machine where you are running the build, as this is required to generate the final Chocolatey package.
-> If required, you can skip the creation of the Chocolatey packages using the `--shouldRunChocolatey` option, i.e. `.\build.bat --shouldRunChocolatey=false`
-
-Running the build on Windows should produce an artifact that is tested and ready to be used.
-
-#### Other Platforms
-
-##### Prerequisites:
-
- * Install and configure Mono. Mono 6.6 or newer should work, see `docker/Dockerfile.linux` for the currently recommended version of Mono.
-    * Linux systems; see [Mono install instructions for Linux](https://www.mono-project.com/download/stable/#download-lin)
-    * Mac systems; see [Mono install instructions for Mac](https://www.mono-project.com/download/stable/#download-mac)
- * Install .NET 6.0 SDK or newer. This is used in the build scripts.
-    * Linux systems; see [Install .NET on Linux](https://learn.microsoft.com/en-us/dotnet/core/install/linux)
-    * Mac systems; see [Install .NET on macOS](https://learn.microsoft.com/en-us/dotnet/core/install/macos)
-    * This is required for some Dotnet Global Tools used during the Cake build. The .NET Frameworks equivalent builds do not work on Mono.
- * If building from Git, then having Git 2.22+ installed is required.
- * MonoDevelop is helpful for working on source.
-
-##### Before building:
-
- * Consider adding the following to your `~/.profile` (or other relevant dot source file):
-
-```sh
-# Mono
-# http://www.michaelruck.de/2010/03/solving-pkg-config-and-mono-35-profile.html
-# https://cloudgen.wordpress.com/2013/03/06/configure-nant-to-run-under-mono-3-06-beta-for-mac-osx/
-export PKG_CONFIG_PATH=/opt/local/lib/pkgconfig:/Library/Frameworks/Mono.framework/Versions/Current/lib/pkgconfig:$PKG_CONFIG_PATH
+```
+docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest
 ```
 
- * Set your permissions correctly:
+1. Open `http://<host>:8080` and create the administrator. There is no default account.
+2. On **Machines**, create a pairing code. It works once and expires after 10 minutes.
+3. On the Windows machine, enter it in the app, or on a server without a desktop session:
 
-```sh
-chmod +x *.sh
+```
+MaterialChoco.exe --agent enroll --hub https://your-hub --code XXXX-XXXX
+MaterialChoco.exe --agent run
 ```
 
-##### Build Process:
+**Treat hub access as administrator access.** The hub can install software with administrator rights on every paired machine. Serve it over HTTPS; agents refuse plain HTTP to a remote hub unless you opt in. Read the [security model](https://ding-ding-projects.github.io/choco/articles/security-model.html) first.
 
- * Run `./build.sh`.
+## Honest status
 
-Running the build on Mono produces an artifact similar to Windows but may have more rough edges. You may get a failure or two in the build script that can be safely ignored.
+| | |
+| --- | --- |
+| **Checked** | `npm test`: 88 of 88 pass. End to end run in headless Chrome against a real hub and agent processes: 117 of 117 checks pass. The hub image builds, runs and is published. The release workflow builds the CLI from this repository on Windows, packs it into the installer and publishes it. The site is live and was measured at phone widths. |
+| **Not proven** | Nobody has installed the app on Windows and run a real install, upgrade or uninstall through it. Every automated check used a test stand-in for `choco.exe`, on Linux. Passkeys were checked with a software passkey device and Chrome's virtual one, not a real device. `build.bat` and `build-installer.bat` have never been run. No screen reader pass and no accessibility audit. |
+| **Not signed** | The installer is not code signed. |
+| **Not built** | Signed agent updates, limiting a user to some machines, and much of the maintainer's wider feature catalogue. The exact count is in the feature inventory. |
 
-### Testing
+## Where to read more
 
-The Chocolatey CLI codebase contains a number of different tests, including unit, integration, and end-to-end tests.
-These are all documented in the [TESTING.md](https://github.com/chocolatey/choco/blob/develop/TESTING.md) file.
+| | |
+| --- | --- |
+| [material-choco/README.md](material-choco/README.md) | The app in detail: structure, security, build, tests, size |
+| [material-choco/HANDOFF.md](material-choco/HANDOFF.md) | Exactly what was checked, with results, and what was not |
+| [material-choco/ROADMAP.md](material-choco/ROADMAP.md) | What is done and what is next |
+| [material-choco/docs/FEATURE-INVENTORY.md](material-choco/docs/FEATURE-INVENTORY.md) | The state of every required feature, built or not |
+| [material-choco/docs/features](material-choco/docs/features/README.md) | One document per shipped feature |
+| [material-choco/docs/articles](material-choco/docs/articles/README.md) | How-to guides, also on the site |
+| [material-choco/docs/api](material-choco/docs/api/README.md) | Hub HTTP API and Postman collection |
+| [design/material-choco](design/material-choco/README.md) | The design files |
 
-The unit and integration tests are NUnit tests, which can be executed directly within Visual Studio, or as part of the [build process](https://github.com/chocolatey/choco/blob/develop/TESTING.md#running-tests).
+## About this fork
 
-The end-to-end tests use Pester as the test framework. Since these tests have the potential to actually make changes to your system, we recommend using the [provided Vagrant file to run these tests in a dedicated virtual machine](https://github.com/chocolatey/choco/blob/develop/TESTING.md#pester-tests).
+This repository is a fork of the **Chocolatey CLI**, the package manager for Windows, made by Chocolatey Software, Inc. and its contributors and licensed under Apache-2.0.
 
-### Installing on Other Platforms:
+- Upstream project: <https://github.com/chocolatey/choco>
+- Chocolatey documentation: <https://docs.chocolatey.org/en-us/>
+- Community package repository: <https://community.chocolatey.org>
 
- 1. Get a copy of the source code and build.
- 1. Copy (or link) the contents of `./code_drop/temp/_PublishedApps/choco` to your preferred install directory. On Linux, the preferred directory is `/opt/chocolatey`
- 1. Export the `ChocolateyInstall` environment variable, pointing to the install directory the build output was copied too.
- 1. Copy `./docker/choco_wrapper` to a directory on the `$PATH`, rename to `choco`, and if the install directory is something else than `/opt/chocolatey`, then edit it to point to the correct path.
+What this fork adds: the `material-choco/` and `design/` folders, two workflows under `.github/workflows` whose names start with `material-choco`, and a few files at the root (`AGENTS.md`, `CLOSEOUT_PROMPT.md`, this README). **No file of the Chocolatey CLI itself was changed.** The app runs the CLI as a separate program and reads its source only to generate the list of commands and options.
 
-## Credits
+Material Choco is **not affiliated with or endorsed by Chocolatey Software, Inc.** "Chocolatey" is their trademark. The CLI that ships inside the app is built from this repository and not by Chocolatey Software, which is why the app passes `--allow-unofficial-build` to it. For the official, supported Chocolatey, use the upstream project.
 
-Chocolatey is brought to you by quite a few people and frameworks. See [CREDITS](https://github.com/chocolatey/choco/blob/master/docs/legal/CREDITS.md) (just LEGAL/Credits.md in the zip folder).
+Licence: Apache-2.0, the same as upstream, for the fork's additions too. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Credits of the CLI are in [docs/legal/CREDITS.md](docs/legal/CREDITS.md).
+
+<details><summary>Building and testing the Chocolatey CLI itself (kept from the upstream README)</summary>
+
+Requirements to run the CLI: .NET Framework 4.8 or newer, PowerShell 2.0 or newer, Windows Server 2008 R2 or newer, or Windows 10 or newer. See the upstream [support lifecycle](https://docs.chocolatey.org/en-us/information/support-lifecycle).
+
+`build.bat` and `build.sh` at the repository root belong to the CLI. They create a generated file named `SolutionVersion.cs` and must be run at least once before Visual Studio will build.
+
+**Windows.** Minimum requirements: .NET Framework 4.8, the .NET Framework 4.8 Dev Pack, Visual Studio 2019 or its Build Tools, and the .NET SDK (to install .NET global tools). `setup.ps1` at the root can install these. Then run `build.bat`. The build assumes the Chocolatey CLI is installed on the build machine, because it is used to create the final package; skip that step with `.\build.bat --shouldRunChocolatey=false`.
+
+**Other platforms.** Install Mono (6.6 or newer; `docker/Dockerfile.linux` names the recommended version) and the .NET 6.0 SDK or newer, and Git 2.22 or newer when building from Git. Make the scripts executable with `chmod +x *.sh`, then run `./build.sh`. The upstream README notes that a build on Mono may have rough edges.
+
+**Installing a build on other platforms.** Copy the contents of `./code_drop/temp/_PublishedApps/choco` to an install directory (`/opt/chocolatey` is preferred on Linux), export `ChocolateyInstall` pointing at it, and copy `./docker/choco_wrapper` to a directory on the `PATH` under the name `choco`.
+
+**Tests of the CLI.** Unit and integration tests use NUnit; end to end tests use Pester and can change the system, so upstream recommends its Vagrant file. All of this is described in [TESTING.md](TESTING.md).
+
+**Contributing to the CLI.** See [CONTRIBUTING.md](CONTRIBUTING.md) and [COMMITTERS.md](COMMITTERS.md). Changes to the CLI belong upstream, not in this fork. The CLI's own changelog is [CHANGELOG.md](CHANGELOG.md).
+
+The original upstream README, with its badges, community links and full instructions, is at <https://github.com/chocolatey/choco#readme>.
+
+</details>
+
+<details><summary>Notes for people and agents working in this repository</summary>
+
+Read [AGENTS.md](AGENTS.md). In short: do not change the CLI source under `src/` for app work; after a CLI option changes, run `node material-choco/scripts/gen-schema.mjs`; run `npm test` and `npm run test:e2e` in `material-choco/` before pushing and record the real results in `material-choco/HANDOFF.md`; update the roadmap, the handoff and the feature inventory in the same change as the work they describe. [CLOSEOUT_PROMPT.md](CLOSEOUT_PROMPT.md) holds a ready-to-paste prompt for continuing the work.
+
+</details>

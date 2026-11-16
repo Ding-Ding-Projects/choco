@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Two key confirmation · Material Choco</title>
+<meta name="description" content="Destructive actions need two separate keys and then a slider before they run.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/two-key-confirmation.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Two key confirmation · Material Choco">
+<meta property="og:description" content="Destructive actions need two separate keys and then a slider before they run.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/two-key-confirmation.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Two key confirmation · Material Choco">
+<meta name="twitter:description" content="Destructive actions need two separate keys and then a slider before they run.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Two key confirmation</span></li></ol><h1>Two key confirmation</h1><p class="lead"><span>Destructive actions need two separate keys and then a slider before they run.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>A dialog that states the action, for example the exact uninstall command and the number of machines, and holds it until three things are done: key A is on, key B is on, and the slider has been dragged to the end. The slider is disabled until both keys are on. Turning a key off, or letting go of the slider early, resets it. <b>Emergency exit</b> and <code>Escape</code> cancel.</p>
+<p>It guards: uninstalling packages, removing a source, unsetting a config value, removing an API key, clearing the whole HTTP cache, removing a machine from the hub, deleting a user, deleting a passkey, resetting every setting, and the <code>uninstall</code>, <code>unpackself</code>, <code>remove</code> and <code>unset</code> commands in the Console.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<ol><li>Read the sentence at the top.</li><li>Press <b>Hold key A</b> and <b>Hold key B</b>. Each stays on until pressed again.</li><li>Drag the slider all the way, or focus it and press <code>End</code>.</li></ol>
+<p>A line under the slider says whether both keys are held, and is announced to assistive technology.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p>End to end checks in <code>test/e2e/run.mjs</code>: <code>slider is locked before both keys</code>, <code>one key and a full slider does not confirm</code>, <code>uninstall runs only after both keys and the slider</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>It guards against accidents by one person. It is not a second person's approval.</li><li>It cannot be turned off or relaxed per action.</li><li>Not reviewed with a screen reader.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/two-key-confirmation.md">docs/features/two-key-confirmation.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/confirming-destructive-actions.html"><h3>Confirming destructive actions</h3><p>the guide</p><span class="more">Open</span></a><a class="card reveal" href="../features/read-only-agents.html"><h3>Read only agents</h3><span class="more">Open</span></a><a class="card reveal" href="../features/command-preview-and-dry-run.html"><h3>Command preview and dry run</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="hub-http-api.html"><small>Previous</small>Hub HTTP API</a><a class="next" href="install-result-takeovers.html"><small>Next</small>Install result takeovers</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

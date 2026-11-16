@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Running the hub in a container · Material Choco</title>
+<meta name="description" content="The hub is a small web app that lets you manage many Windows machines from a browser, including a phone. It runs in one container and has no runtime dependencies beyond Node.js.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/articles/hub-in-a-container.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Running the hub in a container · Material Choco">
+<meta property="og:description" content="The hub is a small web app that lets you manage many Windows machines from a browser, including a phone. It runs in one container and has no runtime dependencies beyond Node.js.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/articles/hub-in-a-container.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Running the hub in a container · Material Choco">
+<meta name="twitter:description" content="The hub is a small web app that lets you manage many Windows machines from a browser, including a phone. It runs in one container and has no runtime dependencies beyond Node.js.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../articles/">Guides</a></li><li><span aria-current="page">Running the hub in a container</span></li></ol><h1>Running the hub in a container</h1><p class="lead"><span>The hub is a small web app that lets you manage many Windows machines from a browser, including a phone. It runs in one container and has no runtime dependencies beyond Node.js.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#start-it">Start it</a></li><li><a href="#create-the-administrator">Create the administrator</a></li><li><a href="#turn-on-https">Turn on HTTPS</a></li><li><a href="#settings">Settings</a></li><li><a href="#add-a-passkey">Add a passkey</a></li><li><a href="#back-up-and-update">Back up and update</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<blockquote><p><b>Read the <a href="../articles/security-model.html">security model</a> first.</b> The hub can install software with administrator rights on every machine paired with it. Hub access is administrator access.</p></blockquote>
+<h2 id="start-it">Start it</h2>
+<p>With Docker Compose, from the <code>material-choco</code> folder of the repository:</p>
+<pre tabindex="0"><code>docker compose up -d</code></pre>
+<p>Or directly:</p>
+<pre tabindex="0"><code>docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest</code></pre>
+<p>Then open <code>http://&lt;host&gt;:8080</code> from any device on the same network.</p>
+<p>The image is based on <code>node:22-alpine</code>, runs as the non-root user <code>node</code>, keeps its data in the <code>/data</code> volume, and has a health check that calls <code>/api/status</code>.</p>
+<h2 id="create-the-administrator">Create the administrator</h2>
+<p>The first visit shows <b>Create the administrator</b>. There is no default account.</p>
+<ul><li>The name is 2 to 40 letters, digits, dot, dash, underscore or <code>@</code>.</li><li>The password needs at least 10 characters. It is stored as a salted scrypt hash.</li></ul>
+<p>After that, setup is closed: the form cannot be used again. This first account is an admin, and can add more people under <b>Users and roles</b> as admin, operator or viewer.</p>
+<figure><button class="shot" type="button" data-full="../shots/01-first-run-create-administrator.png" data-caption="First start of a hub: the form that creates the administrator." aria-label="Enlarge: First start of a hub: the form that creates the administrator."><img loading="lazy" src="../shots/01-first-run-create-administrator.png" alt="First start of a hub: the form that creates the administrator." width="1360" height="757"></button><figcaption>First start of a hub: the form that creates the administrator.</figcaption></figure>
+<p>A first-run wizard follows. On a hub its second step offers to create the first pairing code. See <a href="../articles/pairing-and-remote-agents.html">Pairing and remote agents</a>.</p>
+<h2 id="turn-on-https">Turn on HTTPS</h2>
+<p>Agents refuse plain HTTP to a remote hub unless they are started with an explicit opt-in, and a session cookie over plain HTTP can be read on the network. Use one of these:</p>
+<p><b>A certificate in the container.</b> Mount the files and set two variables:</p>
+<pre tabindex="0"><code>docker run -d -p 8443:8080 \
+  -v material-choco-data:/data -v /path/to/certs:/certs:ro \
+  -e MATERIAL_CHOCO_TLS_CERT=/certs/cert.pem \
+  -e MATERIAL_CHOCO_TLS_KEY=/certs/key.pem \
+  ghcr.io/ding-ding-projects/material-choco-hub:latest</code></pre>
+<p><b>A reverse proxy.</b> Terminate TLS in the proxy and forward to port 8080. The hub marks its session cookie <code>Secure</code> when the proxy sends <code>X-Forwarded-Proto: https</code>. The proxy must not buffer responses on <code>/api/events</code> or cut long requests on <code>/agent/poll</code>, which are held open for up to 25 seconds.</p>
+<h2 id="settings">Settings</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Variable</th><th scope="col">Default in the image</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>MATERIAL_CHOCO_DATA</code></td><td><code>/data</code></td><td>Folder for the store, job logs and history</td></tr><tr><td><code>MATERIAL_CHOCO_PORT</code></td><td><code>8080</code></td><td>Port to listen on</td></tr><tr><td><code>MATERIAL_CHOCO_HOST</code></td><td><code>0.0.0.0</code></td><td>Address to listen on</td></tr><tr><td><code>MATERIAL_CHOCO_TLS_CERT</code></td><td>not set</td><td>Path to a certificate file</td></tr><tr><td><code>MATERIAL_CHOCO_TLS_KEY</code></td><td>not set</td><td>Path to the private key file</td></tr><tr><td><code>MATERIAL_CHOCO_ORIGIN</code></td><td>not set</td><td>Public address of the hub, for passkeys behind a proxy that changes the <code>Host</code> header</td></tr><tr><td><code>MATERIAL_CHOCO_KEY_FILE</code></td><td><code>secret.key</code> in the data folder</td><td>Where the key for secrets at rest is kept</td></tr></tbody></table></div>
+<h2 id="add-a-passkey">Add a passkey</h2>
+<p>Open <b>Settings</b>, then <b>Sign in and locks</b>. From there you can change the password and add a <a href="../features/passkeys.html">passkey</a>, so that you sign in with a fingerprint, a face, a device PIN or a security key. The hub has no authenticator code step: sign in is a password or a passkey.</p>
+<h2 id="back-up-and-update">Back up and update</h2>
+<p>Everything the hub knows is in the data volume, including the key file for secrets at rest: the users, paired machines with the hashes of their tokens, jobs, schedules, job logs and the history. Back up that volume. To update, pull the new image and recreate the container with the same volume.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p>The handoff note records that the image was built with <code>docker build</code>, run as a container, reached on the LAN address, passed its health check, ran as the non-root user, and that a real agent enrolled against it and reported inventory. The release workflow pushed the image to the registry. HTTPS through the two variables is covered by the code path but was not exercised in a recorded check.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>Passkeys exist and were tested with a software passkey device only, not with a real device in a real browser.</li><li>Three fixed roles. A user cannot be limited to some machines, and every role can read job output and the history.</li><li>Secret option values and webhook addresses are encrypted in the data file, but the key lies in the same data folder unless you move it with <code>MATERIAL_CHOCO_KEY_FILE</code>. Anyone who reads the whole folder reads the key too.</li><li>Running the hub without a container (<code>npm run hub</code>) works for development and is not a supported deployment.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/hub-in-a-container.md">docs/articles/hub-in-a-container.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/pairing-and-remote-agents.html"><h3>Pairing and remote agents</h3><p>the next step</p><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><p>read before exposing a hub</p><span class="more">Open</span></a><a class="card reveal" href="../features/users-and-roles.html"><h3>Users and roles</h3><p>give other people access</p><span class="more">Open</span></a><a class="card reveal" href="../features/status-webhooks.html"><h3>Status webhooks</h3><p>hear about failed jobs</p><span class="more">Open</span></a><a class="card reveal" href="../articles/jobs-schedules-and-history.html"><h3>Jobs, schedules and history</h3><p>what the hub does with commands</p><span class="more">Open</span></a><a class="card reveal" href="../features/hub-http-api.html"><h3>Hub HTTP API</h3><p>routes and the Postman collection</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More guides"><a href="getting-started.html"><small>Previous</small>Getting started on one PC</a><a class="next" href="pairing-and-remote-agents.html"><small>Next</small>Pairing and remote agents</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Sign in · Material Choco</title>
+<meta name="description" content="Sign in to the hub with a password or a passkey, with lockout after failures, and sessions that expire.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/sign-in.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sign in · Material Choco">
+<meta property="og:description" content="Sign in to the hub with a password or a passkey, with lockout after failures, and sessions that expire.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/sign-in.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sign in · Material Choco">
+<meta name="twitter:description" content="Sign in to the hub with a password or a passkey, with lockout after failures, and sessions that expire.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Sign in</span></li></ol><h1>Sign in</h1><p class="lead"><span>Sign in to the hub with a password or a passkey, with lockout after failures, and sessions that expire.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<ul><li><b>Setup once.</b> The first visitor creates the first admin. There is no default account, and setup cannot be repeated. Admins add further <a href="../features/users-and-roles.html">users with roles</a>.</li><li><b>Passkeys</b> are an extra way to sign in; see <a href="../features/passkeys.html">passkeys</a>.</li><li><b>Passwords</b> need at least 10 characters and are stored as salted scrypt hashes.</li><li><b>No authenticator codes.</b> By a decision of the maintainer on 2026-11-16 the hub has no one time code step. Sign in is a password or a passkey. A hub upgraded from a build that had codes deletes the stored records at start and writes one history entry per affected user.</li><li><b>Lockout.</b> After 5 failed attempts for a name from an address, sign in is refused for 30 seconds, doubling up to 15 minutes.</li><li><b>Sessions</b> use an <code>HttpOnly</code>, <code>SameSite=Strict</code> cookie and end 12 hours after their last use. <b>Sign out</b> ends one at once.</li></ul>
+<p>The desktop app has no sign in screen. Its window is signed in with a one time launch token as the current Windows user, and its server listens on this computer only.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Sign in with your name and password, or with a passkey where one is set up. <b>Settings</b>, <b>Sign in and locks</b> changes the password and manages passkeys.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li>Tests <code>nothing works before setup and sign in</code>, <code>setup creates the administrator once</code>, <code>wrong passwords are refused and then locked out</code> and <code>cross-site requests are refused</code> in <code>test/hub.test.js</code>.</li><li>End to end checks <code>setup refuses a short password</code> and <code>API refuses requests without a session</code>.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>The only second factor is a passkey. An account with a password alone has one factor.</li><li>Passkeys were tested with a software passkey device only, not with a real device in a real browser.</li><li>Sessions are held in memory, so restarting the hub signs everyone out.</li><li>There is no self-service password recovery. An admin can reset another user's password. If the only admin loses theirs, the account has to be repaired in the data folder by whoever operates the hub.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/sign-in.md">docs/features/sign-in.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/passkeys.html"><h3>Passkeys</h3><span class="more">Open</span></a><a class="card reveal" href="../features/users-and-roles.html"><h3>Users and roles</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><span class="more">Open</span></a><a class="card reveal" href="../features/pairing.html"><h3>Pairing</h3><span class="more">Open</span></a><a class="card reveal" href="../features/history.html"><h3>History</h3><p>sign ins are recorded</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="hub-container.html"><small>Previous</small>Hub container image</a><a class="next" href="passkeys.html"><small>Next</small>Passkeys</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

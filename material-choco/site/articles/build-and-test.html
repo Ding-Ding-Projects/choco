@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Build and test from source · Material Choco</title>
+<meta name="description" content="How to run the app and the hub from a checkout, how the tests work, and what the release workflow does. Useful if you want to verify a claim on this site yourself.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/articles/build-and-test.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build and test from source · Material Choco">
+<meta property="og:description" content="How to run the app and the hub from a checkout, how the tests work, and what the release workflow does. Useful if you want to verify a claim on this site yourself.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/articles/build-and-test.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build and test from source · Material Choco">
+<meta name="twitter:description" content="How to run the app and the hub from a checkout, how the tests work, and what the release workflow does. Useful if you want to verify a claim on this site yourself.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../articles/">Guides</a></li><li><span aria-current="page">Build and test from source</span></li></ol><h1>Build and test from source</h1><p class="lead"><span>How to run the app and the hub from a checkout, how the tests work, and what the release workflow does. Useful if you want to verify a claim on this site yourself.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#layout">Layout</a></li><li><a href="#run-it-for-development">Run it for development</a></li><li><a href="#tests">Tests</a></li><li><a href="#build-on-windows">Build on Windows</a></li><li><a href="#the-release-workflow">The release workflow</a></li><li><a href="#this-site">This site</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="layout">Layout</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Folder</th><th scope="col">What it holds</th></tr></thead><tbody><tr><td><code>core/</code></td><td>CLI wrapper, bundled CLI setup, job runner, agent</td></tr><tr><td><code>hub/</code></td><td>HTTP server, sign in, jobs, schedules, store, <code>Dockerfile</code></td></tr><tr><td><code>desktop/</code></td><td>Desktop shell: frameless window, the hub in-process, agent mode</td></tr><tr><td><code>ui/</code></td><td>The interface, shared by the desktop app and the hub</td></tr><tr><td><code>shared/</code></td><td><code>choco-schema.json</code>, generated from the CLI source</td></tr><tr><td><code>test/</code></td><td>Unit, integration and end to end checks</td></tr><tr><td><code>site/</code></td><td>This site. <code>site/tools/generate.mjs</code> builds its pages from <code>docs/</code></td></tr></tbody></table></div>
+<h2 id="run-it-for-development">Run it for development</h2>
+<p>Any platform with Node.js 22:</p>
+<pre tabindex="0"><code>cd material-choco
+npm ci
+node scripts/gen-schema.mjs      # refresh the schema from the C# source
+node scripts/build-vendor.mjs    # rebuild ui/vendor
+npm run hub                      # hub on http://localhost:8080
+npm start                        # desktop app</code></pre>
+<p>A development checkout has no built CLI inside it. Set <code>MATERIAL_CHOCO_BUNDLE</code> to a folder that contains <code>choco.exe</code>, or set <code>MATERIAL_CHOCO_ALLOW_SYSTEM=1</code> to let it use a Chocolatey found on the system.</p>
+<h2 id="tests">Tests</h2>
+<pre tabindex="0"><code>npm test             # unit and integration tests
+npm run test:e2e     # end to end run in headless Chrome</code></pre>
+<ul><li><code>npm test</code> starts a real hub and a real agent in-process and covers the schema, argument validation, sign in, pairing, jobs, read only agents, schedules and history.</li><li><code>npm run test:e2e</code> starts a hub and two agent processes, drives the real interface in headless Chrome, asserts outcomes, and saves the screenshots under <code>docs/screenshots</code>.</li></ul>
+<p>Both use <code>test/fixtures/fake-choco.js</code>, a small stand-in for <code>choco.exe</code>, because the checks run on Linux. Package names and versions in the screenshots come from that stand-in. The numbers of tests and checks, and their last recorded results, are in <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">HANDOFF.md</a>.</p>
+<h2 id="build-on-windows">Build on Windows</h2>
+<p><code>build.bat</code> builds the CLI from the repository root, installs the npm packages and starts the app. <code>build-installer.bat</code> produces the Squirrel.Windows installer in <code>dist\squirrel-windows</code>. Both accept <code>/s</code>, <code>--silent</code> or <code>SILENT=1</code>.</p>
+<blockquote><p>These two scripts were written on Linux and have <b>not been run on Windows yet</b>.</p></blockquote>
+<h2 id="the-release-workflow">The release workflow</h2>
+<p><code>.github/workflows/material-choco-release.yml</code> does the same steps on a hosted Windows runner: it builds the CLI from this repository, packs it into the app, and publishes <code>Setup.exe</code>, <code>RELEASES</code> and the full <code>.nupkg</code> as a release whose tag starts with <code>material-choco-v</code>. It also builds and pushes the hub image. The installer is not code signed.</p>
+<p>The handoff note records the first green run and the release it produced. It also records what that run does not prove: the installer was built, and was not installed or started.</p>
+<h2 id="this-site">This site</h2>
+<pre tabindex="0"><code>node material-choco/site/tools/generate.mjs</code></pre>
+<p>rebuilds the pages from <code>docs/articles</code> and <code>docs/features</code>. <code>.github/workflows/material-choco-site.yml</code> runs it and publishes the result. Fonts are the vendored files from <code>ui/vendor/fonts</code>; the site makes no third-party requests apart from the lookup of the newest release.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>The app has not been built or run with <code>build.bat</code> on Windows.</li><li>The end to end run needs Google Chrome on the machine (<code>CHROME_BIN</code> selects another binary).</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/build-and-test.md">docs/articles/build-and-test.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/getting-started.html"><h3>Getting started on one PC</h3><p>the installed app</p><span class="more">Open</span></a><a class="card reveal" href="../articles/commands-and-options.html"><h3>Every command and option</h3><p>the schema generator</p><span class="more">Open</span></a><a class="card reveal" href="../features/windows-installer.html"><h3>Windows installer</h3><p>the feature page</p><span class="more">Open</span></a><a class="card reveal" href="../features/hub-http-api.html"><h3>Hub HTTP API</h3><p>routes for your own tooling</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More guides"><a href="finding-your-way-around.html"><small>Previous</small>Finding your way around</a><a class="next" href="./"><small>Back to</small>All guides</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Bundled Chocolatey CLI · Material Choco</title>
+<meta name="description" content="The Chocolatey CLI built from this repository ships inside the app, so there is nothing to install before the first command.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/bundled-cli.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bundled Chocolatey CLI · Material Choco">
+<meta property="og:description" content="The Chocolatey CLI built from this repository ships inside the app, so there is nothing to install before the first command.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/bundled-cli.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bundled Chocolatey CLI · Material Choco">
+<meta name="twitter:description" content="The Chocolatey CLI built from this repository ships inside the app, so there is nothing to install before the first command.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Bundled Chocolatey CLI</span></li></ol><h1>Bundled Chocolatey CLI</h1><p class="lead"><span>The Chocolatey CLI built from this repository ships inside the app, so there is nothing to install before the first command.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>The installer carries a <code>choco.exe</code> that the release workflow builds from the source in this repository. On first use the app copies it to a folder it owns and runs every command with <code>ChocolateyInstall</code> pointing there:</p>
+<ul><li><code>%ProgramData%\MaterialChoco\chocolatey</code> when the app runs as administrator and can write there, or when that folder already exists.</li><li><code>%LOCALAPPDATA%\MaterialChoco\chocolatey</code> otherwise.</li></ul>
+<p>The copy is refreshed when the bundled file changes, for example after an app update. A Chocolatey you installed yourself is not touched. Because the build does not come from Chocolatey Software, the agent adds <code>--allow-unofficial-build</code> to every command.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>You do not have to do anything. The first step of the first-run wizard starts the bundled CLI and shows its version, its path and the number of packages found. Every machine card shows the CLI version it reported.</p>
+<p>If the CLI cannot be started, pages show <b>Chocolatey CLI is not available</b> with the reason and a <b>Try again</b> button, instead of an empty list.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li>The release workflow built the CLI on a Windows runner and <code>choco.exe --version</code> printed a version there, as recorded in <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">HANDOFF.md</a>.</li><li>Test <code>agent enrolls with a one time code and reports inventory from the bundled CLI</code> in <code>test/hub.test.js</code> and the end to end check <code>two agents enrolled and reported inventory through the bundled CLI</code> exercise the copy-and-run path, with the test stand-in in place of <code>choco.exe</code>.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>The installed app has not been started on Windows, so the real <code>choco.exe</code> has not yet been run by the app.</li><li>Whether the CLI unpacks its helper files correctly when <code>ChocolateyInstall</code> points at the app-owned folder is unconfirmed.</li><li>A development checkout has no bundled CLI. See <a href="../articles/build-and-test.html">Build and test from source</a>.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/bundled-cli.md">docs/features/bundled-cli.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/getting-started.html"><h3>Getting started on one PC</h3><p>the first run</p><span class="more">Open</span></a><a class="card reveal" href="../features/first-run-wizard.html"><h3>First-run wizard</h3><p>where the CLI is checked</p><span class="more">Open</span></a><a class="card reveal" href="../features/windows-installer.html"><h3>Windows installer</h3><p>how the CLI gets into the installer</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="./"><small>Back to</small>All features</a><a class="next" href="command-schema.html"><small>Next</small>Command schema generated from the CLI source</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

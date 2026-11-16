@@ -3,7 +3,7 @@ name: Material Choco site
 on:
   push:
     branches: [main]
-    paths: ['material-choco/site/**', 'material-choco/docs/screenshots/**', 'material-choco/ui/vendor/fonts/**', '.github/workflows/material-choco-site.yml']
+    paths: ['material-choco/site/**', 'material-choco/docs/articles/**', 'material-choco/docs/features/**', 'material-choco/docs/screenshots/**', 'material-choco/ui/icon.svg', 'material-choco/ui/vendor/fonts/**', 'material-choco/package.json', '.github/workflows/material-choco-site.yml']
   workflow_dispatch:
 
 permissions:
@@ -24,15 +24,23 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Build the pages from docs/articles and docs/features
+        run: node material-choco/site/tools/generate.mjs
       - name: Assemble the site
         run: |
-          mkdir -p _site/shots _site/fonts
-          cp material-choco/site/* _site/
+          mkdir -p _site/shots _site/fonts _site/articles _site/features
+          cp material-choco/site/*.html material-choco/site/*.css material-choco/site/*.js material-choco/site/*.json material-choco/site/*.png _site/
+          cp material-choco/site/articles/*.html _site/articles/
+          cp material-choco/site/features/*.html _site/features/
           cp material-choco/ui/icon.svg _site/
           cp material-choco/ui/vendor/fonts/*.woff2 _site/fonts/
           cp material-choco/docs/screenshots/*.png _site/shots/
-          printf '{"builtAt":"%s","commit":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_SHA" > _site/build.json
+          rm -f _site/shots/zz-*.png
+          version="$(node -p "require('./material-choco/package.json').version")"
+          printf '{"builtAt":"%s","commit":"%s","version":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_SHA" "$version" > _site/build.json
           touch _site/.nojekyll
+      - name: Check that every internal link resolves
+        run: node material-choco/site/tools/check-links.mjs _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Every command and option · Material Choco</title>
+<meta name="description" content="Material Choco does not keep its own list of what Chocolatey can do. It reads the list from the CLI source in the same repository, so every command and every option has a control.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/articles/commands-and-options.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Every command and option · Material Choco">
+<meta property="og:description" content="Material Choco does not keep its own list of what Chocolatey can do. It reads the list from the CLI source in the same repository, so every command and every option has a control.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/articles/commands-and-options.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Every command and option · Material Choco">
+<meta name="twitter:description" content="Material Choco does not keep its own list of what Chocolatey can do. It reads the list from the CLI source in the same repository, so every command and every option has a control.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../articles/">Guides</a></li><li><span aria-current="page">Every command and option</span></li></ol><h1>Every command and option</h1><p class="lead"><span>Material Choco does not keep its own list of what Chocolatey can do. It reads the list from the CLI source in the same repository, so every command and every option has a control.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#where-the-list-comes-from">Where the list comes from</a></li><li><a href="#the-console">The Console</a></li><li><a href="#the-same-forms-elsewhere">The same forms elsewhere</a></li><li><a href="#options-added-for-you">Options added for you</a></li><li><a href="#what-is-refused">What is refused</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="where-the-list-comes-from">Where the list comes from</h2>
+<p><code>scripts/gen-schema.mjs</code> reads the C# command classes under <code>src/chocolatey</code> and writes <code>shared/choco-schema.json</code>. At the time of writing that file holds 23 commands, 190 command options, 24 global options, 11 config settings and 30 features. A test fails when the file no longer matches the source, so the list cannot drift silently. When the CLI gains an option, run the generator and the app gains a control.</p>
+<h2 id="the-console">The Console</h2>
+<p>Open <b>Console</b>. The left column lists every command; deprecated ones are marked.</p>
+<ol><li>Pick a command. Commands with subcommands, such as <code>source</code> or <code>pin</code>, show them as a row of buttons.</li><li>Type positional arguments, for example package ids, separated by spaces. Put double quotes around an argument that contains spaces.</li><li>Set options. A switch is a toggle; an option that takes a value is a text field. Each one has an information button that shows the description from the CLI source and every accepted spelling of the option.</li><li>With more than six options, a filter field narrows the list.</li><li>Open <b>Global options</b> for the options every command accepts.</li><li>Watch <b>Command that will run</b>. It updates as you type and shows exactly what the agent will be asked to run.</li><li>Choose the machines under <b>Run on</b>, then <b>Run</b>. <b>Schedule</b> sends the command to the Schedules page to run on a timetable, and <b>Copy</b> copies the command text. For a dry run, turn on <code>--what-if</code> under <b>Global options</b>; the dialogs on the daily pages have a <b>Dry run with --what-if</b> button that does this for you.</li></ol>
+<figure><button class="shot" type="button" data-full="../shots/11-console-every-option.png" data-caption="Lower half of the Console: the exact command, the machines to run on, and the Copy, Schedule and Run buttons." aria-label="Enlarge: Lower half of the Console: the exact command, the machines to run on, and the Copy, Schedule and Run buttons."><img loading="lazy" src="../shots/11-console-every-option.png" alt="Lower half of the Console: the exact command, the machines to run on, and the Copy, Schedule and Run buttons." width="1360" height="757"></button><figcaption>Lower half of the Console: the exact command, the machines to run on, and the Copy, Schedule and Run buttons.</figcaption></figure>
+<p>Commands that remove things (<code>uninstall</code>, <code>unpackself</code>, and the <code>remove</code> and <code>unset</code> subcommands) ask for the <a href="../articles/confirming-destructive-actions.html">two key confirmation</a> first.</p>
+<h2 id="the-same-forms-elsewhere">The same forms elsewhere</h2>
+<p>The daily pages open the same generated form with the fields already filled in:</p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Page</th><th scope="col">Uses</th></tr></thead><tbody><tr><td>Installed</td><td><code>upgrade</code>, <code>uninstall</code>, <code>pin</code>, <code>info</code>, and <code>install</code> with a <code>packages.config</code></td></tr><tr><td>Discover</td><td><code>search</code>, then <code>install</code> with every install option</td></tr><tr><td>Updates</td><td><code>outdated</code> through the inventory, then <code>upgrade</code></td></tr><tr><td>Sources</td><td><code>source</code> add, remove, enable, disable</td></tr><tr><td>Config and features</td><td><code>config</code> set and unset, <code>feature</code> enable and disable</td></tr><tr><td>Pins</td><td><code>pin</code> add and remove</td></tr><tr><td>API keys</td><td><code>apikey</code> list, add, remove</td></tr><tr><td>Cache and templates</td><td><code>cache</code>, <code>template</code>, <code>rule</code>, <code>license</code>, <code>support</code></td></tr><tr><td>Package builder</td><td><code>new</code>, <code>pack</code>, <code>push</code>, <code>export</code></td></tr></tbody></table></div>
+<h2 id="options-added-for-you">Options added for you</h2>
+<ul><li><code>--confirm</code>, <code>--no-progress</code> and <code>--no-color</code> are added to commands you start, because nobody is sitting at the remote console to answer a prompt. They are shown in the preview.</li><li><code>--allow-unofficial-build</code> is added by the agent, because the bundled CLI is built from this repository and not by Chocolatey Software. It is added on the machine and is not part of the preview.</li><li>Inventory reads add <code>--limit-output</code> so that the result can be parsed.</li></ul>
+<h2 id="what-is-refused">What is refused</h2>
+<p>The hub and the agent both check a request before anything runs: unknown commands or options, arguments that start with <code>-</code>, values with line breaks. See the <a href="../articles/security-model.html">security model</a>.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li>Tests <code>schema matches the CLI source in this repository</code> and <code>schema covers every command file</code> in <code>test/core.test.js</code>.</li><li>Tests <code>buildArgs builds validated arguments without a shell</code> and <code>buildArgs rejects unknown commands, options, subcommands and option injection</code>.</li><li>End to end checks <code>console preview shows the exact command</code>, <code>config page lists every CLI feature</code> and <code>failed job shows exit code and output</code>.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>Every check so far ran against a test stand-in for <code>choco.exe</code>. No command has been run through the app on Windows yet.</li><li>The parsers for <code>--limit-output</code> rows of <code>apikey list</code>, <code>template list</code> and <code>rule list</code> were written from the source, not from real output. Those pages show raw output where no parser applies.</li><li>The form is generic: it does not know which combinations of options make sense together. The CLI still validates and reports errors, which you see in the job output.</li><li>Options that exist only in the licensed edition of Chocolatey appear if they are in this repository's source, and do nothing without that edition.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/commands-and-options.md">docs/articles/commands-and-options.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/jobs-schedules-and-history.html"><h3>Jobs, schedules and history</h3><p>what happens after Run</p><span class="more">Open</span></a><a class="card reveal" href="../articles/confirming-destructive-actions.html"><h3>Confirming destructive actions</h3><p>two keys and a slider</p><span class="more">Open</span></a><a class="card reveal" href="../features/command-schema.html"><h3>Command schema</h3><p>the generator in detail</p><span class="more">Open</span></a><a class="card reveal" href="../features/console.html"><h3>Console</h3><p>the feature page</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More guides"><a href="security-model.html"><small>Previous</small>Security model</a><a class="next" href="jobs-schedules-and-history.html"><small>Next</small>Jobs, schedules and history</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

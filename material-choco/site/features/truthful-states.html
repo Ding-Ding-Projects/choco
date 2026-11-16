@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Loading, empty, offline and error states · Material Choco</title>
+<meta name="description" content="Every page says what is actually true: loading, nothing here yet, offline, or failed and why.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/truthful-states.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Loading, empty, offline and error states · Material Choco">
+<meta property="og:description" content="Every page says what is actually true: loading, nothing here yet, offline, or failed and why.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/truthful-states.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loading, empty, offline and error states · Material Choco">
+<meta name="twitter:description" content="Every page says what is actually true: loading, nothing here yet, offline, or failed and why.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Loading, empty, offline and error states</span></li></ol><h1>Loading, empty, offline and error states</h1><p class="lead"><span>Every page says what is actually true: loading, nothing here yet, offline, or failed and why.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<ul><li><b>No sample data.</b> Before a machine is paired, pages say nothing is enrolled and offer the button to pair one.</li><li><b>Loading</b> shows placeholder rows while an inventory or a command result is on its way.</li><li><b>Offline</b> machines keep their last inventory, labelled with its time and a note that it may be stale. When the live connection to the hub itself drops, the page reconnects by itself and reloads its data when the link returns.</li><li><b>Errors</b> appear in place: a panel with what failed, the exit code or message, the output where there is one, and a way to retry. A page that throws shows the error and the rest of the app keeps working.</li><li><b>CLI not available</b> is its own state on a machine card, with the reason from the agent.</li></ul>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Nothing to set up. When you see an error panel, its buttons are the recovery actions: try again, open the full log, refresh the inventory.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p>End to end checks <code>empty state is truthful before any machine</code>, <code>failed job shows exit code and output</code> and <code>no browser console errors during the run</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>The states were checked in the situations the end to end run creates. Network failures in the middle of a request were not simulated.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/truthful-states.md">docs/features/truthful-states.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/overview.html"><h3>Overview</h3><span class="more">Open</span></a><a class="card reveal" href="../features/jobs-and-live-output.html"><h3>Jobs and live output</h3><span class="more">Open</span></a><a class="card reveal" href="../features/notifications.html"><h3>Notifications</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="notifications.html"><small>Previous</small>Notifications</a><a class="next" href="overview.html"><small>Next</small>Overview</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

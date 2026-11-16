@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Users and roles · Material Choco</title>
+<meta name="description" content="More than one person can sign in to a hub, each with a role: admin, operator or viewer.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/users-and-roles.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Users and roles · Material Choco">
+<meta property="og:description" content="More than one person can sign in to a hub, each with a role: admin, operator or viewer.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/users-and-roles.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Users and roles · Material Choco">
+<meta name="twitter:description" content="More than one person can sign in to a hub, each with a role: admin, operator or viewer.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Users and roles</span></li></ol><h1>Users and roles</h1><p class="lead"><span>More than one person can sign in to a hub, each with a role: admin, operator or viewer.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Role</th><th scope="col">May do</th></tr></thead><tbody><tr><td>Admin</td><td>Everything, including users, webhooks, removing machines, and machine policy (read only, allowed commands)</td></tr><tr><td>Operator</td><td>Run any command, cancel jobs, pair machines, rename and group machines, create and edit schedules</td></tr><tr><td>Viewer</td><td>Read machines, jobs and their output, schedules and history. Refresh an inventory and run plain read only queries such as <code>list</code>, <code>outdated</code>, <code>search</code> and <code>info</code></td></tr></tbody></table></div>
+<p>The account created at setup is an admin. The hub enforces the role on every request and answers with a refusal when the role does not allow it; the interface also leaves out controls that the role cannot use and says which role you have. The last enabled admin cannot be deleted, disabled or given another role. A role change, disabling an account and a password reset take effect on that person's open sessions at once.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p>Admins open <b>Users and roles</b>:</p>
+<ul><li><b>Add a user</b> with a name, a role and a first password of at least 10 characters. Tell the person the password yourself; they can change it in Settings.</li><li>Change a role with the buttons on the row, or switch an account off with its <b>Enabled</b> switch.</li><li>The row menu has <b>Reset password</b> and <b>Delete user</b>. Deleting asks for the <a href="../features/two-key-confirmation.html">two key confirmation</a>.</li></ul>
+<p>Your own role is shown in the top bar. Every user action is written to the <a href="../features/history.html">History</a>, without passwords.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li><code>test/roles.test.js</code>, among them <code>a viewer cannot change anything</code>, <code>a viewer may refresh the inventory and run plain read only queries</code>, <code>an operator cannot remove machines or change machine policy</code>, <code>the last administrator cannot be removed, demoted or disabled</code> and <code>a role change, a disabled account and a reset password take effect on live sessions</code>.</li><li>End to end checks <code>users are added with their roles through the Users page</code>, <code>an operator sees the role and no admin pages</code>, <code>the hub answers 403 to an operator for admin actions</code>, <code>a viewer is not offered upgrade, import or uninstall on Installed</code> and <code>the hub answers 403 to a viewer for changes and accepts a plain query</code>.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li><b>Job output and the history are visible to every role.</b> Do not give an account to someone who should not read them.</li><li>Three fixed roles. There are no custom roles and no limiting of a user to some machines.</li><li>A new user gets a password chosen by the admin. There are no invitations by email and no self-service password recovery.</li><li>Not available in the desktop app, which has one local user who is always admin.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/users-and-roles.md">docs/features/users-and-roles.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/sign-in.html"><h3>Sign in</h3><span class="more">Open</span></a><a class="card reveal" href="../features/command-allow-lists.html"><h3>Command allow lists</h3><span class="more">Open</span></a><a class="card reveal" href="../articles/security-model.html"><h3>Security model</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="passkeys.html"><small>Previous</small>Passkeys</a><a class="next" href="pairing.html"><small>Next</small>Pairing</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

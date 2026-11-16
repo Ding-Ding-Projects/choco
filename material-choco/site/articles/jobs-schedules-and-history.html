@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>Jobs, schedules and history · Material Choco</title>
+<meta name="description" content="Everything you run becomes a job on one machine. This guide follows a job from the Run button to the history, and shows how to put jobs on a timetable.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/articles/jobs-schedules-and-history.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jobs, schedules and history · Material Choco">
+<meta property="og:description" content="Everything you run becomes a job on one machine. This guide follows a job from the Run button to the history, and shows how to put jobs on a timetable.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/articles/jobs-schedules-and-history.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jobs, schedules and history · Material Choco">
+<meta name="twitter:description" content="Everything you run becomes a job on one machine. This guide follows a job from the Run button to the history, and shows how to put jobs on a timetable.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/" aria-current="page">Guides</a><a href="../features/">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../articles/">Guides</a></li><li><span aria-current="page">Jobs, schedules and history</span></li></ol><h1>Jobs, schedules and history</h1><p class="lead"><span>Everything you run becomes a job on one machine. This guide follows a job from the Run button to the history, and shows how to put jobs on a timetable.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#choose-where-a-command-runs">Choose where a command runs</a></li><li><a href="#the-life-of-a-job">The life of a job</a></li><li><a href="#the-jobs-page">The Jobs page</a></li><li><a href="#schedules">Schedules</a></li><li><a href="#history">History</a></li><li><a href="#notifications">Notifications</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="choose-where-a-command-runs">Choose where a command runs</h2>
+<p>The button at the top that reads <b>All machines</b> sets the machines that pages show and act on. Choose one machine, several, or all. Dialogs and the Console also have their own <b>Run on</b> list for a single command.</p>
+<p>Running a command on three machines creates three jobs, one per machine.</p>
+<h2 id="the-life-of-a-job">The life of a job</h2>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">State</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>Queued</td><td>Waiting for the machine's agent. For an offline machine it waits up to 7 days</td></tr><tr><td>Running</td><td>The agent took it. Output arrives live</td></tr><tr><td>Succeeded</td><td>The CLI ended with exit code 0</td></tr><tr><td>Failed</td><td>Any other exit code, a refusal by the agent, or a timeout</td></tr><tr><td>Cancelled</td><td>You cancelled it while queued or running</td></tr><tr><td>Expired</td><td>The machine did not come online within 7 days</td></tr></tbody></table></div>
+<p>An agent runs one job at a time, in the order they were queued. A job is stopped after 240 minutes.</p>
+<h2 id="the-jobs-page">The Jobs page</h2>
+<p>Select a job on the left to see its command, who requested it and when, its state, and the output. While a job runs, the output scrolls live and <b>Cancel</b> stops it. When it ends you get a success panel with the exit code or a failure panel with <b>Run again</b>, <b>Copy output</b> and <b>Refresh inventory</b>. <b>Export log</b> saves the output as a text file.</p>
+<p>Filters narrow the list to active jobs, failed jobs, or hide the inventory reads that agents do after each change.</p>
+<figure><button class="shot" type="button" data-full="../shots/12-job-failed.png" data-caption="A failed job: exit code 1, the output, and the recovery actions." aria-label="Enlarge: A failed job: exit code 1, the output, and the recovery actions."><img loading="lazy" src="../shots/12-job-failed.png" alt="A failed job: exit code 1, the output, and the recovery actions." width="1360" height="757"></button><figcaption>A failed job: exit code 1, the output, and the recovery actions.</figcaption></figure>
+<p>If the hub restarts while a job is running, the job is marked failed with a note that its result is unknown, because the hub can no longer vouch for it.</p>
+<h2 id="schedules">Schedules</h2>
+<p>Open <b>Schedules</b> and choose <b>New schedule</b>.</p>
+<ul><li><b>What to run:</b> upgrade all packages, refresh the inventory, or a command you built in the Console and sent here with its <b>Schedule</b> button.</li><li><b>Where:</b> all machines including ones paired later, the machines currently selected, or a group.</li><li><b>When:</b> a time of day in the hub's time zone, and optionally the days of the week. No day selected means every day.</li></ul>
+<p>Schedules run on the hub, once per day at most. An offline machine receives its job when it returns, within 7 days. A read only machine is skipped when the command would change it. Each schedule has a switch to pause it.</p>
+<h2 id="history">History</h2>
+<p><b>History</b> is an append-only record kept by the hub: sign ins and failed sign ins, pairing codes, machines joining and leaving, every job created and how it ended, schedule runs, and account changes. Filter it, or export it as CSV, JSON or Markdown; the export follows the filter.</p>
+<p>Source passwords and API keys are masked before a command is recorded.</p>
+<figure><button class="shot" type="button" data-full="../shots/18-history.png" data-caption="History with its filter and export." aria-label="Enlarge: History with its filter and export."><img loading="lazy" src="../shots/18-history.png" alt="History with its filter and export." width="1360" height="757"></button><figcaption>History with its filter and export.</figcaption></figure>
+<h2 id="notifications">Notifications</h2>
+<p>A notification appears when a job is queued and when one of your jobs ends, with an <b>Open</b> button that jumps to the job. The bell in the top bar lists the notifications since the page was opened. Installs and upgrades also trigger a <a href="../articles/install-result-takeovers.html">full-screen result</a>.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<ul><li>Tests in <code>test/hub.test.js</code>: <code>a job runs on the agent, streams output and refreshes inventory</code>, <code>a failing command reports its exit code</code>, <code>schedules create jobs at their time, once per day</code>, <code>history is recorded and secrets stay out of it</code>.</li><li>End to end checks: <code>inventory refreshes after a change</code>, <code>job page shows the success state with exit code</code>, <code>failed job shows exit code and output</code>, <code>history records actions</code>.</li></ul>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>The hub keeps the newest 2,000 jobs.</li><li>The job list does not keep the original options of a job, so <b>Run again</b> opens the Console on that command for you to fill in.</li><li>Schedules are daily or weekly at one time of day. There are no intervals or cron expressions.</li><li>A bulk action is one job per row or machine, not one transaction.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/articles/jobs-schedules-and-history.md">docs/articles/jobs-schedules-and-history.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../articles/commands-and-options.html"><h3>Every command and option</h3><p>build the command first</p><span class="more">Open</span></a><a class="card reveal" href="../articles/install-result-takeovers.html"><h3>Install result takeovers</h3><p>the full-screen results</p><span class="more">Open</span></a><a class="card reveal" href="../articles/pairing-and-remote-agents.html"><h3>Pairing and remote agents</h3><p>where jobs run</p><span class="more">Open</span></a><a class="card reveal" href="../features/offline-job-queue.html"><h3>Offline job queue</h3><p>the 7 day wait in detail</p><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More guides"><a href="commands-and-options.html"><small>Previous</small>Every command and option</a><a class="next" href="confirming-destructive-actions.html"><small>Next</small>Confirming destructive actions</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" data-base="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8A3F0B">
+<title>School mode · Material Choco</title>
+<meta name="description" content="A plain mode for shared or public screens: English only, no playful options, with an optional PIN.">
+<link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/school-mode.html">
+<meta property="og:site_name" content="Material Choco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="School mode · Material Choco">
+<meta property="og:description" content="A plain mode for shared or public screens: English only, no playful options, with an optional PIN.">
+<meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/school-mode.html">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="School mode · Material Choco">
+<meta name="twitter:description" content="A plain mode for shared or public screens: English only, no playful options, with an optional PIN.">
+<meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
+<meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../site.css?v=ccbee28d">
+<script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="top">
+  <a class="brand" href=".././"><img src="../icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav id="nav" aria-label="Site"><a href=".././#what">What it does</a><a href=".././#remote">Remote</a><a href=".././#screens">Screens</a><a href="../articles/">Guides</a><a href="../features/" aria-current="page">Features</a><a href=".././#status">Status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <div class="tools">
+    <button class="tool search" type="button" data-open-palette aria-haspopup="dialog" aria-keyshortcuts="Control+Shift+F" aria-label="Search this site and run actions. Shortcut: Control Shift F"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><span class="lbl">Search</span><kbd>Ctrl+Shift+F</kbd></button>
+    <button class="tool" type="button" id="theme-toggle" aria-label="Theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H4zM9 20h6M12 16v4"/></svg></button>
+    <button class="tool menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="nav" aria-label="Open the menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<main id="main">
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">School mode</span></li></ol><h1>School mode</h1><p class="lead"><span>A plain mode for shared or public screens: English only, no playful options, with an optional PIN.</span></p></div>
+<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<h2 id="what-it-is">What it is</h2>
+<p>When the mode is on, the interface is forced to English, playful message variants and dialog emoji are off, the personal wording file is ignored, and the Cantonese narration voice is not used. The mode can be renamed, and the new name is shown wherever the mode is mentioned. A PIN can be set that is asked for when turning the mode off.</p>
+<h2 id="how-to-use-it">How to use it</h2>
+<p><b>Settings</b>, <b>Language</b>: turn the mode on, optionally rename it and set a PIN. To turn it off, flip the switch and enter the PIN if one is set.</p>
+<h2 id="what-was-checked">What was checked</h2>
+<p>No dedicated named check. The behaviour is implemented in <code>ui/js/i18n.js</code> and <code>ui/js/pages2.js</code>.</p>
+<h2 id="known-limits">Known limits</h2>
+<ul><li>It is a convenience lock and not a security feature. The setting and the PIN live in the browser's storage, and clearing the site's storage resets both.</li><li>It applies to one browser. It is not pushed from the hub to other devices.</li></ul>
+<p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/school-mode.md">docs/features/school-mode.md</a>. It describes version 0.1 of the app. See the <a href="../#status">honest status</a> for what has and has not been proven.</p>
+</article></div>
+<section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/language-modes.html"><h3>Language modes</h3><span class="more">Open</span></a><a class="card reveal" href="../features/personal-wording-file.html"><h3>Personal wording file</h3><span class="more">Open</span></a><a class="card reveal" href="../features/focus-modes.html"><h3>Focus modes</h3><span class="more">Open</span></a></div>
+<nav class="pager" aria-label="More features"><a href="personal-wording-file.html"><small>Previous</small>Personal wording file</a><a class="next" href="theme-and-seed-colour.html"><small>Next</small>Theme and seed colour</a></nav>
+</section>
+</main>
+<footer>
+  <nav aria-label="Footer"><a href=".././">Home</a><a href="../articles/">Guides</a><a href="../features/">Features</a><a href="https://github.com/Ding-Ding-Projects/choco/releases">Releases</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+  <p>This site documents Material Choco and links to its downloads. It is not the app: the app runs on your Windows PC, and the hub runs in your own container.</p>
+  <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
+  <p id="built">Build information loads with scripts enabled.</p>
+</footer>
+<script src="../site.js?v=ccbee28d"></script>
+</body>
+</html>
