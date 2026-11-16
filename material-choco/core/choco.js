@@ -77,6 +77,9 @@ function run(chocoPath, argv, { onData, timeoutMs = 4 * 60 * 60 * 1000, signal, 
   return new Promise((resolve) => {
     const started = Date.now(); let out = ''; let err = ''; let done = false; let timer;
     let child;
+    // The tests stand a Node script in for choco.exe; on Windows it has to be started by Node.
+    // Only test/fixtures/stand-in.js sets this variable.
+    if (process.env.MATERIAL_CHOCO_CLI_NODE === '1') { argv = [chocoPath, ...argv]; chocoPath = process.execPath; }
     try { child = spawn(chocoPath, argv, { windowsHide: true, shell: false, cwd: cwd || os.tmpdir(), env: env ? { ...process.env, ...env } : process.env }); }
     catch (e) { return resolve({ code: -1, stdout: '', stderr: String(e.message), durationMs: 0, spawnError: true }); }
     const finish = (code, extra = {}) => { if (done) return; done = true; clearTimeout(timer); resolve({ code, stdout: out, stderr: err, durationMs: Date.now() - started, ...extra }); };

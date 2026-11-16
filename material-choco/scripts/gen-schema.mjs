@@ -159,7 +159,8 @@ const schema = { schemaVersion: 1, generatedFrom: 'src/chocolatey/infrastructure
 const out = path.join(here, '..', 'shared', 'choco-schema.json');
 const text = JSON.stringify(schema, null, 1) + '\n';
 if (process.argv.includes('--check')) {
-  if (!fs.existsSync(out) || read(out) !== text) { console.error('choco-schema.json is out of date with the C# source. Run: node scripts/gen-schema.mjs'); process.exit(1); }
+  // A Windows checkout with core.autocrlf has CRLF line endings; the comparison ignores them.
+  if (!fs.existsSync(out) || read(out).replace(/\r\n/g, '\n') !== text) { console.error('choco-schema.json is out of date with the C# source. Run: node scripts/gen-schema.mjs'); process.exit(1); }
   console.log('schema matches source');
 } else { fs.writeFileSync(out, text); }
 console.log(`${commands.length} commands, ${commands.reduce((n, c) => n + c.options.length, 0)} command options, ${globalOptions.length} global options, ${configSettings.length} config settings, ${features.length} features`);

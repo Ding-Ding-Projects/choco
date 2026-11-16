@@ -9,11 +9,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import http from 'node:http';
 import { launch } from './cdp.mjs';
+import { installStandIn } from '../fixtures/stand-in.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const shots = path.resolve(root, process.argv.includes('--shots') ? process.argv[process.argv.indexOf('--shots') + 1] : 'docs/screenshots');
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mc-e2e-')); const port = 18000 + Math.floor(Math.random() * 1000); const hubUrl = `http://127.0.0.1:${port}`;
-const bundle = path.join(tmp, 'bundle'); fs.mkdirSync(bundle); fs.copyFileSync(path.join(root, 'test/fixtures/fake-choco.js'), path.join(bundle, 'choco')); fs.chmodSync(path.join(bundle, 'choco'), 0o755);
+const bundle = path.join(tmp, 'bundle'); installStandIn(bundle);
 const procs = []; const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok }); console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${detail && !ok ? '  ' + detail : ''}`); };
 const agentEnv = (n) => ({ ...process.env, MATERIAL_CHOCO_DATA: path.join(tmp, 'agent' + n), MATERIAL_CHOCO_BUNDLE: bundle, MATERIAL_CHOCO_HOME: path.join(tmp, 'home' + n), FAKE_CHOCO_STATE: path.join(tmp, `state${n}.json`) });
@@ -172,7 +173,7 @@ try {
   await settingsTab('Appearance');
   await setField('[data-time="darkFrom"]', hhmm(new Date(tNow - 60000)), 'change'); await p.wait(300); await setField('[data-time="darkTo"]', hhmm(new Date(tNow + 5 * 60000)), 'change'); await p.wait(300); await click('[data-pal="set-schedTheme"] md-switch'); await p.wait(600);
   check('theme switches by time of day and leaves the theme choice alone', await p.eval(`const st=JSON.parse(localStorage.getItem('mc.settings.v1')); return document.documentElement.dataset.theme==='dark' && !('theme' in st) && document.querySelector('#main').innerText.includes('Right now: dark until')`));
-  await click('[data-pal="set-schedTheme"] md-switch'); await p.wait(600); check('turning the theme schedule off returns the chosen theme', await p.eval(`return document.documentElement.dataset.theme`) === 'light');
+  await click('[data-pal="set-schedTheme"] md-switch'); await p.wait(600); check('turning the theme schedule off returns the chosen theme', await p.eval(`return document.documentElement.dataset.theme === (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')`));
   const logoBad = await p.eval(`const m=await import('/js/pages2.js'); try{ await m.applyLogoFile(new File([new TextEncoder().encode('this is not a picture')],'logo.png',{type:'image/png'})); return 'accepted' }catch(e){ return e.message }`);
   check('a logo file that is not a picture is refused by its content', /not a PNG, JPEG, WebP or SVG/.test(logoBad) && await p.eval(`return localStorage.getItem('mc.logo')===null`), logoBad);
   const logoBig = await p.eval(`const m=await import('/js/pages2.js'); try{ await m.applyLogoFile(new File([new Uint8Array(300*1024)],'big.png')); return 'accepted' }catch(e){ return e.message }`); check('a logo larger than 256 KB is refused', /limit is 256 KB/.test(logoBig), logoBig);

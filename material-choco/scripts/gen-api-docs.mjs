@@ -78,7 +78,7 @@ const collectionText = JSON.stringify(collection, null, 1) + '\n';
 // ---- README table -------------------------------------------------------------------------------------------
 const WHO = { open: 'anyone (no session)', viewer: 'viewer, operator, admin', operator: 'operator, admin', admin: 'admin', agent: 'agent token' };
 const table = ['| Method | Path | Who may call it |', '| --- | --- | --- |', ...routes.map((r) => `| ${r.method} | \`${r.path}\` | ${WHO[r.access]} |`)].join('\n');
-const readme = fs.existsSync(readmeFile) ? fs.readFileSync(readmeFile, 'utf8') : '';
+const readme = fs.existsSync(readmeFile) ? fs.readFileSync(readmeFile, 'utf8').replace(/\r\n/g, '\n') : '';
 const a = readme.indexOf(START); const b = readme.indexOf(END);
 if (a < 0 || b < a) { console.error(`docs/api/README.md needs the markers\n${START}\n${END}`); process.exit(1); }
 const readmeText = readme.slice(0, a + START.length) + '\n' + table + '\n' + readme.slice(b);
@@ -86,7 +86,7 @@ const readmeText = readme.slice(0, a + START.length) + '\n' + table + '\n' + rea
 // ---- write or check ---------------------------------------------------------------------------------------------
 const outputs = [[collectionFile, collectionText], [readmeFile, readmeText]];
 if (process.argv.includes('--check')) {
-  const stale = outputs.filter(([file, text]) => !fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== text).map(([file]) => path.relative(root, file));
+  const stale = outputs.filter(([file, text]) => !fs.existsSync(file) || fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n') !== text).map(([file]) => path.relative(root, file));
   if (stale.length) { console.error(`Out of date: ${stale.join(', ')}. Run: node scripts/gen-api-docs.mjs`); process.exit(1); }
   console.log(`API docs match the ${routes.length} routes in hub/server.js`);
 } else {

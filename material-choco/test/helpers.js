@@ -9,9 +9,7 @@ const http = require('node:http');
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mc-hard-'));
 if (!process.env.MATERIAL_CHOCO_BUNDLE) {
-  const bundle = path.join(tmp, 'bundle'); fs.mkdirSync(bundle);
-  const exe = path.join(bundle, process.platform === 'win32' ? 'choco.exe' : 'choco');
-  fs.copyFileSync(path.join(__dirname, 'fixtures', 'fake-choco.js'), exe); fs.chmodSync(exe, 0o755);
+  const bundle = path.join(tmp, 'bundle'); require('./fixtures/stand-in').installStandIn(bundle);
   Object.assign(process.env, { MATERIAL_CHOCO_BUNDLE: bundle, MATERIAL_CHOCO_HOME: path.join(tmp, 'home'), FAKE_CHOCO_STATE: path.join(tmp, 'state.json') });
 }
 delete process.env.MATERIAL_CHOCO_ORIGIN; delete process.env.MATERIAL_CHOCO_KEY_FILE;

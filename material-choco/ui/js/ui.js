@@ -70,7 +70,8 @@ export function toast(message, { kind = '', action, ms = 5000 } = {}) {
   document.dispatchEvent(new CustomEvent('mc-notice'));
   const el = h('div', { class: 'toast ' + kind }, icon(kind === 'err' ? 'error' : kind === 'ok' ? 'check_circle' : 'info'), h('span', { class: 'grow' }, message), action && h('button', { onclick: () => { action.run(); el.remove(); } }, action.label), h('button', { 'aria-label': t('close'), onclick: () => el.remove() }, icon('close', 'sm')));
   toastHost.append(el); if (kind === 'err') sound('err'); else if (kind === 'ok') sound('ok');
-  if (kind !== 'err') setTimeout(() => el.remove(), ms); else setTimeout(() => el.remove(), 15000);
+  // ms: 0 keeps the notice until it is closed or its action is used.
+  if (kind === 'err') setTimeout(() => el.remove(), 15000); else if (ms > 0) setTimeout(() => el.remove(), ms);
 }
 
 // --- sheets (dialogs) -------------------------------------------------------------------

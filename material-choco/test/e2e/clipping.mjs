@@ -18,6 +18,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { launch } from './cdp.mjs';
+import { installStandIn } from '../fixtures/stand-in.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const arg = (name) => (process.argv.includes(name) ? process.argv[process.argv.indexOf(name) + 1] : undefined);
@@ -79,7 +80,7 @@ const MEASURE = `
 `;
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mc-clip-')); const port = 19000 + Math.floor(Math.random() * 1000); const hubUrl = `http://127.0.0.1:${port}`;
-const bundle = path.join(tmp, 'bundle'); fs.mkdirSync(bundle); fs.copyFileSync(path.join(root, 'test/fixtures/fake-choco.js'), path.join(bundle, 'choco')); fs.chmodSync(path.join(bundle, 'choco'), 0o755);
+const bundle = path.join(tmp, 'bundle'); installStandIn(bundle);
 const agentEnv = { ...process.env, MATERIAL_CHOCO_DATA: path.join(tmp, 'agent1'), MATERIAL_CHOCO_BUNDLE: bundle, MATERIAL_CHOCO_HOME: path.join(tmp, 'home1'), FAKE_CHOCO_STATE: path.join(tmp, 'state1.json') };
 // Findings that differ only in a data attribute value (one per row of a list) are one pattern.
 const patternOf = (selector) => selector.replace(/="[^"]*"/g, '');

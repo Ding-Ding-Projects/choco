@@ -4,7 +4,7 @@ rem Usage: build-installer.bat [/s | --silent]   (or set SILENT=1)
 setlocal
 cd /d "%~dp0"
 set "BUILD_ONLY=1"
-call build.bat %* || exit /b %errorlevel%
+call "%~dp0build.bat" %* || exit /b %errorlevel%
 echo [installer] electron-builder
 call npx electron-builder --win squirrel --x64 --publish never || exit /b %errorlevel%
 echo.

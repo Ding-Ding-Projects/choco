@@ -33,6 +33,26 @@ export async function runJob(spec, { machineIds, quiet = false } = {}) {
     return r.jobs;
   } catch (e) { toast(e.message, { kind: 'err' }); return []; }
 }
+
+// A switch that changes a machine (a source, a feature) runs a job that takes many seconds with the
+// real CLI. Until that job ends the switch shows the requested state and is locked, so a second press
+// cannot queue the same command again. key names the switch, for example "<machine id>|feature|<name>".
+export const pendingSwitches = new Map();
+export const switchState = (key, current) => (pendingSwitches.has(key) ? { selected: pendingSwitches.get(key), disabled: true } : { selected: current, disabled: false });
+export async function toggleJob(key, want, spec, opts) {
+  if (pendingSwitches.has(key)) return [];
+  pendingSwitches.set(key, want); S.rerender('pending');
+  // After the job ends the lock stays until the machine's inventory has been read again, so the
+  // switch never shows the old value in between. A refresh that never comes releases it after 20 s.
+  const at = (id) => machine(id)?.inventory?.at || '';
+  const before = new Map((opts?.machineIds || []).map((id) => [id, at(id)]));
+  const jobs = await runJob(spec, opts);
+  const done = () => { pendingSwitches.delete(key); S.rerender('pending'); };
+  if (!jobs.length) { done(); return jobs; }
+  const refreshed = () => jobs.every((j) => at(j.machineId) !== (before.get(j.machineId) ?? ''));
+  Promise.all(jobs.map((j) => waitJob(j.id))).then(() => { const end = Date.now() + 20000; const tick = () => (refreshed() || Date.now() > end ? done() : setTimeout(tick, 500)); tick(); }, done);
+  return jobs;
+}
 function upsertJob(j) { const i = S.jobs.findIndex((x) => x.id === j.id); if (i >= 0) S.jobs[i] = j; else S.jobs.unshift(j); }
 
 export async function loadAll() {

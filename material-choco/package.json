@@ -70,5 +70,9 @@
       "iconUrl": "https://raw.githubusercontent.com/Ding-Ding-Projects/choco/develop/material-choco/desktop/icon.ico",
       "name": "MaterialChoco"
     }
+  },
+  "allowScripts": {
+    "electron@33.4.11": true,
+    "esbuild@0.24.2": true
   }
 }

@@ -144,7 +144,7 @@ document.addEventListener('contextmenu', (e) => {
 
 // ---- desktop app: say when an update has been downloaded ---------------------------------------------------------
 if (window.desktop?.onUpdate) window.desktop.onUpdate((u) => {
-  if (u?.state === 'ready') toast(tx('Update {v} has been downloaded and installs when the app restarts. This build is not code signed, so its publisher cannot be verified by Windows.', { v: u.version || '' }).replace('  ', ' '), { ms: 60000, action: { label: tx('Restart'), run: () => window.desktop.restartToUpdate() } });
+  if (u?.state === 'ready') toast(tx('Update {v} has been downloaded and installs when the app restarts. This build is not code signed, so its publisher cannot be verified by Windows.', { v: u.version || '' }).replace('  ', ' '), { ms: 0, action: { label: tx('Restart'), run: () => window.desktop.restartToUpdate() } });
   else if (u?.state === 'error') toast(tx('The update check failed: {m}. The app keeps running on this version.', { m: u.message || 'unknown error' }), { kind: 'err' });
 });
 

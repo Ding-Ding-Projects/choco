@@ -18,7 +18,9 @@ if (agentAt >= 0) {
   const choco = require('../core/choco');
 
   // Squirrel.Windows install, update and uninstall events: create or remove shortcuts, then quit.
-  const squirrel = process.argv.find((a) => a.startsWith('--squirrel-'));
+  // --squirrel-firstrun is not an event to handle: Setup.exe starts the app with it right after
+  // installing, and the app opens normally.
+  const squirrel = process.argv.find((a) => a.startsWith('--squirrel-') && a !== '--squirrel-firstrun');
   const updateExe = path.resolve(path.dirname(process.execPath), '..', 'Update.exe');
   if (squirrel && process.platform === 'win32') {
     const exe = path.basename(process.execPath);
@@ -32,8 +34,19 @@ if (agentAt >= 0) {
 
     async function start() {
       Menu.setApplicationMenu(null);
-      hub = createHub({ dataDir, desktop: true, host: '127.0.0.1', port: 0 });
-      const addr = await hub.listen();
+      // The window's settings live in browser storage, which belongs to the page origin, and the origin
+      // includes the port. So the port of the first start is kept and asked for again; only when another
+      // program holds it does the app take a new one (and those settings start over).
+      const portFile = path.join(dataDir, 'desktop-port');
+      let saved = 0; try { saved = Number(fs.readFileSync(portFile, 'utf8').trim()) || 0; } catch { /* first start */ }
+      let addr;
+      try { hub = createHub({ dataDir, desktop: true, host: '127.0.0.1', port: saved }); addr = await hub.listen(); }
+      catch (err) {
+        if (!saved) throw err;
+        try { await hub.close(); } catch { /* it never listened */ }
+        hub = createHub({ dataDir, desktop: true, host: '127.0.0.1', port: 0 }); addr = await hub.listen();
+      }
+      try { fs.mkdirSync(dataDir, { recursive: true }); fs.writeFileSync(portFile, String(addr.port)); } catch { /* the next start picks a port again */ }
       agent = new Agent({ configFile: path.join(dataDir, 'agent.json') }); agent.start();
       win = new BrowserWindow({ width: 1360, height: 900, minWidth: 420, minHeight: 560, frame: false, backgroundColor: '#FCF8F6', show: false, title: 'Material Choco', icon: path.join(__dirname, 'icon.png'),
         webPreferences: { preload: path.join(__dirname, 'preload.js'), contextIsolation: true, nodeIntegration: false, sandbox: true } });

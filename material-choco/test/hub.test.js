@@ -7,8 +7,7 @@ const os = require('node:os');
 const path = require('node:path');
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'mc-test-'));
-const bundle = path.join(tmp, 'bundle'); fs.mkdirSync(bundle);
-fs.copyFileSync(path.join(__dirname, 'fixtures', 'fake-choco.js'), path.join(bundle, process.platform === 'win32' ? 'choco.exe' : 'choco')); fs.chmodSync(path.join(bundle, 'choco'), 0o755);
+const bundle = path.join(tmp, 'bundle'); require('./fixtures/stand-in').installStandIn(bundle);
 Object.assign(process.env, { MATERIAL_CHOCO_BUNDLE: bundle, MATERIAL_CHOCO_HOME: path.join(tmp, 'home'), FAKE_CHOCO_STATE: path.join(tmp, 'state.json') });
 const { createHub } = require('../hub/server');
 const { Agent } = require('../core/agent');

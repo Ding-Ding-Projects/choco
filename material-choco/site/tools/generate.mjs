@@ -17,7 +17,9 @@ import { fileURLToPath } from 'node:url';
 import { createHash as __hash } from 'node:crypto';
 import { readFileSync as __read } from 'node:fs';
 // Version on the stylesheet and script links, so browsers fetch a changed file at once instead of waiting for the cache to expire.
-const ASSET_V = __hash('sha1').update(__read(new URL('../site.css', import.meta.url))).update(__read(new URL('../site.js', import.meta.url))).digest('hex').slice(0, 8);
+// The text is hashed with LF line endings, so a Windows checkout with core.autocrlf gives the same value.
+const __text = (name) => __read(new URL(name, import.meta.url), 'utf8').replace(/\r\n/g, '\n');
+const ASSET_V = __hash('sha1').update(__text('../site.css')).update(__text('../site.js')).digest('hex').slice(0, 8);
 
 const TOOLS = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(TOOLS, '..');
@@ -153,7 +155,7 @@ function render(md, dir) {
 }
 // Splits a document into title, lead paragraph, body and the links of its "Related" section.
 function parseDoc(file, dir) {
-  const md = fs.readFileSync(file, 'utf8'); const name = path.basename(file, '.md');
+  const md = fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n'); const name = path.basename(file, '.md');
   const t = /^# (.+)$/m.exec(md); if (!t) throw new Error(`${file}: no title`);
   let rest = md.slice(t.index + t[0].length).replace(/^\s+/, '');
   const leadEnd = rest.search(/\n\s*\n/); const lead = (leadEnd < 0 ? rest : rest.slice(0, leadEnd)).replace(/\n/g, ' ').trim(); rest = leadEnd < 0 ? '' : rest.slice(leadEnd);
@@ -275,7 +277,7 @@ const galleryNav = () => galleryGroups.map((g) => `<li><a href="#${slug(g)}">${g
 const pages = [];
 const fill = (text) => text.replace(/\{\{frame:([\w.-]+)\}\}/g, (_m, f) => frame(f)).replace(/\{\{phone:([\w.-]+)\}\}/g, (_m, f) => phone(f)).replace(/\{\{thumb:([\w.-]+)\}\}/g, (_m, f) => thumb(f))
   .replace('{{GUIDES}}', () => guideCards('articles/')).replace('{{GALLERY}}', gallery).replace('{{GALLERY_NAV}}', galleryNav).replace(/\{\{FEATURE_COUNT\}\}/g, String(flat.length)).replace(/\{\{GUIDE_COUNT\}\}/g, String(guides.length)).replace(/\{\{SHOT_COUNT\}\}/g, String(shown.length));
-const fragment = (name) => fill(fs.readFileSync(path.join(TOOLS, 'pages', name + '.html'), 'utf8'));
+const fragment = (name) => fill(fs.readFileSync(path.join(TOOLS, 'pages', name + '.html'), 'utf8').replace(/\r\n/g, '\n'));
 const head = (trail, h1, lead, extra = '') => `<div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs(trail)}<h1>${h1}</h1><p class="lead"><span>${lead}</span></p>${extra}</div>`;
 const demoCall = (prefix) => `<section class="band block demo"><div class="blocktext"><span class="eyebrow">No install needed</span><h2>Try the demo</h2><p>The real interface in your browser, against simulated machines. Nothing is installed and nothing leaves the browser.</p><div class="cta left"><a class="dl" href="${prefix}demo/">Open the demo</a><a class="ghost" href="${prefix}about-the-demo.html">What the demo is</a></div></div><div class="blockpic">${phone('51-demo-phone.png', prefix)}</div></section>`;
 const HOME_DESC = 'A desktop app and a remote management hub for the Chocolatey CLI. Manage packages on one Windows PC or many, from a desktop app, a browser or a phone. Chocolatey ships inside.';
@@ -314,7 +316,7 @@ pages.push(['search.json', JSON.stringify(search) + '\n']);
 let stale = 0;
 for (const [out, text] of pages) {
   const file = path.join(SITE, out);
-  if (check) { if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== text) { console.error('stale: ' + out); stale++; } continue; }
+  if (check) { if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n') !== text) { console.error('stale: ' + out); stale++; } continue; }
   fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, text);
 }
 // Pages whose source document was removed are deleted so they cannot go stale.
