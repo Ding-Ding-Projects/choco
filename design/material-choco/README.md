@@ -18,9 +18,13 @@ These files are a design. They are not the implementation and do not prove any b
 | Packages | `Installed`, `Install`, `Updates` |
 | Configuration | `Config` |
 | Console and authoring | `Console` |
-| Remote fleet | `Machines`, `Job` |
+| Remote fleet | `Machines`, `Job`, `PairQr` |
 | Required features | `Settings`, `Palette` |
 | States and errors | `StateLoading`, `StateError`, `StateSuccess`, `StateEmpty`, `InstallSuccess`, `InstallError` |
+| Built-in tools | `Base64`, `Authenticator` |
+| Search | `RegexBuilder` |
+| Hub security | `PasskeySignIn`, `Users`, `Webhooks` |
+| Landing site | `Site`, `SitePhone` |
 | Phone | `Phone` |
 | Desktop app | `Desktop` |
 
@@ -33,6 +37,21 @@ A first version was more restrained. It was replaced the same day at the maintai
 ## Install result takeovers (added 2026-11-16)
 
 `InstallSuccess` and `InstallError` are full-screen takeovers shown when an install or upgrade finishes. Success: the screen opens like an iris, rotating rays, expanding rings, a stamped and morphing medal with a self-drawing tick, a sprung headline, falling confetti; it closes on click, Escape, or after 5 seconds. Failure: a white flash, scan lines, a quake, a stamped cross, a glitching headline, the exit code and the last lines of output, and two actions; it stays until dismissed. Under reduced motion the rays, rings, confetti, flash and scan lines are removed and the panel appears in place. Both were rendered to `frames/` and compared with the real app captures `27` and `28` in `material-choco/docs/screenshots`. Difference: the app adds an emoji to the headline when the dialog emoji setting is on, and shows flying shards on failure.
+
+## Second pass (2026-11-16)
+
+Nine boards were added for surfaces that were being built at the same time: QR pairing, Base64 tools, the built-in authenticator, the regex builder, passkey sign in, users and roles, status webhooks, and the landing site on desktop and phone. They were rendered to `frames/` and reviewed; two findings were fixed (the logo inside the landing hero shape was drawn too small, and the sign-in fields were spread apart). The QR pattern on the boards is illustrative, not a scannable code. Text in square brackets on the landing boards marks values that the live page looks up. These boards were drawn while the code was written, so the built screens may differ; compare with `material-choco/docs/screenshots` before relying on them.
+
+## Tweaks (added 2026-11-16)
+
+Every board declares two working levers in the design tool's Tweaks tab, with the same names and defaults on all 28 boards:
+
+| Tweak | Type | Default | Effect |
+| --- | --- | --- | --- |
+| `accent` | colour, with four swatches | `#8A3F0B` | Replaces the primary colour everywhere it is used on the board. |
+| `motion` | switch | on | Off stills every animation and transition on the board. |
+
+The board files therefore contain `{{accent}}` where the primary colour goes, and a wrapper with a `{{motionClass}}` class; the design tool fills these in. Opened directly in a browser without the tool, those two placeholders are not filled, so use `frames/` for a faithful picture. The frames were rendered before the placeholders were added and show the default values. The Tweaks were not exercised inside the design tool from the build session, so their behaviour there is unverified.
 
 ## Stageshow skill
 

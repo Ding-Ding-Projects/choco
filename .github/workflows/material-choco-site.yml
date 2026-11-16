@@ -1,0 +1,41 @@
+name: Material Choco site
+
+on:
+  push:
+    branches: [main]
+    paths: ['material-choco/site/**', 'material-choco/docs/screenshots/**', 'material-choco/ui/vendor/fonts/**', '.github/workflows/material-choco-site.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: material-choco-site
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.repository == 'Ding-Ding-Projects/choco'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/shots _site/fonts
+          cp material-choco/site/* _site/
+          cp material-choco/ui/icon.svg _site/
+          cp material-choco/ui/vendor/fonts/*.woff2 _site/fonts/
+          cp material-choco/docs/screenshots/*.png _site/shots/
+          printf '{"builtAt":"%s","commit":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$GITHUB_SHA" > _site/build.json
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4

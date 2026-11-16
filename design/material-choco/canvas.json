@@ -2,7 +2,7 @@
  "v": 3,
  "createdOnFiles": {
   "v": 1,
-  "at": "2026-11-16T14:57:17Z"
+  "at": "2026-11-16T15:06:46Z"
  },
  "title": "Material Choco",
  "launch": {
@@ -37,6 +37,22 @@
   {
    "id": "states",
    "name": "States and errors"
+  },
+  {
+   "id": "tools",
+   "name": "Built-in tools"
+  },
+  {
+   "id": "search",
+   "name": "Search"
+  },
+  {
+   "id": "security",
+   "name": "Hub security"
+  },
+  {
+   "id": "site",
+   "name": "Landing site"
   },
   {
    "id": "phone",
@@ -129,6 +145,15 @@
    "page": "fleet",
    "expand": "fill"
   },
+  "PairQr.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 720,
+   "title": "Pairing with a QR code",
+   "page": "fleet",
+   "expand": "fill"
+  },
   "Settings.dc.html": {
    "x": 0,
    "y": 0,
@@ -201,6 +226,77 @@
    "page": "states",
    "expand": "fill"
   },
+  "Base64.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 820,
+   "title": "Base64 tools",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "Authenticator.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 820,
+   "title": "Built-in authenticator",
+   "page": "tools",
+   "expand": "fill"
+  },
+  "RegexBuilder.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 800,
+   "title": "Regex builder",
+   "page": "search",
+   "expand": "fill"
+  },
+  "PasskeySignIn.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Sign in with a passkey",
+   "page": "security",
+   "expand": "fill"
+  },
+  "Users.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 1360,
+   "h": 760,
+   "title": "Users and roles",
+   "page": "security",
+   "expand": "fill"
+  },
+  "Webhooks.dc.html": {
+   "x": 2880,
+   "y": 0,
+   "w": 1360,
+   "h": 780,
+   "title": "Status webhooks",
+   "page": "security",
+   "expand": "fill"
+  },
+  "Site.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1360,
+   "h": 1700,
+   "title": "Landing site, desktop",
+   "page": "site",
+   "expand": "fill"
+  },
+  "SitePhone.dc.html": {
+   "x": 1440,
+   "y": 0,
+   "w": 390,
+   "h": 1500,
+   "title": "Landing site, phone",
+   "page": "site"
+  },
   "Phone.dc.html": {
    "x": 0,
    "y": 0,
@@ -229,6 +325,7 @@
   "Console.dc.html",
   "Machines.dc.html",
   "Job.dc.html",
+  "PairQr.dc.html",
   "Settings.dc.html",
   "Palette.dc.html",
   "StateLoading.dc.html",
@@ -237,6 +334,14 @@
   "StateEmpty.dc.html",
   "InstallSuccess.dc.html",
   "InstallError.dc.html",
+  "Base64.dc.html",
+  "Authenticator.dc.html",
+  "RegexBuilder.dc.html",
+  "PasskeySignIn.dc.html",
+  "Users.dc.html",
+  "Webhooks.dc.html",
+  "Site.dc.html",
+  "SitePhone.dc.html",
   "Phone.dc.html",
   "Desktop.dc.html"
  ],
@@ -278,7 +383,7 @@
    "y": -300,
    "text": "Remote fleet",
    "kind": "title1",
-   "maxW": 2800,
+   "maxW": 4240,
    "page": "fleet"
   },
   "t_features": {
@@ -296,6 +401,38 @@
    "kind": "title1",
    "maxW": 6720,
    "page": "states"
+  },
+  "t_tools": {
+   "x": 0,
+   "y": -300,
+   "text": "Built-in tools",
+   "kind": "title1",
+   "maxW": 2800,
+   "page": "tools"
+  },
+  "t_search": {
+   "x": 0,
+   "y": -300,
+   "text": "Search",
+   "kind": "title1",
+   "maxW": 1360,
+   "page": "search"
+  },
+  "t_security": {
+   "x": 0,
+   "y": -300,
+   "text": "Hub security",
+   "kind": "title1",
+   "maxW": 4240,
+   "page": "security"
+  },
+  "t_site": {
+   "x": 0,
+   "y": -300,
+   "text": "Landing site",
+   "kind": "title1",
+   "maxW": 1830,
+   "page": "site"
   },
   "t_phone": {
    "x": 0,

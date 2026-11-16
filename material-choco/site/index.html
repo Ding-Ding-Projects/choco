@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Material Choco: Chocolatey with a real interface, on one PC or a whole fleet</title>
+<meta name="description" content="A desktop app and a remote management hub for the Chocolatey CLI. Chocolatey ships inside. Nothing else to install.">
+<meta property="og:title" content="Material Choco">
+<meta property="og:description" content="A desktop app and a remote management hub for the Chocolatey CLI. Chocolatey ships inside.">
+<meta property="og:image" content="https://ding-ding-projects.github.io/choco/shots/06-overview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <a class="brand" href="#top"><img src="icon.svg" alt="" width="36" height="36"><span>Material Choco</span></a>
+  <nav aria-label="Sections"><a href="#what">What it does</a><a href="#remote">Remote</a><a href="#screens">Screens</a><a href="#status">Honest status</a><a href="https://github.com/Ding-Ding-Projects/choco/tree/main/material-choco">Source</a></nav>
+</header>
+<main id="main">
+<section class="hero" id="top">
+  <div class="rays" aria-hidden="true"></div>
+  <div class="blob" aria-hidden="true"><img src="icon.svg" alt="" width="120" height="120"></div>
+  <h1>Chocolatey, with a real interface.</h1>
+  <p class="lead">Manage packages on one Windows PC, or on every PC you look after, from a desktop app, a browser or a phone. The Chocolatey CLI ships inside. There is nothing else to install.</p>
+  <div class="cta">
+    <a class="dl" id="dl" href="https://github.com/Ding-Ding-Projects/choco/releases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span id="dl-label">Download for Windows</span></a>
+    <a class="ghost" href="#hub">Run the hub in a container</a>
+  </div>
+  <p class="fine" id="dl-note" aria-live="polite">Looking up the newest installer.</p>
+  <p class="fine">The installer is not code signed, so Windows may show an unknown publisher warning. Not affiliated with or endorsed by Chocolatey Software, Inc.</p>
+</section>
+
+<section id="what" class="band">
+  <h2>What it does</h2>
+  <div class="grid">
+    <article class="card reveal"><h3>Every command, every option</h3><p>23 commands and 190 options, read straight from the CLI source in the same repository. When the CLI gains an option, the app gains a control.</p></article>
+    <article class="card reveal"><h3>Nothing to install first</h3><p>The installer carries its own runtime and a Chocolatey CLI built from the repository. One download, one click.</p></article>
+    <article class="card reveal"><h3>A fleet, not just a PC</h3><p>Pair machines to a hub with a one time code. Run a command on one, some or all of them. Offline machines get the job when they return.</p></article>
+    <article class="card reveal"><h3>Hard to break by accident</h3><p>Uninstalls and removals need two keys and a slider. A read only agent refuses every change, and enforces that itself.</p></article>
+    <article class="card reveal"><h3>You see what will run</h3><p>Every form shows the exact command before it runs, with a dry run button. Passwords and API keys are masked in logs.</p></article>
+    <article class="card reveal"><h3>Loud when it matters</h3><p>Every install that finishes takes over the screen: a celebration on success, an alarm with the exit code and output on failure.</p></article>
+  </div>
+</section>
+
+<section id="remote" class="band alt">
+  <h2>Remote management in three steps</h2>
+  <ol class="steps">
+    <li class="reveal"><b>Start the hub.</b><span id="hub">One container, reachable on your network.</span><pre><code>docker run -d -p 8080:8080 -v material-choco-data:/data ghcr.io/ding-ding-projects/material-choco-hub:latest</code></pre></li>
+    <li class="reveal"><b>Create a pairing code.</b><span>Open the hub, create the administrator, then make a code on the Machines page. It works once and expires in 10 minutes.</span></li>
+    <li class="reveal"><b>Enter it on the Windows machine.</b><span>In the app, or on a server without a desktop:</span><pre><code>MaterialChoco.exe --agent enroll --hub https://your-hub --code XXXX-XXXX
+MaterialChoco.exe --agent run</code></pre></li>
+  </ol>
+  <p class="warn"><b>Treat hub access as administrator access.</b> The hub can install software with administrator rights on every paired machine. Serve it over HTTPS. Agents refuse plain HTTP to a remote hub unless you opt in for a trusted LAN.</p>
+</section>
+
+<section id="screens" class="band">
+  <h2>Real screens</h2>
+  <p class="sub">Captured from the running hub and agents by the project's end to end run. In that run a small test stand-in played the part of <code>choco.exe</code>, so package names and versions come from it.</p>
+  <div class="shots">
+    <figure class="reveal wide"><img loading="lazy" src="shots/06-overview.png" alt="Overview page with update count, machine and package totals and recent jobs" width="1360" height="900"><figcaption>Overview</figcaption></figure>
+    <figure class="reveal"><img loading="lazy" src="shots/27-install-success-takeover.png" alt="Full-screen celebration reading Upgrade complete, with the command and exit code" width="1360" height="900"><figcaption>An install succeeds</figcaption></figure>
+    <figure class="reveal"><img loading="lazy" src="shots/28-install-failure-takeover.png" alt="Full-screen red alarm reading Install failed, with exit code 1 and the output" width="1360" height="900"><figcaption>An install fails</figcaption></figure>
+    <figure class="reveal"><img loading="lazy" src="shots/07-installed.png" alt="Installed packages for two machines, with status and pin columns" width="1360" height="900"><figcaption>Installed packages per machine</figcaption></figure>
+    <figure class="reveal"><img loading="lazy" src="shots/10-two-key-confirmation.png" alt="Confirmation dialog with two keys and a locked slider" width="1360" height="900"><figcaption>Two keys and a slider before an uninstall</figcaption></figure>
+    <figure class="reveal"><img loading="lazy" src="shots/11-console-every-option.png" alt="Console page with a generated form and the command preview" width="1360" height="900"><figcaption>Console: every command and option</figcaption></figure>
+    <figure class="reveal"><img loading="lazy" src="shots/23-overview-dark-bilingual.png" alt="Overview in the dark theme with English and Cantonese labels" width="1360" height="900"><figcaption>Dark theme, bilingual mode</figcaption></figure>
+    <figure class="reveal phone"><img loading="lazy" src="shots/24-phone-overview.png" alt="Overview page at phone width" width="780" height="1688"><figcaption>On a phone</figcaption></figure>
+  </div>
+</section>
+
+<section id="status" class="band alt">
+  <h2>Honest status</h2>
+  <ul class="status">
+    <li class="reveal ok"><b>Works and checked.</b> Hub, agents, job queue, schedules and the interface pass 22 automated tests and 31 end to end checks. The hub image runs. The installer builds on Windows with the repository's own CLI inside.</li>
+    <li class="reveal no"><b>Not yet proven.</b> Nobody has installed the app on Windows and run a real install through it. Until that happens, treat this as an early build.</li>
+    <li class="reveal no"><b>Not built yet.</b> Automatic updates, passkeys, more than one hub user, code signing.</li>
+  </ul>
+  <p><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked</a> · <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a> · <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/FEATURE-INVENTORY.md">Feature inventory</a> · <a href="https://github.com/Ding-Ding-Projects/choco/releases">All releases</a></p>
+</section>
+</main>
+<footer><p>Apache-2.0. Built on the Chocolatey CLI. "Chocolatey" is a trademark of Chocolatey Software, Inc. <span id="built"></span></p></footer>
+<script src="site.js"></script>
+</body>
+</html>
