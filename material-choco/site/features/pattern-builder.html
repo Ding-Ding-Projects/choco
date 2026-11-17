@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=e85f9cbe">
+<link rel="stylesheet" href="../site.css?v=0e187f3e">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -41,17 +41,31 @@
 </header>
 <main id="main">
 <div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Pattern builder</span></li></ol><h1>Pattern builder</h1><p class="lead"><span>Describe the text you are looking for, and the builder writes the regular expression.</span></p></div>
-<div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<div class="doc withtoc"><details class="toc" open data-search-jumps><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
+<div class="sitesearch" data-site-search="page-pattern-builder" data-noun="part" data-nouns="parts" data-lines="its text first (for a table row its first cell, for code its first line), then the rest of the row or code, then its section and subsection"><label class="slabel" for="page-pattern-builder-filter">Search this page</label><div class="srow"><span class="sfield"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><input id="page-pattern-builder-filter" type="search" placeholder="Words to look for" autocomplete="off" spellcheck="false" aria-describedby="page-pattern-builder-count"></span></div><p class="count" id="page-pattern-builder-count" aria-live="polite"></p></div>
+<section class="docsec" data-search-group>
 <h2 id="what-it-is">What it is</h2>
-<p>A dialog that opens from the button beside the <b>Regex</b> switch of a filter. You fill in any of five parts and it composes one pattern, anchored to the start of each row:</p>
-<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr><th scope="col">Part</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>Starts with</td><td>The row begins with this text</td></tr><tr><td>Contains</td><td>This text appears anywhere</td></tr><tr><td>Ends with</td><td>The row finishes with this text</td></tr><tr><td>Any of these</td><td>At least one of the choices appears. Separate them with commas</td></tr><tr><td>Does not contain</td><td>Rows with this text are left out</td></tr></tbody></table></div>
-<p>The builder escapes special characters for you, explains the result in a sentence, shows the pattern and whether it compiles, and previews it live against rows of the page it was opened from and against lines you type. Upper and lower case are treated the same.</p>
+<p data-search-item data-name="A dialog that opens from the button beside the Regex switch of a filter. You fill in any of five parts and it composes one pattern, anchored to the start of each row:" data-detail="Section: What it is">A dialog that opens from the button beside the <b>Regex</b> switch of a filter. You fill in any of five parts and it composes one pattern, anchored to the start of each row:</p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table" data-search-group><table><thead><tr><th scope="col">Part</th><th scope="col">Meaning</th></tr></thead><tbody><tr data-search-item data-name="Starts with" data-detail="The row begins with this text
+Section: What it is"><td>Starts with</td><td>The row begins with this text</td></tr><tr data-search-item data-name="Contains" data-detail="This text appears anywhere
+Section: What it is"><td>Contains</td><td>This text appears anywhere</td></tr><tr data-search-item data-name="Ends with" data-detail="The row finishes with this text
+Section: What it is"><td>Ends with</td><td>The row finishes with this text</td></tr><tr data-search-item data-name="Any of these" data-detail="At least one of the choices appears. Separate them with commas
+Section: What it is"><td>Any of these</td><td>At least one of the choices appears. Separate them with commas</td></tr><tr data-search-item data-name="Does not contain" data-detail="Rows with this text are left out
+Section: What it is"><td>Does not contain</td><td>Rows with this text are left out</td></tr></tbody></table></div>
+<p data-search-item data-name="The builder escapes special characters for you, explains the result in a sentence, shows the pattern and whether it compiles, and previews it live against rows of the page it was opened from and against lines you type. Upper and lower case are treated the same." data-detail="Section: What it is">The builder escapes special characters for you, explains the result in a sentence, shows the pattern and whether it compiles, and previews it live against rows of the page it was opened from and against lines you type. Upper and lower case are treated the same.</p>
+</section>
+<section class="docsec" data-search-group>
 <h2 id="how-to-use-it">How to use it</h2>
-<p>Open a filter bar, press the builder button, fill in the parts and apply. The filter switches to regex mode with the pattern filled in. The command palette and the changelog have the same builder.</p>
+<p data-search-item data-name="Open a filter bar, press the builder button, fill in the parts and apply. The filter switches to regex mode with the pattern filled in. The command palette and the changelog have the same builder." data-detail="Section: How to use it">Open a filter bar, press the builder button, fill in the parts and apply. The filter switches to regex mode with the pattern filled in. The command palette and the changelog have the same builder.</p>
+</section>
+<section class="docsec" data-search-group>
 <h2 id="what-was-checked">What was checked</h2>
-<p>End to end checks <code>pattern builder composes an anchored pattern and previews matches</code>, <code>pattern builder escapes special characters and compiles safely</code>, <code>a built pattern filters the list it was opened from</code> and <code>the palette has its own pattern builder</code>.</p>
+<p data-search-item data-name="End to end checks pattern builder composes an anchored pattern and previews matches, pattern builder escapes special characters and compiles safely, a built pattern filters the list it was opened from and the palette has its own pattern builder." data-detail="Section: What was checked">End to end checks <code>pattern builder composes an anchored pattern and previews matches</code>, <code>pattern builder escapes special characters and compiles safely</code>, <code>a built pattern filters the list it was opened from</code> and <code>the palette has its own pattern builder</code>.</p>
+</section>
+<section class="docsec" data-search-group>
 <h2 id="known-limits">Known limits</h2>
-<ul><li>It builds from the five parts above. Anything else, such as repetition counts or groups, you type as a pattern by hand.</li><li>A pattern longer than 200 characters, or one that does not compile, filters nothing and says why.</li><li>It writes patterns. It does not explain a pattern you paste in.</li></ul>
+<ul data-search-group><li data-search-item data-name="It builds from the five parts above. Anything else, such as repetition counts or groups, you type as a pattern by hand." data-detail="Section: Known limits">It builds from the five parts above. Anything else, such as repetition counts or groups, you type as a pattern by hand.</li><li data-search-item data-name="A pattern longer than 200 characters, or one that does not compile, filters nothing and says why." data-detail="Section: Known limits">A pattern longer than 200 characters, or one that does not compile, filters nothing and says why.</li><li data-search-item data-name="It writes patterns. It does not explain a pattern you paste in." data-detail="Section: Known limits">It writes patterns. It does not explain a pattern you paste in.</li></ul>
+</section>
 <p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/pattern-builder.md">docs/features/pattern-builder.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/filters-and-regex.html"><h3>Filters and regex</h3><span class="more">Open</span></a><a class="card reveal" href="../features/command-palette.html"><h3>Command palette</h3><span class="more">Open</span></a><a class="card reveal" href="../features/changelog-viewer.html"><h3>Changelog viewer</h3><span class="more">Open</span></a></div>
@@ -64,6 +78,6 @@
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=e85f9cbe"></script>
+<script src="../site.js?v=0e187f3e"></script>
 </body>
 </html>

@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 // Checks an assembled copy of the site: every internal link, image, stylesheet and script
-// resolves to a file, and every #fragment resolves to an id on the target page.
+// resolves to a file, every #fragment resolves to an id on the target page, and the feature index,
+// the guides index and the screens page each have a search with a Regex switch and a pattern
+// builder (check-searches.mjs).
 //   node check-links.mjs <assembled folder> [--prefix /choco/]
 import fs from 'node:fs';
 import path from 'node:path';
+import { checkSearches, SEARCH_PAGES } from './check-searches.mjs';
 const root = path.resolve(process.argv[2] || '_site');
 const prefix = process.argv.includes('--prefix') ? process.argv[process.argv.indexOf('--prefix') + 1] : '/choco/';
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
@@ -31,6 +34,7 @@ for (const page of pages) {
   const img = /<meta property="og:image" content="([^"]+)">/.exec(html); if (img && !/^https:\/\//.test(img[1])) { console.error(`${path.relative(root, page)}: og:image is not an absolute https URL`); bad++; }
 }
 try { for (const e of JSON.parse(fs.readFileSync(path.join(root, 'search.json'), 'utf8'))) { seen++; const [p, frag] = e.url.split('#'); let file = path.join(root, p); if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html'); if (!fs.existsSync(file) || (frag && !idsOf(file).has(frag))) { console.error(`search.json: ${e.url} does not resolve`); bad++; } } } catch (e) { console.error('search.json: ' + e.message); bad++; }
-console.log(`${pages.length} pages, ${seen} internal references checked, ${external} external links not followed, ${bad} problem(s).`);
+const searches = checkSearches(root, { prefix }); for (const s of searches.problems) console.error(s); bad += searches.problems.length;
+console.log(`${pages.length} pages, ${seen} internal references checked, ${external} external links not followed, ${searches.checked} of ${SEARCH_PAGES.length} search pages checked, ${bad} problem(s).`);
 console.log(hasDemo ? 'The demo is present at demo/ and links to it were checked.' : `The demo is NOT present in this copy: ${demoLinks} link(s) to demo/ could not be checked.`);
 process.exit(bad ? 1 : 0);

@@ -8,6 +8,7 @@
 //           docs/features/*.md   feature pages   -> site/features/*.html
 //           site/tools/pages/*.html page bodies  -> site/index.html, screens.html, remote.html,
 //                                                   download.html, status.html, about-the-demo.html
+//           (a page body that is mostly a list places a search with {{SEARCH:id}}; see PAGE_SEARCHES)
 // Also writes site/404.html and site/search.json (the index used by the command palette).
 // The demo itself is not built here: the deploy workflow copies material-choco/ui to demo/.
 // Every page shares one header, footer, stylesheet and script.
@@ -129,33 +130,76 @@ function inline(text, dir) {
 }
 // Markdown subset used by the documents: headings, paragraphs, lists, tables, fenced code,
 // block quotes (rendered as notes), and images on their own line.
-function render(md, dir) {
-  const lines = md.replace(/\r/g, '').split('\n'); const out = []; const toc = []; let i = 0;
-  const para = []; const flush = () => { if (para.length) { out.push(`<p>${inline(para.join(' '), dir)}</p>`); para.length = 0; } };
+// find: true for a page that gets its own search. Then every part of the page is a search item:
+// each paragraph, note, code block, picture, subheading, table row and list item. Its name is its
+// text (the first cell of a row, the first line of a code block), and its detail is the rest (the
+// other cells, the other lines) followed by the section and subsection it is in, so a search for
+// the words of a heading shows everything under that heading. Every table and list hides when none
+// of its items match, and each part of the page from one h2 to the next is wrapped in a section that
+// hides when nothing in it matches.
+// Returns the HTML, the h2 headings for the outline, and how many rows and list items it holds.
+function render(md, dir, { find = false, quiet = false } = {}) {
+  const lines = md.replace(/\r/g, '').split('\n'); const out = []; const toc = []; let i = 0; let items = 0;
+  let section = ''; let sub = ''; let open = false;
+  const SEC = '<section class="docsec" data-search-group>';
+  const push = (html) => { if (find && !open) { out.push(SEC); open = true; } out.push(html); };
+  const group = find ? ' data-search-group' : '';
+  const item = (name, detail) => (find ? findable(name, [detail, section ? `Section: ${section}` : '', sub ? `Subsection: ${sub}` : ''].filter(Boolean).join('\n')) : '');
+  const para = []; const flush = () => { if (para.length) { const text = para.join(' '); push(`<p${item(plain(text), '')}>${inline(text, dir)}</p>`); para.length = 0; } };
   while (i < lines.length) {
     const l = lines[i];
-    if (/^```/.test(l)) { flush(); const buf = []; i++; while (i < lines.length && !/^```/.test(lines[i])) buf.push(lines[i++]); i++; out.push(`<pre tabindex="0"><code>${esc(buf.join('\n'))}</code></pre>`); continue; }
+    if (/^```/.test(l)) {
+      flush(); const buf = []; i++; while (i < lines.length && !/^```/.test(lines[i])) buf.push(lines[i++]); i++;
+      // The search item is a wrapper, so the copy button that site.js adds beside the code hides with it.
+      const pre = `<pre tabindex="0"><code>${esc(buf.join('\n'))}</code></pre>`;
+      push(find ? `<div class="codeblock"${item(buf[0] || '', buf.slice(1).join('\n'))}>${pre}</div>` : pre); continue;
+    }
     let m = /^(#{2,3}) (.+)$/.exec(l);
-    if (m) { flush(); const id = slug(m[2]); if (m[1].length === 2) toc.push([id, plain(m[2])]); out.push(`<h${m[1].length} id="${id}">${inline(m[2], dir)}</h${m[1].length}>`); i++; continue; }
+    if (m) {
+      flush(); const level = m[1].length; const id = slug(m[2]); const text = plain(m[2]);
+      if (level === 2) { toc.push([id, text]); section = text; sub = ''; if (find) { if (open) out.push('</section>'); open = false; } }
+      if (level === 3) sub = '';
+      push(`<h${level} id="${id}"${level === 3 ? item(text, '') : ''}>${inline(m[2], dir)}</h${level}>`);
+      if (level === 3) sub = text;
+      i++; continue;
+    }
     if (/^\|/.test(l) && /^\|[\s:|-]+\|$/.test(lines[i + 1] || '')) {
       flush(); const row = (x) => x.replace(/^\||\|$/g, '').split(/(?<!\\)\|/).map((c) => c.trim().replace(/\\\|/g, '|'));
       const head = row(l); i += 2; const body = []; while (i < lines.length && /^\|/.test(lines[i])) body.push(row(lines[i++]));
-      out.push(`<div class="tablewrap" tabindex="0" role="region" aria-label="Table"><table><thead><tr>${head.map((c) => `<th scope="col">${inline(c, dir)}</th>`).join('')}</tr></thead><tbody>${body.map((r) => `<tr>${r.map((c) => `<td>${inline(c, dir)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`); continue;
+      items += body.length;
+      push(`<div class="tablewrap" tabindex="0" role="region" aria-label="Table"${group}><table><thead><tr>${head.map((c) => `<th scope="col">${inline(c, dir)}</th>`).join('')}</tr></thead><tbody>${body.map((r) => `<tr${item(plain(r[0] || ''), r.slice(1).map(plain).filter(Boolean).join(' | '))}>${r.map((c) => `<td>${inline(c, dir)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`); continue;
     }
     if (/^(- |\d+\. )/.test(l)) {
-      flush(); const ordered = /^\d/.test(l); const items = [];
-      while (i < lines.length && (/^(- |\d+\. )/.test(lines[i]) || /^ {2,}\S/.test(lines[i]))) { if (/^ {2,}\S/.test(lines[i])) items[items.length - 1] += ' ' + lines[i].trim(); else items.push(lines[i].replace(/^(- |\d+\. )/, '')); i++; }
-      out.push(`<${ordered ? 'ol' : 'ul'}>${items.map((x) => `<li>${inline(x, dir)}</li>`).join('')}</${ordered ? 'ol' : 'ul'}>`); continue;
+      flush(); const ordered = /^\d/.test(l); const list = [];
+      while (i < lines.length && (/^(- |\d+\. )/.test(lines[i]) || /^ {2,}\S/.test(lines[i]))) { if (/^ {2,}\S/.test(lines[i])) list[list.length - 1] += ' ' + lines[i].trim(); else list.push(lines[i].replace(/^(- |\d+\. )/, '')); i++; }
+      items += list.length;
+      // On a page with a search, the steps of an ordered list carry their number, so a step keeps it while others are hidden.
+      push(`<${ordered ? 'ol' : 'ul'}${group}>${list.map((x, k) => `<li${find && ordered ? ` value="${k + 1}"` : ''}${item(plain(x), '')}>${inline(x, dir)}</li>`).join('')}</${ordered ? 'ol' : 'ul'}>`); continue;
     }
-    if (/^> ?/.test(l)) { flush(); const buf = []; while (i < lines.length && /^> ?/.test(lines[i])) buf.push(lines[i++].replace(/^> ?/, '')); out.push(`<blockquote>${render(buf.join('\n'), dir).html}</blockquote>`); continue; }
+    if (/^> ?/.test(l)) { flush(); const buf = []; while (i < lines.length && /^> ?/.test(lines[i])) buf.push(lines[i++].replace(/^> ?/, '')); push(`<blockquote${item(plain(buf.filter((x) => x.trim()).join(' ')), '')}>${render(buf.join('\n'), dir, { quiet }).html}</blockquote>`); continue; }
     m = /^!\[([^\]]*)\]\(([^)]+)\)$/.exec(l.trim());
     if (m) { flush(); const src = href(m[2], dir); const file = path.join(shotDir, path.basename(src)); const size = fs.existsSync(file) ? png(file) : null;
-      if (!size) console.warn(`  note: image ${m[2]} is not in docs/screenshots yet`);
-      out.push(`<figure><button class="shot" type="button" data-full="${esc(src)}" data-caption="${esc(m[1])}" aria-label="Enlarge: ${esc(m[1])}"><img loading="lazy" src="${esc(src)}" alt="${esc(m[1])}"${size ? ` width="${size.w}" height="${size.h}"` : ''}></button><figcaption>${esc(m[1])}</figcaption></figure>`); i++; continue; }
+      if (!size && !quiet) console.warn(`  note: image ${m[2]} is not in docs/screenshots yet`);
+      push(`<figure${item(m[1], '')}><button class="shot" type="button" data-full="${esc(src)}" data-caption="${esc(m[1])}" aria-label="Enlarge: ${esc(m[1])}"><img loading="lazy" src="${esc(src)}" alt="${esc(m[1])}"${size ? ` width="${size.w}" height="${size.h}"` : ''}></button><figcaption>${esc(m[1])}</figcaption></figure>`); i++; continue; }
     if (!l.trim()) { flush(); i++; continue; }
     para.push(l.trim()); i++;
   }
-  flush(); return { html: out.join('\n'), toc };
+  flush(); if (open) out.push('</section>');
+  return { html: out.join('\n'), toc, items };
+}
+// A guide or feature page with at least this many table rows and list items gets its own search.
+const PAGE_SEARCH_MIN = 8;
+// Every word of a document, each once and in the order it first appears, for the searches on the
+// guide and feature indexes: a word that a page is about is found even when it is not in the title
+// or the lead. Short common words are left out to keep the index pages small.
+const COMMON = new Set('the and for are but not you your with that this from have has was were can its they them then than what when which who will would there their into out also any all one two may per via each such only some more most other over under upon just like how use used using does did done been being off own same very too our'.split(' '));
+function wordsOf(md) {
+  const seen = new Set();
+  for (const raw of md.replace(/\]\([^)]*\)/g, ']').toLowerCase().split(/[\s`*#>|[\]()"',;!?]+/)) {
+    const w = raw.replace(/^[^\p{L}\p{N}-]+|[^\p{L}\p{N}]+$/gu, '');
+    if ((w.length >= 3 || /[^\x00-\x7f]/.test(w)) && !COMMON.has(w)) seen.add(w);
+  }
+  return [...seen].join(' ');
 }
 // Splits a document into title, lead paragraph, body and the links of its "Related" section.
 function parseDoc(file, dir) {
@@ -165,8 +209,9 @@ function parseDoc(file, dir) {
   const leadEnd = rest.search(/\n\s*\n/); const lead = (leadEnd < 0 ? rest : rest.slice(0, leadEnd)).replace(/\n/g, ' ').trim(); rest = leadEnd < 0 ? '' : rest.slice(leadEnd);
   let related = []; const r = /\n## Related\n([\s\S]*)$/.exec(rest);
   if (r) { rest = rest.slice(0, r.index); related = [...r[1].matchAll(/^- \[([^\]]+)\]\(([^)]+)\)(?:: (.+))?$/gm)].map((x) => ({ title: x[1], url: href(x[2], dir), note: x[3] || '' })); }
-  const body = render(rest, dir);
-  return { name, dir, file, title: plain(t[1]), lead, leadHtml: inline(lead, dir), desc: plain(lead).slice(0, 300), html: body.html, toc: body.toc, related };
+  const find = render(rest, dir, { quiet: true }).items >= PAGE_SEARCH_MIN;
+  const body = render(rest, dir, { find });
+  return { name, dir, file, title: plain(t[1]), lead, leadHtml: inline(lead, dir), desc: plain(lead).slice(0, 300), html: body.html, toc: body.toc, related, find, items: body.items, words: wordsOf(`${t[1]}\n${lead}\n${rest}`) };
 }
 const readDir = (dir) => (fs.existsSync(path.join(APP, 'docs', dir)) ? fs.readdirSync(path.join(APP, 'docs', dir)).filter((f) => f.endsWith('.md') && f !== 'README.md').sort().map((f) => parseDoc(path.join(APP, 'docs', dir, f), dir)) : []);
 
@@ -233,6 +278,38 @@ ${body}
   return [out, html];
 }
 const crumbs = (list) => `<ol class="crumbs">${list.map(([h, l]) => `<li>${h ? `<a href="${h}">${l}</a>` : `<span aria-current="page">${l}</span>`}</li>`).join('')}</ol>`;
+// A search over the items of one page: elements marked data-search-item, each with a data-name and a
+// data-detail. site.js adds the Regex switch, the pattern builder button, the error line and the
+// empty state. Without scripts the box is hidden by the stylesheet and every item stays visible.
+// lines: how an item reads as lines, which the box shows while its Regex switch is on.
+const searchBox = ({ id, label, noun, nouns, lines }) => `<div class="sitesearch" data-site-search="${id}" data-noun="${noun}" data-nouns="${nouns}" data-lines="${esc(lines)}"><label class="slabel" for="${id}-filter">${esc(label)}</label><div class="srow"><span class="sfield">${ic(I.search).replace('<svg', '<svg class="ic"')}<input id="${id}-filter" type="search" placeholder="Words to look for" autocomplete="off" spellcheck="false" aria-describedby="${id}-count"></span></div><p class="count" id="${id}-count" aria-live="polite"></p></div>`;
+// The attributes that make an element findable by the search box of its page.
+const findable = (name, detail) => ` data-search-item data-name="${esc(name)}" data-detail="${esc(detail)}"`;
+// Searches on the top-level pages that are mostly lists. A page body places one with {{SEARCH:id}},
+// wraps each part that should hide when nothing in it matches in an element marked data-search-group,
+// and marks each entry with data-find (see markFinds).
+const PAGE_SEARCHES = {
+  status: { label: 'Search this page', noun: 'entry', nouns: 'entries', lines: 'its words in bold (or its link) first, then the rest of its text, then its section' },
+  demo: { label: 'Search this page', noun: 'entry', nouns: 'entries', lines: 'its words in bold (or its link) first, then the rest of its text, then its section' },
+};
+// Plain text of a piece of a page body: tags removed, the few entities the bodies use decoded. A tag
+// becomes a space, so two elements side by side do not run together; a space that this leaves inside
+// brackets or before punctuation is taken out again.
+const textOf = (html) => html.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').replace(/\s+([.,;:!?)])/g, '$1').replace(/\(\s+/g, '(').trim();
+// Turns data-find on an li, p or div of a page body into the attributes of a search item. Its name is
+// its leading words in bold (without a closing full stop), or all of its text when it has none; its
+// detail is the rest of its text and then its section: the nearest h2 before it, or the value of
+// data-find="..." when given. The element must not contain an element of its own kind.
+function markFinds(html) {
+  return html.replace(/<(li|p|div)\b([^>]*?)\sdata-find(?:="([^"]*)")?(?=[\s>])([^>]*)>([\s\S]*?)<\/\1>/g, (_m, tag, before, named, after, inner, at) => {
+    const heads = [...html.slice(0, at).matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/g)];
+    const section = named || (heads.length ? textOf(heads[heads.length - 1][1]) : '');
+    const bold = /^\s*<b>([\s\S]*?)<\/b>/.exec(inner);
+    const name = bold ? textOf(bold[1]).replace(/\.$/, '') : textOf(inner);
+    const rest = bold ? textOf(inner.slice(bold[0].length)) : '';
+    return `<${tag}${before}${findable(name, [rest, section ? `Section: ${section}` : ''].filter(Boolean).join('\n'))}${after}>${inner}</${tag}>`;
+  });
+}
 
 // ---- collect documents ----------------------------------------------------------------------------
 const guides = readDir('articles').sort((a, b) => (GUIDES.indexOf(a.name) + 1 || 99) - (GUIDES.indexOf(b.name) + 1 || 99));
@@ -244,12 +321,15 @@ const flat = grouped.flatMap(([, l]) => l);
 
 function docPage(d, list, kind) {
   const i = list.indexOf(d); const prev = list[i - 1]; const next = list[i + 1]; const up = kind === 'Guide' ? ['../articles/', 'Guides'] : ['../features/', 'Features'];
-  const toc = d.toc.length > 1 ? `<details class="toc" open><summary>On this page</summary><ol>${d.toc.map(([id, t]) => `<li><a href="#${id}">${esc(t)}</a></li>`).join('')}</ol></details>` : '';
+  // A long page gets a search over all of its parts. The outline then lists jump links that hide
+  // with the sections they lead to.
+  const finder = d.find ? searchBox({ id: `page-${d.name}`, label: 'Search this page', noun: 'part', nouns: 'parts', lines: 'its text first (for a table row its first cell, for code its first line), then the rest of the row or code, then its section and subsection' }) + '\n' : '';
+  const toc = d.toc.length > 1 ? `<details class="toc" open${d.find ? ' data-search-jumps' : ''}><summary>On this page</summary><ol>${d.toc.map(([id, t]) => `<li><a href="#${id}">${esc(t)}</a></li>`).join('')}</ol></details>` : '';
   const related = d.related.length ? `<h2>Related</h2><div class="grid">${d.related.map((r) => `<a class="card reveal" href="${esc(r.url)}"><h3>${esc(r.title)}</h3>${r.note ? `<p>${inline(r.note, d.dir)}</p>` : ''}<span class="more">Open</span></a>`).join('')}</div>` : '';
   const body = `<main id="main">
 <div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs([['../', 'Home'], up, [null, esc(d.title)]])}<h1>${esc(d.title)}</h1><p class="lead"><span>${d.leadHtml}</span></p></div>
 <div class="doc${toc ? ' withtoc' : ''}">${toc}<article class="prose">
-${d.html}
+${finder}${d.html}
 <p class="srclink">Source of this page: <a href="${BLOB}material-choco/docs/${d.dir}/${d.name}.md">docs/${d.dir}/${d.name}.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related">${related}
@@ -266,24 +346,26 @@ const phone = (f, prefix = '') => { const x = shotOf(f); return x ? `<figure cla
 const thumb = (f, prefix = '') => { const x = shotOf(f); return x ? `<img class="thumb" loading="lazy" src="${prefix}shots/${x.f}" alt="" width="${x.w}" height="${x.h}">` : ''; };
 const GROUP_SHOT = { Packages: '07-installed.png', 'Remote management': '05-machines.png', 'Safety and feedback': '10-two-key-confirmation.png', Interface: '20-command-palette.png', 'Built-in tools': '29-base64-tools.png', 'Language, look and comfort': '22-settings-appearance-dark-bilingual.png', 'Desktop app and delivery': '26-desktop-app-on-linux-virtual-display.png' };
 // A row of category links above the groups, so a phone reader can jump instead of scrolling past 61 entries.
-const featureJump = () => `<nav class="fjump" aria-label="Feature categories">${grouped.map(([g, l]) => `<a href="#${slug(g)}">${esc(g)} <span>${l.length}</span></a>`).join('')}</nav>`;
-const featureGroups = () => `${featureJump()}<div class="fgroups">${grouped.map(([g, l]) => `<section class="fgroup reveal" id="${slug(g)}"><div class="fhead">${GROUP_SHOT[g] ? frame(GROUP_SHOT[g], '../') : ''}<div><h2>${g}</h2><p class="n">${l.length} features</p></div></div><ul class="flist">${l.map((f) => `<li data-feature="${esc((f.title + ' ' + f.desc + ' ' + g).toLowerCase())}"><a href="${f.name}.html">${esc(f.title)}<small>${esc(f.desc.split(/(?<=\.)\s/)[0])}</small></a></li>`).join('')}</ul></section>`).join('')}</div>`;
-const guideCards = (prefix) => `<div class="grid">${guides.map((g, i) => `<a class="card reveal" href="${prefix}${g.name}.html"><span class="num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3>${esc(g.title)}</h3><p>${esc(g.desc.split(/(?<=\.)\s/)[0])}</p><span class="more">Read the guide</span></a>`).join('')}</div>`;
+const featureJump = () => `<nav class="fjump" aria-label="Feature categories" data-search-jumps>${grouped.map(([g, l]) => `<a href="#${slug(g)}">${esc(g)} <span data-group-count>${l.length}</span></a>`).join('')}</nav>`;
+const featureGroups = () => `${featureJump()}<div class="fgroups">${grouped.map(([g, l]) => `<section class="fgroup reveal" id="${slug(g)}" data-search-group><div class="fhead">${GROUP_SHOT[g] ? frame(GROUP_SHOT[g], '../') : ''}<div><h2>${g}</h2><p class="n" data-group-count data-noun="feature" data-nouns="features">${l.length} ${l.length === 1 ? 'feature' : 'features'}</p></div></div><ul class="flist">${l.map((f) => `<li${findable(f.title, `${f.desc}\nCategory: ${g}\n${f.words}`)}><a href="${f.name}.html">${esc(f.title)}<small>${esc(f.desc.split(/(?<=\.)\s/)[0])}</small></a></li>`).join('')}</ul></section>`).join('')}</div>`;
+// searchable: true on the guides index, where the search box of that page looks for the cards.
+const guideCards = (prefix, searchable = false) => `<div class="grid">${guides.map((g, i) => `<a class="card reveal" href="${prefix}${g.name}.html"${searchable ? findable(g.title, `${g.desc}${g.toc.length ? `\nSections: ${g.toc.map((t) => t[1]).join(', ')}` : ''}\n${g.words}`) : ''}><span class="num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h3>${esc(g.title)}</h3><p>${esc(g.desc.split(/(?<=\.)\s/)[0])}</p><span class="more">Read the guide</span></a>`).join('')}</div>`;
 const shown = SHOTS.filter(([f]) => shotFiles.includes(f) && !HELD[f]);
 for (const f of shotFiles) if (!SHOTS.some(([s]) => s === f) && !HELD[f]) console.warn(`  note: ${f} has no caption in SHOTS and is not shown`);
 const galleryGroups = [...new Set(shown.map((s) => s[3]))];
 function gallery() {
   return galleryGroups.map((g) => { const list = shown.filter((s) => s[3] === g);
-    const fig = ([f, t, c, , cls]) => { const { w, h } = png(path.join(shotDir, f)); return `<figure class="reveal${cls === 'phone' ? ' ph' : ''}"><button class="shot" type="button" data-full="shots/${f}" data-caption="${esc(t + '. ' + c)}" aria-label="Enlarge: ${esc(t)}"><img loading="lazy" src="shots/${f}" alt="${esc(c)}" width="${w}" height="${h}"></button><figcaption><b>${esc(t)}</b><span>${esc(c)}</span></figcaption></figure>`; };
-    return `<section class="galgroup" id="${slug(g)}"><h2>${g} <small>${list.length}</small></h2><div class="shots">${list.map(fig).join('')}</div></section>`; }).join('\n');
+    const fig = ([f, t, c, , cls]) => { const { w, h } = png(path.join(shotDir, f)); return `<figure class="reveal${cls === 'phone' ? ' ph' : ''}"${findable(t, `${c}\nGroup: ${g}`)}><button class="shot" type="button" data-full="shots/${f}" data-caption="${esc(t + '. ' + c)}" aria-label="Enlarge: ${esc(t)}"><img loading="lazy" src="shots/${f}" alt="${esc(c)}" width="${w}" height="${h}"></button><figcaption><b>${esc(t)}</b><span>${esc(c)}</span></figcaption></figure>`; };
+    return `<section class="galgroup" id="${slug(g)}" data-search-group><h2>${g} <small data-group-count>${list.length}</small></h2><div class="shots">${list.map(fig).join('')}</div></section>`; }).join('\n');
 }
 const galleryNav = () => galleryGroups.map((g) => `<li><a href="#${slug(g)}">${g}</a></li>`).join('');
 
 // ---- write everything -------------------------------------------------------------------------------
 const pages = [];
 const fill = (text) => text.replace(/\{\{frame:([\w.-]+)\}\}/g, (_m, f) => frame(f)).replace(/\{\{phone:([\w.-]+)\}\}/g, (_m, f) => phone(f)).replace(/\{\{thumb:([\w.-]+)\}\}/g, (_m, f) => thumb(f))
-  .replace('{{GUIDES}}', () => guideCards('articles/')).replace('{{GALLERY}}', gallery).replace('{{GALLERY_NAV}}', galleryNav).replace(/\{\{FEATURE_COUNT\}\}/g, String(flat.length)).replace(/\{\{GUIDE_COUNT\}\}/g, String(guides.length)).replace(/\{\{SHOT_COUNT\}\}/g, String(shown.length));
-const fragment = (name) => fill(fs.readFileSync(path.join(TOOLS, 'pages', name + '.html'), 'utf8').replace(/\r\n/g, '\n'));
+  .replace('{{GUIDES}}', () => guideCards('articles/')).replace('{{SHOT_SEARCH}}', () => searchBox({ id: 'screen', label: 'Filter the captures', noun: 'capture', nouns: 'captures', lines: 'its title first, then its description and its group' })).replace('{{GALLERY}}', gallery).replace('{{GALLERY_NAV}}', galleryNav).replace(/\{\{FEATURE_COUNT\}\}/g, String(flat.length)).replace(/\{\{GUIDE_COUNT\}\}/g, String(guides.length)).replace(/\{\{SHOT_COUNT\}\}/g, String(shown.length))
+  .replace(/\{\{SEARCH:([\w-]+)\}\}/g, (_m, id) => { if (!PAGE_SEARCHES[id]) throw new Error(`no search named ${id} in PAGE_SEARCHES`); return searchBox({ id, ...PAGE_SEARCHES[id] }); });
+const fragment = (name) => fill(markFinds(fs.readFileSync(path.join(TOOLS, 'pages', name + '.html'), 'utf8').replace(/\r\n/g, '\n')));
 const head = (trail, h1, lead, extra = '') => `<div class="dochead"><div class="rays" aria-hidden="true"></div>${crumbs(trail)}<h1>${h1}</h1><p class="lead"><span>${lead}</span></p>${extra}</div>`;
 const demoCall = (prefix) => `<section class="band block demo"><div class="blocktext"><span class="eyebrow">No install needed</span><h2>Try the demo</h2><p>The real interface in your browser, against simulated machines. Nothing is installed and nothing leaves the browser.</p><div class="cta left"><a class="dl" href="${prefix}demo/">Open the demo</a><a class="ghost" href="${prefix}about-the-demo.html">What the demo is</a></div></div><div class="blockpic">${phone('51-demo-phone.png', prefix)}</div></section>`;
 const HOME_DESC = 'A desktop app and a remote management hub for the Chocolatey CLI. Manage packages on one Windows PC or many, from a desktop app, a browser or a phone. Chocolatey ships inside.';
@@ -298,9 +380,9 @@ const TOP = [
 ];
 for (const [file, section, title, desc, h1, lead] of TOP) pages.push(page({ out: file + '.html', title: `${title} · Material Choco`, desc, section, base: '', body: `<main id="main">${head([['./', 'Home'], [null, title]], h1, lead)}${fragment(file)}</main>` }));
 pages.push(page({ out: 'articles/index.html', title: 'Guides · Material Choco', desc: 'Step by step guides for Material Choco: one PC, the hub in a container, pairing, security, every command, and more.', section: 'articles', base: '../',
-  body: `<main id="main">${head([['../', 'Home'], [null, 'Guides']], 'Guides', `${guides.length} how-to guides, written from the source and the README. Each one says what has been checked and what has not.`)}<section class="band tight"><div class="guidetop">${frame('02-first-run-wizard.png', '../')}<div><h2>Start here</h2><p class="sub">New to it? Read <a href="getting-started.html">Getting started on one PC</a>, or <a href="hub-in-a-container.html">Running the hub in a container</a> if you look after several machines. Looking for one specific feature? The <a href="../features/">feature pages</a> cover each of them separately, or press <kbd>Ctrl+Shift+F</kbd> to search everything.</p></div></div>${guideCards('')}</section>${demoCall('../')}</main>` }));
+  body: `<main id="main">${head([['../', 'Home'], [null, 'Guides']], 'Guides', `${guides.length} how-to guides, written from the source and the README. Each one says what has been checked and what has not.`)}<section class="band tight"><div class="guidetop">${frame('02-first-run-wizard.png', '../')}<div><h2>Start here</h2><p class="sub">New to it? Read <a href="getting-started.html">Getting started on one PC</a>, or <a href="hub-in-a-container.html">Running the hub in a container</a> if you look after several machines. Looking for one specific feature? The <a href="../features/">feature pages</a> cover each of them separately, or press <kbd>Ctrl+Shift+F</kbd> to search everything.</p></div></div>${searchBox({ id: 'guide', label: 'Search the guides', noun: 'guide', nouns: 'guides', lines: 'its title first, then its description, its section headings, and every other word of the guide, each once' })}${guideCards('', true)}</section>${demoCall('../')}</main>` }));
 pages.push(page({ out: 'features/index.html', title: 'Features · Material Choco', desc: `Every feature that ships in Material Choco 0.1, one page each: what it is, how to use it, how it was checked and its known limits.`, section: 'features', base: '../',
-  body: `<main id="main">${head([['../', 'Home'], [null, 'Features']], 'Features', `${flat.length} features ship in this build. Each has its own page: what it is, how to use it, what was checked and how, and its known limits. Planned work is in the roadmap, not here.`)}<section class="band tight"><label class="filter"><span class="sr">Filter features</span>${ic(I.search).replace('<svg', '<svg class="ic"')}<input id="feature-filter" type="search" placeholder="Filter features" autocomplete="off"></label><p class="count" id="feature-count" aria-live="polite"></p>${featureGroups()}</section>${demoCall('../')}</main>` }));
+  body: `<main id="main">${head([['../', 'Home'], [null, 'Features']], 'Features', `${flat.length} features ship in this build. Each has its own page: what it is, how to use it, what was checked and how, and its known limits. Planned work is in the roadmap, not here.`)}<section class="band tight">${searchBox({ id: 'feature', label: 'Filter features', noun: 'feature', nouns: 'features', lines: 'its name first, then its description, its category, and every other word of its page, each once' })}${featureGroups()}</section>${demoCall('../')}</main>` }));
 for (const g of guides) pages.push(docPage(g, guides, 'Guide'));
 for (const f of flat) pages.push(docPage(f, flat, 'Feature'));
 pages.push(page({ out: '404.html', title: 'Page not found · Material Choco', desc: 'This page does not exist on the Material Choco site.', section: '', base: '', absolute: true,
@@ -327,5 +409,5 @@ for (const [out, text] of pages) {
 }
 // Pages whose source document was removed are deleted so they cannot go stale.
 for (const dir of ['articles', 'features']) for (const f of fs.existsSync(path.join(SITE, dir)) ? fs.readdirSync(path.join(SITE, dir)) : []) if (f.endsWith('.html') && !pages.some(([o]) => o === `${dir}/${f}`)) { if (check) { console.error('orphan: ' + dir + '/' + f); stale++; } else fs.rmSync(path.join(SITE, dir, f)); }
-console.log(check ? (stale ? `${stale} page(s) differ from their sources. Run the generator.` : `${pages.length} files match their sources.`) : `Wrote ${pages.length} files: ${guides.length} guides, ${flat.length} feature pages.`);
+console.log(check ? (stale ? `${stale} page(s) differ from their sources. Run the generator.` : `${pages.length} files match their sources.`) : `Wrote ${pages.length} files: ${guides.length} guides, ${flat.length} feature pages, ${[...guides, ...flat].filter((d) => d.find).length} of them with a search of their own.`);
 process.exit(stale ? 1 : 0);

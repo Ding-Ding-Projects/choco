@@ -24,7 +24,7 @@
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="site.css?v=e85f9cbe">
+<link rel="stylesheet" href="site.css?v=0e187f3e">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -45,26 +45,40 @@
       <h2 id="open">Open it</h2>
       <div class="cta left"><a class="dl solid" href="demo/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>Open the demo</a></div>
       <p>It opens the same interface the app and the hub use, with a banner that marks it as a demo.</p>
+      <div class="sitesearch" data-site-search="demo" data-noun="entry" data-nouns="entries" data-lines="its words in bold (or its link) first, then the rest of its text, then its section"><label class="slabel" for="demo-filter">Search this page</label><div class="srow"><span class="sfield"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM20 20l-4-4"/></svg><input id="demo-filter" type="search" placeholder="Words to look for" autocomplete="off" spellcheck="false" aria-describedby="demo-count"></span></div><p class="count" id="demo-count" aria-live="polite"></p></div>
+      <div class="findsec" data-search-group>
       <h2 id="what" style="margin-top:28px">What it is</h2>
       <ul class="status">
-        <li class="ok reveal"><b>The real interface.</b> The same pages, menus, confirmations and full-screen results as the app.</li>
-        <li class="ok reveal"><b>Simulated machines.</b> A pretend hub runs inside the page, with made-up machines and packages. An "install" in the demo changes only that pretend data.</li>
-        <li class="ok reveal"><b>Nothing is installed.</b> No Chocolatey command runs anywhere. Your computer is not changed.</li>
-        <li class="ok reveal"><b>Nothing leaves the browser.</b> The demo makes no network requests of its own. What you type stays in the page.</li>
+        <li class="ok reveal" data-search-item data-name="The real interface" data-detail="The same pages, menus, confirmations and full-screen results as the app.
+Section: What it is"><b>The real interface.</b> The same pages, menus, confirmations and full-screen results as the app.</li>
+        <li class="ok reveal" data-search-item data-name="Simulated machines" data-detail="A pretend hub runs inside the page, with made-up machines and packages. An &quot;install&quot; in the demo changes only that pretend data.
+Section: What it is"><b>Simulated machines.</b> A pretend hub runs inside the page, with made-up machines and packages. An "install" in the demo changes only that pretend data.</li>
+        <li class="ok reveal" data-search-item data-name="Nothing is installed" data-detail="No Chocolatey command runs anywhere. Your computer is not changed.
+Section: What it is"><b>Nothing is installed.</b> No Chocolatey command runs anywhere. Your computer is not changed.</li>
+        <li class="ok reveal" data-search-item data-name="Nothing leaves the browser" data-detail="The demo makes no network requests of its own. What you type stays in the page.
+Section: What it is"><b>Nothing leaves the browser.</b> The demo makes no network requests of its own. What you type stays in the page.</li>
       </ul>
+      </div>
     </div>
     <div class="dlpic"><figure class="frame phone reveal"><button class="shot" type="button" data-full="shots/51-demo-phone.png" data-caption="The demo on a phone. The demo at phone width: a one-line banner with Add machine and Reset, and the Overview below." aria-label="Enlarge: The demo on a phone"><img loading="lazy" src="shots/51-demo-phone.png" alt="The demo at phone width: a one-line banner with Add machine and Reset, and the Overview below." width="780" height="1688"></button></figure></div>
   </div>
+  <div class="findsec" data-search-group>
   <h2 id="looks">What it looks like</h2>
-  <p class="sub">A banner at the top of the demo says at all times that the machines are simulated. It has two buttons: one adds a simulated machine, the other resets the demo.</p>
+  <p class="sub" data-search-item data-name="A banner at the top of the demo says at all times that the machines are simulated. It has two buttons: one adds a simulated machine, the other resets the demo." data-detail="Section: What it looks like">A banner at the top of the demo says at all times that the machines are simulated. It has two buttons: one adds a simulated machine, the other resets the demo.</p>
   <div class="pair wide"><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>The demo: overview</span></div><button class="shot" type="button" data-full="shots/47-demo-overview.png" data-caption="The demo: overview. The in-browser demo: a banner says the machines are simulated and nothing is installed, above the Overview page with three simulated machines and 6 updates ready." aria-label="Enlarge: The demo: overview"><img loading="lazy" src="shots/47-demo-overview.png" alt="The in-browser demo: a banner says the machines are simulated and nothing is installed, above the Overview page with three simulated machines and 6 updates ready." width="1338" height="746"></button></figure><figure class="frame reveal"><div class="chrome" aria-hidden="true"><i></i><i></i><i></i><span>The demo: a machine joins</span></div><button class="shot" type="button" data-full="shots/50-demo-machine-joined.png" data-caption="The demo: a machine joins. The demo after Simulate a machine joining: the Machines page lists four simulated machines and a pairing code." aria-label="Enlarge: The demo: a machine joins"><img loading="lazy" src="shots/50-demo-machine-joined.png" alt="The demo after Simulate a machine joining: the Machines page lists four simulated machines and a pairing code." width="1338" height="746"></button></figure></div>
+  </div>
+  <div class="findsec" data-search-group>
   <h2 id="limits" style="margin-top:32px">What it cannot show</h2>
   <ul class="status">
-    <li class="no reveal"><b>Real results.</b> Output, exit codes and timings in the demo come from the simulation. They show how the app reports results, not how any package behaves.</li>
-    <li class="no reveal"><b>Anything that needs a real hub or a real Windows machine.</b> Real agents, HTTPS, deliveries to other services and real installs.</li>
-    <li class="no reveal"><b>Proof.</b> The demo proves nothing about the app on Windows. For what has and has not been proven, see the <a href="status.html">status page</a>.</li>
+    <li class="no reveal" data-search-item data-name="Real results" data-detail="Output, exit codes and timings in the demo come from the simulation. They show how the app reports results, not how any package behaves.
+Section: What it cannot show"><b>Real results.</b> Output, exit codes and timings in the demo come from the simulation. They show how the app reports results, not how any package behaves.</li>
+    <li class="no reveal" data-search-item data-name="Anything that needs a real hub or a real Windows machine" data-detail="Real agents, HTTPS, deliveries to other services and real installs.
+Section: What it cannot show"><b>Anything that needs a real hub or a real Windows machine.</b> Real agents, HTTPS, deliveries to other services and real installs.</li>
+    <li class="no reveal" data-search-item data-name="Proof" data-detail="The demo proves nothing about the app on Windows. For what has and has not been proven, see the status page.
+Section: What it cannot show"><b>Proof.</b> The demo proves nothing about the app on Windows. For what has and has not been proven, see the <a href="status.html">status page</a>.</li>
   </ul>
-  <ul class="links" style="margin-top:22px"><li><a href="download.html">Download the installer</a></li><li><a href="remote.html">Run a real hub</a></li><li><a href="screens.html">Real captures</a></li></ul>
+  </div>
+  <ul class="links" style="margin-top:22px" data-search-group><li data-search-item data-name="Download the installer" data-detail="Section: Other pages"><a href="download.html">Download the installer</a></li><li data-search-item data-name="Run a real hub" data-detail="Section: Other pages"><a href="remote.html">Run a real hub</a></li><li data-search-item data-name="Real captures" data-detail="Section: Other pages"><a href="screens.html">Real captures</a></li></ul>
 </section>
 </main>
 <footer>
@@ -73,6 +87,6 @@
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="site.js?v=e85f9cbe"></script>
+<script src="site.js?v=0e187f3e"></script>
 </body>
 </html>

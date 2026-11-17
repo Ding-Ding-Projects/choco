@@ -158,7 +158,7 @@ node site/tools/generate.mjs     # rebuild the site pages
 | Command | What it does | Result on 2026-11-16 |
 | --- | --- | --- |
 | `npm test` | Unit and integration tests. They start a real hub and a real agent in-process and cover the schema, argument validation, sign in, passkeys, roles, secrets at rest, webhooks, allow lists, jobs, schedules and history. | 95 of 95 pass |
-| `npm run test:e2e` | Drives the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer, and refreshes the screenshots. | 121 of 121 checks pass |
+| `npm run test:e2e` | Drives the real interface in headless Chrome against a real hub and agent processes, as admin, operator and viewer, and refreshes the screenshots. | 124 of 124 checks pass |
 
 Both use `test/fixtures/fake-choco.js` in place of `choco.exe`. Neither proves anything about the real CLI on Windows.
 </details>

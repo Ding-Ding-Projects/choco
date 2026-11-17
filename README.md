@@ -137,7 +137,7 @@ MaterialChoco.exe --agent run
 
 | | |
 | --- | --- |
-| **Checked** | On Windows 11 (2026-11-16): release 0.1.16 matched its SHA-256 sums, installed, and with its real CLI installed, upgraded, pinned and uninstalled a package and changed a source and a feature; 0.1.15 updated itself to 0.1.16; a job sent from the hub ran there; `build.bat` and `build-installer.bat` worked from a clean clone. Automated, on Linux and Windows: `npm test` 95 of 95, end to end run 121 of 121, demo 26 of 26, clipping check 36 of 36 sizes. The site is live and was measured at phone widths. |
+| **Checked** | On Windows 11 (2026-11-16): release 0.1.16 matched its SHA-256 sums, installed, and with its real CLI installed, upgraded, pinned and uninstalled a package and changed a source and a feature; 0.1.15 updated itself to 0.1.16; a job sent from the hub ran there; `build.bat` and `build-installer.bat` worked from a clean clone. Automated, on Linux and Windows: `npm test` 95 of 95, end to end run 124 of 124, demo 26 of 26, clipping check 36 of 36 sizes. The site is live and was measured at phone widths. |
 | **Not proven** | A build on a Windows machine with nothing installed. Passkeys on a real device (they were checked with a software passkey device and Chrome's virtual one; over plain HTTP on a LAN address browsers do not offer them). Working offline. No screen reader pass and no accessibility audit. |
 | **Not signed** | The installer is not code signed. |
 | **Not built** | Signed agent updates, limiting a user to some machines, and much of the maintainer's wider feature catalogue. The exact count is in the feature inventory. |

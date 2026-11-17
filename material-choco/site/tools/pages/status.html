@@ -1,34 +1,45 @@
 <section class="band tight">
-  <div class="stats">
-    <div class="stat ok reveal"><b>95 of 95</b><span>unit and integration tests pass (<code>npm test</code>), on Linux and on Windows</span></div>
-    <div class="stat ok reveal"><b>121 of 121</b><span>end to end checks pass, in a real browser against a real hub and agents, on Linux and on Windows</span></div>
-    <div class="stat ok reveal"><b>Windows</b><span>the released app installed, used with its real Chocolatey CLI, updated and uninstalled on Windows 11</span></div>
-    <div class="stat no reveal"><b>Unsigned</b><span>the installer carries no code signature</span></div>
+  {{SEARCH:status}}
+  <div class="stats" data-search-group>
+    <div class="stat ok reveal" data-find="At a glance"><b>95 of 95</b><span>unit and integration tests pass (<code>npm test</code>), on Linux and on Windows</span></div>
+    <div class="stat ok reveal" data-find="At a glance"><b>124 of 124</b><span>end to end checks pass, in a real browser against a real hub and agents, on Linux and on Windows</span></div>
+    <div class="stat ok reveal" data-find="At a glance"><b>Windows</b><span>the released app installed, used with its real Chocolatey CLI, updated and uninstalled on Windows 11</span></div>
+    <div class="stat no reveal" data-find="At a glance"><b>Unsigned</b><span>the installer carries no code signature</span></div>
   </div>
+  <div class="findsec" data-search-group>
   <h2 id="checked">Checked</h2>
   <ul class="status">
-    <li class="reveal ok"><b>Windows, with the real CLI.</b> On 2026-11-16 release 0.1.16 was downloaded, its SHA-256 sums compared with the release notes, and installed on Windows 11. With the Chocolatey CLI inside the app it installed, upgraded, pinned and uninstalled a package, turned a source and a feature off and on, and showed both full-screen results. The bundled CLI unpacked into the app's own folder and left a Chocolatey that was already on the machine untouched.</li>
-    <li class="reveal ok"><b>Automatic updates.</b> An installed 0.1.15 found and downloaded 0.1.16 by itself within a minute, said that the build is not code signed, and started as 0.1.16 the next time.</li>
-    <li class="reveal ok"><b>The hub.</b> The published container image ran, a Windows machine paired with a one time code, and a job started from a phone-width browser ran there with the real CLI.</li>
-    <li class="reveal ok"><b>The build scripts.</b> From a clean clone on Windows, <code>build-installer.bat</code> built the CLI from source and produced an unsigned installer, and <code>build.bat</code> built and started the app.</li>
-    <li class="reveal ok"><b>The hub, agents and interface.</b> Covered by the automated tests and by an end to end run that drives the real interface as admin, operator and viewer. This includes the job queue, schedules, users and roles, passkeys, command allow lists, status webhooks and secrets at rest.</li>
-    <li class="reveal ok"><b>This site.</b> Every internal link is checked each time the site is built, and every page was measured at phone and desktop widths for sideways scroll and small touch targets.</li>
+    <li class="reveal ok" data-find><b>Windows, with the real CLI.</b> On 2026-11-16 release 0.1.16 was downloaded, its SHA-256 sums compared with the release notes, and installed on Windows 11. With the Chocolatey CLI inside the app it installed, upgraded, pinned and uninstalled a package, turned a source and a feature off and on, and showed both full-screen results. The bundled CLI unpacked into the app's own folder and left a Chocolatey that was already on the machine untouched.</li>
+    <li class="reveal ok" data-find><b>Automatic updates.</b> An installed 0.1.15 found and downloaded 0.1.16 by itself within a minute, said that the build is not code signed, and started as 0.1.16 the next time.</li>
+    <li class="reveal ok" data-find><b>The hub.</b> The published container image ran, a Windows machine paired with a one time code, and a job started from a phone-width browser ran there with the real CLI.</li>
+    <li class="reveal ok" data-find><b>The build scripts.</b> From a clean clone on Windows, <code>build-installer.bat</code> built the CLI from source and produced an unsigned installer, and <code>build.bat</code> built and started the app.</li>
+    <li class="reveal ok" data-find><b>The hub, agents and interface.</b> Covered by the automated tests and by an end to end run that drives the real interface as admin, operator and viewer. This includes the job queue, schedules, users and roles, passkeys, command allow lists, status webhooks and secrets at rest.</li>
+    <li class="reveal ok" data-find><b>This site.</b> Every internal link is checked each time the site is built, and every page was measured at phone and desktop widths for sideways scroll and small touch targets.</li>
   </ul>
   <div class="statuspic">{{frame:52-windows-install-complete.png}}</div>
+  </div>
+  <div class="findsec" data-search-group>
   <h2 id="not-proven">Not yet proven</h2>
   <ul class="status">
-    <li class="reveal no"><b>A fresh Windows.</b> The machine used already had the .NET build tools that the CLI build needs, so a build on a machine with nothing installed is not proven.</li>
-    <li class="reveal no"><b>Passkeys on a real device.</b> They were checked with a software passkey device and with the virtual one in Chrome. Over plain HTTP on a LAN address browsers do not offer passkeys at all, so this needs the hub on HTTPS.</li>
-    <li class="reveal no"><b>Accessibility.</b> Screen readers and display scaling have not been audited. The clipping check covers text at 200 percent.</li>
-    <li class="reveal no"><b>Working offline.</b> The installed app was not tried without a network.</li>
-    <li class="reveal no"><b>Secrets at rest.</b> Secret values are encrypted in the hub's data file, but the key lies in the same folder unless you move it.</li>
+    <li class="reveal no" data-find><b>A fresh Windows.</b> The machine used already had the .NET build tools that the CLI build needs, so a build on a machine with nothing installed is not proven.</li>
+    <li class="reveal no" data-find><b>Passkeys on a real device.</b> They were checked with a software passkey device and with the virtual one in Chrome. Over plain HTTP on a LAN address browsers do not offer passkeys at all, so this needs the hub on HTTPS.</li>
+    <li class="reveal no" data-find><b>Accessibility.</b> Screen readers and display scaling have not been audited. The clipping check covers text at 200 percent.</li>
+    <li class="reveal no" data-find><b>Working offline.</b> The installed app was not tried without a network.</li>
+    <li class="reveal no" data-find><b>Secrets at rest.</b> Secret values are encrypted in the hub's data file, but the key lies in the same folder unless you move it.</li>
   </ul>
+  </div>
+  <div class="findsec" data-search-group>
   <h2 id="inventory">Required features: 118 counted strictly</h2>
-  <p class="sub">The maintainer keeps a list of 118 features every app of theirs should have. This is the count for this app. A feature is "done" only when it meets the intent and a named check exercised it.</p>
+  <p class="sub" data-find>The maintainer keeps a list of 118 features every app of theirs should have. This is the count for this app. A feature is "done" only when it meets the intent and a named check exercised it.</p>
   <div class="bar" role="img" aria-label="16 done, 64 partial, 24 not built, 12 not applicable, 2 waived"><span class="b1" style="flex:16">16</span><span class="b2" style="flex:64">64</span><span class="b4" style="flex:24">24</span><span class="b5" style="flex:12">12</span><span class="b6" style="flex:2"></span></div>
   <ul class="legend"><li><i class="b1"></i>16 done</li><li><i class="b2"></i>64 partial</li><li><i class="b4"></i>24 not built</li><li><i class="b5"></i>12 not applicable</li><li><i class="b6"></i>2 waived by the maintainer</li></ul>
+  </div>
+  <div class="findsec" data-search-group>
   <h2 id="not-built" style="margin-top:36px">Not built</h2>
-  <p class="sub">Signed agent updates, limiting a user to some machines, and much of that wider list. There are no authenticator codes: the maintainer removed them, and sign in is a password or a passkey.</p>
+  <p class="sub" data-find>Signed agent updates, limiting a user to some machines, and much of that wider list. There are no authenticator codes: the maintainer removed them, and sign in is a password or a passkey.</p>
+  </div>
+  <div class="findsec" data-search-group>
   <h2 id="read-more">The records</h2>
-  <ul class="links"><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked, with results</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/FEATURE-INVENTORY.md">Feature inventory, row by row</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/CHANGELOG.md">Changelog</a></li><li><a href="https://github.com/Ding-Ding-Projects/choco/releases">All releases</a></li><li><a href="articles/security-model.html">Security model</a></li></ul>
+  <ul class="links"><li data-find><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/HANDOFF.md">What was checked, with results</a></li><li data-find><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/ROADMAP.md">Roadmap</a></li><li data-find><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/FEATURE-INVENTORY.md">Feature inventory, row by row</a></li><li data-find><a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/CHANGELOG.md">Changelog</a></li><li data-find><a href="https://github.com/Ding-Ding-Projects/choco/releases">All releases</a></li><li data-find><a href="articles/security-model.html">Security model</a></li></ul>
+  </div>
 </section>

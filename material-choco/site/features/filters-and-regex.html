@@ -6,12 +6,12 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#8A3F0B">
 <title>Filters and regex · Material Choco</title>
-<meta name="description" content="A foldable filter bar on every list, with plain text by default and regular expressions on request.">
+<meta name="description" content="A search on every page and in every category that lists something, each with its own regular expression switch and pattern builder beside it.">
 <link rel="canonical" href="https://ding-ding-projects.github.io/choco/features/filters-and-regex.html">
 <meta property="og:site_name" content="Material Choco">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Filters and regex · Material Choco">
-<meta property="og:description" content="A foldable filter bar on every list, with plain text by default and regular expressions on request.">
+<meta property="og:description" content="A search on every page and in every category that lists something, each with its own regular expression switch and pattern builder beside it.">
 <meta property="og:url" content="https://ding-ding-projects.github.io/choco/features/filters-and-regex.html">
 <meta property="og:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta property="og:image:type" content="image/png">
@@ -20,11 +20,11 @@
 <meta property="og:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Filters and regex · Material Choco">
-<meta name="twitter:description" content="A foldable filter bar on every list, with plain text by default and regular expressions on request.">
+<meta name="twitter:description" content="A search on every page and in every category that lists something, each with its own regular expression switch and pattern builder beside it.">
 <meta name="twitter:image" content="https://ding-ding-projects.github.io/choco/og.png">
 <meta name="twitter:image:alt" content="Material Choco: the app icon and the Overview page of the app, showing updates ready on two machines.">
 <link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="../site.css?v=e85f9cbe">
+<link rel="stylesheet" href="../site.css?v=0e187f3e">
 <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('mc.site.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
@@ -40,17 +40,19 @@
   </div>
 </header>
 <main id="main">
-<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Filters and regex</span></li></ol><h1>Filters and regex</h1><p class="lead"><span>A foldable filter bar on every list, with plain text by default and regular expressions on request.</span></p></div>
+<div class="dochead"><div class="rays" aria-hidden="true"></div><ol class="crumbs"><li><a href="../">Home</a></li><li><a href="../features/">Features</a></li><li><span aria-current="page">Filters and regex</span></li></ol><h1>Filters and regex</h1><p class="lead"><span>A search on every page and in every category that lists something, each with its own regular expression switch and pattern builder beside it.</span></p></div>
 <div class="doc withtoc"><details class="toc" open><summary>On this page</summary><ol><li><a href="#what-it-is">What it is</a></li><li><a href="#how-to-use-it">How to use it</a></li><li><a href="#what-was-checked">What was checked</a></li><li><a href="#known-limits">Known limits</a></li></ol></details><article class="prose">
 <h2 id="what-it-is">What it is</h2>
-<p>Machines, Installed, Config and features, Jobs, History and Help have a filter bar: a text field, a <b>Regex</b> switch, and chips specific to the page, such as <b>Outdated only</b>, <b>Online</b>, <b>Active</b> or <b>Failed</b>. Folding the bar is remembered per page, and a folded bar shows how many filters are active. The command palette has the same regex switch.</p>
+<p>Every page that lists things has a search: Overview (what needs attention, and recent jobs, each with its own search), Machines, Installed, Discover (a filter over the results, separate from the search of the package feed), Updates, Sources, Config and features, Pins, API keys (once keys are read), Cache and templates (cached entries, templates and rules, each with its own search), Package builder (its tools and their options), Console (the command list, and the options of the chosen command), Jobs, Schedules, History, Users, Status webhooks and Help. The Settings page has one search across all its categories: matching settings from every category are shown, each labelled with its category. Context menus, the New tab catalogue, the notification list, the changelog and the command palette have one too.</p>
+<p>Next to every search are a <b>Regex</b> switch and a pattern builder button. Each search keeps its own text, regex choice and error, so changing one never changes another, and a page that redraws with new data keeps what was typed. Below the list a line says how many items are shown, and an empty result says so in words. Only the Base64 tools page has no search, because it shows no list.</p>
 <p>Regular expressions are compiled safely: a pattern that does not compile shows its error and matches nothing, patterns longer than 200 characters are refused, and matching looks at the first 2,000 characters of each item. Matching ignores case.</p>
+<p>The landing site has the same idea for its own lists: the feature index, the guides index, the screens gallery and the site's command palette each have a search with a regex switch and a pattern builder written for the site.</p>
 <h2 id="how-to-use-it">How to use it</h2>
-<p>Type to filter. Turn on <b>Regex</b> for a pattern such as <code>^git|zip$</code>, or press the button beside the switch to open the <a href="../features/pattern-builder.html">pattern builder</a>, which writes the pattern for you. Each filter has an information button that explains it in place. Press <code>/</code> to jump to the filter of the current page. Click the bar's heading to fold it.</p>
+<p>Type to filter. Turn on <b>Regex</b> for a pattern such as <code>^git|zip$</code>, or press the <code>(.*)</code> button beside the switch to open the <a href="../features/pattern-builder.html">pattern builder</a>, which writes the pattern for you and fills the search it was opened from. Each page filter has an information button that explains it in place. Press <code>/</code> to jump to the filter of the current page. Click a filter bar's heading to fold it.</p>
 <h2 id="what-was-checked">What was checked</h2>
-<p>End to end checks <code>a built pattern filters the list it was opened from</code>, <code>every page filter has an info button that explains it in place</code> and <code>Ctrl+Shift+F opens the palette and filters</code>.</p>
+<p>End to end checks <code>every page that has something to search has a search with a Regex switch and a pattern builder</code> (a hand-written list of every page, with the reason for each page that has nothing to search), <code>the Settings search finds a setting in a category other than the open one</code>, <code>the Console command search narrows the commands, and Regex applies a pattern</code>, <code>a built pattern filters the list it was opened from</code>, <code>every page filter has an info button that explains it in place</code> and <code>Ctrl+Shift+F opens the palette and filters</code>. On the site, <code>site/tools/check-searches.mjs</code> checks that the feature index, the guides index and the screens page each have a labelled search and a regex builder. Each of these checks was seen failing when a search was removed, and passing once it was put back. The clipping check passes at all 36 sizes with the new searches, including text at 200 percent on a 320 px screen.</p>
 <h2 id="known-limits">Known limits</h2>
-<ul><li>Filter bars keep plain text matching by default. Regular expressions are opt-in per filter.</li><li>Filter text is kept while the app is open and cleared on reload.</li></ul>
+<ul><li>The pattern builder composes a pattern from parts and previews it; it is not a full regular expression workbench (no replace, no explanation of a pasted pattern, no choice of flavour).</li><li>Filter text is kept while the app is open and cleared on reload.</li><li>The API keys search appears once a machine's keys are read and keys exist.</li></ul>
 <p class="srclink">Source of this page: <a href="https://github.com/Ding-Ding-Projects/choco/blob/main/material-choco/docs/features/filters-and-regex.md">docs/features/filters-and-regex.md</a>. It describes version 0.1 of the app. See the <a href="../status.html">status page</a> for what has and has not been proven.</p>
 </article></div>
 <section class="related"><h2>Related</h2><div class="grid"><a class="card reveal" href="../features/pattern-builder.html"><h3>Pattern builder</h3><span class="more">Open</span></a><a class="card reveal" href="../features/command-palette.html"><h3>Command palette</h3><span class="more">Open</span></a><a class="card reveal" href="../features/context-menus.html"><h3>Context menus with a filter</h3><span class="more">Open</span></a><a class="card reveal" href="../features/history.html"><h3>History</h3><span class="more">Open</span></a></div>
@@ -63,6 +65,6 @@
   <p>Apache-2.0. Built on the Chocolatey CLI. Not affiliated with or endorsed by Chocolatey Software, Inc. "Chocolatey" is their trademark.</p>
   <p id="built">Build information loads with scripts enabled.</p>
 </footer>
-<script src="../site.js?v=e85f9cbe"></script>
+<script src="../site.js?v=0e187f3e"></script>
 </body>
 </html>

@@ -4,24 +4,31 @@
       <h2 id="open">Open it</h2>
       <div class="cta left"><a class="dl solid" href="demo/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg>Open the demo</a></div>
       <p>It opens the same interface the app and the hub use, with a banner that marks it as a demo.</p>
+      {{SEARCH:demo}}
+      <div class="findsec" data-search-group>
       <h2 id="what" style="margin-top:28px">What it is</h2>
       <ul class="status">
-        <li class="ok reveal"><b>The real interface.</b> The same pages, menus, confirmations and full-screen results as the app.</li>
-        <li class="ok reveal"><b>Simulated machines.</b> A pretend hub runs inside the page, with made-up machines and packages. An "install" in the demo changes only that pretend data.</li>
-        <li class="ok reveal"><b>Nothing is installed.</b> No Chocolatey command runs anywhere. Your computer is not changed.</li>
-        <li class="ok reveal"><b>Nothing leaves the browser.</b> The demo makes no network requests of its own. What you type stays in the page.</li>
+        <li class="ok reveal" data-find><b>The real interface.</b> The same pages, menus, confirmations and full-screen results as the app.</li>
+        <li class="ok reveal" data-find><b>Simulated machines.</b> A pretend hub runs inside the page, with made-up machines and packages. An "install" in the demo changes only that pretend data.</li>
+        <li class="ok reveal" data-find><b>Nothing is installed.</b> No Chocolatey command runs anywhere. Your computer is not changed.</li>
+        <li class="ok reveal" data-find><b>Nothing leaves the browser.</b> The demo makes no network requests of its own. What you type stays in the page.</li>
       </ul>
+      </div>
     </div>
     <div class="dlpic">{{phone:51-demo-phone.png}}</div>
   </div>
+  <div class="findsec" data-search-group>
   <h2 id="looks">What it looks like</h2>
-  <p class="sub">A banner at the top of the demo says at all times that the machines are simulated. It has two buttons: one adds a simulated machine, the other resets the demo.</p>
+  <p class="sub" data-find>A banner at the top of the demo says at all times that the machines are simulated. It has two buttons: one adds a simulated machine, the other resets the demo.</p>
   <div class="pair wide">{{frame:47-demo-overview.png}}{{frame:50-demo-machine-joined.png}}</div>
+  </div>
+  <div class="findsec" data-search-group>
   <h2 id="limits" style="margin-top:32px">What it cannot show</h2>
   <ul class="status">
-    <li class="no reveal"><b>Real results.</b> Output, exit codes and timings in the demo come from the simulation. They show how the app reports results, not how any package behaves.</li>
-    <li class="no reveal"><b>Anything that needs a real hub or a real Windows machine.</b> Real agents, HTTPS, deliveries to other services and real installs.</li>
-    <li class="no reveal"><b>Proof.</b> The demo proves nothing about the app on Windows. For what has and has not been proven, see the <a href="status.html">status page</a>.</li>
+    <li class="no reveal" data-find><b>Real results.</b> Output, exit codes and timings in the demo come from the simulation. They show how the app reports results, not how any package behaves.</li>
+    <li class="no reveal" data-find><b>Anything that needs a real hub or a real Windows machine.</b> Real agents, HTTPS, deliveries to other services and real installs.</li>
+    <li class="no reveal" data-find><b>Proof.</b> The demo proves nothing about the app on Windows. For what has and has not been proven, see the <a href="status.html">status page</a>.</li>
   </ul>
-  <ul class="links" style="margin-top:22px"><li><a href="download.html">Download the installer</a></li><li><a href="remote.html">Run a real hub</a></li><li><a href="screens.html">Real captures</a></li></ul>
+  </div>
+  <ul class="links" style="margin-top:22px" data-search-group><li data-find="Other pages"><a href="download.html">Download the installer</a></li><li data-find="Other pages"><a href="remote.html">Run a real hub</a></li><li data-find="Other pages"><a href="screens.html">Real captures</a></li></ul>
 </section>

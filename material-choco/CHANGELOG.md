@@ -18,6 +18,14 @@ The released app was installed on Windows 11 and used with the real Chocolatey C
 - The schema, API reference and site checks pass on a Windows checkout with CRLF line endings.
 - The tests run on Windows, and screenshots no longer follow the machine's light or dark theme.
 
+### Search everywhere (2026-11-16)
+
+- Every page and category that lists something has a search with its own Regex switch and pattern builder: Overview, Discover results, Updates, Sources, Pins, API keys, Cache and templates, Package builder, the Console's command list and options, Schedules, Users and Status webhooks join the pages that already had one. The Settings page searches across all its categories at once. Context menus and the New tab catalogue have a regex switch and builder too.
+- Each search keeps its own text and regex choice, survives the page redrawing with new data, and states how many items are shown.
+- Fixed on the way: the API key, template and cache readers lost their results when the page redrew during the read; the Console option filter did not actually hide options; switch options in the Console had a large empty gap under them.
+- The site's feature index, guides index, screens gallery and command palette have a search with a regex switch and a pattern builder of their own.
+- A check fails if any page that lists something loses its search; it was seen failing and passing.
+
 ### Layout and the demo (2026-11-16)
 
 - No clipping at any of the 36 checked sizes, including text at 200 percent on a 320 px screen: the phone bottom bar, long option names, page titles, buttons, setting rows and the top bar now fit.

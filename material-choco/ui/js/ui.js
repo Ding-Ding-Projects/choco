@@ -40,9 +40,14 @@ export async function copy(text) { try { await navigator.clipboard.writeText(tex
 export function matcher(query, regex) {
   if (!query) return { ok: true, test: () => true };
   if (!regex) { const q = query.toLowerCase(); return { ok: true, test: (s) => String(s).toLowerCase().includes(q) }; }
-  if (query.length > 200) return { ok: false, error: 'Pattern is longer than 200 characters', test: () => false };
+  if (query.length > 200) return { ok: false, error: tx('Pattern is longer than 200 characters'), test: () => false };
   try { const re = new RegExp(query, 'i'); return { ok: true, test: (s) => re.test(String(s).slice(0, 2000)) }; } catch (e) { return { ok: false, error: e.message, test: () => false }; }
 }
+// The line a filter shows for the result of matcher(): empty when the pattern works, else why it does not.
+// The reason itself comes from the regular expression engine of the browser.
+export const rxError = (m) => (m.ok ? '' : t('regex') + ': ' + m.error);
+// "1 result" or "{n} results", for counts that are spoken or shown after a search.
+export const resultsText = (n) => (n === 1 ? tx('1 result') : t('results', { n }));
 
 // --- sound and narration ---------------------------------------------------------
 let ctx;
@@ -93,28 +98,66 @@ export const sheetOpen = () => open.length > 0;
 export function alertSheet(title, body, emo = '') { title = say(title); if (typeof body === 'string') body = say(body); const close = sheet(frag(h('h2', { class: 'h2' }, emoji(emo), title), typeof body === 'string' ? h('p', { class: 'muted' }, body) : body, h('div', { class: 'row' }, h('span', { class: 'grow' }), btn(t('close'), { kind: 'tonal', onclick: () => close() }))), { label: title }); return close; }
 
 // --- context menus: every menu opens with a filter field --------------------------------
-let menuEl = null;
-export function closeMenu() { if (menuEl) { menuEl.remove(); menuEl = null; } }
-export function menu(at, items, { label = 'Menu' } = {}) {
-  closeMenu(); const opener = document.activeElement;
+// The filter has its own regex switch and pattern builder. While the builder is open the menu
+// stays in place but hidden, and a click inside the builder does not close it.
+let menuEl = null; let menuHeld = false;
+export function closeMenu() { if (menuEl) { menuEl.remove(); menuEl = null; } menuHeld = false; }
+// display, not visibility: visibility can be transitioned, and a menu still fading back in cannot take focus.
+const holdMenu = (on) => { menuHeld = on; if (menuEl) menuEl.style.display = on ? 'none' : ''; };
+// True while a menu waits hidden for its pattern builder. No other menu opens then, so the one that
+// waits is still there to receive the pattern.
+export const menuWaiting = () => menuHeld && !!menuEl;
+// The accessible name of the element a menu opens from, used to name the menu when the caller gives none.
+const nameOf = (x) => (x && x.getAttribute ? (x.getAttribute('aria-label') || '').trim() : '');
+// A shortcut as shown ("Ctrl+Shift+F") in the form aria-keyshortcuts expects ("Control+Shift+F").
+const ariaKeys = (s) => String(s).split('+').map((k) => (k === 'Ctrl' ? 'Control' : k)).join('+');
+// The height of a bar that stays at the top of the window, such as the banner of the demo page. It
+// sets --banner on the root element; sheets and menus are placed below it.
+const bannerHeight = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--banner')) || 0;
+let menuSeq = 0;
+export function menu(at, items, { label } = {}) {
+  if (menuWaiting()) return;
+  closeMenu(); const opener = document.activeElement; const st = { regex: false };
+  // A mouse event gives a point. An element, or a keyboard event such as Shift+F10, gives the element to open beside.
+  const point = !at.getBoundingClientRect && Number.isFinite(at.clientX) && (at.clientX || at.clientY);
+  const anchor = at.getBoundingClientRect ? at : point ? null : [at.currentTarget, at.target, opener].find((x) => x && x.getBoundingClientRect && x !== document.body) || null;
+  label = label || nameOf(anchor) || nameOf(at.currentTarget) || tx('Actions for this element');
   const list = h('div', { class: 'col gap0', role: 'menu', 'aria-label': label });
   const count = h('span', { class: 'sr', 'aria-live': 'polite' });
-  const input = h('input', { type: 'search', placeholder: t('filter'), 'aria-label': t('filter') });
-  const render = () => { const m = matcher(input.value, false); list.replaceChildren(); let n = 0; for (const it of items) { if (!it || !m.test(it.label)) continue; n++; list.append(h('button', { class: 'mi' + (it.danger ? ' danger' : ''), role: 'menuitem', disabled: it.disabled, onclick: () => { closeMenu(); it.run(); } }, it.icon && icon(it.icon, 'sm'), h('span', {}, it.label), it.control, it.shortcut && h('kbd', { 'aria-label': 'Shortcut ' + it.shortcut }, it.shortcut))); } count.textContent = n + ' items'; };
+  const note = h('p', { class: 'small mnote', hidden: true, dataset: { menuNote: '1' } });
+  // The field is named by a label that stays on screen while text is typed, so the Regex switch and
+  // the pattern builder beside it always sit next to a visible name.
+  const fieldId = 'menu-filter-' + ++menuSeq;
+  const input = h('input', { type: 'search', id: fieldId });
+  const name = h('label', { class: 'mlabel', for: fieldId }, icon('filter_list', 'sm'), h('span', {}, t('filter')));
+  // The switch shows its name as text, the same word as the Regex switch of every other filter, so the
+  // name that is heard is the name that is seen.
+  const rx = h('button', { type: 'button', class: 'mrx', role: 'switch', 'aria-checked': 'false', title: t('regex'), dataset: { menuRegex: '1' }, onclick: () => { st.regex = !st.regex; rx.setAttribute('aria-checked', String(st.regex)); render(); } }, t('regex'));
+  // The menu can be gone by the time the builder returns a pattern, for example after a page change.
+  const build = builderBtn(() => items.filter(Boolean).map((it) => String(it.label)), (pat) => { if (!input.isConnected) return; st.regex = true; rx.setAttribute('aria-checked', 'true'); input.value = pat; render(); input.focus(); }, tx('The preview uses the items of this menu.'), { onOpen: () => holdMenu(true), onClose: () => holdMenu(false) });
+  // The shortcut text is part of the name of the item; aria-keyshortcuts tells assistive technology it is a shortcut.
+  const render = () => { const m = matcher(input.value, st.regex); list.replaceChildren(); let n = 0; for (const it of items) { if (!it || !m.test(it.label)) continue; n++; list.append(h('button', { class: 'mi' + (it.danger ? ' danger' : ''), role: 'menuitem', disabled: it.disabled, 'aria-keyshortcuts': it.shortcut ? ariaKeys(it.shortcut) : null, onclick: () => { closeMenu(); it.run(); } }, it.icon && icon(it.icon, 'sm'), h('span', {}, it.label), it.control, it.shortcut && h('kbd', {}, it.shortcut))); }
+    // A pattern that cannot be compiled shows no item and says why; an empty result says so.
+    note.textContent = m.ok ? (n ? '' : t('no_results')) : rxError(m); note.hidden = !note.textContent; note.classList.toggle('bad', !m.ok);
+    count.textContent = m.ok ? (n ? resultsText(n) : t('no_results')) : rxError(m); };
   input.addEventListener('input', render);
   menuEl = h('div', { class: 'menu', onkeydown: (e) => {
     const btns = [...list.querySelectorAll('button:not([disabled])')]; const i = btns.indexOf(document.activeElement);
     if (e.key === 'ArrowDown') { e.preventDefault(); (btns[i + 1] || btns[0])?.focus(); } else if (e.key === 'ArrowUp') { e.preventDefault(); (i <= 0 ? input : btns[i - 1]).focus(); }
     else if (e.key === 'Enter' && document.activeElement === input) { e.preventDefault(); btns[0]?.click(); }
     else if (e.key === 'Escape') { e.stopPropagation(); if (input.value) { input.value = ''; render(); input.focus(); } else { closeMenu(); opener?.focus?.(); } }
-  } }, h('div', { class: 'filter' }, icon('filter_list', 'sm'), input), list, count);
+  } }, h('div', { class: 'filter' }, name, input, rx, build), note, list, count);
   render(); document.body.append(menuEl);
-  const r = at.getBoundingClientRect ? at.getBoundingClientRect() : { left: at.clientX, bottom: at.clientY, top: at.clientY };
+  const r = anchor ? anchor.getBoundingClientRect() : point ? { left: at.clientX, bottom: at.clientY, top: at.clientY } : { left: 8, bottom: 8, top: 8 };
+  // Kept inside the window and below a bar that stays at the top (the demo banner), even when the
+  // opener is not, so the filter field, its Regex switch and its builder are never out of sight. The
+  // menu is no taller than the room under that bar; its items scroll.
+  const top = 8 + bannerHeight(); menuEl.style.maxHeight = Math.max(120, Math.min(innerHeight * 0.7, innerHeight - top - 8)) + 'px';
   const mw = menuEl.offsetWidth; const mh = menuEl.offsetHeight;
   menuEl.style.left = Math.max(8, Math.min(r.left, innerWidth - mw - 8)) + 'px';
-  menuEl.style.top = Math.max(8, r.bottom + mh + 8 > innerHeight ? Math.max(8, r.top - mh - 4) : r.bottom + 4) + 'px';
+  menuEl.style.top = Math.max(top, Math.min(innerHeight - mh - 8, r.bottom + mh + 8 > innerHeight ? Math.max(top, r.top - mh - 4) : r.bottom + 4)) + 'px';
   input.focus();
-  setTimeout(() => document.addEventListener('pointerdown', function off(e) { if (menuEl && !menuEl.contains(e.target)) closeMenu(); if (!menuEl) document.removeEventListener('pointerdown', off); }), 0);
+  setTimeout(() => document.addEventListener('pointerdown', function off(e) { if (menuEl && !menuHeld && !menuEl.contains(e.target)) closeMenu(); if (!menuEl) document.removeEventListener('pointerdown', off); }), 0);
 }
 
 // --- two key super confirmation for destructive actions -----------------------------------
@@ -219,7 +262,7 @@ export function composePattern({ starts = '', contains = '', ends = '', anyOf = 
   if (!head && !starts && !ends) return '';
   return '^' + head + rxEsc(starts) + (ends ? '.*' + rxEsc(ends) + '$' : '');
 }
-export function regexBuilder({ sample = [], onApply, where = '' } = {}) {
+export function regexBuilder({ sample = [], onApply, where = '', onClose } = {}) {
   const parts = { starts: '', contains: '', ends: '', anyOf: '', not: '' }; let own = '';
   const out = h('pre', { class: 'log cmd', 'aria-label': tx('Pattern'), dataset: { rxPattern: '1' } }); const status = h('p', { class: 'small', 'aria-live': 'polite', dataset: { rxStatus: '1' } }); const list = h('div', { class: 'rxlist' }); const words = h('p', { class: 'muted' });
   const field = (key, label, hint) => h('md-outlined-text-field', { label, 'supporting-text': hint, class: 'grow', style: 'flex:1 1 240px', dataset: { rx: key }, oninput: (e) => { parts[key] = e.target.value; draw(); } });
@@ -239,14 +282,17 @@ export function regexBuilder({ sample = [], onApply, where = '' } = {}) {
     h('div', { class: 'row top' }, field('anyOf', tx('Any of these'), tx('Separate choices with commas')), field('not', tx('Does not contain'), tx('Rows with this text are left out'))),
     words, out, status, h('h3', { class: 'h2', style: 'font-size:1.05rem' }, tx('Live preview')), list,
     h('md-outlined-text-field', { type: 'textarea', rows: 2, label: tx('Your own lines to test, one per line'), style: 'width:100%', dataset: { rx: 'own' }, oninput: (e) => { own = e.target.value; draw(); } }),
-    h('div', { class: 'row' }, btn(t('cancel'), { kind: 'text', onclick: () => close() }), btn(tx('Copy pattern'), { kind: 'text', ic: 'content_copy', onclick: () => { const pat = composePattern(parts); if (pat) copy(pat); } }), h('span', { class: 'grow' }), use)), { label: tx('Pattern builder') }); draw();
+    h('div', { class: 'row' }, btn(t('cancel'), { kind: 'text', onclick: () => close() }), btn(tx('Copy pattern'), { kind: 'text', ic: 'content_copy', onclick: () => { const pat = composePattern(parts); if (pat) copy(pat); } }), h('span', { class: 'grow' }), use)), { label: tx('Pattern builder'), onClose }); draw();
   return close;
 }
-export const builderBtn = (sample, onApply, where) => h('md-icon-button', { 'aria-label': tx('Build a pattern from parts'), title: tx('Build a pattern from parts'), dataset: { rxopen: '1' }, onclick: () => regexBuilder({ sample: sample(), onApply, where }) }, icon('regular_expression'));
+// onOpen and onClose let a host that sits above dialogs, such as a menu, step aside while the builder is open.
+export const builderBtn = (sample, onApply, where, { onOpen, onClose } = {}) => h('md-icon-button', { 'aria-label': tx('Build a pattern from parts'), title: tx('Build a pattern from parts'), dataset: { rxopen: '1' }, onclick: () => { onOpen && onOpen(); regexBuilder({ sample: sample(), onApply, where, onClose }); } }, icon('regular_expression'));
 // A self-contained filter row for lists that redraw themselves: text, regex switch, builder.
 export function miniFilter(onchange, { label = t('filter'), sample = () => [] } = {}) {
-  const st = { q: '', regex: false }; const err = h('span', { class: 'small', style: 'color:var(--err)', role: 'alert' });
-  const fire = () => { const m = matcher(st.q, st.regex); err.textContent = m.ok ? '' : 'Regex: ' + m.error; onchange(); };
+  // The reason a pattern cannot be used repeats the pattern as one long word; it wraps anywhere, so it
+  // never makes the row, the sheet or the page wider than the window.
+  const st = { q: '', regex: false }; const err = h('span', { class: 'small', style: 'color:var(--err);overflow-wrap:anywhere;min-width:0', role: 'alert', dataset: { filterError: '1' } });
+  const fire = () => { err.textContent = rxError(matcher(st.q, st.regex)); onchange(); };
   const input = h('md-outlined-text-field', { label, type: 'search', style: 'flex:1 1 220px', oninput: (e) => { st.q = e.target.value; fire(); } }, h('span', { slot: 'leading-icon' }, icon('filter_list')));
   const chip = h('md-filter-chip', { label: t('regex'), onclick: (e) => setTimeout(() => { st.regex = e.target.selected; fire(); }) });
   return { st, test: (s) => matcher(st.q, st.regex).test(s), el: h('div', { class: 'row minifilter' }, input, chip, builderBtn(sample, (pat) => { st.q = pat; st.regex = true; input.value = pat; chip.selected = true; fire(); }), err) };

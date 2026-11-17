@@ -60,7 +60,8 @@ After these fixes were pushed, release `material-choco-v0.1.17` (built from `77d
 | Check | Result | When |
 | --- | --- | --- |
 | `npm test` | 95 of 95 pass on Windows (before the fixes it was 76 of 81, with one test file not loading) | 2026-11-16 |
-| `node test/e2e/run.mjs` (real interface in headless Chrome, real hub and agent processes, stand-in CLI) | 121 of 121 on Windows; the screenshots in `docs/screenshots` were retaken there | 2026-11-16 |
+| `node test/e2e/run.mjs` (real interface in headless Chrome, real hub and agent processes, stand-in CLI) | 124 of 124 on Windows, including the three search checks below; the screenshots in `docs/screenshots` were retaken there | 2026-11-16 |
+| Search guards: `every page that has something to search has a search with a Regex switch and a pattern builder`, `the Settings search finds a setting in a category other than the open one`, `the Console command search narrows the commands, and Regex applies a pattern`; on the site `site/tools/check-searches.mjs` | pass; each was seen failing with one search removed (the Sources search, a site search) and passing once it was restored | 2026-11-16 |
 | `node test/e2e/demo.mjs` | 26 of 26 on Windows, including two new checks that failed on the old code: a schedule runs at its time (it did not run), and the banner on a phone is at most 80 px tall (it was 133 px) | 2026-11-16 |
 | `node test/e2e/clipping.mjs` | 36 of 36 sizes on Windows; it was 15 of 36. See the note under "Not verified" | 2026-11-16 |
 | Schema, API reference and site checks | match, on Linux and on a Windows CRLF checkout | 2026-11-16 |
@@ -69,6 +70,10 @@ After these fixes were pushed, release `material-choco-v0.1.17` (built from `77d
 | Public text scan for private wording | every changed text file and the commit messages pass | 2026-11-16 |
 
 The earlier Linux results (95 of 95, 121 of 121, the site checks, the hub container and the first workflow runs) are in the history of this file.
+
+### Search on every page (2026-11-16)
+
+Every page and category that lists something now has a search with its own Regex switch and pattern builder (the list is in `docs/features/filters-and-regex.md`); Settings searches across all its categories. Only Base64 tools has none, because it shows no list. The work was done by four implementers with separate files, then reviewed in three rounds per area from three angles (function, accessibility and language, layout). The review did not run dry: the third round still found 11 to 18 issues per area, none rated high, and they were fixed, but those last fixes were not reviewed again. The full check run after them passed everything listed above. 139 new sentences were translated into Cantonese.
 
 ## Not verified
 

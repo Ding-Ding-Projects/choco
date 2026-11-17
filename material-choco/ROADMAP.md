@@ -50,6 +50,8 @@ A box is ticked only when the item works and was exercised. Every tick below was
 ## 0.4: interface
 
 - [x] Pattern builder beside every regex switch
+- [x] A search with its own Regex switch and pattern builder on every page and category that lists something, Settings searching across all categories (guarded by an end to end check, 2026-11-16)
+- [ ] A full regular expression workbench in place of the five-part builder (replace, explain a pasted pattern, flavours)
 - [x] Tabs: close, pin, reorder by drag and by keyboard
 - [x] General context menu on elements without their own
 - [x] One list of keyboard shortcuts, shown in menus, the palette and Help

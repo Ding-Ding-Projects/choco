@@ -184,6 +184,30 @@ details.fold > summary::-webkit-details-marker { display: none; } details.fold[o
 .menu .filter { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 14px; background: var(--s4); margin-bottom: 4px; } .menu .filter input { font-size: .875rem; }
 .menu button.mi { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border: 0; border-radius: 12px; background: none; text-align: left; font-size: .875rem; cursor: pointer; width: 100%; }
 .menu button.mi:hover, .menu button.mi:focus-visible { background: var(--s4); } .menu button.mi.danger { color: var(--err); } .menu .mi span { flex: 1; }
+/* A shortcut that does not fit beside its label at narrow widths or large text moves under it, at the right, instead of being cut off. */
+.menu button.mi { flex-wrap: wrap; row-gap: 2px; padding-block: 4px; } .menu .mi kbd { margin-left: auto; }
+/* The menu filter keeps its regex switch and pattern builder beside the field; on a narrow menu with large text they move to a second line. */
+.menu .filter { flex-wrap: wrap; row-gap: 4px; --mtarget: max(36px, calc(var(--target) - 8px)); } .menu .filter input { flex: 1 1 96px; }
+.menu .mrx { flex: none; min-width: var(--mtarget); min-height: var(--mtarget); padding: 0 10px; border: 1px solid var(--ol); border-radius: 10px; background: none; color: var(--onv); font-size: .8125rem; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.menu .mrx[aria-checked=true] { background: var(--sc); color: var(--onsc); border-color: var(--sc); }
+/* The search fields of menus and the palette drop the browser outline to sit flush in their pill, so they draw the focus ring themselves. */
+.palette .q input:focus-visible, .filter input:focus-visible { outline: 3px solid var(--sec); outline-offset: 2px; border-radius: 6px; }
+:root[data-focus=bold] .palette .q input:focus-visible, :root[data-focus=bold] .filter input:focus-visible { outline-width: 5px; outline-color: var(--ter); }
+/* Forced colours drop fills and border colours, so the on state of the menu regex switch is drawn in system colours that stay distinct. */
+@media (forced-colors: active) {
+  .menu .mrx { border-color: ButtonText; color: ButtonText; }
+  .menu .mrx[aria-checked=true] { forced-color-adjust: none; background: Highlight; color: HighlightText; border: 2px solid Highlight; }
+  .palette .q input:focus-visible, .filter input:focus-visible { outline-color: Highlight; }
+}
+/* The visible name of the menu filter field. It stays on screen while text is typed; a click on it focuses the field. */
+.menu .mlabel { display: inline-flex; align-items: center; gap: 6px; flex: none; font-size: .8125rem; font-weight: 600; color: var(--onv); cursor: text; }
+/* The field draws its own outline, so where to type is visible while it is empty. It starts wide enough that,
+   when the row has to wrap, the switch and the builder move to the second line together. */
+.menu .filter input { flex: 1 1 140px; min-height: var(--mtarget); padding: 0 10px; border: 1px solid var(--ol); border-radius: 10px; background: var(--bg); }
+/* The reason a filter pattern cannot be used repeats the pattern as one long word, so it wraps anywhere. */
+[data-filter-error] { overflow-wrap: anywhere; min-width: 0; }
+.menu .filter md-icon-button { flex: none; --md-icon-button-state-layer-height: var(--mtarget); --md-icon-button-state-layer-width: var(--mtarget); --md-icon-button-icon-size: 20px; }
+.menu .mnote { padding: 4px 12px 6px; overflow-wrap: anywhere; } .menu .mnote:not(.bad) { color: var(--onv); }
 .toasts { position: fixed; right: 20px; bottom: 20px; z-index: 80; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; max-width: min(440px, calc(100vw - 40px)); }
 .toast { background: var(--ink); color: var(--onink); border-radius: 20px; padding: 12px 14px 12px 18px; display: flex; gap: 12px; align-items: center; box-shadow: var(--shadow); animation: toast-in calc(420ms * var(--dur)) var(--spring); font-size: .875rem; }
 .toast.err { background: var(--err); color: var(--onerr); animation: toast-in calc(420ms * var(--dur)) var(--spring), shake calc(620ms * var(--dur)) 200ms; } .toast.ok { background: var(--ok); color: #fff; } :root[data-theme=dark] .toast.ok { color: var(--onpri); }

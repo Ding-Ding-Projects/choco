@@ -223,6 +223,87 @@ try {
   check('a failed test delivery is shown as failed', await p.eval(`return document.querySelector('[data-hook-result="failed"]').textContent.includes('Test failed')`)); await p.wait(300); await p.shot(path.join(shots, '42-status-webhooks.png'));
   await p.eval(`document.querySelector('[data-hook-row="Ops log"]').closest('tr').querySelector('md-switch').click()`); await p.wait(600);
   check('the enable switch changes the webhook on the hub', await p.eval(`const r=await (await fetch('/api/webhooks')).json(); return r.webhooks[0].enabled===false && r.webhooks[0].name==='Ops log'`));
+  // ---- a search on every page that has something to search ----
+  // Written by hand on purpose. A page that loses its search fails here by name, and a page that is
+  // not in this list fails until somebody decides whether it needs one. need: true means the page shows
+  // a search with a Regex switch and a pattern builder when it opens. need: 'after' means the search
+  // appears once the page holds a list, which open() produces. need: false states why there is none.
+  const SEARCH_PAGES = {
+    overview: { need: true }, // what needs attention and the recent jobs each have their own search
+    machines: { need: true },
+    installed: { need: true },
+    discover: { need: true }, // the package search itself has a Regex switch and a pattern builder
+    updates: { need: true },
+    sources: { need: true },
+    config: { need: true },
+    pins: { need: true },
+    apikeys: { need: false, why: 'the page holds no list until a machine is asked for its keys; the key list then has a search of its own, but only when keys are stored, and the stand-in CLI of this run stores none' },
+    tools: { need: 'after', open: () => clickText('List templates') }, // each list the CLI prints gets a search of its own
+    builder: { need: true },
+    console: { need: true }, // the command list, the options of the open command and the machine choice
+    jobs: { need: true },
+    schedules: { need: true },
+    history: { need: true },
+    base64: { need: false, why: 'it converts the text or the file it is given; there is no list on the page to search' },
+    users: { need: true },
+    webhooks: { need: true }, // shown once a webhook exists; this run added one above
+    help: { need: true },
+    settings: { need: true },
+  };
+  const jsDir = path.join(root, 'ui/js');
+  const sourcePages = fs.readdirSync(jsDir).filter((f) => f.endsWith('.js')).flatMap((f) => [...fs.readFileSync(path.join(jsDir, f), 'utf8').matchAll(/\{\s*id:\s*'([\w-]+)',\s*icon:/g)].map((m) => m[1]));
+  // Every element with data-rxopen inside #main must sit in a row with a labelled search field and a
+  // Regex switch, and every search field inside #main must have a pattern builder beside it.
+  const searchAudit = () => p.eval(`const rxWord=(await import('/js/i18n.js')).t('regex'); const main=document.querySelector('#main'); if(!main) return { complete:0, builders:0, problems:['the page has no #main'] };
+    const shown=(el)=>{ for(let n=el;n&&n!==main;n=n.parentElement){ if(n.hidden||getComputedStyle(n).display==='none') return false; } return true; };
+    const isField=(el)=>(el.matches('md-outlined-text-field,md-filled-text-field')&&(el.type||el.getAttribute('type'))==='search')||el.matches('input[type="search"]');
+    const labelOf=(f)=>String(f.label||f.getAttribute('aria-label')||(f.id&&document.querySelector('label[for="'+f.id+'"]')?.textContent)||'').trim();
+    const isRx=(el)=>el.matches('md-filter-chip,[role="switch"]')&&[el.label,el.getAttribute('aria-label'),el.textContent].some((x)=>String(x||'').trim().startsWith(rxWord));
+    const fieldsIn=(n)=>[...n.querySelectorAll('md-outlined-text-field,md-filled-text-field,input')].filter(isField);
+    const rowOf=(el)=>{ let n=el.parentElement; for(let i=0;i<3&&n&&n!==main;i++,n=n.parentElement) if(fieldsIn(n).length) return n; return el.parentElement; };
+    const problems=[]; let complete=0; const builders=[...main.querySelectorAll('[data-rxopen]')].filter(shown);
+    for(const b of builders){ const row=rowOf(b); const f=fieldsIn(row)[0]; const name=f?labelOf(f):''; const rx=[...row.querySelectorAll('*')].find(isRx);
+      if(!f) problems.push('a pattern builder button has no search field beside it'); else if(!name) problems.push('a search field has no label');
+      if(f&&!rx) problems.push('the search '+JSON.stringify(name)+' has no Regex switch beside it');
+      if(f&&name&&rx) complete++; }
+    for(const f of fieldsIn(main).filter(shown)) if(!rowOf(f).querySelector('[data-rxopen]')) problems.push('the search '+JSON.stringify(labelOf(f))+' has no pattern builder (data-rxopen) beside it');
+    return { complete, builders:builders.length, problems };`);
+  const tabIds = await p.eval(`return [...document.querySelectorAll('[data-tab]')].map((x)=>x.dataset.tab)`);
+  const searchGaps = []; const withSearch = []; const withoutSearch = [];
+  for (const id of new Set([...sourcePages, ...tabIds])) if (!(id in SEARCH_PAGES)) searchGaps.push(`${id}: a page that is not in the hand-written list of searches; decide whether it needs one and add it`);
+  for (const id of Object.keys(SEARCH_PAGES)) if (!sourcePages.includes(id)) searchGaps.push(`${id}: listed, but no page with this id is defined in ui/js`);
+  for (const [id, want] of Object.entries(SEARCH_PAGES)) {
+    if (!tabIds.includes(id)) { searchGaps.push(`${id}: no tab opens it for an admin`); continue; }
+    await go(id);
+    if (want.open) await want.open().catch((e) => searchGaps.push(`${id}: could not fill the page: ${e.message}`));
+    const end = Date.now() + (want.need === 'after' ? 15000 : want.need ? 4000 : 600); let r;
+    for (;;) { r = await searchAudit(); if ((r.complete && !r.problems.length) || Date.now() > end) break; await p.wait(250); }
+    if (want.need && !r.complete) searchGaps.push(`${id}: ${r.problems.length ? r.problems.join('; ') : 'no search with a Regex switch and a pattern builder (data-rxopen) inside #main'}`);
+    else if (r.problems.length) searchGaps.push(`${id}: ${r.problems.join('; ')}`);
+    else if (!want.need && r.complete) searchGaps.push(`${id}: listed as having nothing to search (${want.why}), but it has a search now; mark it as needing one so this check protects it`);
+    (r.complete ? withSearch : withoutSearch).push(r.complete ? `${id} (${r.complete})` : id);
+  }
+  console.log(`      searches found on ${withSearch.length} pages: ${withSearch.join(', ')}; none on: ${withoutSearch.join(', ') || 'no page'}`);
+  check('every page that has something to search has a search with a Regex switch and a pattern builder', searchGaps.length === 0, searchGaps.join(' | '));
+  // The Settings search looks in every category, not only the one that is open.
+  await go('settings'); await p.wait(400); await settingsTab('Language');
+  const openCategory = () => p.eval(`return [...document.querySelectorAll('#main [data-settings-tabs] md-filter-chip')].find((c)=>c.selected)?.label || ''`);
+  const catBefore = await openCategory();
+  await setField('#main [data-settings-search] md-outlined-text-field', 'Vividness'); await p.wait(700);
+  const found = await p.eval(`const g=[...document.querySelectorAll('#main [data-settings-group]')]; const ap=g.find((x)=>x.dataset.settingsGroup==='appearance'); return { groups:g.map((x)=>x.dataset.settingsGroup), hit:!!ap && ap.innerText.includes('Vividness') && !!ap.querySelector('md-slider'), count:document.querySelector('#main [data-settings-count]')?.textContent || '' }`);
+  await setField('#main [data-settings-search] md-outlined-text-field', ''); await p.wait(700);
+  const catAfter = await openCategory();
+  check('the Settings search finds a setting in a category other than the open one', catBefore === 'Language' && found.hit && !found.groups.includes('language') && /settings match/.test(found.count) && catAfter === catBefore, JSON.stringify({ catBefore, found, catAfter }).slice(0, 300));
+  // The Console command list has its own search: plain words, then a pattern with Regex on.
+  await go('console'); await p.wait(500);
+  const cmdField = '#main [data-cmd-filter] md-outlined-text-field';
+  const cmdState = () => p.eval(`const b=[...document.querySelectorAll('#main nav.cmdlist button.tab[data-cmd]')]; const box=document.querySelector('#main [data-cmd-filter]'); return { all:b.length, shown:b.filter((x)=>getComputedStyle(x).display!=='none').map((x)=>x.dataset.cmd), text:box ? box.innerText : '', regex:!!box?.querySelector('md-filter-chip')?.selected }`);
+  const toggleCmdRegex = () => p.eval(`document.querySelector('#main [data-cmd-filter] md-filter-chip').shadowRoot.querySelector('button').click()`).then(() => p.wait(300));
+  const cmdAll = await cmdState();
+  await setField(cmdField, 'pin'); await p.wait(400); const cmdWords = await cmdState();
+  await toggleCmdRegex(); await setField(cmdField, '^up'); await p.wait(400); const cmdRx = await cmdState();
+  await toggleCmdRegex(); await setField(cmdField, ''); await p.wait(400); const cmdCleared = await cmdState();
+  check('the Console command search narrows the commands, and Regex applies a pattern', cmdAll.all >= 20 && cmdAll.shown.length === cmdAll.all && cmdWords.shown.includes('pin') && !cmdWords.shown.includes('install') && cmdWords.shown.length < cmdAll.all && cmdWords.text.includes(`${cmdWords.shown.length} of ${cmdAll.all} commands shown`) && cmdRx.regex && cmdRx.shown.join() === 'upgrade' && !cmdCleared.regex && cmdCleared.shown.length === cmdAll.all, JSON.stringify({ cmdAll: cmdAll.shown.length, cmdWords, cmdRx, cmdCleared: cmdCleared.shown.length }).slice(0, 400));
   // ---- personal wording reaches error surfaces, and never rewrites technical text ----
   const failInstall = () => p.eval(`const ms=await (await fetch('/api/machines')).json(); await fetch('/api/jobs',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({machineIds:[ms.find(m=>m.name==='BUILD-01').id],spec:{kind:'choco',command:'install',args:['no-such-package'],global:{confirm:true}}})})`);
   const takeover = () => p.eval(`const d=document.querySelector('.drama.err'); return { big:d.querySelector('.big').textContent, sub:d.querySelector('.sub').textContent, what:d.querySelector('.what').textContent, out:d.querySelector('pre').textContent }`);
